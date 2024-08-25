@@ -1,13 +1,12 @@
 -module(libglans).
+
 -export([truly_random/0]).
 -nifs([truly_random/0]).
+
 -on_load(init/0).
 
 init() ->
-    io:format("loading libglans...~n"),
-    ok = erlang:load_nif("priv/libglans", 0),
-    io:format("loaded libglans.~n").
-    
+    ok = erlang:load_nif(filename:join([code:priv_dir("glans"), "libglans"]), 0).
 
 truly_random() ->
-    exit(nif_library_not_loaded).
+    erlang:nif_error(nif_library_not_loaded).
