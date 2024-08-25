@@ -1,6 +1,6 @@
 #[rustler::nif]
-fn add(a: i64, b: i64) -> i64 {
-    a + b
+pub fn truly_random() -> i64 {
+    4 // Chosen by fair dice roll. Guaranteed to be random.
 }
 
 rustler::init!("glans");
