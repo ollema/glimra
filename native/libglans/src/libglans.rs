@@ -1,52 +1,83 @@
+use core::str;
 use once_cell::sync::Lazy;
-use rustler::env::Env;
-use rustler::{Atom, Error as NifError, NifResult, Term as NifTerm};
-use std::fmt::Write;
+use rustler::{Atom, Encoder, Env, Error as NifError, NifResult, Term as NifTerm};
 use tree_sitter_highlight::{
-    Error as HighlightError, HighlightConfiguration, Highlighter, HtmlRenderer,
+    Error as HighlightError, HighlightConfiguration, HighlightEvent, Highlighter,
 };
 
 mod atoms {
     rustler::atoms! {
-       highlight_cancelled,
-       highlight_invalid_language,
-       highlight_unknown,
-       nil,
-       ok,
-       unsupported_language,
+        source,
+        highlight_start,
+        highlight_end,
+        highlight_cancelled,
+        highlight_invalid_language,
+        highlight_unknown,
+        ok,
+        unsupported_language,
     }
 }
 
-const HIGHLIGHT_NAMES: [&str; 22] = [
+const HIGHLIGHT_NAMES: [&str; 52] = [
     "attribute",
+    "boolean",
+    "carriage-return",
     "comment",
+    "comment.documentation",
     "constant",
     "constant.builtin",
     "constructor",
+    "constructor.builtin",
     "embedded",
+    "error",
+    "escape",
     "function",
     "function.builtin",
     "keyword",
+    "markup",
+    "markup.bold",
+    "markup.heading",
+    "markup.italic",
+    "markup.link",
+    "markup.link.url",
+    "markup.list",
+    "markup.list.checked",
+    "markup.list.numbered",
+    "markup.list.unchecked",
+    "markup.list.unnumbered",
+    "markup.quote",
+    "markup.raw",
+    "markup.raw.block",
+    "markup.raw.inline",
+    "markup.strikethrough",
     "module",
     "number",
     "operator",
     "property",
+    "property.builtin",
+    "punctuation",
     "punctuation.bracket",
     "punctuation.delimiter",
+    "punctuation.special",
     "string",
+    "string.escape",
+    "string.regexp",
     "string.special",
+    "string.special.symbol",
     "tag",
     "type",
     "type.builtin",
+    "variable",
     "variable.builtin",
+    "variable.member",
     "variable.parameter",
 ];
 
 static C_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_c::language(),
+        "c",
         tree_sitter_c::HIGHLIGHT_QUERY,
-        "",
         "",
         "",
     )
@@ -54,11 +85,12 @@ static C_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c.configure(&HIGHLIGHT_NAMES);
     c
 });
+
 static CSS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_css::language(),
+        "c",
         tree_sitter_css::HIGHLIGHTS_QUERY,
-        "",
         "",
         "",
     )
@@ -70,6 +102,7 @@ static CSS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static ELIXIR_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_elixir::language(),
+        "elixir",
         tree_sitter_elixir::HIGHLIGHTS_QUERY,
         r#"((sigil
             (sigil_name) @_sigil_name
@@ -77,7 +110,6 @@ static ELIXIR_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
             (#eq? @_sigil_name "H")
             (#set! injection.language "heex")
             (#set! injection.combined))"#,
-        "",
         "",
     )
     .unwrap();
@@ -88,8 +120,8 @@ static ELIXIR_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static GO_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_go::language(),
+        "go",
         tree_sitter_go::HIGHLIGHTS_QUERY,
-        "",
         "",
         "",
     )
@@ -101,10 +133,10 @@ static GO_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static HASKELL_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_haskell::language(),
+        "haskell",
         tree_sitter_haskell::HIGHLIGHTS_QUERY,
         "",
         tree_sitter_haskell::LOCALS_QUERY,
-        "",
     )
     .unwrap();
     c.configure(&HIGHLIGHT_NAMES);
@@ -114,9 +146,9 @@ static HASKELL_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static HEEX_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_heex::language(),
+        "heex",
         tree_sitter_heex::HIGHLIGHTS_QUERY,
         tree_sitter_heex::INJECTIONS_QUERY,
-        "",
         "",
     )
     .unwrap();
@@ -127,9 +159,9 @@ static HEEX_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static HTML_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_html::language(),
+        "html",
         tree_sitter_html::HIGHLIGHTS_QUERY,
         tree_sitter_html::INJECTIONS_QUERY,
-        "",
         "",
     )
     .unwrap();
@@ -140,10 +172,10 @@ static HTML_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static JS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_javascript::language(),
+        "javascript",
         tree_sitter_javascript::HIGHLIGHT_QUERY,
         tree_sitter_javascript::INJECTIONS_QUERY,
         tree_sitter_javascript::LOCALS_QUERY,
-        "",
     )
     .unwrap();
     c.configure(&HIGHLIGHT_NAMES);
@@ -153,8 +185,8 @@ static JS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static JSON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_json::language(),
+        "json",
         tree_sitter_json::HIGHLIGHTS_QUERY,
-        "",
         "",
         "",
     )
@@ -166,9 +198,9 @@ static JSON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 static RUST_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_rust::language(),
+        "rust",
         tree_sitter_rust::HIGHLIGHTS_QUERY,
         tree_sitter_rust::INJECTIONS_QUERY,
-        "",
         "",
     )
     .unwrap();
@@ -184,98 +216,80 @@ fn translate_highlight_error(e: HighlightError) -> NifError {
     }))
 }
 
-fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>, &'a str)> {
+fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
     vec![
-        ("c", &C_CONFIG, ".c .h"),
-        ("css", &CSS_CONFIG, ".css"),
-        ("elixir", &ELIXIR_CONFIG, ".ex .exs"),
-        ("go", &GO_CONFIG, ".go"),
-        ("haskell", &HASKELL_CONFIG, ".hs"),
-        ("heex", &HEEX_CONFIG, ".heex"),
-        ("html", &HTML_CONFIG, ".html"),
-        ("javascript", &JS_CONFIG, ".js .mjs"),
-        ("json", &JSON_CONFIG, ".json"),
-        ("rust", &RUST_CONFIG, ".rs"),
+        ("c", &C_CONFIG),
+        ("css", &CSS_CONFIG),
+        ("elixir", &ELIXIR_CONFIG),
+        ("go", &GO_CONFIG),
+        ("haskell", &HASKELL_CONFIG),
+        ("heex", &HEEX_CONFIG),
+        ("html", &HTML_CONFIG),
+        ("javascript", &JS_CONFIG),
+        ("json", &JSON_CONFIG),
+        ("rust", &RUST_CONFIG),
     ]
 }
 
 #[rustler::nif]
-fn get_language_from_filename(env: Env, filename: &str) -> Atom {
-    for (lang, _, extensions) in get_lang_tuples() {
-        let parts = extensions.split(' ');
-        for p in parts {
-            if filename.ends_with(p) {
-                return Atom::from_str(env, lang).unwrap();
-            }
-        }
-    }
-    return atoms::nil();
+fn get_highlight_types(env: Env) -> Vec<NifTerm> {
+    HIGHLIGHT_NAMES
+        .iter()
+        .map(|name| name.encode(env))
+        .collect()
 }
 
 #[rustler::nif]
-fn get_supported_languages(env: Env) -> Vec<Atom> {
-    let mut r = Vec::new();
-    for (lang, _, _) in get_lang_tuples() {
-        r.push(Atom::from_str(env, lang).unwrap());
-    }
-    r
-}
-
-#[rustler::nif]
-fn get_highlight_events<'a>(source_code: &str, l: NifTerm) -> NifResult<(Atom, String)> {
-    let lang = l.atom_to_string().unwrap();
-
+fn get_highlight_events<'a>(
+    env: Env<'a>,
+    source_code: &str,
+    language: &str,
+) -> NifResult<(Atom, Vec<NifTerm<'a>>)> {
     let get_config = |given_lang: &str| {
-        for (lang, config, _) in get_lang_tuples() {
-            if lang == given_lang {
+        for (language, config) in get_lang_tuples() {
+            if language == given_lang {
                 return Some(Lazy::force(config));
             }
         }
         return None;
     };
 
-    let highlight_config = match get_config(lang.as_str()) {
+    let highlight_config = match get_config(language) {
         Some(c) => c,
         _ => {
             return Err(NifError::Term(Box::new(atoms::unsupported_language())));
         }
     };
 
-    let html_attrs = HIGHLIGHT_NAMES.map(|s| format!(r#"class="token {}""#, s.replace(".", " ")));
     let mut highlighter = Highlighter::new();
-
-    let source_code_bytes = source_code.as_bytes();
     let highlight_result =
-        highlighter.highlight(highlight_config, source_code_bytes, None, get_config);
+        highlighter.highlight(highlight_config, source_code.as_bytes(), None, get_config);
 
     let events = match highlight_result {
-        Ok(events) => Ok(events),
-        Err(e) => Err(translate_highlight_error(e)),
-    }?;
-
-    let mut renderer = HtmlRenderer::new();
-
-    match renderer.render(events, source_code_bytes, &|highlight| {
-        html_attrs[highlight.0].as_bytes()
-    }) {
-        Ok(_) => (),
+        Ok(events) => events,
         Err(e) => return Err(translate_highlight_error(e)),
+    };
+
+    let mut nif_events = Vec::new();
+
+    for event in events {
+        match event {
+            Ok(HighlightEvent::Source { start, end }) => {
+                nif_events.push((atoms::source(), start, end).encode(env));
+            }
+            Ok(HighlightEvent::HighlightStart(s)) => {
+                nif_events.push((atoms::highlight_start(), s.0).encode(env));
+            }
+            Ok(HighlightEvent::HighlightEnd) => {
+                nif_events.push((atoms::highlight_end()).encode(env));
+            }
+            Err(e) => {
+                return Err(translate_highlight_error(e));
+            }
+        }
     }
 
-    let mut html = String::new();
-    writeln!(html, r#"<pre class="code-block language-{lang}"><code>"#).unwrap();
-    for (i, line) in renderer.lines().enumerate() {
-        writeln!(
-            html,
-            r#"<div class="line-wrapper"><span class="line-number">{}</span>{}</div>"#,
-            i + 1,
-            line,
-        )
-        .unwrap();
-    }
-    writeln!(html, "</code></pre>").unwrap();
-
-    Ok((atoms::ok(), html))
+    Ok((atoms::ok(), nif_events))
 }
 
 rustler::init!("libglans");

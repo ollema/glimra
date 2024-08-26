@@ -37,7 +37,7 @@ case "$UNAME_M" in
         ;;
 esac
 
-SOURCE_PATH="native/libglans/target/release/liblibglans.${SOURCE_EXT}"
+SOURCE_PATH="./target/release/liblibglans.${SOURCE_EXT}"
 
 TARGET_PATH="./priv/lib/libglans-${OS}-${ARCH}.${TARGET_EXT}"
 
