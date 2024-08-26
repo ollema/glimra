@@ -2,5 +2,5 @@
 *.ez
 /build
 erl_crash.dump
-priv/*.so
-priv/*.dll
+priv/lib/*.so
+priv/lib/*.dll

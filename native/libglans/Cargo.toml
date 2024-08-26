@@ -1,12 +1,12 @@
 [package]
-name = "glans"
+name = "libglans"
 version = "0.1.0"
 authors = []
 edition = "2021"
 
 [lib]
-name = "glans"
-path = "src/lib.rs"
+name = "libglans"
+path = "src/libglans.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
