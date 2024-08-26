@@ -1,8 +1,10 @@
 import gleam/dict.{type Dict}
-import gleam/int
 import gleam/io
 import gleam/list
 import gleam/string
+import lustre/attribute
+import lustre/element.{type Element}
+import lustre/element/html
 
 pub type HighlightEvent {
   HighlightStart(highlight_type: Int)
@@ -23,44 +25,53 @@ fn language_to_string(language: Language) {
 @external(erlang, "libglans", "get_highlight_types")
 fn get_highlight_types() -> List(String)
 
-pub fn build_index_to_type_map() -> Dict(Int, String) {
-  dict.from_list(list.index_map(get_highlight_types(), fn(x, i) { #(i, x) }))
-}
-
 @external(erlang, "libglans", "get_highlight_events")
 fn get_highlight_events(
   source_code: String,
   lang_atom: String,
 ) -> Result(List(HighlightEvent), String)
 
-pub fn main() {
-  let source =
-    "fn main() { 
+const demo_snippet = "
+fn main() { 
   println!(\"Hello, world!\"); 
 }"
-  let language = Rust
 
-  let highlights = syntax_highlight(source, language)
+const demo_lang = Rust
 
-  use highlight <- list.each(highlights)
-  let #(highlight_type, text) = highlight
-  io.println(highlight_type <> ":" <> "\"" <> text <> "\"")
+pub fn main() {
+  html.code([], syntax_highlight(demo_snippet, demo_lang))
+  |> element.to_string
+  |> io.print
 }
 
-fn syntax_highlight(source: String, lang: Language) -> List(#(String, String)) {
-  let assert Ok(events) = get_highlight_events(source, language_to_string(lang))
+pub fn build_index_to_type_map() -> Dict(Int, String) {
+  dict.from_list(list.index_map(get_highlight_types(), fn(x, i) { #(i, x) }))
+}
+
+fn syntax_highlight(source: String, language: Language) -> List(Element(Nil)) {
+  let events = case get_highlight_events(source, language_to_string(language)) {
+    Ok(events) -> events
+    _ -> panic as "could not syntax highlight code snippet"
+  }
   let index_to_type_map = build_index_to_type_map()
-  do_process_raw_highlights(source, events, [], [], "", index_to_type_map)
+  list.reverse(do_process_raw_highlights(
+    source,
+    events,
+    [],
+    [],
+    "",
+    index_to_type_map,
+  ))
 }
 
 fn do_process_raw_highlights(
   source: String,
   events: List(HighlightEvent),
-  nif_events: List(#(String, String)),
+  elements: List(Element(Nil)),
   current_highlights: List(Int),
   current_snippet: String,
   index_to_type_map: Dict(Int, String),
-) -> List(#(String, String)) {
+) -> List(Element(Nil)) {
   case events {
     [event, ..rest] -> {
       case event {
@@ -68,7 +79,7 @@ fn do_process_raw_highlights(
           do_process_raw_highlights(
             source,
             rest,
-            nif_events,
+            elements,
             [highlight_type, ..current_highlights],
             current_snippet,
             index_to_type_map,
@@ -77,17 +88,16 @@ fn do_process_raw_highlights(
         HighlightEnd -> {
           case current_highlights {
             [current_highlight, ..rest_of_current_highlights] -> {
-              io.println(
-                int.to_string(current_highlight)
-                <> ": "
-                <> "\""
-                <> current_snippet
-                <> "\"",
-              )
+              let highlight_type = case
+                dict.get(index_to_type_map, current_highlight)
+              {
+                Ok(highlight_type) -> highlight_type
+                _ -> panic as "unknown highlight type!"
+              }
               do_process_raw_highlights(
                 source,
                 rest,
-                nif_events,
+                [syntax_block(highlight_type, current_snippet), ..elements],
                 rest_of_current_highlights,
                 "",
                 index_to_type_map,
@@ -99,11 +109,13 @@ fn do_process_raw_highlights(
           }
         }
         Source(start, end) -> {
-          let snippet = string.slice(source, start, end - start)
+          let snippet =
+            string.slice(source, start, end - start)
+            |> string.replace("\n", "")
           do_process_raw_highlights(
             source,
             rest,
-            nif_events,
+            elements,
             current_highlights,
             current_snippet <> snippet,
             index_to_type_map,
@@ -111,6 +123,10 @@ fn do_process_raw_highlights(
         }
       }
     }
-    [] -> nif_events
+    [] -> elements
   }
+}
+
+pub fn syntax_block(highlight_type: String, snippet: String) -> Element(Nil) {
+  html.span([attribute.class(highlight_type)], [html.text(snippet)])
 }
