@@ -13,14 +13,44 @@ pub type HighlightEvent {
 }
 
 pub type Language {
+  Bash
+  C
+  Css
+  Elixir
+  Erlang
+  Gleam
+  Go
+  Haskell
+  Heex
+  Html
+  Javascript
+  Json
+  Markdown
+  Python
   Rust
-  // TODO: add more here
+  Typescript
+  Yaml
 }
 
 fn language_to_string(language: Language) {
   case language {
+    Bash -> "bash"
+    C -> "c"
+    Css -> "css"
+    Elixir -> "elixir"
+    Erlang -> "erlang"
+    Gleam -> "gleam"
+    Go -> "go"
+    Haskell -> "haskell"
+    Heex -> "heex"
+    Html -> "html"
+    Javascript -> "javascript"
+    Json -> "json"
+    Markdown -> "markdown"
+    Python -> "python"
     Rust -> "rust"
-    // TODO: add more here
+    Typescript -> "typescript"
+    Yaml -> "yaml"
   }
 }
 
@@ -58,13 +88,19 @@ pub fn syntax_highlight(
 
 pub fn main() {
   let source =
-    "fn main() { 
-  println!(\"Hello, world!\"); 
+    "pub fn main() {
+  let source = todo
+
+  let language = Gleam
+
+  html.code([], syntax_highlight(source: source, language: language))
+  |> element.to_string
+  |> io.print
 }"
 
-  let language = Rust
+  let language = Gleam
 
-  html.code([], syntax_highlight(source:, language:))
+  html.code([], syntax_highlight(source: source, language: language))
   |> element.to_string
   |> io.print
 }

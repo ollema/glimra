@@ -73,6 +73,19 @@ const HIGHLIGHT_NAMES: [&str; 52] = [
     "variable.parameter",
 ];
 
+static BASH_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_bash::language(),
+        "bash",
+        tree_sitter_bash::HIGHLIGHT_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
 static C_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_c::language(),
@@ -117,6 +130,32 @@ static ELIXIR_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c
 });
 
+static ERLANG_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_erlang::language(),
+        "erlang",
+        tree_sitter_erlang::HIGHLIGHTS_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
+static GLEAM_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_gleam::language(), 
+        "gleam",
+        tree_sitter_gleam::HIGHLIGHTS_QUERY,
+        "",
+        tree_sitter_gleam::LOCALS_QUERY,
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
 static GO_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_go::language(),
@@ -135,7 +174,7 @@ static HASKELL_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
         tree_sitter_haskell::language(),
         "haskell",
         tree_sitter_haskell::HIGHLIGHTS_QUERY,
-        "",
+        tree_sitter_haskell::INJECTIONS_QUERY,
         tree_sitter_haskell::LOCALS_QUERY,
     )
     .unwrap();
@@ -195,12 +234,64 @@ static JSON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c
 });
 
+static MARKDOWN_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_md::language(),
+        "markdown",
+        tree_sitter_md::HIGHLIGHT_QUERY_BLOCK,
+        tree_sitter_md::INJECTION_QUERY_BLOCK,
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
+static PYTHON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_python::language(),
+        "python",
+        tree_sitter_python::HIGHLIGHTS_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
 static RUST_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_rust::language(),
         "rust",
         tree_sitter_rust::HIGHLIGHTS_QUERY,
         tree_sitter_rust::INJECTIONS_QUERY,
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
+static TYPESCRIPT_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_typescript::language_typescript(),
+        "typescript",
+        tree_sitter_typescript::HIGHLIGHTS_QUERY,
+        "",
+        tree_sitter_typescript::LOCALS_QUERY,
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
+static YAML_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_yaml::language(),
+        "yaml",
+        tree_sitter_yaml::HIGHLIGHTS_QUERY,
+        "",
         "",
     )
     .unwrap();
@@ -218,16 +309,23 @@ fn translate_highlight_error(e: HighlightError) -> NifError {
 
 fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
     vec![
+        ("bash", &BASH_CONFIG),
         ("c", &C_CONFIG),
         ("css", &CSS_CONFIG),
         ("elixir", &ELIXIR_CONFIG),
+        ("erlang", &ERLANG_CONFIG),
+        ("gleam", &GLEAM_CONFIG),
         ("go", &GO_CONFIG),
         ("haskell", &HASKELL_CONFIG),
         ("heex", &HEEX_CONFIG),
         ("html", &HTML_CONFIG),
         ("javascript", &JS_CONFIG),
         ("json", &JSON_CONFIG),
+        ("markdown", &MARKDOWN_CONFIG),
+        ("python", &PYTHON_CONFIG),
         ("rust", &RUST_CONFIG),
+        ("typescript", &TYPESCRIPT_CONFIG),
+        ("yaml", &YAML_CONFIG),
     ]
 }
 
