@@ -1,8 +1,6 @@
 -module(libglans).
-
--export([truly_random/0]).
--nifs([truly_random/0]).
-
+-export([get_language_from_filename/1, get_supported_languages/0, get_highlight_events/2]).
+-nifs([get_language_from_filename/1, get_supported_languages/0, get_highlight_events/2]).
 -on_load(init/0).
 
 init() ->
@@ -34,5 +32,12 @@ arch() ->
         ["win32"] -> x86_64;
         Other -> {other, Other}
     end.
-truly_random() ->
+
+get_language_from_filename(_Filename) ->
+    erlang:nif_error(nif_library_not_loaded).
+
+get_supported_languages() ->
+    erlang:nif_error(nif_library_not_loaded).
+
+get_highlight_events(_SourceCode, _LangAtom) ->
     erlang:nif_error(nif_library_not_loaded).
