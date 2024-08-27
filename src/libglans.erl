@@ -1,6 +1,6 @@
 -module(libglans).
--export([get_highlight_types/0, get_highlight_events/2]).
--nifs([get_highlight_types/0, get_highlight_events/2]).
+-export([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
+-nifs([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
 -on_load(init/0).
 
 init() ->
@@ -33,7 +33,10 @@ arch() ->
         Other -> {other, Other}
     end.
 
-get_highlight_types() ->
+get_supported_languages() ->
+    erlang:nif_error(nif_library_not_loaded).
+
+get_highlight_name(_Index) ->
     erlang:nif_error(nif_library_not_loaded).
 
 get_highlight_events(_Source, _Language) ->

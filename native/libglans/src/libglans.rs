@@ -330,10 +330,10 @@ fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
 }
 
 #[rustler::nif]
-fn get_highlight_types(env: Env) -> Vec<NifTerm> {
-    HIGHLIGHT_NAMES
+fn get_supported_languages(env: Env) -> Vec<NifTerm> {
+    get_lang_tuples()
         .iter()
-        .map(|name| name.encode(env))
+        .map(|(lang, _)| lang.encode(env))
         .collect()
 }
 
@@ -388,6 +388,11 @@ fn get_highlight_events<'a>(
     }
 
     Ok((atoms::ok(), nif_events))
+}
+
+#[rustler::nif]
+fn get_highlight_name<'a>(index: usize) -> NifResult<&'a str> {
+    Ok(HIGHLIGHT_NAMES[index])
 }
 
 rustler::init!("libglans");

@@ -1,61 +1,17 @@
-import gleam/dict.{type Dict}
-import gleam/io
+// IMPORTS ---------------------------------------------------------------------
+
+import gleam/bool
 import gleam/list
+import gleam/result
 import gleam/string
 import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 
-pub type HighlightEvent {
-  HighlightStart(highlight_type: Int)
-  Source(start: Int, end: Int)
-  HighlightEnd
-}
+// FFI -------------------------------------------------------------------------
 
-pub type Language {
-  Bash
-  C
-  Css
-  Elixir
-  Erlang
-  Gleam
-  Go
-  Haskell
-  Heex
-  Html
-  Javascript
-  Json
-  Markdown
-  Python
-  Rust
-  Typescript
-  Yaml
-}
-
-fn language_to_string(language: Language) {
-  case language {
-    Bash -> "bash"
-    C -> "c"
-    Css -> "css"
-    Elixir -> "elixir"
-    Erlang -> "erlang"
-    Gleam -> "gleam"
-    Go -> "go"
-    Haskell -> "haskell"
-    Heex -> "heex"
-    Html -> "html"
-    Javascript -> "javascript"
-    Json -> "json"
-    Markdown -> "markdown"
-    Python -> "python"
-    Rust -> "rust"
-    Typescript -> "typescript"
-    Yaml -> "yaml"
-  }
-}
-
-@external(erlang, "libglans", "get_highlight_types")
-fn get_highlight_types() -> List(String)
+@external(erlang, "libglans", "get_supported_languages")
+fn get_supported_languages() -> List(String)
 
 @external(erlang, "libglans", "get_highlight_events")
 fn get_highlight_events(
@@ -63,97 +19,126 @@ fn get_highlight_events(
   lang_atom: String,
 ) -> Result(List(HighlightEvent), String)
 
+@external(erlang, "libglans", "get_highlight_name")
+fn get_highlight_name(index: Int) -> String
+
+// MAIN ------------------------------------------------------------------------
+
+// TODO: use builders!!!
 pub fn syntax_highlight(
   source source: String,
-  language language: Language,
-) -> List(Element(Nil)) {
-  let index_to_type_map =
-    dict.from_list(list.index_map(get_highlight_types(), fn(x, i) { #(i, x) }))
+  language language: String,
+) -> Result(Element(Nil), SyntaxHighlightingError) {
+  let language = string.lowercase(language)
+  let language_supported = list.contains(get_supported_languages(), language)
 
-  let events = case get_highlight_events(source, language_to_string(language)) {
-    Ok(events) -> events
-    _ -> panic as "could not perform syntax highlighting!"
-  }
+  use <- bool.guard(
+    when: !language_supported,
+    return: Error(UnsupportedLanguage(language)),
+  )
 
-  list.reverse(do_syntax_highlighting(
+  use events <- result.try(
+    get_highlight_events(source, language)
+    // TODO: figure out if there is a way to get the error message from the NIF
+    // and either map it to a SyntaxHighlightingError or have it directly be mapped
+    // to a SyntaxHighlightingError from the FFI function definition
+    |> result.replace_error(TreeSitterError),
+  )
+
+  use reversed_lines <- result.try(do_syntax_highlight(
     source: source,
-    index_to_type_map: index_to_type_map,
     events: events,
     code_block: [],
     current_code_row: [],
     current_highlights: [],
     current_snippet: "",
   ))
+
+  Ok(html.code([], list.reverse(reversed_lines)))
 }
 
-pub fn main() {
-  let source =
-    "pub fn main() {
-  let source = todo
+// TYPES -----------------------------------------------------------------------
 
-  let language = Gleam
-
-  html.code([], syntax_highlight(source: source, language: language))
-  |> element.to_string
-  |> io.print
-}"
-
-  let language = Gleam
-
-  html.code([], syntax_highlight(source: source, language: language))
-  |> element.to_string
-  |> io.print
+pub type SyntaxHighlightingError {
+  UnsupportedLanguage(language: String)
+  TreeSitterError
+  UnmatchedHighlightEvents
 }
 
-fn do_syntax_highlighting(
+type HighlightEvent {
+  HighlightStart(highlight_type: Int)
+  Source(start: Int, end: Int)
+  HighlightEnd
+}
+
+// IMPLEMENTATION -------------------------------------------------------------
+
+fn do_syntax_highlight(
   source source: String,
-  index_to_type_map index_to_type_map: Dict(Int, String),
   events events: List(HighlightEvent),
   code_block code_block: List(Element(Nil)),
   current_code_row current_code_row: List(Element(Nil)),
   current_highlights current_highlights: List(Int),
   current_snippet current_snippet: String,
-) -> List(Element(Nil)) {
+) -> Result(List(Element(Nil)), SyntaxHighlightingError) {
+  let #(current_highlight_name, rest_of_current_highlights) = case
+    current_highlights
+  {
+    [current_highlight, ..rest_of_current_highlights] -> {
+      #(get_highlight_name(current_highlight), rest_of_current_highlights)
+    }
+
+    [] -> {
+      #("", [])
+    }
+  }
+
   case events {
     [event, ..rest] -> {
       case event {
         HighlightStart(highlight_type) -> {
-          do_syntax_highlighting(
-            source:,
-            index_to_type_map:,
-            events: rest,
-            code_block:,
-            current_code_row:,
-            current_highlights: [highlight_type, ..current_highlights],
-            current_snippet:,
-          )
-        }
-
-        HighlightEnd -> {
-          case current_highlights {
-            [current_highlight, ..rest_of_current_highlights] -> {
-              let highlight_type =
-                get_highlight_type(index_to_type_map, current_highlight)
-
-              do_syntax_highlighting(
+          case current_snippet {
+            "" -> {
+              do_syntax_highlight(
                 source:,
-                index_to_type_map:,
+                events: rest,
+                code_block:,
+                current_code_row:,
+                current_highlights: [highlight_type, ..current_highlights],
+                current_snippet:,
+              )
+            }
+
+            _ -> {
+              do_syntax_highlight(
+                source:,
                 events: rest,
                 code_block:,
                 current_code_row: prepend_with_snippet(
                   current_code_row:,
-                  highlight_type:,
+                  highlight_name: current_highlight_name,
                   snippet: current_snippet,
                 ),
-                current_highlights: rest_of_current_highlights,
+                current_highlights: [highlight_type, ..current_highlights],
                 current_snippet: "",
               )
             }
-
-            [] -> {
-              panic as "unmatched start events and end events!"
-            }
           }
+        }
+
+        HighlightEnd -> {
+          do_syntax_highlight(
+            source:,
+            events: rest,
+            code_block:,
+            current_code_row: prepend_with_snippet(
+              current_code_row:,
+              highlight_name: current_highlight_name,
+              snippet: current_snippet,
+            ),
+            current_highlights: rest_of_current_highlights,
+            current_snippet: "",
+          )
         }
 
         Source(start, end) -> {
@@ -169,62 +154,30 @@ fn do_syntax_highlighting(
               let assert Ok(#(before_linebreak, after_linebreak)) =
                 string.split_once(snippet, on: "\n")
 
-              case current_highlights {
-                [current_highlight, ..] -> {
-                  let highlight_type =
-                    get_highlight_type(index_to_type_map, current_highlight)
-
-                  do_syntax_highlighting(
-                    source:,
-                    index_to_type_map:,
-                    events: rest,
-                    code_block: prepend_with_linebreak(
-                      current_code_block: code_block,
-                      children: prepend_with_snippet(
-                        current_code_row:,
-                        highlight_type:,
-                        snippet: current_snippet <> before_linebreak,
-                      ),
-                    ),
-                    current_code_row: prepend_with_snippet(
-                      current_code_row: [],
-                      highlight_type:,
-                      snippet: after_linebreak,
-                    ),
-                    current_highlights:,
-                    current_snippet: "",
-                  )
-                }
-
-                [] -> {
-                  do_syntax_highlighting(
-                    source:,
-                    index_to_type_map:,
-                    events: rest,
-                    code_block: prepend_with_linebreak(
-                      current_code_block: code_block,
-                      children: prepend_with_snippet(
-                        current_code_row:,
-                        highlight_type: "",
-                        snippet: current_snippet <> before_linebreak,
-                      ),
-                    ),
-                    current_code_row: prepend_with_snippet(
-                      current_code_row: [],
-                      highlight_type: "",
-                      snippet: after_linebreak,
-                    ),
-                    current_highlights:,
-                    current_snippet: "",
-                  )
-                }
-              }
+              do_syntax_highlight(
+                source:,
+                events: rest,
+                code_block: prepend_with_linebreak(
+                  current_code_block: code_block,
+                  children: prepend_with_snippet(
+                    current_code_row:,
+                    highlight_name: current_highlight_name,
+                    snippet: current_snippet <> before_linebreak,
+                  ),
+                ),
+                current_code_row: prepend_with_snippet(
+                  current_code_row: [],
+                  highlight_name: current_highlight_name,
+                  snippet: after_linebreak,
+                ),
+                current_highlights:,
+                current_snippet: "",
+              )
             }
 
             False -> {
-              do_syntax_highlighting(
+              do_syntax_highlight(
                 source:,
-                index_to_type_map:,
                 events: rest,
                 code_block:,
                 current_code_row:,
@@ -238,53 +191,29 @@ fn do_syntax_highlighting(
     }
 
     [] -> {
-      case current_highlights {
-        [current_highlight, ..] -> {
-          let highlight_type =
-            get_highlight_type(index_to_type_map, current_highlight)
-
-          prepend_with_linebreak(
-            current_code_block: code_block,
-            children: prepend_with_snippet(
-              current_code_row:,
-              highlight_type:,
-              snippet: current_snippet,
-            ),
-          )
-        }
-
-        [] -> {
-          prepend_with_linebreak(
-            current_code_block: code_block,
-            children: prepend_with_snippet(
-              current_code_row:,
-              highlight_type: "",
-              snippet: current_snippet,
-            ),
-          )
-        }
-      }
+      Ok(prepend_with_linebreak(
+        current_code_block: code_block,
+        children: prepend_with_snippet(
+          current_code_row:,
+          highlight_name: current_highlight_name,
+          snippet: current_snippet,
+        ),
+      ))
     }
   }
 }
 
-fn get_highlight_type(
-  index_to_type_map index_to_type_map: Dict(Int, String),
-  current_highlight current_highlight: Int,
-) {
-  let assert Ok(highlight_type) = dict.get(index_to_type_map, current_highlight)
-  highlight_type
-}
+// ELEMENT BUILDERS ------------------------------------------------------------
 
 fn prepend_with_snippet(
   current_code_row siblings: List(Element(Nil)),
-  highlight_type highlight_type: String,
+  highlight_name highlight_name: String,
   snippet snippet: String,
 ) -> List(Element(Nil)) {
   case string.is_empty(snippet) {
     True -> siblings
     False -> [
-      html.span([attribute.class(highlight_type)], [html.text(snippet)]),
+      html.span([attribute.class(highlight_name)], [html.text(snippet)]),
       ..siblings
     ]
   }
