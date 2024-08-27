@@ -11,3 +11,5 @@ lustre = ">= 4.3.6 and < 5.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
+birdie = ">= 1.2.1 and < 2.0.0"
+simplifile = ">= 2.0.1 and < 3.0.0"

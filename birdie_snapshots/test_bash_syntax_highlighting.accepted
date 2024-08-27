@@ -1,0 +1,11 @@
+---
+version: 1.2.1
+title: test bash syntax highlighting
+file: ./test/glans_test.gleam
+test_name: bash_syntax_highlighting_test
+---
+<code><span class="line"><span class="comment">#!/bin/bash</span></span><span class="line"><span>
+</span><span class="property">my_var</span><span>=</span><span class="string">&quot;Hello, World!&quot;</span><span>  </span><span class="comment"># this is a comment</span></span><span class="line"><span>
+</span><span class="keyword">function</span><span> </span><span class="function">greet</span><span>() {</span></span><span class="line"><span>    </span><span class="function">echo</span><span> </span><span class="string">&quot;</span><span class="operator">$</span><span class="property">my_var</span><span class="string">&quot;</span></span><span class="line"><span>}
+
+</span><span class="keyword">if</span><span> [ </span><span class="string">&quot;</span><span class="operator">$</span><span class="property">1</span><span class="string">&quot;</span><span> == </span><span class="string">&quot;test&quot;</span><span> ]; </span><span class="keyword">then</span></span><span class="line"><span>    </span><span class="function">greet</span></span><span class="line"><span class="keyword">fi</span></span><span class="line"></span></code>
