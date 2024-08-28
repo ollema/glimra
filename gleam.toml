@@ -1,5 +1,5 @@
 name = "glans"
-version = "0.0.1"
+version = "1.0.0"
 target = "erlang"
 description = "Ahead of time tree-sitter syntax highlighting for lustre"
 licences = ["MIT"]
