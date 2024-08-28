@@ -46,6 +46,7 @@ dependencies = [
  "tree-sitter-bash",
  "tree-sitter-c",
  "tree-sitter-css",
+ "tree-sitter-djot",
  "tree-sitter-elixir",
  "tree-sitter-erlang",
  "tree-sitter-gleam",
@@ -217,6 +218,15 @@ name = "tree-sitter-css"
 version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e08e324b1cf60fd3291774b49724c66de2ce8fcf4d358d0b4b82e37b41b1c9b"
+dependencies = [
+ "cc",
+ "tree-sitter",
+]
+
+[[package]]
+name = "tree-sitter-djot"
+version = "0.0.1"
+source = "git+https://github.com/treeman/tree-sitter-djot?rev=886601b67d1f4690173a4925c214343c30704d32#886601b67d1f4690173a4925c214343c30704d32"
 dependencies = [
  "cc",
  "tree-sitter",

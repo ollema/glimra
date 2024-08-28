@@ -17,6 +17,7 @@ tree-sitter = "0.22.6"
 tree-sitter-bash = "0.21.0"
 tree-sitter-c = "0.21.4"
 tree-sitter-css = "0.21.1"
+tree-sitter-djot = { git = "https://github.com/treeman/tree-sitter-djot", rev = "886601b67d1f4690173a4925c214343c30704d32" }
 tree-sitter-elixir = "0.2.0"
 tree-sitter-erlang = "0.7.0"
 tree-sitter-gleam = { git = "https://github.com/gleam-lang/tree-sitter-gleam", rev = "426e67087fd62be5f4533581b5916b2cf010fb5b" }

@@ -35,6 +35,11 @@ pub fn css_syntax_highlighting_test() {
   |> birdie.snap(title: "test css syntax highlighting")
 }
 
+pub fn djot_syntax_highlighting_test() {
+  highlight_snippet("test/snippets/snippet.dj", "djot")
+  |> birdie.snap(title: "test djot syntax highlighting")
+}
+
 pub fn elixir_syntax_highlighting_test() {
   highlight_snippet("test/snippets/snippet.ex", "elixir")
   |> birdie.snap(title: "test elixir syntax highlighting")

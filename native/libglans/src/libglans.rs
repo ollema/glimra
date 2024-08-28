@@ -112,6 +112,19 @@ static CSS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c
 });
 
+static DJOT_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
+    let mut c = HighlightConfiguration::new(
+        tree_sitter_djot::language(),
+        "djot",
+        tree_sitter_djot::HIGHLIGHTS_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    c.configure(&HIGHLIGHT_NAMES);
+    c
+});
+
 static ELIXIR_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_elixir::language(),
@@ -247,6 +260,7 @@ fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
         ("bash", &BASH_CONFIG),
         ("c", &C_CONFIG),
         ("css", &CSS_CONFIG),
+        ("djot", &DJOT_CONFIG),
         ("elixir", &ELIXIR_CONFIG),
         ("erlang", &ERLANG_CONFIG),
         ("gleam", &GLEAM_CONFIG),
