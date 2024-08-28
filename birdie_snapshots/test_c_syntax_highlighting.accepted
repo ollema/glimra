@@ -1,0 +1,11 @@
+---
+version: 1.2.1
+title: test c syntax highlighting
+file: ./test/glans_test.gleam
+test_name: c_syntax_highlighting_test
+---
+<code><span class="line"><span class="keyword">#include</span><span> </span><span class="string">&lt;stdio.h&gt;</span></span><span class="line"><span>
+</span><span class="comment">// comment</span></span><span class="line"><span class="type">int</span><span> </span><span class="function">add</span><span>(</span><span class="type">int</span><span> </span><span class="variable">a</span><span>, </span><span class="type">int</span><span> </span><span class="variable">b</span><span>) {</span></span><span class="line"><span>    </span><span class="keyword">return</span><span> </span><span class="variable">a</span><span> </span><span class="operator">+</span><span> </span><span class="variable">b</span><span>;</span></span><span class="line"><span>}
+
+</span><span class="type">int</span><span> </span><span class="function">main</span><span>() {</span></span><span class="line"><span>    </span><span class="type">int</span><span> </span><span class="variable">result</span><span> </span><span class="operator">=</span><span> </span><span class="function">add</span><span>(</span><span class="number">5</span><span>, </span><span class="number">3</span><span>);</span></span><span class="line"><span>    </span><span class="function">printf</span><span>(</span><span class="string">&quot;Result: %d\n&quot;</span><span>, </span><span class="variable">result</span><span>);</span></span><span class="line"><span>    </span><span class="keyword">return</span><span> </span><span class="number">0</span><span>;</span></span><span class="line"><span>}
+</span></span></code>

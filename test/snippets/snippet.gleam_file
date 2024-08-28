@@ -1,0 +1,11 @@
+// this is a comment
+import gleam/io
+
+pub fn add(a: Int, b: Int) -> Int {
+    a + b
+}
+
+pub fn main() {
+    let result = add(5, 3)
+    io.println("result:" <> result)
+}

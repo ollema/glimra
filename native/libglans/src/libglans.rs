@@ -145,7 +145,7 @@ static ERLANG_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
 
 static GLEAM_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
-        tree_sitter_gleam::language(), 
+        tree_sitter_gleam::language(),
         "gleam",
         tree_sitter_gleam::HIGHLIGHTS_QUERY,
         "",
@@ -162,32 +162,6 @@ static GO_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
         "go",
         tree_sitter_go::HIGHLIGHTS_QUERY,
         "",
-        "",
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
-static HASKELL_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_haskell::language(),
-        "haskell",
-        tree_sitter_haskell::HIGHLIGHTS_QUERY,
-        tree_sitter_haskell::INJECTIONS_QUERY,
-        tree_sitter_haskell::LOCALS_QUERY,
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
-static HEEX_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_heex::language(),
-        "heex",
-        tree_sitter_heex::HIGHLIGHTS_QUERY,
-        tree_sitter_heex::INJECTIONS_QUERY,
         "",
     )
     .unwrap();
@@ -234,19 +208,6 @@ static JSON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c
 });
 
-static MARKDOWN_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_md::language(),
-        "markdown",
-        tree_sitter_md::HIGHLIGHT_QUERY_BLOCK,
-        tree_sitter_md::INJECTION_QUERY_BLOCK,
-        "",
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
 static PYTHON_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     let mut c = HighlightConfiguration::new(
         tree_sitter_python::language(),
@@ -273,32 +234,6 @@ static RUST_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
     c
 });
 
-static TYPESCRIPT_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_typescript::language_typescript(),
-        "typescript",
-        tree_sitter_typescript::HIGHLIGHTS_QUERY,
-        "",
-        tree_sitter_typescript::LOCALS_QUERY,
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
-static YAML_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_yaml::language(),
-        "yaml",
-        tree_sitter_yaml::HIGHLIGHTS_QUERY,
-        "",
-        "",
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
 fn translate_highlight_error(e: HighlightError) -> NifError {
     NifError::Term(Box::new(match e {
         HighlightError::Cancelled => atoms::highlight_cancelled(),
@@ -316,16 +251,11 @@ fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
         ("erlang", &ERLANG_CONFIG),
         ("gleam", &GLEAM_CONFIG),
         ("go", &GO_CONFIG),
-        ("haskell", &HASKELL_CONFIG),
-        ("heex", &HEEX_CONFIG),
         ("html", &HTML_CONFIG),
         ("javascript", &JS_CONFIG),
         ("json", &JSON_CONFIG),
-        ("markdown", &MARKDOWN_CONFIG),
         ("python", &PYTHON_CONFIG),
         ("rust", &RUST_CONFIG),
-        ("typescript", &TYPESCRIPT_CONFIG),
-        ("yaml", &YAML_CONFIG),
     ]
 }
 

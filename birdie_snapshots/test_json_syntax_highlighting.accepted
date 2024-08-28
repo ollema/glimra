@@ -1,0 +1,8 @@
+---
+version: 1.2.1
+title: test json syntax highlighting
+file: ./test/glans_test.gleam
+test_name: json_syntax_highlighting_test
+---
+<code><span class="line"><span>{</span></span><span class="line"><span>  </span><span class="string">&quot;name&quot;</span><span>: </span><span class="string">&quot;Joe&quot;</span><span>,</span></span><span class="line"><span>  </span><span class="string">&quot;age&quot;</span><span>: </span><span class="number">30</span><span>,</span></span><span class="line"><span>  </span><span class="string">&quot;student&quot;</span><span>: </span><span class="constant.builtin">false</span><span>,</span></span><span class="line"><span>  </span><span class="string">&quot;skills&quot;</span><span>: [</span><span class="string">&quot;gleam&quot;</span><span>, </span><span class="string">&quot;erlang&quot;</span><span>, </span><span class="string">&quot;heavy metal&quot;</span><span>]</span></span><span class="line"><span>}
+</span></span></code>

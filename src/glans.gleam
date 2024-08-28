@@ -49,15 +49,19 @@ pub fn syntax_highlight(
   )
 
   use reversed_lines <- result.try(do_syntax_highlight(
-    source: source,
-    events: events,
+    source:,
+    events:,
+    config:,
     code_block: [],
     code_row: [],
     highlights: [],
     snippet: "",
   ))
 
-  Ok(html.code([], list.reverse(reversed_lines)))
+  Ok(html.code(
+    [attribute.class(config.block_class)],
+    list.reverse(reversed_lines),
+  ))
 }
 
 // TYPES -----------------------------------------------------------------------
@@ -93,20 +97,14 @@ pub fn block_class(config config: Config, class class: String) -> Config {
 fn do_syntax_highlight(
   source source: String,
   events events: List(HighlightEvent),
+  config config: Config,
   // accumulators below
   code_block code_block: List(Element(Nil)),
   code_row code_row: List(Element(Nil)),
   highlights highlights: List(Int),
   snippet snippet: String,
 ) -> Result(List(Element(Nil)), SyntaxHighlightingError) {
-  let #(highlight_name, rest_of_highlights) = case highlights {
-    [highlight, ..rest_of_highlights] -> {
-      #(get_highlight_name(highlight), rest_of_highlights)
-    }
-    [] -> {
-      #("", [])
-    }
-  }
+  let #(highlight_name, rest_of_highlights) = parse_highlights(highlights)
 
   case events {
     [event, ..rest] -> {
@@ -118,6 +116,7 @@ fn do_syntax_highlight(
               do_syntax_highlight(
                 source:,
                 events: rest,
+                config:,
                 code_block:,
                 code_row:,
                 highlights: [highlight_type, ..highlights],
@@ -130,6 +129,7 @@ fn do_syntax_highlight(
               do_syntax_highlight(
                 source:,
                 events: rest,
+                config:,
                 code_block:,
                 code_row: prepend_with_snippet(
                   code_row:,
@@ -156,6 +156,7 @@ fn do_syntax_highlight(
               do_syntax_highlight(
                 source:,
                 events: rest,
+                config:,
                 code_block:,
                 code_row: prepend_with_snippet(
                   code_row:,
@@ -185,7 +186,9 @@ fn do_syntax_highlight(
               do_syntax_highlight(
                 source:,
                 events: rest,
+                config:,
                 code_block: prepend_with_linebreak(
+                  config:,
                   current_code_block: code_block,
                   children: prepend_with_snippet(
                     code_row:,
@@ -208,6 +211,7 @@ fn do_syntax_highlight(
               do_syntax_highlight(
                 source:,
                 events: rest,
+                config:,
                 code_block:,
                 code_row:,
                 highlights:,
@@ -222,6 +226,7 @@ fn do_syntax_highlight(
     [] -> {
       // add remaining snippet to the current
       Ok(prepend_with_linebreak(
+        config:,
         current_code_block: code_block,
         children: prepend_with_snippet(
           code_row:,
@@ -229,6 +234,19 @@ fn do_syntax_highlight(
           snippet: snippet,
         ),
       ))
+    }
+  }
+}
+
+// HELPERS ---------------------------------------------------------------------
+
+fn parse_highlights(highlights: List(Int)) -> #(String, List(Int)) {
+  case highlights {
+    [highlight, ..rest_of_highlights] -> {
+      #(get_highlight_name(highlight), rest_of_highlights)
+    }
+    [] -> {
+      #("", [])
     }
   }
 }
@@ -250,8 +268,12 @@ fn prepend_with_snippet(
 }
 
 fn prepend_with_linebreak(
+  config config: Config,
   current_code_block siblings: List(Element(Nil)),
   children children: List(Element(Nil)),
 ) -> List(Element(Nil)) {
-  [html.span([attribute.class("line")], list.reverse(children)), ..siblings]
+  [
+    html.span([attribute.class(config.line_class)], list.reverse(children)),
+    ..siblings
+  ]
 }

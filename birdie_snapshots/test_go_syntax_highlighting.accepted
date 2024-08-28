@@ -1,0 +1,12 @@
+---
+version: 1.2.1
+title: test go syntax highlighting
+file: ./test/glans_test.gleam
+test_name: go_syntax_highlighting_test
+---
+<code><span class="line"><span class="keyword">package</span><span> main</span></span><span class="line"><span>
+</span><span class="keyword">import</span><span> </span><span class="string">&quot;fmt&quot;</span></span><span class="line"><span>
+</span><span class="comment">// this is a comment</span></span><span class="line"><span class="keyword">func</span><span> </span><span class="variable">add</span><span>(</span><span class="variable">a</span><span> </span><span class="type">int</span><span>, </span><span class="variable">b</span><span> </span><span class="type">int</span><span>) </span><span class="type">int</span><span> {</span></span><span class="line"><span>    </span><span class="keyword">return</span><span> </span><span class="variable">a</span><span> </span><span class="operator">+</span><span> </span><span class="variable">b</span></span><span class="line"><span>}
+
+</span><span class="keyword">func</span><span> </span><span class="variable">main</span><span>() {</span></span><span class="line"><span>    </span><span class="variable">result</span><span> </span><span class="operator">:=</span><span> </span><span class="variable">add</span><span>(</span><span class="number">5</span><span>, </span><span class="number">3</span><span>)</span></span><span class="line"><span>    </span><span class="variable">fmt</span><span>.</span><span class="property">Println</span><span>(</span><span class="string">&quot;Result:&quot;</span><span>, </span><span class="variable">result</span><span>)</span></span><span class="line"><span>}
+</span></span></code>

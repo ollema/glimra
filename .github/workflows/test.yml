@@ -1,0 +1,58 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compile-nifs:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, macos-13, windows-latest]
+        include:
+          - os: ubuntu-latest
+            target: linux-x86_64
+          - os: macos-latest
+            target: macos-aarch64
+          - os: macos-13
+            target: macos-x86_64
+          - os: windows-latest
+            target: windows-x86_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4.1.6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2.7.3
+      - run: ./build.sh
+      - uses: actions/upload-artifact@v4.3.3
+        with:
+          name: compiled-nifs-${{ matrix.target }}
+          path: priv/lib/*
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            target: linux-x86_64
+          - os: windows-latest
+            target: windows-x86_64
+    runs-on: ${{ matrix.os }}
+    needs: compile-nifs
+    steps:
+      - uses: actions/checkout@v4.1.6
+      - uses: erlef/setup-beam@v1.15.4
+        with:
+          otp-version: "26.0.2"
+          gleam-version: "1.4.1"
+          rebar3-version: "3"
+      - run: gleam format --check src test
+        if: ${{ matrix.os != 'windows-latest' }}
+      - run: gleam deps download
+      - uses: actions/download-artifact@v4.1.7
+        with:
+          name: compiled-nifs-${{ matrix.target }}
+          path: priv/lib
+      - run: gleam test --target erlang
