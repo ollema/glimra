@@ -33,7 +33,7 @@ jobs:
       - name: upload NIF
         uses: actions/upload-artifact@v4
         with:
-          name: compiled-nifs-${{ matrix.target }}
+          name: ${{ matrix.target }}
           path: priv/lib/*
 
   test:
@@ -64,7 +64,7 @@ jobs:
       - name: download NIF
         uses: actions/download-artifact@v4
         with:
-          name: compiled-nifs-${{ matrix.target }}
+          name: ${{ matrix.target }}
           path: priv/lib
       - name: test
         run: gleam test --target erlang
