@@ -9,7 +9,7 @@ jobs:
   compile-nifs:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, macos-13, windows-latest]
+        os: [ubuntu-latest, macos-latest, macos-13]
         include:
           - os: ubuntu-latest
             target: linux-x86_64
@@ -17,8 +17,6 @@ jobs:
             target: macos-aarch64
           - os: macos-13
             target: macos-x86_64
-          - os: windows-latest
-            target: windows-x86_64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4.1.6
@@ -33,12 +31,10 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
             target: linux-x86_64
-          - os: windows-latest
-            target: windows-x86_64
     runs-on: ${{ matrix.os }}
     needs: compile-nifs
     steps:
