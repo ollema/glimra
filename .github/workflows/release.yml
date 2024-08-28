@@ -64,7 +64,7 @@ jobs:
           path: priv/lib
           merge-multiple: true
       - name: publish to hex
-        run: gleam publish
+        run: gleam publish -y
         shell: bash
         env:
           HEXPM_USER: ${{ secrets.HEXPM_USER }}
