@@ -10,7 +10,7 @@ A zero runtime syntax highlighter for [`lustre/ssg`](https://github.com/lustre-l
 
 ## Platform support
 
-`glans` uses [NIFs](https://www.erlang.org/doc/system/nif) to extract syntax highlighting events provided by the `tree-sitter` and `tree-sitter-highlight` crates. This allows `glans` to provide syntax highlighting for a wide range of languages with minimal effort.
+`glans` uses [NIFs](https://www.erlang.org/doc/system/nif) to extract syntax highlighting events provided by the [`tree-sitter`](https://crates.io/crates/tree-sitter) and [`tree-sitter-highlight`](https://crates.io/crates/tree-sitter-highlight) crates. This allows `glans` to provide syntax highlighting for a wide range of languages with minimal effort.
 
 Unfortunately, this also means that `glans` only works with the Erlang target. Furthermore, you either need to have access to the Rust toolchain or you can use the provided precompiled binaries.
 
@@ -27,6 +27,9 @@ Currently, the following operating systems and architectures are supported:
 ```sh
 gleam add glans
 ```
+
+## Usage
+
 ```gleam
 import glans
 
@@ -34,8 +37,8 @@ pub fn main() {
   let source = "let greeting = \"Hello, Joe!\""
 
   let highlighted_snippet =
-    glans.syntax_highlighter("gleam")
-    |> glans.syntax_highlight(source)
+    glans.syntax_highlighter(language: "gleam")
+    |> glans.syntax_highlight(source: source)
 }
 ```
 
@@ -44,5 +47,5 @@ Further documentation can be found at <https://hexdocs.pm/glans>.
 ## Development
 
 ```sh
-gleam test  # Run the tests
+gleam test  # run the tests
 ```
