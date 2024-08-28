@@ -19,11 +19,11 @@ jobs:
             target: macos-x86_64
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2.7.3
+      - uses: swatinem/rust-cache@v2
       - run: ./build.sh
-      - uses: actions/upload-artifact@v4.3.3
+      - uses: actions/upload-artifact@v4
         with:
           name: compiled-nifs-${{ matrix.target }}
           path: priv/lib/*
@@ -38,8 +38,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: compile-nifs
     steps:
-      - uses: actions/checkout@v4.1.6
-      - uses: erlef/setup-beam@v1.15.4
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1.18.1
         with:
           otp-version: "26.0.2"
           gleam-version: "1.4.1"
@@ -47,7 +47,7 @@ jobs:
       - run: gleam format --check src test
         if: ${{ matrix.os != 'windows-latest' }}
       - run: gleam deps download
-      - uses: actions/download-artifact@v4.1.7
+      - uses: actions/download-artifact@v4
         with:
           name: compiled-nifs-${{ matrix.target }}
           path: priv/lib
