@@ -38,7 +38,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: priv/lib
-      - name: release
+          merge-multiple: true
+      - name: release on github
         uses: softprops/action-gh-release@v1
         with:
           files: priv/lib/*
@@ -49,16 +50,21 @@ jobs:
       - test
       - version
     steps:
-      - uses: actions/checkout@v4
-      - uses: erlef/setup-beam@v1.18.1
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup gleam
+        uses: erlef/setup-beam@v1.18.1
         with:
           otp-version: "26.0.2"
           gleam-version: "1.4.1"
           rebar3-version: "3"
-      - uses: actions/download-artifact@v4
+      - name: download NIFs
+        uses: actions/download-artifact@v4
         with:
           path: priv/lib
-      - run: gleam publish
+          merge-multiple: true
+      - name: publish to hex
+        run: gleam publish
         shell: bash
         env:
           hex_user: ${{ secrets.HEXPM_USER }}
