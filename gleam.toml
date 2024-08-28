@@ -1,7 +1,7 @@
 name = "glans"
 version = "1.0.0"
 target = "erlang"
-description = "Ahead of time tree-sitter syntax highlighting for lustre"
+description = "Zero runtime syntax highlighter for lustre/ssg."
 licences = ["MIT"]
 repository = { type = "github", user = "ollema", repo = "glans" }
 
