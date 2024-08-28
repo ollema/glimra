@@ -56,3 +56,6 @@ jobs:
           name: compiled-nifs-${{ matrix.target }}
           path: priv/lib
       - run: gleam test --target erlang
+        # TODO: enable when birdie works on windows again 
+        if: ${{ matrix.os != 'windows-latest' }} 
+
