@@ -49,9 +49,9 @@ pub fn syntax_highlight(
     source: source,
     events: events,
     code_block: [],
-    current_code_row: [],
-    current_highlights: [],
-    current_snippet: "",
+    code_row: [],
+    highlights: [],
+    snippet: "",
   ))
 
   Ok(html.code([], list.reverse(reversed_lines)))
@@ -76,18 +76,16 @@ type HighlightEvent {
 fn do_syntax_highlight(
   source source: String,
   events events: List(HighlightEvent),
+  // accumulators below
   code_block code_block: List(Element(Nil)),
-  current_code_row current_code_row: List(Element(Nil)),
-  current_highlights current_highlights: List(Int),
-  current_snippet current_snippet: String,
+  code_row code_row: List(Element(Nil)),
+  highlights highlights: List(Int),
+  snippet snippet: String,
 ) -> Result(List(Element(Nil)), SyntaxHighlightingError) {
-  let #(current_highlight_name, rest_of_current_highlights) = case
-    current_highlights
-  {
-    [current_highlight, ..rest_of_current_highlights] -> {
-      #(get_highlight_name(current_highlight), rest_of_current_highlights)
+  let #(highlight_name, rest_of_highlights) = case highlights {
+    [highlight, ..rest_of_highlights] -> {
+      #(get_highlight_name(highlight), rest_of_highlights)
     }
-
     [] -> {
       #("", [])
     }
@@ -97,62 +95,75 @@ fn do_syntax_highlight(
     [event, ..rest] -> {
       case event {
         HighlightStart(highlight_type) -> {
-          case current_snippet {
+          case snippet {
             "" -> {
+              // if the current snippet is empty, we just add the highlight type
               do_syntax_highlight(
                 source:,
                 events: rest,
                 code_block:,
-                current_code_row:,
-                current_highlights: [highlight_type, ..current_highlights],
-                current_snippet:,
+                code_row:,
+                highlights: [highlight_type, ..highlights],
+                snippet:,
               )
             }
 
             _ -> {
+              // add the current snippet to the current row before starting a new highlight
               do_syntax_highlight(
                 source:,
                 events: rest,
                 code_block:,
-                current_code_row: prepend_with_snippet(
-                  current_code_row:,
-                  highlight_name: current_highlight_name,
-                  snippet: current_snippet,
+                code_row: prepend_with_snippet(
+                  code_row:,
+                  highlight_name: highlight_name,
+                  snippet: snippet,
                 ),
-                current_highlights: [highlight_type, ..current_highlights],
-                current_snippet: "",
+                highlights: [highlight_type, ..highlights],
+                snippet: "",
               )
             }
           }
         }
 
         HighlightEnd -> {
-          do_syntax_highlight(
-            source:,
-            events: rest,
-            code_block:,
-            current_code_row: prepend_with_snippet(
-              current_code_row:,
-              highlight_name: current_highlight_name,
-              snippet: current_snippet,
-            ),
-            current_highlights: rest_of_current_highlights,
-            current_snippet: "",
-          )
+          case
+            string.is_empty(highlight_name) && list.is_empty(rest_of_highlights)
+          {
+            True -> {
+              // if there is no current highlight, we have an unmatched highlight end
+              Error(UnmatchedHighlightEvents)
+            }
+            False -> {
+              // add the current snippet to the current row before discarding the current highlight
+              do_syntax_highlight(
+                source:,
+                events: rest,
+                code_block:,
+                code_row: prepend_with_snippet(
+                  code_row:,
+                  highlight_name: highlight_name,
+                  snippet: snippet,
+                ),
+                highlights: rest_of_highlights,
+                snippet: "",
+              )
+            }
+          }
         }
 
         Source(start, end) -> {
-          let snippet = string.slice(source, start, end - start)
+          let new_snippet = string.slice(source, start, end - start)
 
-          // if the snippet contains a newline...
-          case string.contains(does: snippet, contain: "\n") {
+          // if the new snippet contains a newline...
+          case string.contains(does: new_snippet, contain: "\n") {
             True -> {
               // then we want to add what is before the linebreak
               // to the current <span> and then add a new row
               // and add what is after the linebreak to the next row
               // while keeping the current highlight type, if any
               let assert Ok(#(before_linebreak, after_linebreak)) =
-                string.split_once(snippet, on: "\n")
+                string.split_once(new_snippet, on: "\n")
 
               do_syntax_highlight(
                 source:,
@@ -160,29 +171,30 @@ fn do_syntax_highlight(
                 code_block: prepend_with_linebreak(
                   current_code_block: code_block,
                   children: prepend_with_snippet(
-                    current_code_row:,
-                    highlight_name: current_highlight_name,
-                    snippet: current_snippet <> before_linebreak,
+                    code_row:,
+                    highlight_name: highlight_name,
+                    snippet: snippet <> before_linebreak,
                   ),
                 ),
-                current_code_row: prepend_with_snippet(
-                  current_code_row: [],
-                  highlight_name: current_highlight_name,
+                code_row: prepend_with_snippet(
+                  code_row: [],
+                  highlight_name: highlight_name,
                   snippet: after_linebreak,
                 ),
-                current_highlights:,
-                current_snippet: "",
+                highlights:,
+                snippet: "",
               )
             }
 
             False -> {
+              // otherwise we just add the snippet to the current snippet
               do_syntax_highlight(
                 source:,
                 events: rest,
                 code_block:,
-                current_code_row:,
-                current_highlights:,
-                current_snippet: current_snippet <> snippet,
+                code_row:,
+                highlights:,
+                snippet: snippet <> new_snippet,
               )
             }
           }
@@ -191,12 +203,13 @@ fn do_syntax_highlight(
     }
 
     [] -> {
+      // add remaining snippet to the current
       Ok(prepend_with_linebreak(
         current_code_block: code_block,
         children: prepend_with_snippet(
-          current_code_row:,
-          highlight_name: current_highlight_name,
-          snippet: current_snippet,
+          code_row:,
+          highlight_name: highlight_name,
+          snippet: snippet,
         ),
       ))
     }
@@ -206,7 +219,7 @@ fn do_syntax_highlight(
 // ELEMENT BUILDERS ------------------------------------------------------------
 
 fn prepend_with_snippet(
-  current_code_row siblings: List(Element(Nil)),
+  code_row siblings: List(Element(Nil)),
   highlight_name highlight_name: String,
   snippet snippet: String,
 ) -> List(Element(Nil)) {
