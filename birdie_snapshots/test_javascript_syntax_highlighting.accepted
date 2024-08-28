@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test javascript syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: javascript_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment">// this is a comment</span></span><span class="line"><span class="keyword">function</span><span> </span><span class="function">add</span><span class="punctuation.bracket">(</span><span class="variable">a</span><span class="punctuation.delimiter">,</span><span> </span><span class="variable">b</span><span class="punctuation.bracket">)</span><span> </span><span class="punctuation.bracket">{</span></span><span class="line"><span>  </span><span class="keyword">return</span><span> </span><span class="variable">a</span><span> </span><span class="operator">+</span><span> </span><span class="variable">b</span><span class="punctuation.delimiter">;</span></span><span class="line"><span class="punctuation.bracket">}</span></span><span class="line"><span>

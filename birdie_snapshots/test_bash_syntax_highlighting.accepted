@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test bash syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: bash_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment">#!/bin/bash</span></span><span class="line"><span>

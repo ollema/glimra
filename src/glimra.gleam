@@ -10,16 +10,16 @@ import lustre/element/html
 
 // FFI -------------------------------------------------------------------------
 
-@external(erlang, "libglans", "get_supported_languages")
+@external(erlang, "libglimra", "get_supported_languages")
 fn get_supported_languages() -> List(String)
 
-@external(erlang, "libglans", "get_highlight_events")
+@external(erlang, "libglimra", "get_highlight_events")
 fn get_highlight_events(
   source_code: String,
   lang_atom: String,
 ) -> Result(List(HighlightEvent), String)
 
-@external(erlang, "libglans", "get_highlight_name")
+@external(erlang, "libglimra", "get_highlight_name")
 fn get_highlight_name(index: Int) -> String
 
 // MAIN ------------------------------------------------------------------------

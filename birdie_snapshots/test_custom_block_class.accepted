@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test custom block class
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: custom_block_class_test
 ---
 <code class="kod"><span class="line"><span class="keyword">let</span><span> </span><span class="variable">greeting</span><span> </span><span class="punctuation.delimiter">=</span><span> </span><span class="string">&quot;Hello, Joe!&quot;</span></span></code>

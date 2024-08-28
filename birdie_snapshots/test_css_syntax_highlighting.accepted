@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test css syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: css_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment">/* this is a comment */</span></span><span class="line"><span class="tag">body</span><span> {</span></span><span class="line"><span>  </span><span class="property">background-color</span><span class="punctuation.delimiter">:</span><span> </span><span class="punctuation.delimiter">#</span><span class="string.special">f0f0f0</span><span>;</span></span><span class="line"><span>  </span><span class="property">font-family</span><span class="punctuation.delimiter">:</span><span> Arial</span><span class="punctuation.delimiter">,</span><span> sans-serif;</span></span><span class="line"><span>}

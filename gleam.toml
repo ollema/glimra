@@ -1,9 +1,9 @@
-name = "glans"
+name = "glimra"
 version = "1.0.0"
 target = "erlang"
 description = "Zero runtime syntax highlighter for lustre/ssg."
 licences = ["MIT"]
-repository = { type = "github", user = "ollema", repo = "glans" }
+repository = { type = "github", user = "ollema", repo = "glimra" }
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"

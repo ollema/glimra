@@ -28,10 +28,10 @@ fn main() -> Result<()> {
     let priv_lib_dir = PathBuf::from_iter(["priv", "lib"]);
 
     let mut dll_input_path =
-        PathBuf::from_iter(["target", "release"]).join(format!("{DLL_PREFIX}libglans"));
+        PathBuf::from_iter(["target", "release"]).join(format!("{DLL_PREFIX}libglimra"));
     dll_input_path.set_extension(DLL_EXTENSION);
 
-    let mut dll_output_path = priv_lib_dir.join(format!("libglans-{OS}-{ARCH}"));
+    let mut dll_output_path = priv_lib_dir.join(format!("libglimra-{OS}-{ARCH}"));
     dll_output_path.set_extension(if cfg!(windows) { "dll" } else { "so" });
 
     fs::create_dir_all(&priv_lib_dir)?;

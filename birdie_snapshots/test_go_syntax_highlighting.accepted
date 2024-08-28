@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test go syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: go_syntax_highlighting_test
 ---
 <code><span class="line"><span class="keyword">package</span><span> main</span></span><span class="line"><span>

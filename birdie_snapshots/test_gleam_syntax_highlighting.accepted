@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test gleam syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: gleam_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment">// this is a comment</span></span><span class="line"><span class="keyword">import</span><span> </span><span class="module">gleam/io</span></span><span class="line"><span>

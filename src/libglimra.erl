@@ -1,4 +1,4 @@
--module(libglans).
+-module(libglimra).
 -export([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
 -nifs([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
 -on_load(init/0).
@@ -8,13 +8,13 @@ init() ->
 
 nif_filepath() ->
     DllName = case {os(), arch()} of
-        {macos, aarch64} -> "libglans-macos-aarch64";
-        {macos, x86_64} -> "libglans-macos-x86_64";
-        {linux, x86_64} -> "libglans-linux-x86_64";
-        {windows, x86_64} -> "libglans-windows-x86_64";
+        {macos, aarch64} -> "libglimra-macos-aarch64";
+        {macos, x86_64} -> "libglimra-macos-x86_64";
+        {linux, x86_64} -> "libglimra-linux-x86_64";
+        {windows, x86_64} -> "libglimra-windows-x86_64";
         {Os, Arch} -> throw({dll_not_found, ["Unsupported platform", Os, Arch]})
     end,
-    filename:join([code:priv_dir("glans"), "lib", DllName]).
+    filename:join([code:priv_dir("glimra"), "lib", DllName]).
 
 os() ->
     case os:type() of

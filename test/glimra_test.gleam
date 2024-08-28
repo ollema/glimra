@@ -1,7 +1,7 @@
 import birdie
-import glans
 import gleam/result
 import gleeunit
+import glimra
 import lustre/element
 import simplifile
 
@@ -13,8 +13,8 @@ fn highlight_snippet(file: String, language: String) -> String {
   let assert Ok(source) = simplifile.read(file)
 
   let assert Ok(highlighted_string) =
-    glans.syntax_highlighter(language)
-    |> glans.syntax_highlight(source)
+    glimra.syntax_highlighter(language)
+    |> glimra.syntax_highlight(source)
     |> result.map(element.to_string)
 
   highlighted_string
@@ -89,9 +89,9 @@ pub fn custom_line_class_test() {
   let source = "let greeting = \"Hello, Joe!\""
 
   let assert Ok(highlighted_string) =
-    glans.syntax_highlighter("gleam")
-    |> glans.line_class("linje")
-    |> glans.syntax_highlight(source)
+    glimra.syntax_highlighter("gleam")
+    |> glimra.line_class("linje")
+    |> glimra.syntax_highlight(source)
     |> result.map(element.to_string)
 
   highlighted_string
@@ -102,9 +102,9 @@ pub fn custom_block_class_test() {
   let source = "let greeting = \"Hello, Joe!\""
 
   let assert Ok(highlighted_string) =
-    glans.syntax_highlighter("gleam")
-    |> glans.block_class("kod")
-    |> glans.syntax_highlight(source)
+    glimra.syntax_highlighter("gleam")
+    |> glimra.block_class("kod")
+    |> glimra.syntax_highlight(source)
     |> result.map(element.to_string)
 
   highlighted_string

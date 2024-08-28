@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["native/libglans",  "tools/xtask"]
+members = ["native/libglimra",  "tools/xtask"]
 
 [workspace.dependencies]
 anyhow = "1.0.86"

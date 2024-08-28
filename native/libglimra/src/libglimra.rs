@@ -339,4 +339,4 @@ fn get_highlight_name<'a>(index: usize) -> NifResult<&'a str> {
     Ok(HIGHLIGHT_NAMES[index])
 }
 
-rustler::init!("libglans");
+rustler::init!("libglimra");

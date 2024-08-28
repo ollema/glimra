@@ -67,5 +67,5 @@ jobs:
         run: gleam publish
         shell: bash
         env:
-          hex_user: ${{ secrets.HEXPM_USER }}
-          hex_pass: ${{ secrets.HEXPM_PASS }}
+          HEXPM_USER: ${{ secrets.HEXPM_USER }}
+          HEXPM_PASS: ${{ secrets.HEXPM_PASS }}

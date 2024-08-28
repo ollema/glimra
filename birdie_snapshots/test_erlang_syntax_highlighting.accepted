@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test erlang syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: erlang_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment">% this is a comment</span></span><span class="line"><span class="operator">-</span><span class="keyword">module</span><span class="punctuation.bracket">(</span><span class="module">math</span><span class="punctuation.bracket">)</span><span class="punctuation.delimiter">.</span></span><span class="line"><span class="operator">-</span><span class="keyword">export</span><span class="punctuation.bracket">(</span><span class="punctuation.bracket">[</span><span class="function">add</span><span class="operator">/</span><span class="number">2</span><span class="punctuation.bracket">]</span><span class="punctuation.bracket">)</span><span class="punctuation.delimiter">.</span></span><span class="line"><span>

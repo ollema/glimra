@@ -1,7 +1,7 @@
 ---
 version: 1.2.1
 title: test elixir syntax highlighting
-file: ./test/glans_test.gleam
+file: ./test/glimra_test.gleam
 test_name: elixir_syntax_highlighting_test
 ---
 <code><span class="line"><span class="comment"># this is a comment</span></span><span class="line"><span class="keyword">defmodule</span><span> </span><span class="module">Math</span><span> </span><span class="keyword">do</span></span><span class="line"><span>  </span><span class="attribute">@</span><span class="attribute">pi</span><span> </span><span class="number">3.14159</span></span><span class="line"><span>
