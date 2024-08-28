@@ -1,0 +1,65 @@
+name: release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: install tomlq
+        run: cargo install tomlq
+      - name:
+        run: |
+          if [ "v$(tomlq version -f gleam.toml)" == "${{ github.ref_name }}" ]; then
+            exit 0
+          fi
+          echo "tag does not match version in gleam.toml, refusing to publish"
+          exit 1
+
+  release-gh:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+      - version
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: download NIFs
+        uses: actions/download-artifact@v4
+        with:
+          path: priv/lib
+      - name: release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: priv/lib/*
+
+  release-hex:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+      - version
+    steps:
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1.18.1
+        with:
+          otp-version: "26.0.2"
+          gleam-version: "1.4.1"
+          rebar3-version: "3"
+      - uses: actions/download-artifact@v4
+        with:
+          path: priv/lib
+      - run: gleam publish
+        shell: bash
+        env:
+          hex_user: ${{ secrets.HEXPM_USER }}
+          hex_pass: ${{ secrets.HEXPM_PASS }}

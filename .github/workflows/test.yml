@@ -21,11 +21,16 @@ jobs:
             target: windows-x86_64
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2.7.3
-      - run: cargo xtask
-      - uses: actions/upload-artifact@v4
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: setup rust cache
+        uses: swatinem/rust-cache@v2.7.3
+      - name: build NIF
+        run: cargo xtask
+      - name: upload NIF
+        uses: actions/upload-artifact@v4
         with:
           name: compiled-nifs-${{ matrix.target }}
           path: priv/lib/*
@@ -42,20 +47,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: compile-nifs
     steps:
-      - uses: actions/checkout@v4
-      - uses: erlef/setup-beam@v1.18.1
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup gleam
+        uses: erlef/setup-beam@v1.18.1
         with:
           otp-version: "26.0.2"
           gleam-version: "1.4.1"
           rebar3-version: "3"
-      - run: gleam format --check src test
+      - name: test formatting
+        run: gleam format --check src test
         if: ${{ matrix.os != 'windows-latest' }}
-      - run: gleam deps download
-      - uses: actions/download-artifact@v4
+      - name: download dependencies
+        run: gleam deps download
+      - name: download NIF
+        uses: actions/download-artifact@v4
         with:
           name: compiled-nifs-${{ matrix.target }}
           path: priv/lib
-      - run: gleam test --target erlang
-        # TODO: enable when birdie works on windows again 
+      - name: test
+        run: gleam test --target erlang
+        # TODO: enable when/if birdie works on windows 
         if: ${{ matrix.os != 'windows-latest' }} 
 
