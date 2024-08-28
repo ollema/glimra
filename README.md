@@ -4,7 +4,7 @@
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/glans/)
 ![Erlang-compatible](https://img.shields.io/badge/target-erlang-b83998)
 
-A zero runtime syntax highlighter for [`lustre/ssg`](https://github.com/lustre-labs/ssg).
+Zero runtime syntax highlighter for [`lustre/ssg`](https://github.com/lustre-labs/ssg).
 
 > In Swedish, `glans` describes the brilliant gleam or lustre that comes from a polished, reflective surface, capturing the essence of light shining off something smooth and glossy.
 
