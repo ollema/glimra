@@ -24,12 +24,15 @@ fn get_highlight_name(index: Int) -> String
 
 // MAIN ------------------------------------------------------------------------
 
-// TODO: use builders!!!
+pub fn syntax_highlighter(language language: String) -> Config {
+  Config(language: language, line_class: "line", block_class: "")
+}
+
 pub fn syntax_highlight(
+  config config: Config,
   source source: String,
-  language language: String,
 ) -> Result(Element(Nil), SyntaxHighlightingError) {
-  let language = string.lowercase(language)
+  let language = string.lowercase(config.language)
   let language_supported = list.contains(get_supported_languages(), language)
 
   use <- bool.guard(
@@ -59,6 +62,10 @@ pub fn syntax_highlight(
 
 // TYPES -----------------------------------------------------------------------
 
+pub opaque type Config {
+  Config(language: String, line_class: String, block_class: String)
+}
+
 pub type SyntaxHighlightingError {
   UnsupportedLanguage(language: String)
   TreeSitterError
@@ -71,7 +78,17 @@ type HighlightEvent {
   HighlightEnd
 }
 
-// IMPLEMENTATION -------------------------------------------------------------
+// BUILDERS --------------------------------------------------------------------
+
+pub fn line_class(config config: Config, class class: String) -> Config {
+  Config(..config, line_class: class)
+}
+
+pub fn block_class(config config: Config, class class: String) -> Config {
+  Config(..config, block_class: class)
+}
+
+// IMPLEMENTATION --------------------------------------------------------------
 
 fn do_syntax_highlight(
   source source: String,

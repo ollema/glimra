@@ -1,5 +1,6 @@
 import birdie
 import glans
+import gleam/result
 import gleeunit
 import lustre/element
 import simplifile
@@ -10,8 +11,13 @@ pub fn main() {
 
 fn highlight_snippet(file: String, language: String) -> String {
   let assert Ok(source) = simplifile.read(file)
-  let assert Ok(highlighted_snippet) = glans.syntax_highlight(source, language)
-  element.to_string(highlighted_snippet)
+
+  let assert Ok(highlighted_string) =
+    glans.syntax_highlighter(language)
+    |> glans.syntax_highlight(source)
+    |> result.map(element.to_string)
+
+  highlighted_string
 }
 
 pub fn bash_syntax_highlighting_test() {
