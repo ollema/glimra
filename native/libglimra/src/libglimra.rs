@@ -18,59 +18,107 @@ mod atoms {
     }
 }
 
-const HIGHLIGHT_NAMES: [&str; 52] = [
-    "attribute",
-    "boolean",
-    "carriage-return",
-    "comment",
-    "comment.documentation",
-    "constant",
-    "constant.builtin",
-    "constructor",
-    "constructor.builtin",
-    "embedded",
-    "error",
-    "escape",
-    "function",
-    "function.builtin",
-    "keyword",
-    "markup",
-    "markup.bold",
-    "markup.heading",
-    "markup.italic",
-    "markup.link",
-    "markup.link.url",
-    "markup.list",
-    "markup.list.checked",
-    "markup.list.numbered",
-    "markup.list.unchecked",
-    "markup.list.unnumbered",
-    "markup.quote",
-    "markup.raw",
-    "markup.raw.block",
-    "markup.raw.inline",
-    "markup.strikethrough",
-    "module",
-    "number",
-    "operator",
-    "property",
-    "property.builtin",
-    "punctuation",
-    "punctuation.bracket",
-    "punctuation.delimiter",
-    "punctuation.special",
-    "string",
-    "string.escape",
-    "string.regexp",
-    "string.special",
-    "string.special.symbol",
-    "tag",
-    "type",
-    "type.builtin",
-    "variable",
-    "variable.builtin",
-    "variable.member",
-    "variable.parameter",
+// taken from:
+// https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
+const HIGHLIGHT_NAMES: [&str; 56] = [
+    // -------------------------------------------------------------------------
+    // identifiers
+    // -------------------------------------------------------------------------
+    // variables
+    "variable",                   // various variable names
+    "variable.builtin",           // built-in variable names (e.g. `this`)
+    "variable.member",            // object and struct fields
+    "variable.parameter.builtin", // special parameters (e.g. `_`, `it`)
+    "variable.parameter",         // parameters of a function
+    // constants
+    "constant",         // constant identifiers
+    "constant.builtin", // built-in constant values
+    "constant.macro",   // constants defined by the preprocessor
+    // modules
+    "module", // modules or namespaces
+    // labels
+    "label", // GOTO and other labels
+    // -------------------------------------------------------------------------
+    // literals
+    // -------------------------------------------------------------------------
+    // strings
+    "string",               // string literals
+    "string.documentation", // string documenting code
+    "string.escape",        // escape sequences
+    "string.regexp",        // regular expressions
+    "string.special",       // other special strings (e.g. dates)
+    // characters
+    "character",         // character literals
+    "character.special", // special characters (e.g. wildcards)
+    // booleans
+    "boolean", // boolean literals
+    // numbers
+    "number", // numeric literals
+    // -------------------------------------------------------------------------
+    // types
+    // -------------------------------------------------------------------------
+    // types
+    "type",            // type or class definitions and annotations
+    "type.builtin",    // built-in types
+    "type.definition", // identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
+    // attributes
+    "attribute",         // attribute annotations (e.g. Python decorators, Rust lifetimes)
+    "attribute.builtin", // builtin annotations (e.g. `@property` in Python)
+    // properties
+    "property", // the key in key/value pairs
+    // -------------------------------------------------------------------------
+    // functions
+    // -------------------------------------------------------------------------
+    // functions
+    "function",             // function definitions
+    "function.builtin",     // built-in functions
+    "function.call",        // function calls
+    "function.macro",       // preprocessor macros
+    "function.method",      // method calls
+    "function.method.call", // method calls
+    // constructors
+    "constructor", // constructor calls and definitions
+    // operators
+    "operator", // operators
+    // -------------------------------------------------------------------------
+    // keywords
+    // -------------------------------------------------------------------------
+    // keywords
+    "keyword",                     // keywords not fitting into specific categories
+    "keyword.coroutine", // keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+    "keyword.function",  // keywords that define a function (e.g. `func` in Go, `def` in Python)
+    "keyword.operator",  // operators that are English words (e.g. `and` / `or`)
+    "keyword.import", // keywords for including or exporting modules (e.g. `import` / `from` in Python)
+    "keyword.type",   // keywords describing namespaces and composite types (e.g. `struct`, `enum`)
+    "keyword.modifier", // keywords modifying other constructs (e.g. `const`, `static`, `public`)
+    "keyword.repeat", // keywords related to loops (e.g. `for` / `while`)
+    "keyword.return", // keywords like `return` and `yield`
+    "keyword.debug",  // keywords related to debugging
+    "keyword.exception", // keywords related to exceptions (e.g. `throw` / `catch`)
+    "keyword.conditional", // keywords related to conditionals (e.g. `if` / `else`)
+    "keyword.conditional.ternary", // ternary operator (e.g. `?` / `:`)"
+    // -------------------------------------------------------------------------
+    // punctuation
+    // -------------------------------------------------------------------------
+    // punctuation
+    "punctuation",           // generic punctuation
+    "punctuation.bracket",   // brackets (e.g. `()` / `{}` / `[]`)
+    "punctuation.delimiter", // delimiters (e.g. `;` / `.` / `,`)
+    "punctuation.special",   // special symbols (e.g. `{}` in string interpolation)
+    // -------------------------------------------------------------------------
+    // comments
+    // -------------------------------------------------------------------------
+    // comments
+    "comment",               // line and block comments
+    "comment.documentation", // comments documenting code
+    // -------------------------------------------------------------------------
+    // tags
+    // -------------------------------------------------------------------------
+    // tags
+    "tag",           // XML-style tag names (and similar)
+    "tag.builtin",   // builtin tag names (e.g. HTML5 tags)
+    "tag.attribute", // XML-style tag attributes
+    "tag.delimiter", // XML-style tag delimiters
 ];
 
 static BASH_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
@@ -104,19 +152,6 @@ static CSS_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
         tree_sitter_css::language(),
         "c",
         tree_sitter_css::HIGHLIGHTS_QUERY,
-        "",
-        "",
-    )
-    .unwrap();
-    c.configure(&HIGHLIGHT_NAMES);
-    c
-});
-
-static DJOT_CONFIG: Lazy<HighlightConfiguration> = Lazy::new(|| {
-    let mut c = HighlightConfiguration::new(
-        tree_sitter_djot::language(),
-        "djot",
-        tree_sitter_djot::HIGHLIGHTS_QUERY,
         "",
         "",
     )
@@ -260,7 +295,6 @@ fn get_lang_tuples<'a>() -> Vec<(&'a str, &'a Lazy<HighlightConfiguration>)> {
         ("bash", &BASH_CONFIG),
         ("c", &C_CONFIG),
         ("css", &CSS_CONFIG),
-        ("djot", &DJOT_CONFIG),
         ("elixir", &ELIXIR_CONFIG),
         ("erlang", &ERLANG_CONFIG),
         ("gleam", &GLEAM_CONFIG),

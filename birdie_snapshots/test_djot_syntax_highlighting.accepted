@@ -1,9 +1,0 @@
----
-version: 1.2.1
-title: test djot syntax highlighting
-file: ./test/glimra_test.gleam
-test_name: djot_syntax_highlighting_test
----
-<code><span class="line"><span class="markup.heading"># Heading 1</span></span><span class="line"></span><span class="line"><span>This is a paragraph with </span><span class="punctuation.delimiter">*</span><span class="punctuation.delimiter">*</span><span class="markup">bold text</span><span class="punctuation.delimiter">*</span><span class="punctuation.delimiter">*</span><span> and </span><span class="punctuation.delimiter">*</span><span class="markup">italic text</span><span class="punctuation.delimiter">*</span><span>.</span></span><span class="line"><span>
-</span><span class="markup.list">- </span><span>List item 1</span></span><span class="line"><span class="markup.list">- </span><span>List item 2</span></span><span class="line"><span>
-</span><span class="punctuation.bracket">[</span><span class="markup.link">Gleam</span><span class="punctuation.bracket">]</span><span class="punctuation.bracket">(</span><span class="markup.link.url">https://gleam.run</span><span class="punctuation.bracket">)</span></span><span class="line"></span></code>
