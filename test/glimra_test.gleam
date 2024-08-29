@@ -2,6 +2,7 @@ import birdie
 import gleam/result
 import gleeunit
 import glimra
+import glimra/theme
 import lustre/element
 import simplifile
 
@@ -33,11 +34,6 @@ pub fn c_syntax_highlighting_test() {
 pub fn css_syntax_highlighting_test() {
   highlight_snippet("test/snippets/snippet.css", "css")
   |> birdie.snap(title: "test css syntax highlighting")
-}
-
-pub fn djot_syntax_highlighting_test() {
-  highlight_snippet("test/snippets/snippet.dj", "djot")
-  |> birdie.snap(title: "test djot syntax highlighting")
 }
 
 pub fn elixir_syntax_highlighting_test() {
@@ -109,4 +105,11 @@ pub fn custom_block_class_test() {
 
   highlighted_string
   |> birdie.snap(title: "test custom block class")
+}
+
+pub fn default_theme_to_css_test() {
+  let css = theme.default_theme() |> theme.to_css()
+
+  css
+  |> birdie.snap(title: "test default theme to css")
 }

@@ -2,8 +2,10 @@
 
 import gleam/bool
 import gleam/list
+import gleam/option.{type Option, None, Some}
 import gleam/result
 import gleam/string
+import glimra/theme.{type Theme}
 import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
@@ -24,12 +26,12 @@ fn get_highlight_name(index: Int) -> String
 
 // MAIN ------------------------------------------------------------------------
 
-pub fn syntax_highlighter(language language: String) -> Config {
-  Config(language: language, line_class: "line", block_class: "")
+pub fn syntax_highlighter(language language: String) -> Config(NoTheme) {
+  Config(language: language, line_class: "line", block_class: "", theme: None)
 }
 
 pub fn syntax_highlight(
-  config config: Config,
+  config config: Config(has_theme),
   source source: String,
 ) -> Result(Element(Nil), SyntaxHighlightingError) {
   let language = string.lowercase(config.language)
@@ -66,9 +68,18 @@ pub fn syntax_highlight(
 
 // TYPES -----------------------------------------------------------------------
 
-pub opaque type Config {
-  Config(language: String, line_class: String, block_class: String)
+pub opaque type Config(has_theme) {
+  Config(
+    language: String,
+    line_class: String,
+    block_class: String,
+    theme: Option(Theme),
+  )
 }
+
+pub type NoTheme
+
+pub type HasTheme
 
 pub type SyntaxHighlightingError {
   UnsupportedLanguage(language: String)
@@ -84,12 +95,27 @@ type HighlightEvent {
 
 // BUILDERS --------------------------------------------------------------------
 
-pub fn line_class(config config: Config, class class: String) -> Config {
+pub fn line_class(
+  config config: Config(has_theme),
+  class class: String,
+) -> Config(has_theme) {
   Config(..config, line_class: class)
 }
 
-pub fn block_class(config config: Config, class class: String) -> Config {
+pub fn block_class(
+  config config: Config(has_theme),
+  class class: String,
+) -> Config(has_theme) {
   Config(..config, block_class: class)
+}
+
+pub fn add_theme(
+  config config: Config(NoTheme),
+  theme theme: Theme,
+) -> Config(HasTheme) {
+  let Config(language, line_class, block_class, _) = config
+
+  Config(language:, line_class:, block_class:, theme: Some(theme))
 }
 
 // IMPLEMENTATION --------------------------------------------------------------
@@ -97,7 +123,7 @@ pub fn block_class(config config: Config, class class: String) -> Config {
 fn do_syntax_highlight(
   source source: String,
   events events: List(HighlightEvent),
-  config config: Config,
+  config config: Config(has_theme),
   // accumulators below
   code_block code_block: List(Element(Nil)),
   code_row code_row: List(Element(Nil)),
@@ -268,7 +294,7 @@ fn prepend_with_snippet(
 }
 
 fn prepend_with_linebreak(
-  config config: Config,
+  config config: Config(has_theme),
   current_code_block siblings: List(Element(Nil)),
   children children: List(Element(Nil)),
 ) -> List(Element(Nil)) {

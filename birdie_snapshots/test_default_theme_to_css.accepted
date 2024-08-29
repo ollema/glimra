@@ -1,0 +1,78 @@
+---
+version: 1.2.1
+title: test default theme to css
+file: ./test/glimra_test.gleam
+test_name: default_theme_to_css_test
+---
+
+/* identifiers */
+.variable { color: rgb(205, 214, 244); }
+.variable.builtin { color: rgb(243, 139, 168); }
+.variable.member { color: rgb(205, 214, 244); }
+.variable.parameter.builtin { color: rgb(235, 160, 172); }
+.variable.parameter { color: rgb(235, 160, 172); }
+.constant { color: rgb(250, 179, 135); }
+.constant.builtin { color: rgb(250, 179, 135); }
+.constant.macro { color: rgb(203, 166, 247); }
+.module { color: rgb(180, 190, 254); }
+.label { color: rgb(116, 199, 236); }
+
+/* literals */
+.string { color: rgb(166, 227, 161); }
+.string.documentation { color: rgb(108, 112, 134); }
+.string.escape { color: rgb(245, 194, 231); }
+.string.regexp { color: rgb(250, 179, 135); }
+.string.special { color: rgb(245, 194, 231); }
+.character { color: rgb(148, 226, 213); }
+.character.special { color: rgb(245, 194, 231); }
+.boolean { color: rgb(250, 179, 135); }
+.number { color: rgb(250, 179, 135); }
+
+/* types */
+.type { color: rgb(249, 226, 175); }
+.type.builtin { color: rgb(249, 226, 175); }
+.type.definition { color: rgb(249, 226, 175); }
+.attribute { color: rgb(250, 179, 135); }
+.attribute.builtin { color: rgb(250, 179, 135); }
+.property { color: rgb(180, 190, 254); }
+
+/* functions */
+.function { color: rgb(137, 180, 250); }
+.function.builtin { color: rgb(250, 179, 135); }
+.function.call { color: rgb(137, 180, 250); }
+.function.macro { color: rgb(148, 226, 213); }
+.function.method { color: rgb(137, 180, 250); }
+.function.method.call { color: rgb(137, 180, 250); }
+.constructor { color: rgb(116, 199, 236); }
+.operator { color: rgb(137, 220, 235); }
+
+/* keywords */
+.keyword { color: rgb(203, 166, 247); }
+.keyword.coroutine { color: rgb(203, 166, 247); }
+.keyword.function { color: rgb(203, 166, 247); }
+.keyword.operator { color: rgb(203, 166, 247); }
+.keyword.import { color: rgb(203, 166, 247); }
+.keyword.type { color: rgb(203, 166, 247); }
+.keyword.modifier { color: rgb(203, 166, 247); }
+.keyword.repeat { color: rgb(203, 166, 247); }
+.keyword.return { color: rgb(203, 166, 247); }
+.keyword.debug { color: rgb(245, 194, 231); }
+.keyword.exception { color: rgb(203, 166, 247); }
+.keyword.conditional { color: rgb(203, 166, 247); }
+.keyword.conditional.ternary { color: rgb(203, 166, 247); }
+
+/* punctuation */
+.punctuation { color: rgb(147, 153, 178); }
+.punctuation.bracket { color: rgb(147, 153, 178); }
+.punctuation.delimiter { color: rgb(147, 153, 178); }
+.punctuation.special { color: rgb(245, 194, 231); }
+
+/* comments */
+.comment { color: rgb(108, 112, 134); }
+.comment.documentation { color: rgb(108, 112, 134); }
+
+/* tags */
+.tag { color: rgb(203, 166, 247); }
+.tag.builtin { color: rgb(203, 166, 247); }
+.tag.attribute { color: rgb(148, 226, 213); }
+.tag.delimiter { color: rgb(137, 220, 235); }
