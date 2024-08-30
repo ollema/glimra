@@ -1,14 +1,27 @@
+//// A module that defines and manages themes for syntax highlighting.
+//// 
+//// The module provides types and functions for creating and applying color
+//// styles to different elements of code, such as variables, functions, keywords,
+//// and more. The `Theme` type encapsulates all the styles necessary for
+//// syntax highlighting, and the module includes functions to convert these
+//// themes into CSS.
+
 import gleam/int
 import gleam/string_builder as sb
 
+/// Represents an RGB color.
 pub type Color {
   Color(r: Int, g: Int, b: Int)
 }
 
+/// Represents a style for syntax highlighting.
 pub type Style {
   Style(color: Color, italic: Bool)
 }
 
+/// Represents a syntax highlighting theme. This includes styles for
+/// various code elements such as variables, functions, types, keywords,
+/// punctuation, comments, and tags.
 pub type Theme {
   Theme(
     background_color: Color,
@@ -82,6 +95,10 @@ pub type Theme {
   )
 }
 
+/// Returns the default theme for syntax highlighting.
+/// 
+/// This theme is based on Catppuccin Mocha, a community-driven pastel theme.
+/// 
 pub fn default_theme() -> Theme {
   Theme(
     background_color: Color(30, 30, 30),
@@ -175,6 +192,11 @@ fn style_to_css(class_name: String, style: Style) -> String {
   "." <> class_name <> " { color: " <> color_to_css(style.color) <> "; }\n"
 }
 
+/// Converts a `Theme` into a complete CSS stylesheet as a string.
+///
+/// This function generates CSS classes for all the different styles included
+/// in the theme, ready to be applied to code elements in HTML.
+///
 pub fn to_css(theme theme: Theme) -> String {
   sb.new()
   |> sb.append("\n/* identifiers */\n")

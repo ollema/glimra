@@ -1,3 +1,13 @@
+//// `glimra` is a zero runtime syntax highlighter for `lustre/ssg`.
+////
+//// In Swedish, `glimra` describes the brilliant gleam or lustre that comes from a polished,
+//// reflective surface, capturing the essence of light shining off something smooth and glossy.
+////
+//// `glimra` uses [NIFs](https://www.erlang.org/doc/system/nif) to extract syntax highlighting
+//// events provided by the [`tree-sitter`](https://crates.io/crates/tree-sitter) and
+//// [`tree-sitter-highlight`](https://crates.io/crates/tree-sitter-highlight) crates.
+//// This allows `glimra` to provide syntax highlighting for a wide range of languages with minimal effort.
+
 // IMPORTS ---------------------------------------------------------------------
 
 import gleam/bool
@@ -39,10 +49,24 @@ const line_class = "line"
 
 // MAIN ------------------------------------------------------------------------
 
+/// Create a new syntax highlighter configuration with default settings.
+///
+/// The default configuration has line numbers disabled and source trimming
+/// enabled, with no theme applied.
+///
 pub fn new_syntax_highlighter() -> Config(NoTheme) {
   Config(line_numbers: False, trim_source: True, theme: None)
 }
 
+/// Perform syntax highlighting on the provided source code using the given
+/// configuration and programming language.
+///
+/// Returns a Lustre `Element` on success, or a `SyntaxHighlightingError` on failure.
+///
+/// - `config`: The syntax highlighter configuration.
+/// - `source`: The source code to highlight.
+/// - `language`: The programming language of the source code.
+///
 pub fn syntax_highlight(
   config config: Config(has_theme),
   source source: String,
@@ -63,9 +87,6 @@ pub fn syntax_highlight(
 
   use events <- result.try(
     get_highlight_events(source, language)
-    // TODO: figure out if there is a way to get the error message from the NIF
-    // and either map it to a SyntaxHighlightingError or have it directly be mapped
-    // to a SyntaxHighlightingError from the FFI function definition
     |> result.replace_error(TreeSitterError),
   )
 
@@ -84,6 +105,11 @@ pub fn syntax_highlight(
   ))
 }
 
+/// Generate CSS for the syntax highlighter configuration.
+///
+/// The CSS includes styles for the highlighted code blocks based on the
+/// configuration's theme.
+///
 pub fn to_css(config config: Config(HasTheme)) -> String {
   let assert Config(_, _, Some(theme)) = config
 
@@ -98,20 +124,33 @@ pub fn to_css(config config: Config(HasTheme)) -> String {
 
 // TYPES -----------------------------------------------------------------------
 
+/// A configuration for the syntax highlighter with a theme.
+///
+/// - `line_numbers`: Whether to display line numbers.
+/// - `trim_source`: Whether to trim whitespace from the source code.
+/// - `theme`: A theme to style the highlighted code.
+///
 pub opaque type Config(has_theme) {
   Config(line_numbers: Bool, trim_source: Bool, theme: Option(Theme))
 }
 
+/// A phantom type representing a configuration without a theme.
 pub type NoTheme
 
+/// A phantom type representing a configuration with a theme.
 pub type HasTheme
 
+/// Possible errors that can occur during syntax highlighting.
 pub type SyntaxHighlightingError {
+  /// The specified language is not supported.
   UnsupportedLanguage(language: String)
+  /// An error occurred with the Tree-sitter syntax highlighting library.
   TreeSitterError
+  /// There were unmatched highlight events during the syntax highlighting process.
   UnmatchedHighlightEvents
 }
 
+/// Syntax highlighting event, such as starting or ending a highlight, or encountering a source code segment.
 type HighlightEvent {
   HighlightStart(highlight_type: Int)
   Source(start: Int, end: Int)
@@ -120,12 +159,18 @@ type HighlightEvent {
 
 // BUILDERS --------------------------------------------------------------------
 
+/// Enable line numbers in the syntax highlighter configuration.
+///
 pub fn enable_line_numbers(
   config config: Config(has_theme),
 ) -> Config(has_theme) {
   Config(..config, line_numbers: True)
 }
 
+/// Set whether to trim the source code in the syntax highlighter configuration.
+///
+/// - `trim_source`: Whether to trim the source code.
+///
 pub fn set_trim_source(
   config config: Config(has_theme),
   trim_source trim_source: Bool,
@@ -133,6 +178,8 @@ pub fn set_trim_source(
   Config(..config, trim_source:)
 }
 
+/// Apply a theme to the syntax highlighter configuration.
+///
 pub fn set_theme(
   config config: Config(NoTheme),
   theme theme: Theme,
@@ -144,6 +191,11 @@ pub fn set_theme(
 
 // LUSTRE/SSG ------------------------------------------------------------------
 
+/// Add a static stylesheet for syntax highlighting to a lustre/ssg configuration.
+///
+/// - `ssg_config`: The static site generator configuration.
+/// - `syntax_highlighter`: The syntax highlighter configuration with a theme.
+///
 pub fn add_static_stylesheet(
   ssg_config ssg_config: ssg.Config(
     has_static_routes,
@@ -155,10 +207,16 @@ pub fn add_static_stylesheet(
   ssg.add_static_asset(ssg_config, css_path, to_css(syntax_highlighter))
 }
 
+/// Generate a link element to include the static syntax highlighting stylesheet.
+///
 pub fn link_static_stylesheet() {
   html.link([attribute.href(css_path), attribute.rel("stylesheet")])
 }
 
+/// Create a renderer function for code blocks that uses the syntax highlighter.
+///
+/// - `syntax_highlighter`: The syntax highlighter configuration with a theme.
+///
 pub fn codeblock_renderer(
   syntax_highlighter syntax_highlighter: Config(HasTheme),
 ) -> fn(Dict(String, String), Option(String), String) -> Element(Nil) {
@@ -354,6 +412,8 @@ fn prepend_with_linebreak(
 
 // CSS UTILS -------------------------------------------------------------------
 
+/// Generate CSS styles for the `<pre>` element based on the provided theme.
+///
 fn pre_styling(config config: Config(HasTheme)) -> String {
   let assert Config(_, _, Some(theme)) = config
 
@@ -383,6 +443,8 @@ fn pre_styling(config config: Config(HasTheme)) -> String {
   <> "}\n"
 }
 
+/// Generate CSS styles for the `<code>` element when line numbers are enabled.
+///
 fn code_styling(config config: Config(HasTheme)) -> String {
   let Config(line_numbers, _, _) = config
 
@@ -397,6 +459,8 @@ fn code_styling(config config: Config(HasTheme)) -> String {
   }
 }
 
+/// Generate CSS styles `<span class="line">` elements.
+///
 fn line_styling(config config: Config(HasTheme)) -> String {
   let Config(line_numbers, _, _) = config
   case line_numbers {
