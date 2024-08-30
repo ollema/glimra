@@ -88,7 +88,7 @@ fn head(title: String, description: String) {
       attribute.attribute("content", "width=device-width, initial-scale=1"),
     ]),
     html.link([attribute.href("/style.css"), attribute.rel("stylesheet")]),
-    // `link_static_stylesheet` will use the same path as the stylesheet
+    // `link_static_stylesheet` will use the same path as `add_static_stylesheet`
     glimra.link_static_stylesheet(),
   ])
 }
