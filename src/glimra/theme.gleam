@@ -11,6 +11,10 @@ pub type Style {
 
 pub type Theme {
   Theme(
+    background_color: Color,
+    padding_x: Float,
+    padding_y: Float,
+    border_radius: Float,
     // identifiers
     variable: Style,
     variable_builtin: Style,
@@ -80,6 +84,10 @@ pub type Theme {
 
 pub fn default_theme() -> Theme {
   Theme(
+    background_color: Color(30, 30, 30),
+    padding_x: 1.5,
+    padding_y: 1.25,
+    border_radius: 0.5,
     // identifiers
     variable: Style(color: Color(205, 214, 244), italic: False),
     variable_builtin: Style(color: Color(243, 139, 168), italic: False),

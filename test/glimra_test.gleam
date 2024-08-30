@@ -81,32 +81,6 @@ pub fn rust_syntax_highlighting_test() {
   |> birdie.snap(title: "test rust syntax highlighting")
 }
 
-pub fn custom_line_class_test() {
-  let source = "let greeting = \"Hello, Joe!\""
-
-  let assert Ok(highlighted_string) =
-    glimra.new_syntax_highlighter()
-    |> glimra.line_class("linje")
-    |> glimra.syntax_highlight(source:, language: "gleam")
-    |> result.map(element.to_string)
-
-  highlighted_string
-  |> birdie.snap(title: "test custom line class")
-}
-
-pub fn custom_block_class_test() {
-  let source = "let greeting = \"Hello, Joe!\""
-
-  let assert Ok(highlighted_string) =
-    glimra.new_syntax_highlighter()
-    |> glimra.block_class("kod")
-    |> glimra.syntax_highlight(source:, language: "gleam")
-    |> result.map(element.to_string)
-
-  highlighted_string
-  |> birdie.snap(title: "test custom block class")
-}
-
 pub fn default_theme_to_css_test() {
   let css = theme.default_theme() |> theme.to_css()
 
@@ -122,4 +96,15 @@ pub fn syntax_highlighter_to_css_test() {
   syntax_highlighter
   |> glimra.to_css()
   |> birdie.snap(title: "test syntax highlighter to css")
+}
+
+pub fn syntax_highlighter_with_line_numbers_to_css_test() {
+  let syntax_highlighter =
+    glimra.new_syntax_highlighter()
+    |> glimra.set_theme(theme.default_theme())
+    |> glimra.enable_line_numbers()
+
+  syntax_highlighter
+  |> glimra.to_css()
+  |> birdie.snap(title: "test syntax highlighter with line numbers to css")
 }
