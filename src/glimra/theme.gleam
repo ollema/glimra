@@ -78,6 +78,81 @@ pub type Theme {
   )
 }
 
+pub fn default_theme() -> Theme {
+  Theme(
+    // identifiers
+    variable: Style(color: Color(205, 214, 244), italic: False),
+    variable_builtin: Style(color: Color(243, 139, 168), italic: False),
+    variable_member: Style(color: Color(205, 214, 244), italic: False),
+    variable_parameter_builtin: Style(
+      color: Color(235, 160, 172),
+      italic: False,
+    ),
+    variable_parameter: Style(color: Color(235, 160, 172), italic: False),
+    constant: Style(color: Color(250, 179, 135), italic: False),
+    constant_builtin: Style(color: Color(250, 179, 135), italic: False),
+    constant_macro: Style(color: Color(203, 166, 247), italic: False),
+    module: Style(color: Color(180, 190, 254), italic: True),
+    label: Style(color: Color(116, 199, 236), italic: False),
+    // literals
+    string: Style(color: Color(166, 227, 161), italic: False),
+    string_documentation: Style(color: Color(108, 112, 134), italic: False),
+    string_escape: Style(color: Color(245, 194, 231), italic: False),
+    string_regexp: Style(color: Color(250, 179, 135), italic: False),
+    string_special: Style(color: Color(245, 194, 231), italic: False),
+    character: Style(color: Color(148, 226, 213), italic: False),
+    character_special: Style(color: Color(245, 194, 231), italic: False),
+    boolean: Style(color: Color(250, 179, 135), italic: False),
+    number: Style(color: Color(250, 179, 135), italic: False),
+    // types
+    type_: Style(color: Color(249, 226, 175), italic: False),
+    type_builtin: Style(color: Color(249, 226, 175), italic: False),
+    type_definition: Style(color: Color(249, 226, 175), italic: False),
+    attribute: Style(color: Color(250, 179, 135), italic: False),
+    attribute_builtin: Style(color: Color(250, 179, 135), italic: False),
+    property: Style(color: Color(180, 190, 254), italic: False),
+    // functions
+    function: Style(color: Color(137, 180, 250), italic: False),
+    function_builtin: Style(color: Color(250, 179, 135), italic: False),
+    function_call: Style(color: Color(137, 180, 250), italic: False),
+    function_macro: Style(color: Color(148, 226, 213), italic: False),
+    function_method: Style(color: Color(137, 180, 250), italic: False),
+    function_method_call: Style(color: Color(137, 180, 250), italic: False),
+    constructor: Style(color: Color(116, 199, 236), italic: False),
+    operator: Style(color: Color(137, 220, 235), italic: False),
+    // keywords
+    keyword: Style(color: Color(203, 166, 247), italic: False),
+    keyword_coroutine: Style(color: Color(203, 166, 247), italic: False),
+    keyword_function: Style(color: Color(203, 166, 247), italic: False),
+    keyword_operator: Style(color: Color(203, 166, 247), italic: False),
+    keyword_import: Style(color: Color(203, 166, 247), italic: False),
+    keyword_type: Style(color: Color(203, 166, 247), italic: False),
+    keyword_modifier: Style(color: Color(203, 166, 247), italic: False),
+    keyword_repeat: Style(color: Color(203, 166, 247), italic: False),
+    keyword_return: Style(color: Color(203, 166, 247), italic: False),
+    keyword_debug: Style(color: Color(245, 194, 231), italic: False),
+    keyword_exception: Style(color: Color(203, 166, 247), italic: False),
+    keyword_conditional: Style(color: Color(203, 166, 247), italic: False),
+    keyword_conditional_ternary: Style(
+      color: Color(203, 166, 247),
+      italic: False,
+    ),
+    // punctuation
+    punctuation: Style(color: Color(147, 153, 178), italic: False),
+    punctuation_bracket: Style(color: Color(147, 153, 178), italic: False),
+    punctuation_delimiter: Style(color: Color(147, 153, 178), italic: False),
+    punctuation_special: Style(color: Color(245, 194, 231), italic: False),
+    // comments
+    comment: Style(color: Color(108, 112, 134), italic: True),
+    comment_documentation: Style(color: Color(108, 112, 134), italic: True),
+    // tags
+    tag: Style(color: Color(203, 166, 247), italic: False),
+    tag_builtin: Style(color: Color(203, 166, 247), italic: False),
+    tag_attribute: Style(color: Color(148, 226, 213), italic: True),
+    tag_delimiter: Style(color: Color(137, 220, 235), italic: False),
+  )
+}
+
 fn color_to_css(color: Color) -> String {
   "rgb("
   <> int.to_string(color.r)
@@ -171,79 +246,4 @@ pub fn to_css(theme theme: Theme) -> String {
   |> sb.append(style_to_css("tag.attribute", theme.tag_attribute))
   |> sb.append(style_to_css("tag.delimiter", theme.tag_delimiter))
   |> sb.to_string()
-}
-
-pub fn default_theme() -> Theme {
-  Theme(
-    // identifiers
-    variable: Style(color: Color(205, 214, 244), italic: False),
-    variable_builtin: Style(color: Color(243, 139, 168), italic: False),
-    variable_member: Style(color: Color(205, 214, 244), italic: False),
-    variable_parameter_builtin: Style(
-      color: Color(235, 160, 172),
-      italic: False,
-    ),
-    variable_parameter: Style(color: Color(235, 160, 172), italic: False),
-    constant: Style(color: Color(250, 179, 135), italic: False),
-    constant_builtin: Style(color: Color(250, 179, 135), italic: False),
-    constant_macro: Style(color: Color(203, 166, 247), italic: False),
-    module: Style(color: Color(180, 190, 254), italic: True),
-    label: Style(color: Color(116, 199, 236), italic: False),
-    // literals
-    string: Style(color: Color(166, 227, 161), italic: False),
-    string_documentation: Style(color: Color(108, 112, 134), italic: False),
-    string_escape: Style(color: Color(245, 194, 231), italic: False),
-    string_regexp: Style(color: Color(250, 179, 135), italic: False),
-    string_special: Style(color: Color(245, 194, 231), italic: False),
-    character: Style(color: Color(148, 226, 213), italic: False),
-    character_special: Style(color: Color(245, 194, 231), italic: False),
-    boolean: Style(color: Color(250, 179, 135), italic: False),
-    number: Style(color: Color(250, 179, 135), italic: False),
-    // types
-    type_: Style(color: Color(249, 226, 175), italic: False),
-    type_builtin: Style(color: Color(249, 226, 175), italic: False),
-    type_definition: Style(color: Color(249, 226, 175), italic: False),
-    attribute: Style(color: Color(250, 179, 135), italic: False),
-    attribute_builtin: Style(color: Color(250, 179, 135), italic: False),
-    property: Style(color: Color(180, 190, 254), italic: False),
-    // functions
-    function: Style(color: Color(137, 180, 250), italic: False),
-    function_builtin: Style(color: Color(250, 179, 135), italic: False),
-    function_call: Style(color: Color(137, 180, 250), italic: False),
-    function_macro: Style(color: Color(148, 226, 213), italic: False),
-    function_method: Style(color: Color(137, 180, 250), italic: False),
-    function_method_call: Style(color: Color(137, 180, 250), italic: False),
-    constructor: Style(color: Color(116, 199, 236), italic: False),
-    operator: Style(color: Color(137, 220, 235), italic: False),
-    // keywords
-    keyword: Style(color: Color(203, 166, 247), italic: False),
-    keyword_coroutine: Style(color: Color(203, 166, 247), italic: False),
-    keyword_function: Style(color: Color(203, 166, 247), italic: False),
-    keyword_operator: Style(color: Color(203, 166, 247), italic: False),
-    keyword_import: Style(color: Color(203, 166, 247), italic: False),
-    keyword_type: Style(color: Color(203, 166, 247), italic: False),
-    keyword_modifier: Style(color: Color(203, 166, 247), italic: False),
-    keyword_repeat: Style(color: Color(203, 166, 247), italic: False),
-    keyword_return: Style(color: Color(203, 166, 247), italic: False),
-    keyword_debug: Style(color: Color(245, 194, 231), italic: False),
-    keyword_exception: Style(color: Color(203, 166, 247), italic: False),
-    keyword_conditional: Style(color: Color(203, 166, 247), italic: False),
-    keyword_conditional_ternary: Style(
-      color: Color(203, 166, 247),
-      italic: False,
-    ),
-    // punctuation
-    punctuation: Style(color: Color(147, 153, 178), italic: False),
-    punctuation_bracket: Style(color: Color(147, 153, 178), italic: False),
-    punctuation_delimiter: Style(color: Color(147, 153, 178), italic: False),
-    punctuation_special: Style(color: Color(245, 194, 231), italic: False),
-    // comments
-    comment: Style(color: Color(108, 112, 134), italic: True),
-    comment_documentation: Style(color: Color(108, 112, 134), italic: True),
-    // tags
-    tag: Style(color: Color(203, 166, 247), italic: False),
-    tag_builtin: Style(color: Color(203, 166, 247), italic: False),
-    tag_attribute: Style(color: Color(148, 226, 213), italic: True),
-    tag_delimiter: Style(color: Color(137, 220, 235), italic: False),
-  )
 }

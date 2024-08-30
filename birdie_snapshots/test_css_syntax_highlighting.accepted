@@ -1,10 +1,8 @@
 ---
 version: 1.2.1
 title: test css syntax highlighting
-file: ./test/glimra_test.gleam
-test_name: css_syntax_highlighting_test
 ---
-<code><span class="line"><span class="comment">/* this is a comment */</span></span><span class="line"><span class="tag">body</span><span> {</span></span><span class="line"><span>  </span><span class="property">background-color</span><span class="punctuation.delimiter">:</span><span> </span><span class="punctuation.delimiter">#</span><span class="string.special">f0f0f0</span><span>;</span></span><span class="line"><span>  </span><span class="property">font-family</span><span class="punctuation.delimiter">:</span><span> Arial</span><span class="punctuation.delimiter">,</span><span> sans-serif;</span></span><span class="line"><span>}
+<code data-lang="css"><span class="line"><span class="comment">/* this is a comment */</span></span><span class="line"><span class="tag">body</span><span> {</span></span><span class="line"><span>  </span><span class="property">background-color</span><span class="punctuation.delimiter">:</span><span> </span><span class="punctuation.delimiter">#</span><span class="string.special">f0f0f0</span><span>;</span></span><span class="line"><span>  </span><span class="property">font-family</span><span class="punctuation.delimiter">:</span><span> Arial</span><span class="punctuation.delimiter">,</span><span> sans-serif;</span></span><span class="line"><span>}
 
 .</span><span class="property">container</span><span> {</span></span><span class="line"><span>  </span><span class="property">width</span><span class="punctuation.delimiter">:</span><span> </span><span class="number">80</span><span class="type">%</span><span>;</span></span><span class="line"><span>  </span><span class="property">margin</span><span class="punctuation.delimiter">:</span><span> </span><span class="number">0</span><span> auto;</span></span><span class="line"><span>}
 </span></span></code>

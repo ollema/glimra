@@ -8,8 +8,9 @@ repository = { type = "github", user = "ollema", repo = "glimra" }
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
 lustre = ">= 4.3.6 and < 5.0.0"
+simplifile = ">= 2.0.1 and < 3.0.0"
+lustre_ssg = ">= 0.8.2 and < 1.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
 birdie = ">= 1.2.1 and < 2.0.0"
-simplifile = ">= 2.0.1 and < 3.0.0"

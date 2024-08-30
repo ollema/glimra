@@ -14,8 +14,8 @@ fn highlight_snippet(file: String, language: String) -> String {
   let assert Ok(source) = simplifile.read(file)
 
   let assert Ok(highlighted_string) =
-    glimra.syntax_highlighter(language)
-    |> glimra.syntax_highlight(source)
+    glimra.new_syntax_highlighter()
+    |> glimra.syntax_highlight(source:, language:)
     |> result.map(element.to_string)
 
   highlighted_string
@@ -85,9 +85,9 @@ pub fn custom_line_class_test() {
   let source = "let greeting = \"Hello, Joe!\""
 
   let assert Ok(highlighted_string) =
-    glimra.syntax_highlighter("gleam")
+    glimra.new_syntax_highlighter()
     |> glimra.line_class("linje")
-    |> glimra.syntax_highlight(source)
+    |> glimra.syntax_highlight(source:, language: "gleam")
     |> result.map(element.to_string)
 
   highlighted_string
@@ -98,9 +98,9 @@ pub fn custom_block_class_test() {
   let source = "let greeting = \"Hello, Joe!\""
 
   let assert Ok(highlighted_string) =
-    glimra.syntax_highlighter("gleam")
+    glimra.new_syntax_highlighter()
     |> glimra.block_class("kod")
-    |> glimra.syntax_highlight(source)
+    |> glimra.syntax_highlight(source:, language: "gleam")
     |> result.map(element.to_string)
 
   highlighted_string
@@ -112,4 +112,14 @@ pub fn default_theme_to_css_test() {
 
   css
   |> birdie.snap(title: "test default theme to css")
+}
+
+pub fn syntax_highlighter_to_css_test() {
+  let syntax_highlighter =
+    glimra.new_syntax_highlighter()
+    |> glimra.set_theme(theme.default_theme())
+
+  syntax_highlighter
+  |> glimra.to_css()
+  |> birdie.snap(title: "test syntax highlighter to css")
 }
