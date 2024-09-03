@@ -1,5 +1,6 @@
 name = "glimra"
 version = "2.0.0"
+gleam = ">= 1.40.0"
 target = "erlang"
 description = "Zero runtime syntax highlighter for lustre/ssg."
 licences = ["MIT"]
