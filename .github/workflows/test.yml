@@ -68,6 +68,3 @@ jobs:
           path: priv/lib
       - name: test
         run: gleam test --target erlang
-        # TODO: enable when/if birdie works on windows 
-        if: ${{ matrix.os != 'windows-latest' }} 
-
