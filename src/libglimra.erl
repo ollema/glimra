@@ -1,5 +1,5 @@
 -module(libglimra).
--export([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
+-export([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2, is_windows/0]).
 -nifs([get_supported_languages/0, get_highlight_name/1, get_highlight_events/2]).
 -on_load(init/0).
 
@@ -41,3 +41,9 @@ get_highlight_name(_Index) ->
 
 get_highlight_events(_Source, _Language) ->
     erlang:nif_error(nif_library_not_loaded).
+
+is_windows() ->
+    case os:type() of
+        {win32, _} -> true;
+        _ -> false
+    end.

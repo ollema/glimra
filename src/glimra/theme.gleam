@@ -7,7 +7,20 @@
 //// themes into CSS.
 
 import gleam/int
-import gleam/string_builder as sb
+
+// FFI -------------------------------------------------------------------------
+
+@external(erlang, "libglimra", "is_windows")
+fn is_windows() -> Bool
+
+fn newline() -> String {
+  case is_windows() {
+    True -> "\r\n"
+    False -> "\n"
+  }
+}
+
+// TYPES -----------------------------------------------------------------------
 
 /// Represents an RGB color.
 pub type Color {
@@ -95,6 +108,8 @@ pub type Theme {
   )
 }
 
+// THEMES ----------------------------------------------------------------------
+
 /// Returns the default theme for syntax highlighting.
 /// 
 /// This theme is based on Catppuccin Mocha, a community-driven pastel theme.
@@ -178,6 +193,8 @@ pub fn default_theme() -> Theme {
   )
 }
 
+// HELPERS ---------------------------------------------------------------------
+
 fn color_to_css(color: Color) -> String {
   "rgb("
   <> int.to_string(color.r)
@@ -189,7 +206,12 @@ fn color_to_css(color: Color) -> String {
 }
 
 fn style_to_css(class_name: String, style: Style) -> String {
-  "." <> class_name <> " { color: " <> color_to_css(style.color) <> "; }\n"
+  "."
+  <> class_name
+  <> " { color: "
+  <> color_to_css(style.color)
+  <> "; }"
+  <> newline()
 }
 
 /// Converts a `Theme` into a complete CSS stylesheet as a string.
@@ -197,83 +219,87 @@ fn style_to_css(class_name: String, style: Style) -> String {
 /// This function generates CSS classes for all the different styles included
 /// in the theme, ready to be applied to code elements in HTML.
 ///
-pub fn to_css(theme theme: Theme) -> String {
-  sb.new()
-  |> sb.append("\n/* identifiers */\n")
-  |> sb.append(style_to_css("variable", theme.variable))
-  |> sb.append(style_to_css("variable.builtin", theme.variable_builtin))
-  |> sb.append(style_to_css("variable.member", theme.variable_member))
-  |> sb.append(style_to_css(
-    "variable.parameter.builtin",
-    theme.variable_parameter_builtin,
-  ))
-  |> sb.append(style_to_css("variable.parameter", theme.variable_parameter))
-  |> sb.append(style_to_css("constant", theme.constant))
-  |> sb.append(style_to_css("constant.builtin", theme.constant_builtin))
-  |> sb.append(style_to_css("constant.macro", theme.constant_macro))
-  |> sb.append(style_to_css("module", theme.module))
-  |> sb.append(style_to_css("label", theme.label))
-  |> sb.append("\n/* literals */\n")
-  |> sb.append(style_to_css("string", theme.string))
-  |> sb.append(style_to_css("string.documentation", theme.string_documentation))
-  |> sb.append(style_to_css("string.escape", theme.string_escape))
-  |> sb.append(style_to_css("string.regexp", theme.string_regexp))
-  |> sb.append(style_to_css("string.special", theme.string_special))
-  |> sb.append(style_to_css("character", theme.character))
-  |> sb.append(style_to_css("character.special", theme.character_special))
-  |> sb.append(style_to_css("boolean", theme.boolean))
-  |> sb.append(style_to_css("number", theme.number))
-  |> sb.append("\n/* types */\n")
-  |> sb.append(style_to_css("type", theme.type_))
-  |> sb.append(style_to_css("type.builtin", theme.type_builtin))
-  |> sb.append(style_to_css("type.definition", theme.type_definition))
-  |> sb.append(style_to_css("attribute", theme.attribute))
-  |> sb.append(style_to_css("attribute.builtin", theme.attribute_builtin))
-  |> sb.append(style_to_css("property", theme.property))
-  |> sb.append("\n/* functions */\n")
-  |> sb.append(style_to_css("function", theme.function))
-  |> sb.append(style_to_css("function.builtin", theme.function_builtin))
-  |> sb.append(style_to_css("function.call", theme.function_call))
-  |> sb.append(style_to_css("function.macro", theme.function_macro))
-  |> sb.append(style_to_css("function.method", theme.function_method))
-  |> sb.append(style_to_css("function.method.call", theme.function_method_call))
-  |> sb.append(style_to_css("constructor", theme.constructor))
-  |> sb.append(style_to_css("operator", theme.operator))
-  |> sb.append("\n/* keywords */\n")
-  |> sb.append(style_to_css("keyword", theme.keyword))
-  |> sb.append(style_to_css("keyword.coroutine", theme.keyword_coroutine))
-  |> sb.append(style_to_css("keyword.function", theme.keyword_function))
-  |> sb.append(style_to_css("keyword.operator", theme.keyword_operator))
-  |> sb.append(style_to_css("keyword.import", theme.keyword_import))
-  |> sb.append(style_to_css("keyword.type", theme.keyword_type))
-  |> sb.append(style_to_css("keyword.modifier", theme.keyword_modifier))
-  |> sb.append(style_to_css("keyword.repeat", theme.keyword_repeat))
-  |> sb.append(style_to_css("keyword.return", theme.keyword_return))
-  |> sb.append(style_to_css("keyword.debug", theme.keyword_debug))
-  |> sb.append(style_to_css("keyword.exception", theme.keyword_exception))
-  |> sb.append(style_to_css("keyword.conditional", theme.keyword_conditional))
-  |> sb.append(style_to_css(
-    "keyword.conditional.ternary",
-    theme.keyword_conditional_ternary,
-  ))
-  |> sb.append("\n/* punctuation */\n")
-  |> sb.append(style_to_css("punctuation", theme.punctuation))
-  |> sb.append(style_to_css("punctuation.bracket", theme.punctuation_bracket))
-  |> sb.append(style_to_css(
-    "punctuation.delimiter",
-    theme.punctuation_delimiter,
-  ))
-  |> sb.append(style_to_css("punctuation.special", theme.punctuation_special))
-  |> sb.append("\n/* comments */\n")
-  |> sb.append(style_to_css("comment", theme.comment))
-  |> sb.append(style_to_css(
-    "comment.documentation",
-    theme.comment_documentation,
-  ))
-  |> sb.append("\n/* tags */\n")
-  |> sb.append(style_to_css("tag", theme.tag))
-  |> sb.append(style_to_css("tag.builtin", theme.tag_builtin))
-  |> sb.append(style_to_css("tag.attribute", theme.tag_attribute))
-  |> sb.append(style_to_css("tag.delimiter", theme.tag_delimiter))
-  |> sb.to_string()
+pub fn to_css(theme t: Theme) -> String {
+  let newline = newline()
+
+  newline
+  <> "/* identifiers */"
+  <> newline
+  <> style_to_css("variable", t.variable)
+  <> style_to_css("variable.builtin", t.variable_builtin)
+  <> style_to_css("variable.member", t.variable_member)
+  <> style_to_css("variable.parameter.builtin", t.variable_parameter_builtin)
+  <> style_to_css("variable.parameter", t.variable_parameter)
+  <> style_to_css("constant", t.constant)
+  <> style_to_css("constant.builtin", t.constant_builtin)
+  <> style_to_css("constant.macro", t.constant_macro)
+  <> style_to_css("module", t.module)
+  <> style_to_css("label", t.label)
+  <> newline
+  <> "/* literals */"
+  <> newline
+  <> style_to_css("string", t.string)
+  <> style_to_css("string.documentation", t.string_documentation)
+  <> style_to_css("string.escape", t.string_escape)
+  <> style_to_css("string.regexp", t.string_regexp)
+  <> style_to_css("string.special", t.string_special)
+  <> style_to_css("character", t.character)
+  <> style_to_css("character.special", t.character_special)
+  <> style_to_css("boolean", t.boolean)
+  <> style_to_css("number", t.number)
+  <> newline
+  <> "/* types */"
+  <> newline
+  <> style_to_css("type", t.type_)
+  <> style_to_css("type.builtin", t.type_builtin)
+  <> style_to_css("type.definition", t.type_definition)
+  <> style_to_css("attribute", t.attribute)
+  <> style_to_css("attribute.builtin", t.attribute_builtin)
+  <> style_to_css("property", t.property)
+  <> newline
+  <> "/* functions */"
+  <> newline
+  <> style_to_css("function", t.function)
+  <> style_to_css("function.builtin", t.function_builtin)
+  <> style_to_css("function.call", t.function_call)
+  <> style_to_css("function.macro", t.function_macro)
+  <> style_to_css("function.method", t.function_method)
+  <> style_to_css("function.method.call", t.function_method_call)
+  <> style_to_css("constructor", t.constructor)
+  <> style_to_css("operator", t.operator)
+  <> newline
+  <> "/* keywords */"
+  <> newline
+  <> style_to_css("keyword", t.keyword)
+  <> style_to_css("keyword.coroutine", t.keyword_coroutine)
+  <> style_to_css("keyword.function", t.keyword_function)
+  <> style_to_css("keyword.operator", t.keyword_operator)
+  <> style_to_css("keyword.import", t.keyword_import)
+  <> style_to_css("keyword.type", t.keyword_type)
+  <> style_to_css("keyword.modifier", t.keyword_modifier)
+  <> style_to_css("keyword.repeat", t.keyword_repeat)
+  <> style_to_css("keyword.return", t.keyword_return)
+  <> style_to_css("keyword.debug", t.keyword_debug)
+  <> style_to_css("keyword.exception", t.keyword_exception)
+  <> style_to_css("keyword.conditional", t.keyword_conditional)
+  <> style_to_css("keyword.conditional.ternary", t.keyword_conditional_ternary)
+  <> newline
+  <> "/* punctuation */"
+  <> newline
+  <> style_to_css("punctuation", t.punctuation)
+  <> style_to_css("punctuation.bracket", t.punctuation_bracket)
+  <> style_to_css("punctuation.delimiter", t.punctuation_delimiter)
+  <> style_to_css("punctuation.special", t.punctuation_special)
+  <> newline
+  <> "/* comments */"
+  <> newline
+  <> style_to_css("comment", t.comment)
+  <> style_to_css("comment.documentation", t.comment_documentation)
+  <> newline
+  <> "/* tags */"
+  <> newline
+  <> style_to_css("tag", t.tag)
+  <> style_to_css("tag.builtin", t.tag_builtin)
+  <> style_to_css("tag.attribute", t.tag_attribute)
+  <> style_to_css("tag.delimiter", t.tag_delimiter)
 }
