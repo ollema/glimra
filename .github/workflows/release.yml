@@ -40,7 +40,7 @@ jobs:
           path: priv/lib
           merge-multiple: true
       - name: release on github
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: priv/lib/*
 
