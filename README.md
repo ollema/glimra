@@ -59,6 +59,7 @@ Given a typical `lustre/ssg` `build.gleam` file with the following `main()` func
 
 ```gleam
 import glimra
+import glimra/theme
 
 pub fn main() {
   let syntax_highlighter =
