@@ -56,6 +56,7 @@ jobs:
           otp-version: "26.0.2"
           gleam-version: "1.12.0"
           rebar3-version: "3"
+          elixir-version: "1.18.4"
       - name: test formatting
         run: gleam format --check src test
         if: ${{ matrix.os != 'windows-latest' }}
