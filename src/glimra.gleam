@@ -407,10 +407,13 @@ fn prepend_with_snippet(
 ) -> List(Element(Nil)) {
   case string.is_empty(snippet) {
     True -> siblings
-    False -> [
-      html.span([attribute.class(highlight_name)], [html.text(snippet)]),
-      ..siblings
-    ]
+    False -> {
+      let attributes = case string.is_empty(highlight_name) {
+        True -> []
+        False -> [attribute.class(highlight_name)]
+      }
+      [html.span(attributes, [html.text(snippet)]), ..siblings]
+    }
   }
 }
 
