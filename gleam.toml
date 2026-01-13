@@ -7,10 +7,10 @@ licences = ["MIT"]
 repository = { type = "github", user = "ollema", repo = "glimra" }
 
 [dependencies]
-gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-lustre = ">= 4.3.6 and < 5.3.2"
+gleam_stdlib = ">= 0.65.0 and < 1.0.0"
+lustre = ">= 5.3.1 and < 6.0.0"
 simplifile = ">= 2.0.1 and < 3.0.0"
-lustre_ssg = ">= 0.8.2 and < 1.0.0"
+lustre_ssg = ">= 0.11.0 and < 1.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
