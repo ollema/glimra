@@ -1,0 +1,5602 @@
+{
+  "catppuccin-mocha": {
+    "fg": "#cdd6f4",
+    "bg": "#1e1e2e",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#9399B2",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#CBA6F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "dracula": {
+    "fg": "#F8F8F2",
+    "bg": "#282A36",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#F1FA8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#F1FA8C",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#F1FA8C",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#FF79C6",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#F1FA8C",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "github-dark": {
+    "fg": "#e1e4e8",
+    "bg": "#24292e",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#9ECBFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#9ECBFF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#6A737D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#9ECBFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#F97583",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#9ECBFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "gruvbox-dark-medium": {
+    "fg": "#ebdbb2",
+    "bg": "#282828",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#928374",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#FB4934",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "monokai": {
+    "fg": "#F8F8F2",
+    "bg": "#272822",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#E6DB74",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#E6DB74",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#88846F",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#E6DB74",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#F92672",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#E6DB74",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "night-owl": {
+    "fg": "#d6deeb",
+    "bg": "#011627",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#ECC48D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#ECC48D",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#637777",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#ECC48D",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#7FDBCA",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#ECC48D",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "nord": {
+    "fg": "#d8dee9ff",
+    "bg": "#2e3440ff",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#616E88",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#81A1C1",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "one-dark-pro": {
+    "fg": "#abb2bf",
+    "bg": "#282c34",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#7F848E",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#98C379",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#98C379",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "tokyo-night": {
+    "fg": "#a9b1d6",
+    "bg": "#1a1b26",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#9ECE6A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#9ECE6A",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#51597D",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#9ECE6A",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#7AA2F7",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#9ECE6A",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "vitesse-dark": {
+    "fg": "#dbd7caee",
+    "bg": "#121212",
+    "tokens": [
+      [
+        {
+          "content": "# Base image",
+          "offset": 0,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 13,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 17,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 33,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " builder",
+          "offset": 35,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Set working directory",
+          "offset": 45,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 69,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 76,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Arguments and environment variables",
+          "offset": 83,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ARG",
+          "offset": 121,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=production",
+          "offset": 124,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 145,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " NODE_ENV=$NODE_ENV",
+          "offset": 148,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENV",
+          "offset": 168,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " PORT=3000",
+          "offset": 171,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy package files",
+          "offset": 183,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 204,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " package*.json ./",
+          "offset": 208,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 226,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " yarn.lock ./",
+          "offset": 230,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Install dependencies",
+          "offset": 245,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 268,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm ci --only=production && \\",
+          "offset": 271,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    npm cache clean --force",
+          "offset": 302,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy source code",
+          "offset": 331,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 350,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " . .",
+          "offset": 354,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Build the application",
+          "offset": 360,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 384,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " npm run build",
+          "offset": 387,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Production stage",
+          "offset": 403,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "FROM",
+          "offset": 422,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " node:20-alpine ",
+          "offset": 426,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "AS",
+          "offset": 442,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " runner",
+          "offset": 444,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "WORKDIR",
+          "offset": 453,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " /app",
+          "offset": 460,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Create non-root user",
+          "offset": 467,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "RUN",
+          "offset": 490,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " addgroup --system --gid 1001 nodejs && \\",
+          "offset": 493,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    adduser --system --uid 1001 nextjs",
+          "offset": 535,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Copy built assets",
+          "offset": 575,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 595,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder --chown=nextjs:nodejs /app/.next ./.next",
+          "offset": 599,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 656,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/node_modules ./node_modules",
+          "offset": 660,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "COPY",
+          "offset": 709,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " --from=builder /app/package.json ./package.json",
+          "offset": 713,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Switch to non-root user",
+          "offset": 763,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "USER",
+          "offset": 789,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " nextjs",
+          "offset": 793,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Expose port",
+          "offset": 802,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "EXPOSE",
+          "offset": 816,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " 3000",
+          "offset": 822,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Health check",
+          "offset": 829,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "HEALTHCHECK",
+          "offset": 844,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " --interval=30s --timeout=3s --start-period=5s --retries=3 \\",
+          "offset": 855,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "    ",
+          "offset": 916,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "CMD",
+          "offset": 920,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " curl -f http://localhost:3000/health || exit 1",
+          "offset": 923,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Labels",
+          "offset": 972,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 981,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " maintainer=",
+          "offset": 986,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"dev@example.com\"",
+          "offset": 998,
+          "color": "#C98A7D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "LABEL",
+          "offset": 1016,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " version=",
+          "offset": 1021,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"1.0\"",
+          "offset": 1030,
+          "color": "#C98A7D",
+          "fontStyle": 0
+        }
+      ],
+      [],
+      [
+        {
+          "content": "# Entry point",
+          "offset": 1037,
+          "color": "#758575DD",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "ENTRYPOINT",
+          "offset": 1051,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1061,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"node\"",
+          "offset": 1063,
+          "color": "#C98A7D",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1069,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "CMD",
+          "offset": 1071,
+          "color": "#4D9375",
+          "fontStyle": 0
+        },
+        {
+          "content": " [",
+          "offset": 1074,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        },
+        {
+          "content": "\"server.js\"",
+          "offset": 1076,
+          "color": "#C98A7D",
+          "fontStyle": 0
+        },
+        {
+          "content": "]",
+          "offset": 1087,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  }
+}

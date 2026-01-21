@@ -1,0 +1,323 @@
+# Single-line comment
+
+#=
+  Multi-line
+  comment
+=#
+
+"""
+Documentation string (docstring)
+for modules, types, and functions
+"""
+
+# Using packages
+using LinearAlgebra
+using Statistics
+import Base: show, +
+
+# Constants
+const MAX_SIZE = 100
+const PI_VALUE = 3.14159
+const GREETING = "Hello, World!"
+
+# Type alias
+const Name = String
+const Age = Int
+
+# Abstract type
+abstract type Shape end
+
+# Struct (immutable by default)
+struct Point
+    x::Float64
+    y::Float64
+end
+
+# Mutable struct
+mutable struct Counter
+    value::Int
+end
+
+# Parametric type
+struct Container{T}
+    items::Vector{T}
+    count::Int
+end
+
+# Struct with inner constructor
+struct Person
+    name::String
+    age::Int
+    email::Union{String, Nothing}
+
+    function Person(name::String, age::Int, email=nothing)
+        age < 0 && throw(ArgumentError("Age cannot be negative"))
+        new(name, age, email)
+    end
+end
+
+# Enum-like with @enum macro
+@enum Status Active Inactive Pending
+
+# Concrete types extending abstract
+struct Circle <: Shape
+    radius::Float64
+end
+
+struct Rectangle <: Shape
+    width::Float64
+    height::Float64
+end
+
+# Simple function
+function add(a::Int, b::Int)::Int
+    return a + b
+end
+
+# Short function syntax
+multiply(a, b) = a * b
+
+# Function with multiple methods (multiple dispatch)
+greet(name::String) = "Hello, $name!"
+greet(name::String, greeting::String) = "$greeting, $name!"
+greet(p::Person) = "Hello, $(p.name)!"
+
+# Function with keyword arguments
+function create_user(; name::String, age::Int, email::String="")
+    Person(name, age, isempty(email) ? nothing : email)
+end
+
+# Function with default arguments
+function power(base::Number, exp::Int=2)
+    base ^ exp
+end
+
+# Variadic function
+function sum_all(numbers::Int...)
+    reduce(+, numbers; init=0)
+end
+
+# Anonymous functions (lambdas)
+increment = x -> x + 1
+double = function(x); x * 2; end
+
+# Higher-order function
+function apply_twice(f::Function, x)
+    f(f(x))
+end
+
+# Recursive function
+function factorial(n::Int)::Int
+    n <= 1 ? 1 : n * factorial(n - 1)
+end
+
+# Tail-recursive with helper
+function factorial_tail(n::Int)::Int
+    function helper(n, acc)
+        n <= 1 ? acc : helper(n - 1, n * acc)
+    end
+    helper(n, 1)
+end
+
+# Method for custom type
+function area(s::Circle)::Float64
+    π * s.radius^2
+end
+
+function area(s::Rectangle)::Float64
+    s.width * s.height
+end
+
+# Operator overloading
+function Base.:+(p1::Point, p2::Point)
+    Point(p1.x + p2.x, p1.y + p2.y)
+end
+
+# Show method for custom display
+function Base.show(io::IO, p::Person)
+    print(io, "Person($(p.name), $(p.age))")
+end
+
+# Control flow
+function classify(n::Int)::String
+    if n < 0
+        "negative"
+    elseif n == 0
+        "zero"
+    elseif n < 10
+        "small"
+    else
+        "large"
+    end
+end
+
+# Ternary operator
+sign(n) = n < 0 ? -1 : (n > 0 ? 1 : 0)
+
+# Pattern matching-like with multiple dispatch
+describe(::Type{Int}) = "integer type"
+describe(::Type{String}) = "string type"
+describe(x::Int) = "integer value: $x"
+describe(x::String) = "string value: $x"
+
+# For loops
+function sum_list(numbers::Vector{Int})::Int
+    total = 0
+    for n in numbers
+        total += n
+    end
+    total
+end
+
+# Enumerated iteration
+function print_indexed(items)
+    for (i, item) in enumerate(items)
+        println("$i: $item")
+    end
+end
+
+# While loop
+function countdown(n::Int)
+    while n > 0
+        println(n)
+        n -= 1
+    end
+end
+
+# Comprehensions
+squares = [x^2 for x in 1:10]
+evens = [x for x in 1:20 if iseven(x)]
+pairs = [(i, j) for i in 1:3, j in 1:3 if i != j]
+sum_of_squares = sum(x^2 for x in 1:10)
+
+# Dictionary comprehension
+word_lengths = Dict(word => length(word) for word in ["hello", "world"])
+
+# Generators
+function fibonacci()
+    Channel{Int}(1) do channel
+        a, b = 0, 1
+        while true
+            put!(channel, a)
+            a, b = b, a + b
+        end
+    end
+end
+
+# Collections
+numbers = [1, 2, 3, 4, 5]
+doubled = map(x -> x * 2, numbers)
+filtered = filter(iseven, numbers)
+total = reduce(+, numbers)
+
+# Array operations
+matrix = [1 2 3; 4 5 6; 7 8 9]
+transposed = matrix'
+product = matrix * matrix'
+
+# Tuple
+coordinates = (1.0, 2.0, 3.0)
+x, y, z = coordinates  # Destructuring
+
+# Named tuple
+person_tuple = (name="Alice", age=30)
+
+# Dictionary
+config = Dict(
+    "host" => "localhost",
+    "port" => 3000,
+    "debug" => true
+)
+
+# Set
+unique_items = Set([1, 2, 2, 3, 3, 3])
+
+# Exception handling
+function safe_divide(a::Number, b::Number)
+    try
+        a / b
+    catch e
+        if isa(e, DivideError)
+            println("Cannot divide by zero")
+            nothing
+        else
+            rethrow(e)
+        end
+    finally
+        println("Division attempted")
+    end
+end
+
+# Custom exception
+struct ValidationError <: Exception
+    msg::String
+end
+
+function validate_age(age::Int)
+    age < 0 && throw(ValidationError("Age cannot be negative"))
+    age > 150 && throw(ValidationError("Age seems unrealistic"))
+    age
+end
+
+# Macros
+macro debug(expr)
+    quote
+        println($(string(expr)), " = ", $(esc(expr)))
+    end
+end
+
+macro assert_positive(x)
+    quote
+        val = $(esc(x))
+        val > 0 || throw(ArgumentError("Expected positive value, got $val"))
+        val
+    end
+end
+
+# String interpolation
+name = "Julia"
+message = "Hello, $name!"
+multiline = """
+    This is a multiline string.
+    Name: $name
+    Sum: $(1 + 2 + 3)
+"""
+
+# Regex
+email_pattern = r"[\w.]+@[\w.]+"
+matches = match(email_pattern, "test@example.com")
+
+# Broadcasting
+arr = [1, 2, 3, 4, 5]
+doubled_broadcast = arr .* 2
+applied = sin.(arr)
+combined = arr .+ arr .* 2
+
+# Parallel computing (requires Threads)
+# Threads.@threads for i in 1:10
+#     process(i)
+# end
+
+# Type assertions and conversions
+x::Int = 42
+y = convert(Float64, x)
+z = Float64(x)
+
+# Main execution
+function main()
+    alice = Person("Alice", 30, "alice@example.com")
+    println(alice)
+    println("Factorial 5: $(factorial(5))")
+
+    circle = Circle(5.0)
+    rect = Rectangle(3.0, 4.0)
+    println("Circle area: $(area(circle))")
+    println("Rectangle area: $(area(rect))")
+
+    for n in take(fibonacci(), 10)
+        print(n, " ")
+    end
+    println()
+end
+
+main()

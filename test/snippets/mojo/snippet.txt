@@ -1,0 +1,215 @@
+# Mojo - High-performance Python superset
+
+from collections import List, Dict
+from memory import memset_zero
+from sys import argv
+
+# Constants
+alias PI: Float64 = 3.14159265359
+alias MAX_ITERATIONS: Int = 1000
+alias EPSILON: Float64 = 1e-10
+
+# Struct with compile-time parameters
+struct Vector[size: Int, T: DType = DType.float64]:
+    var data: SIMD[T, size]
+
+    fn __init__(inout self):
+        self.data = SIMD[T, size]()
+
+    fn __init__(inout self, *values: Scalar[T]):
+        self.data = SIMD[T, size]()
+        for i in range(min(len(values), size)):
+            self.data[i] = values[i]
+
+    fn __getitem__(self, index: Int) -> Scalar[T]:
+        return self.data[index]
+
+    fn __setitem__(inout self, index: Int, value: Scalar[T]):
+        self.data[index] = value
+
+    fn dot(self, other: Self) -> Scalar[T]:
+        var result: Scalar[T] = 0
+        for i in range(size):
+            result += self.data[i] * other.data[i]
+        return result
+
+    fn magnitude(self) -> Scalar[T]:
+        return self.dot(self).sqrt()
+
+    fn normalize(self) -> Self:
+        let mag = self.magnitude()
+        var result = Self()
+        if mag > EPSILON:
+            for i in range(size):
+                result.data[i] = self.data[i] / mag
+        return result
+
+# Struct with traits
+@value
+struct Point:
+    var x: Float64
+    var y: Float64
+
+    fn __init__(inout self, x: Float64 = 0.0, y: Float64 = 0.0):
+        self.x = x
+        self.y = y
+
+    fn distance_to(self, other: Point) -> Float64:
+        let dx = self.x - other.x
+        let dy = self.y - other.y
+        return (dx * dx + dy * dy).sqrt()
+
+    fn __add__(self, other: Point) -> Point:
+        return Point(self.x + other.x, self.y + other.y)
+
+    fn __mul__(self, scalar: Float64) -> Point:
+        return Point(self.x * scalar, self.y * scalar)
+
+    fn __str__(self) -> String:
+        return "Point(" + str(self.x) + ", " + str(self.y) + ")"
+
+# Traits (interfaces)
+trait Drawable:
+    fn draw(self):
+        ...
+
+    fn area(self) -> Float64:
+        ...
+
+struct Circle(Drawable):
+    var center: Point
+    var radius: Float64
+
+    fn __init__(inout self, center: Point, radius: Float64):
+        self.center = center
+        self.radius = radius
+
+    fn draw(self):
+        print("Drawing circle at", self.center.__str__(), "with radius", self.radius)
+
+    fn area(self) -> Float64:
+        return PI * self.radius * self.radius
+
+struct Rectangle(Drawable):
+    var origin: Point
+    var width: Float64
+    var height: Float64
+
+    fn __init__(inout self, origin: Point, width: Float64, height: Float64):
+        self.origin = origin
+        self.width = width
+        self.height = height
+
+    fn draw(self):
+        print("Drawing rectangle at", self.origin.__str__())
+
+    fn area(self) -> Float64:
+        return self.width * self.height
+
+# Higher-order function with parameter
+fn map_values[T: AnyType, func: fn(T) -> T](inout arr: List[T]):
+    for i in range(len(arr)):
+        arr[i] = func(arr[i])
+
+# Compile-time function
+fn square(x: Int) -> Int:
+    return x * x
+
+# Functions with ownership semantics
+fn process_owned(owned value: String) -> String:
+    # Takes ownership of value
+    return value + " processed"
+
+fn process_borrowed(borrowed value: String) -> Int:
+    # Borrows value immutably
+    return len(value)
+
+fn process_inout(inout value: String):
+    # Mutable borrow
+    value = value.upper()
+
+# Error handling
+fn divide(a: Float64, b: Float64) raises -> Float64:
+    if b == 0:
+        raise Error("Division by zero")
+    return a / b
+
+# Async function
+async fn fetch_data(url: String) -> String:
+    # Simulated async operation
+    return "Data from " + url
+
+# Vectorized operations with SIMD
+fn simd_add[width: Int](a: SIMD[DType.float32, width],
+                         b: SIMD[DType.float32, width]) -> SIMD[DType.float32, width]:
+    return a + b
+
+fn simd_dot[width: Int](a: SIMD[DType.float32, width],
+                         b: SIMD[DType.float32, width]) -> Float32:
+    return (a * b).reduce_add()
+
+# Parallelism
+fn parallel_sum(data: List[Int]) -> Int:
+    var total: Int = 0
+
+    @parameter
+    fn sum_chunk(start: Int, end: Int):
+        for i in range(start, end):
+            total += data[i]
+
+    # Would use parallelize() here
+    sum_chunk(0, len(data))
+    return total
+
+# Main entry point
+fn main() raises:
+    # Variables
+    var mutable_var: Int = 42
+    let immutable_val: Float64 = 3.14
+
+    # Struct instances
+    var p1 = Point(0.0, 0.0)
+    var p2 = Point(3.0, 4.0)
+    print("Distance:", p1.distance_to(p2))
+
+    # Vector operations
+    var v1 = Vector[3](1.0, 2.0, 3.0)
+    var v2 = Vector[3](4.0, 5.0, 6.0)
+    print("Dot product:", v1.dot(v2))
+
+    # Polymorphism with traits
+    var circle = Circle(Point(0.0, 0.0), 5.0)
+    var rect = Rectangle(Point(1.0, 1.0), 10.0, 20.0)
+
+    circle.draw()
+    print("Circle area:", circle.area())
+
+    rect.draw()
+    print("Rectangle area:", rect.area())
+
+    # Control flow
+    for i in range(5):
+        if i % 2 == 0:
+            print("Even:", i)
+        else:
+            print("Odd:", i)
+
+    # Error handling
+    try:
+        let result = divide(10.0, 2.0)
+        print("Result:", result)
+
+        let bad_result = divide(10.0, 0.0)
+    except e:
+        print("Error:", e)
+
+    # String operations
+    var greeting: String = "Hello, Mojo!"
+    process_inout(greeting)
+    print(greeting)
+
+    # SIMD example
+    let a = SIMD[DType.float32, 4](1.0, 2.0, 3.0, 4.0)
+    let b = SIMD[DType.float32, 4](5.0, 6.0, 7.0, 8.0)
+    let c = simd_add(a, b)
+    print("SIMD result:", c)

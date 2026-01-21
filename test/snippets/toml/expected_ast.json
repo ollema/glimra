@@ -1,0 +1,4567 @@
+{
+  "language": "toml",
+  "total": 44,
+  "successful": 44,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\"{3,5}",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 3,
+                "max": 5,
+                "body": {
+                  "type": "Character",
+                  "value": 34
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "#",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 35
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 39
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "'{3,5}",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 3,
+                "max": 5,
+                "body": {
+                  "type": "Character",
+                  "value": 39
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(\")((?:[^\"\\\\]|\\\\.)*)(\")",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 34
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "Group",
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": true,
+                                  "body": [
+                                    {
+                                      "type": "Character",
+                                      "value": 34
+                                    },
+                                    {
+                                      "type": "Character",
+                                      "value": 92
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Character",
+                                  "value": 92
+                                },
+                                {
+                                  "type": "CharacterSet",
+                                  "kind": "dot"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 3,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 34
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(')[^']*(')",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 39
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterClass",
+                  "kind": "union",
+                  "negate": true,
+                  "body": [
+                    {
+                      "type": "Character",
+                      "value": 39
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 39
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "((\")(.*?)(\"))\\s*(=)\\s*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 34
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 3,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Quantifier",
+                                "kind": "lazy",
+                                "min": 0,
+                                "max": null,
+                                "body": {
+                                  "type": "CharacterSet",
+                                  "kind": "dot"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 4,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 34
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 5,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "((')([^']*)('))\\s*(=)\\s*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 39
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 3,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Quantifier",
+                                "kind": "greedy",
+                                "min": 0,
+                                "max": null,
+                                "body": {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": true,
+                                  "body": [
+                                    {
+                                      "type": "Character",
+                                      "value": 39
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 4,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 39
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 5,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(((?:[-0-9A-Z_a-z]+|\"(?:[^\"\\\\]|\\\\.)*\"|'[^']*')(?:\\s*\\.\\s*|(?=\\s*=))){2,})\\s*(=)\\s*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 2,
+                        "max": null,
+                        "body": {
+                          "type": "CapturingGroup",
+                          "number": 2,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Group",
+                                  "body": [
+                                    {
+                                      "type": "Alternative",
+                                      "body": [
+                                        {
+                                          "type": "Quantifier",
+                                          "kind": "greedy",
+                                          "min": 1,
+                                          "max": null,
+                                          "body": {
+                                            "type": "CharacterClass",
+                                            "kind": "union",
+                                            "negate": false,
+                                            "body": [
+                                              {
+                                                "type": "Character",
+                                                "value": 45
+                                              },
+                                              {
+                                                "type": "CharacterClassRange",
+                                                "min": {
+                                                  "type": "Character",
+                                                  "value": 48
+                                                },
+                                                "max": {
+                                                  "type": "Character",
+                                                  "value": 57
+                                                }
+                                              },
+                                              {
+                                                "type": "CharacterClassRange",
+                                                "min": {
+                                                  "type": "Character",
+                                                  "value": 65
+                                                },
+                                                "max": {
+                                                  "type": "Character",
+                                                  "value": 90
+                                                }
+                                              },
+                                              {
+                                                "type": "Character",
+                                                "value": 95
+                                              },
+                                              {
+                                                "type": "CharacterClassRange",
+                                                "min": {
+                                                  "type": "Character",
+                                                  "value": 97
+                                                },
+                                                "max": {
+                                                  "type": "Character",
+                                                  "value": 122
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Alternative",
+                                      "body": [
+                                        {
+                                          "type": "Character",
+                                          "value": 34
+                                        },
+                                        {
+                                          "type": "Quantifier",
+                                          "kind": "greedy",
+                                          "min": 0,
+                                          "max": null,
+                                          "body": {
+                                            "type": "Group",
+                                            "body": [
+                                              {
+                                                "type": "Alternative",
+                                                "body": [
+                                                  {
+                                                    "type": "CharacterClass",
+                                                    "kind": "union",
+                                                    "negate": true,
+                                                    "body": [
+                                                      {
+                                                        "type": "Character",
+                                                        "value": 34
+                                                      },
+                                                      {
+                                                        "type": "Character",
+                                                        "value": 92
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "type": "Alternative",
+                                                "body": [
+                                                  {
+                                                    "type": "Character",
+                                                    "value": 92
+                                                  },
+                                                  {
+                                                    "type": "CharacterSet",
+                                                    "kind": "dot"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "type": "Character",
+                                          "value": 34
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Alternative",
+                                      "body": [
+                                        {
+                                          "type": "Character",
+                                          "value": 39
+                                        },
+                                        {
+                                          "type": "Quantifier",
+                                          "kind": "greedy",
+                                          "min": 0,
+                                          "max": null,
+                                          "body": {
+                                            "type": "CharacterClass",
+                                            "kind": "union",
+                                            "negate": true,
+                                            "body": [
+                                              {
+                                                "type": "Character",
+                                                "value": 39
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "type": "Character",
+                                          "value": 39
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Group",
+                                  "body": [
+                                    {
+                                      "type": "Alternative",
+                                      "body": [
+                                        {
+                                          "type": "Quantifier",
+                                          "kind": "greedy",
+                                          "min": 0,
+                                          "max": null,
+                                          "body": {
+                                            "type": "CharacterSet",
+                                            "kind": "space",
+                                            "negate": false
+                                          }
+                                        },
+                                        {
+                                          "type": "Character",
+                                          "value": 46
+                                        },
+                                        {
+                                          "type": "Quantifier",
+                                          "kind": "greedy",
+                                          "min": 0,
+                                          "max": null,
+                                          "body": {
+                                            "type": "CharacterSet",
+                                            "kind": "space",
+                                            "negate": false
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Alternative",
+                                      "body": [
+                                        {
+                                          "type": "LookaroundAssertion",
+                                          "kind": "lookahead",
+                                          "negate": false,
+                                          "body": [
+                                            {
+                                              "type": "Alternative",
+                                              "body": [
+                                                {
+                                                  "type": "Quantifier",
+                                                  "kind": "greedy",
+                                                  "min": 0,
+                                                  "max": null,
+                                                  "body": {
+                                                    "type": "CharacterSet",
+                                                    "kind": "space",
+                                                    "negate": false
+                                                  }
+                                                },
+                                                {
+                                                  "type": "Character",
+                                                  "value": 61
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 3,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(?!\\G)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Assertion",
+                        "kind": "search_start"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(?<=\\S)(?<!=)|$",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookbehind",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterSet",
+                        "kind": "space",
+                        "negate": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookbehind",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_end_newline"
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(?=[\"']|[-+]?[0-9]|[-+]?(inf|nan)|true|false|[\\[{])",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 34
+                          },
+                          {
+                            "type": "Character",
+                            "value": 39
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "Character",
+                              "value": 43
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 48
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "Character",
+                              "value": 43
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 1,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 105
+                              },
+                              {
+                                "type": "Character",
+                                "value": 110
+                              },
+                              {
+                                "type": "Character",
+                                "value": 102
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 110
+                              },
+                              {
+                                "type": "Character",
+                                "value": 97
+                              },
+                              {
+                                "type": "Character",
+                                "value": 110
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 116
+                      },
+                      {
+                        "type": "Character",
+                        "value": 114
+                      },
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 102
+                      },
+                      {
+                        "type": "Character",
+                        "value": 97
+                      },
+                      {
+                        "type": "Character",
+                        "value": 108
+                      },
+                      {
+                        "type": "Character",
+                        "value": 115
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 91
+                          },
+                          {
+                            "type": "Character",
+                            "value": 123
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(?=\\S)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterSet",
+                        "kind": "space",
+                        "negate": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "([-0-9A-Z_a-z]+)\\s*(=)\\s*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 1,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 57
+                              }
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 90
+                              }
+                            },
+                            {
+                              "type": "Character",
+                              "value": 95
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 97
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 122
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(^[\\t ]+)?(?=#)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Assertion",
+                          "kind": "string_start"
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterClass",
+                            "kind": "union",
+                            "negate": false,
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 9
+                              },
+                              {
+                                "type": "Character",
+                                "value": 32
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 35
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": ",|(?=])",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 44
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 93
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": ",|(?=})",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 44
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 125
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "[^.\\s]+",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 1,
+                "max": null,
+                "body": {
+                  "type": "CharacterClass",
+                  "kind": "union",
+                  "negate": true,
+                  "body": [
+                    {
+                      "type": "Character",
+                      "value": 46
+                    },
+                    {
+                      "type": "CharacterSet",
+                      "kind": "space",
+                      "negate": false
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\.",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 46
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G\"",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G\"\"\"",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 34
+              },
+              {
+                "type": "Character",
+                "value": 34
+              },
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G'",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 39
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G'''",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 39
+              },
+              {
+                "type": "Character",
+                "value": 39
+              },
+              {
+                "type": "Character",
+                "value": 39
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G(?!2[5-9])[012][0-9]:[0-5][0-9]:(?!6[1-9])[0-6][0-9](\\.[0-9]+)?",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 50
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 53
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 48
+                  },
+                  {
+                    "type": "Character",
+                    "value": 49
+                  },
+                  {
+                    "type": "Character",
+                    "value": 50
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 57
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Character",
+                "value": 58
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 53
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 57
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Character",
+                "value": 58
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 54
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 49
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 54
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 57
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Character",
+                          "value": 46
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterClass",
+                            "kind": "union",
+                            "negate": false,
+                            "body": [
+                              {
+                                "type": "CharacterClassRange",
+                                "min": {
+                                  "type": "Character",
+                                  "value": 48
+                                },
+                                "max": {
+                                  "type": "Character",
+                                  "value": 57
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G([-+]?(0|([1-9](([0-9]|_[0-9])+)?)))",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "Character",
+                              "value": 43
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 48
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CapturingGroup",
+                                "number": 3,
+                                "body": [
+                                  {
+                                    "type": "Alternative",
+                                    "body": [
+                                      {
+                                        "type": "CharacterClass",
+                                        "kind": "union",
+                                        "negate": false,
+                                        "body": [
+                                          {
+                                            "type": "CharacterClassRange",
+                                            "min": {
+                                              "type": "Character",
+                                              "value": 49
+                                            },
+                                            "max": {
+                                              "type": "Character",
+                                              "value": 57
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "Quantifier",
+                                        "kind": "greedy",
+                                        "min": 0,
+                                        "max": 1,
+                                        "body": {
+                                          "type": "CapturingGroup",
+                                          "number": 4,
+                                          "body": [
+                                            {
+                                              "type": "Alternative",
+                                              "body": [
+                                                {
+                                                  "type": "Quantifier",
+                                                  "kind": "greedy",
+                                                  "min": 1,
+                                                  "max": null,
+                                                  "body": {
+                                                    "type": "CapturingGroup",
+                                                    "number": 5,
+                                                    "body": [
+                                                      {
+                                                        "type": "Alternative",
+                                                        "body": [
+                                                          {
+                                                            "type": "CharacterClass",
+                                                            "kind": "union",
+                                                            "negate": false,
+                                                            "body": [
+                                                              {
+                                                                "type": "CharacterClassRange",
+                                                                "min": {
+                                                                  "type": "Character",
+                                                                  "value": 48
+                                                                },
+                                                                "max": {
+                                                                  "type": "Character",
+                                                                  "value": 57
+                                                                }
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "Alternative",
+                                                        "body": [
+                                                          {
+                                                            "type": "Character",
+                                                            "value": 95
+                                                          },
+                                                          {
+                                                            "type": "CharacterClass",
+                                                            "kind": "union",
+                                                            "negate": false,
+                                                            "body": [
+                                                              {
+                                                                "type": "CharacterClassRange",
+                                                                "min": {
+                                                                  "type": "Character",
+                                                                  "value": 48
+                                                                },
+                                                                "max": {
+                                                                  "type": "Character",
+                                                                  "value": 57
+                                                                }
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G([-+]?(0|([1-9](([0-9]|_[0-9])+)?)))(?=[.Ee])(\\.([0-9](([0-9]|_[0-9])+)?))?([Ee]([-+]?[0-9](([0-9]|_[0-9])+)?))?",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "Character",
+                              "value": 43
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 48
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CapturingGroup",
+                                "number": 3,
+                                "body": [
+                                  {
+                                    "type": "Alternative",
+                                    "body": [
+                                      {
+                                        "type": "CharacterClass",
+                                        "kind": "union",
+                                        "negate": false,
+                                        "body": [
+                                          {
+                                            "type": "CharacterClassRange",
+                                            "min": {
+                                              "type": "Character",
+                                              "value": 49
+                                            },
+                                            "max": {
+                                              "type": "Character",
+                                              "value": 57
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "Quantifier",
+                                        "kind": "greedy",
+                                        "min": 0,
+                                        "max": 1,
+                                        "body": {
+                                          "type": "CapturingGroup",
+                                          "number": 4,
+                                          "body": [
+                                            {
+                                              "type": "Alternative",
+                                              "body": [
+                                                {
+                                                  "type": "Quantifier",
+                                                  "kind": "greedy",
+                                                  "min": 1,
+                                                  "max": null,
+                                                  "body": {
+                                                    "type": "CapturingGroup",
+                                                    "number": 5,
+                                                    "body": [
+                                                      {
+                                                        "type": "Alternative",
+                                                        "body": [
+                                                          {
+                                                            "type": "CharacterClass",
+                                                            "kind": "union",
+                                                            "negate": false,
+                                                            "body": [
+                                                              {
+                                                                "type": "CharacterClassRange",
+                                                                "min": {
+                                                                  "type": "Character",
+                                                                  "value": 48
+                                                                },
+                                                                "max": {
+                                                                  "type": "Character",
+                                                                  "value": 57
+                                                                }
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "Alternative",
+                                                        "body": [
+                                                          {
+                                                            "type": "Character",
+                                                            "value": 95
+                                                          },
+                                                          {
+                                                            "type": "CharacterClass",
+                                                            "kind": "union",
+                                                            "negate": false,
+                                                            "body": [
+                                                              {
+                                                                "type": "CharacterClassRange",
+                                                                "min": {
+                                                                  "type": "Character",
+                                                                  "value": 48
+                                                                },
+                                                                "max": {
+                                                                  "type": "Character",
+                                                                  "value": 57
+                                                                }
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 46
+                          },
+                          {
+                            "type": "Character",
+                            "value": 69
+                          },
+                          {
+                            "type": "Character",
+                            "value": 101
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 6,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Character",
+                          "value": 46
+                        },
+                        {
+                          "type": "CapturingGroup",
+                          "number": 7,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": false,
+                                  "body": [
+                                    {
+                                      "type": "CharacterClassRange",
+                                      "min": {
+                                        "type": "Character",
+                                        "value": 48
+                                      },
+                                      "max": {
+                                        "type": "Character",
+                                        "value": 57
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Quantifier",
+                                  "kind": "greedy",
+                                  "min": 0,
+                                  "max": 1,
+                                  "body": {
+                                    "type": "CapturingGroup",
+                                    "number": 8,
+                                    "body": [
+                                      {
+                                        "type": "Alternative",
+                                        "body": [
+                                          {
+                                            "type": "Quantifier",
+                                            "kind": "greedy",
+                                            "min": 1,
+                                            "max": null,
+                                            "body": {
+                                              "type": "CapturingGroup",
+                                              "number": 9,
+                                              "body": [
+                                                {
+                                                  "type": "Alternative",
+                                                  "body": [
+                                                    {
+                                                      "type": "CharacterClass",
+                                                      "kind": "union",
+                                                      "negate": false,
+                                                      "body": [
+                                                        {
+                                                          "type": "CharacterClassRange",
+                                                          "min": {
+                                                            "type": "Character",
+                                                            "value": 48
+                                                          },
+                                                          "max": {
+                                                            "type": "Character",
+                                                            "value": 57
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "Alternative",
+                                                  "body": [
+                                                    {
+                                                      "type": "Character",
+                                                      "value": 95
+                                                    },
+                                                    {
+                                                      "type": "CharacterClass",
+                                                      "kind": "union",
+                                                      "negate": false,
+                                                      "body": [
+                                                        {
+                                                          "type": "CharacterClassRange",
+                                                          "min": {
+                                                            "type": "Character",
+                                                            "value": 48
+                                                          },
+                                                          "max": {
+                                                            "type": "Character",
+                                                            "value": 57
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 10,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 69
+                            },
+                            {
+                              "type": "Character",
+                              "value": 101
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CapturingGroup",
+                          "number": 11,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Quantifier",
+                                  "kind": "greedy",
+                                  "min": 0,
+                                  "max": 1,
+                                  "body": {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "Character",
+                                        "value": 45
+                                      },
+                                      {
+                                        "type": "Character",
+                                        "value": 43
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": false,
+                                  "body": [
+                                    {
+                                      "type": "CharacterClassRange",
+                                      "min": {
+                                        "type": "Character",
+                                        "value": 48
+                                      },
+                                      "max": {
+                                        "type": "Character",
+                                        "value": 57
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Quantifier",
+                                  "kind": "greedy",
+                                  "min": 0,
+                                  "max": 1,
+                                  "body": {
+                                    "type": "CapturingGroup",
+                                    "number": 12,
+                                    "body": [
+                                      {
+                                        "type": "Alternative",
+                                        "body": [
+                                          {
+                                            "type": "Quantifier",
+                                            "kind": "greedy",
+                                            "min": 1,
+                                            "max": null,
+                                            "body": {
+                                              "type": "CapturingGroup",
+                                              "number": 13,
+                                              "body": [
+                                                {
+                                                  "type": "Alternative",
+                                                  "body": [
+                                                    {
+                                                      "type": "CharacterClass",
+                                                      "kind": "union",
+                                                      "negate": false,
+                                                      "body": [
+                                                        {
+                                                          "type": "CharacterClassRange",
+                                                          "min": {
+                                                            "type": "Character",
+                                                            "value": 48
+                                                          },
+                                                          "max": {
+                                                            "type": "Character",
+                                                            "value": 57
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "Alternative",
+                                                  "body": [
+                                                    {
+                                                      "type": "Character",
+                                                      "value": 95
+                                                    },
+                                                    {
+                                                      "type": "CharacterClass",
+                                                      "kind": "union",
+                                                      "negate": false,
+                                                      "body": [
+                                                        {
+                                                          "type": "CharacterClassRange",
+                                                          "min": {
+                                                            "type": "Character",
+                                                            "value": 48
+                                                          },
+                                                          "max": {
+                                                            "type": "Character",
+                                                            "value": 57
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G(true|false)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 116
+                      },
+                      {
+                        "type": "Character",
+                        "value": 114
+                      },
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 102
+                      },
+                      {
+                        "type": "Character",
+                        "value": 97
+                      },
+                      {
+                        "type": "Character",
+                        "value": 108
+                      },
+                      {
+                        "type": "Character",
+                        "value": 115
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G0b[01]([01]|_[01])*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 48
+              },
+              {
+                "type": "Character",
+                "value": 98
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 48
+                  },
+                  {
+                    "type": "Character",
+                    "value": 49
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 48
+                            },
+                            {
+                              "type": "Character",
+                              "value": 49
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Character",
+                          "value": 95
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 48
+                            },
+                            {
+                              "type": "Character",
+                              "value": 49
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G0o[0-7]([0-7]|_[0-7])*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 48
+              },
+              {
+                "type": "Character",
+                "value": 111
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 55
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 55
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Character",
+                          "value": 95
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 55
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G0x\\h(_??\\h)*",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 48
+              },
+              {
+                "type": "Character",
+                "value": 120
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "hex",
+                "negate": false
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Quantifier",
+                          "kind": "lazy",
+                          "min": 0,
+                          "max": 1,
+                          "body": {
+                            "type": "Character",
+                            "value": 95
+                          }
+                        },
+                        {
+                          "type": "CharacterSet",
+                          "kind": "hex",
+                          "negate": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G[-+]?(inf|nan)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CharacterClass",
+                  "kind": "union",
+                  "negate": false,
+                  "body": [
+                    {
+                      "type": "Character",
+                      "value": 45
+                    },
+                    {
+                      "type": "Character",
+                      "value": 43
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 105
+                      },
+                      {
+                        "type": "Character",
+                        "value": 110
+                      },
+                      {
+                        "type": "Character",
+                        "value": 102
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 110
+                      },
+                      {
+                        "type": "Character",
+                        "value": 97
+                      },
+                      {
+                        "type": "Character",
+                        "value": 110
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G[0-9]{4}-(0[1-9]|1[012])-(?!00|3[2-9])[0-3][0-9]([ Tt](?!2[5-9])[012][0-9]:[0-5][0-9]:(?!6[1-9])[0-6][0-9](\\.[0-9]+)?(Z|[-+](?!2[5-9])[012][0-9]:[0-5][0-9])?)?",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 4,
+                "max": 4,
+                "body": {
+                  "type": "CharacterClass",
+                  "kind": "union",
+                  "negate": false,
+                  "body": [
+                    {
+                      "type": "CharacterClassRange",
+                      "min": {
+                        "type": "Character",
+                        "value": 48
+                      },
+                      "max": {
+                        "type": "Character",
+                        "value": 57
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Character",
+                "value": 45
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 48
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 49
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 49
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 48
+                          },
+                          {
+                            "type": "Character",
+                            "value": 49
+                          },
+                          {
+                            "type": "Character",
+                            "value": 50
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Character",
+                "value": 45
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 48
+                      },
+                      {
+                        "type": "Character",
+                        "value": 48
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 51
+                      },
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 50
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 51
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "CharacterClassRange",
+                    "min": {
+                      "type": "Character",
+                      "value": 48
+                    },
+                    "max": {
+                      "type": "Character",
+                      "value": 57
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 2,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 32
+                            },
+                            {
+                              "type": "Character",
+                              "value": 84
+                            },
+                            {
+                              "type": "Character",
+                              "value": 116
+                            }
+                          ]
+                        },
+                        {
+                          "type": "LookaroundAssertion",
+                          "kind": "lookahead",
+                          "negate": true,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Character",
+                                  "value": 50
+                                },
+                                {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": false,
+                                  "body": [
+                                    {
+                                      "type": "CharacterClassRange",
+                                      "min": {
+                                        "type": "Character",
+                                        "value": 53
+                                      },
+                                      "max": {
+                                        "type": "Character",
+                                        "value": 57
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 48
+                            },
+                            {
+                              "type": "Character",
+                              "value": 49
+                            },
+                            {
+                              "type": "Character",
+                              "value": 50
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 57
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Character",
+                          "value": 58
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 53
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 57
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Character",
+                          "value": 58
+                        },
+                        {
+                          "type": "LookaroundAssertion",
+                          "kind": "lookahead",
+                          "negate": true,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Character",
+                                  "value": 54
+                                },
+                                {
+                                  "type": "CharacterClass",
+                                  "kind": "union",
+                                  "negate": false,
+                                  "body": [
+                                    {
+                                      "type": "CharacterClassRange",
+                                      "min": {
+                                        "type": "Character",
+                                        "value": 49
+                                      },
+                                      "max": {
+                                        "type": "Character",
+                                        "value": 57
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 54
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 57
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 0,
+                          "max": 1,
+                          "body": {
+                            "type": "CapturingGroup",
+                            "number": 3,
+                            "body": [
+                              {
+                                "type": "Alternative",
+                                "body": [
+                                  {
+                                    "type": "Character",
+                                    "value": 46
+                                  },
+                                  {
+                                    "type": "Quantifier",
+                                    "kind": "greedy",
+                                    "min": 1,
+                                    "max": null,
+                                    "body": {
+                                      "type": "CharacterClass",
+                                      "kind": "union",
+                                      "negate": false,
+                                      "body": [
+                                        {
+                                          "type": "CharacterClassRange",
+                                          "min": {
+                                            "type": "Character",
+                                            "value": 48
+                                          },
+                                          "max": {
+                                            "type": "Character",
+                                            "value": 57
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 0,
+                          "max": 1,
+                          "body": {
+                            "type": "CapturingGroup",
+                            "number": 4,
+                            "body": [
+                              {
+                                "type": "Alternative",
+                                "body": [
+                                  {
+                                    "type": "Character",
+                                    "value": 90
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Alternative",
+                                "body": [
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "Character",
+                                        "value": 45
+                                      },
+                                      {
+                                        "type": "Character",
+                                        "value": 43
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "LookaroundAssertion",
+                                    "kind": "lookahead",
+                                    "negate": true,
+                                    "body": [
+                                      {
+                                        "type": "Alternative",
+                                        "body": [
+                                          {
+                                            "type": "Character",
+                                            "value": 50
+                                          },
+                                          {
+                                            "type": "CharacterClass",
+                                            "kind": "union",
+                                            "negate": false,
+                                            "body": [
+                                              {
+                                                "type": "CharacterClassRange",
+                                                "min": {
+                                                  "type": "Character",
+                                                  "value": 53
+                                                },
+                                                "max": {
+                                                  "type": "Character",
+                                                  "value": 57
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "Character",
+                                        "value": 48
+                                      },
+                                      {
+                                        "type": "Character",
+                                        "value": 49
+                                      },
+                                      {
+                                        "type": "Character",
+                                        "value": 50
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "CharacterClassRange",
+                                        "min": {
+                                          "type": "Character",
+                                          "value": 48
+                                        },
+                                        "max": {
+                                          "type": "Character",
+                                          "value": 57
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Character",
+                                    "value": 58
+                                  },
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "CharacterClassRange",
+                                        "min": {
+                                          "type": "Character",
+                                          "value": 48
+                                        },
+                                        "max": {
+                                          "type": "Character",
+                                          "value": 53
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "CharacterClassRange",
+                                        "min": {
+                                          "type": "Character",
+                                          "value": 48
+                                        },
+                                        "max": {
+                                          "type": "Character",
+                                          "value": 57
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G\\[",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 91
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\G\\{",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "search_start"
+              },
+              {
+                "type": "Character",
+                "value": 123
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\S+(\\s*(?=\\S))?",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 1,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": true
+                }
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 0,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterSet",
+                            "kind": "space",
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "LookaroundAssertion",
+                          "kind": "lookahead",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "CharacterSet",
+                                  "kind": "space",
+                                  "negate": true
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\\\([\"\\\\bfnrt]|u\\h{4}|U\\h{8})",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 34
+                          },
+                          {
+                            "type": "Character",
+                            "value": 92
+                          },
+                          {
+                            "type": "Character",
+                            "value": 98
+                          },
+                          {
+                            "type": "Character",
+                            "value": 102
+                          },
+                          {
+                            "type": "Character",
+                            "value": 110
+                          },
+                          {
+                            "type": "Character",
+                            "value": 114
+                          },
+                          {
+                            "type": "Character",
+                            "value": 116
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 4,
+                        "max": 4,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "hex",
+                          "negate": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 85
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 8,
+                        "max": 8,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "hex",
+                          "negate": false
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\\\[^\"\\\\bfnrt]",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 34
+                  },
+                  {
+                    "type": "Character",
+                    "value": 92
+                  },
+                  {
+                    "type": "Character",
+                    "value": 98
+                  },
+                  {
+                    "type": "Character",
+                    "value": 102
+                  },
+                  {
+                    "type": "Character",
+                    "value": 110
+                  },
+                  {
+                    "type": "Character",
+                    "value": 114
+                  },
+                  {
+                    "type": "Character",
+                    "value": 116
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\\\[^\\n\"\\\\bfnrt]",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 10
+                  },
+                  {
+                    "type": "Character",
+                    "value": 34
+                  },
+                  {
+                    "type": "Character",
+                    "value": 92
+                  },
+                  {
+                    "type": "Character",
+                    "value": 98
+                  },
+                  {
+                    "type": "Character",
+                    "value": 102
+                  },
+                  {
+                    "type": "Character",
+                    "value": 110
+                  },
+                  {
+                    "type": "Character",
+                    "value": 114
+                  },
+                  {
+                    "type": "Character",
+                    "value": 116
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\n",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "]",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 93
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^\\s*(\\[)([^]\\[]*)(])",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": true,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 93
+                            },
+                            {
+                              "type": "Character",
+                              "value": 91
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 3,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 93
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^\\s*(\\[\\[)([^]\\[]*)(]])",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 91
+                      },
+                      {
+                        "type": "Character",
+                        "value": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": true,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 93
+                            },
+                            {
+                              "type": "Character",
+                              "value": 91
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 3,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 93
+                      },
+                      {
+                        "type": "Character",
+                        "value": 93
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "}",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 125
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    }
+  ]
+}

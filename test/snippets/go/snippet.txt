@@ -1,0 +1,101 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+// Constants
+const MaxSize = 100
+
+// Struct definition
+type Person struct {
+	Name string
+	Age  int
+}
+
+// Interface definition
+type Greeter interface {
+	Greet() string
+}
+
+// Method on struct
+func (p Person) Greet() string {
+	return fmt.Sprintf("Hello, I'm %s", p.Name)
+}
+
+// Function with multiple return values
+func divide(a, b int) (int, error) {
+	if b == 0 {
+		return 0, fmt.Errorf("division by zero")
+	}
+	return a / b, nil
+}
+
+// Variadic function
+func sum(numbers ...int) int {
+	total := 0
+	for _, n := range numbers {
+		total += n
+	}
+	return total
+}
+
+// Goroutine and channel example
+func worker(id int, jobs <-chan int, results chan<- int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for j := range jobs {
+		results <- j * 2
+	}
+}
+
+func main() {
+	// Variables and short declaration
+	var name string = "Alice"
+	age := 30
+	numbers := []int{1, 2, 3, 4, 5}
+
+	// Struct instantiation
+	person := Person{Name: name, Age: age}
+	fmt.Println(person.Greet())
+
+	// Map
+	scores := map[string]int{
+		"alice": 95,
+		"bob":   87,
+	}
+
+	// For loop
+	for i := 0; i < len(numbers); i++ {
+		fmt.Printf("numbers[%d] = %d\n", i, numbers[i])
+	}
+
+	// Range loop
+	for key, value := range scores {
+		fmt.Printf("%s: %d\n", key, value)
+	}
+
+	// If with initialization
+	if result, err := divide(10, 2); err == nil {
+		fmt.Println("Result:", result)
+	} else {
+		fmt.Println("Error:", err)
+	}
+
+	// Switch statement
+	switch age {
+	case 0:
+		fmt.Println("Newborn")
+	case 18:
+		fmt.Println("Adult")
+	default:
+		fmt.Println("Other age")
+	}
+
+	// Defer
+	defer fmt.Println("Done!")
+
+	// Slice operations
+	slice := numbers[1:4]
+	fmt.Println("Slice:", slice)
+}

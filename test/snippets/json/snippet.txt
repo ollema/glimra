@@ -1,0 +1,36 @@
+{
+  "name": "Glimra",
+  "version": "1.0.0",
+  "description": "A syntax highlighter for Gleam",
+  "active": true,
+  "downloads": 42000,
+  "rating": 4.8,
+  "metadata": null,
+  "keywords": ["gleam", "syntax", "highlighting"],
+  "author": {
+    "name": "Joe",
+    "email": "joe@example.com",
+    "url": "https://example.com"
+  },
+  "contributors": [
+    { "name": "Alice", "commits": 150 },
+    { "name": "Bob", "commits": 75 }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/glimra"
+  },
+  "config": {
+    "theme": "dark",
+    "lineNumbers": true,
+    "tabSize": 2,
+    "features": {
+      "autoIndent": true,
+      "bracketMatching": true,
+      "wordWrap": false
+    }
+  },
+  "numbers": [1, 2, 3, 4, 5],
+  "mixed": [1, "two", true, null, { "nested": "object" }],
+  "escaped": "Line 1\nLine 2\tTabbed \"quoted\" text"
+}

@@ -1,0 +1,62 @@
+diff --git a/src/config.json b/src/config.json
+index 1234567..abcdefg 100644
+--- a/src/config.json
++++ b/src/config.json
+@@ -1,15 +1,18 @@
+ {
+   "name": "my-project",
+-  "version": "1.0.0",
++  "version": "2.0.0",
+   "description": "A sample project",
++  "author": "Developer Name",
+   "dependencies": {
+-    "lodash": "^4.17.0",
+-    "express": "^4.17.1"
++    "lodash": "^4.17.21",
++    "express": "^4.18.2",
++    "axios": "^1.4.0"
+   },
+   "devDependencies": {
+     "jest": "^29.0.0"
+   },
+-  "scripts": {
+-    "test": "jest"
+-  }
++  "scripts": {
++    "test": "jest",
++    "build": "tsc",
++    "start": "node dist/index.js"
++  }
+ }
+\ No newline at end of file
++}
+diff --git a/src/utils.ts b/src/utils.ts
+deleted file mode 100644
+index 9876543..0000000
+--- a/src/utils.ts
++++ /dev/null
+@@ -1,20 +0,0 @@
+-// Utility functions
+-export function formatDate(date: Date): string {
+-  return date.toISOString();
+-}
+-
+-export function capitalize(str: string): string {
+-  return str.charAt(0).toUpperCase() + str.slice(1);
+-}
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..fedcba9
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,10 @@
++# My Project
++
++A sample project demonstrating diff highlighting.
++
++## Installation
++
++```bash
++npm install
++npm run build
++```

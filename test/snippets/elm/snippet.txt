@@ -1,0 +1,341 @@
+-- Single-line comment
+
+{- Multi-line
+   comment
+-}
+
+
+module Main exposing (Model, Msg(..), init, main, update, view)
+
+import Browser
+import Browser.Navigation as Nav
+import Html exposing (Html, a, button, div, h1, input, li, p, text, ul)
+import Html.Attributes exposing (class, href, placeholder, type_, value)
+import Html.Events exposing (onClick, onInput)
+import Http
+import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
+import Task
+import Time
+import Url exposing (Url)
+
+
+
+-- CONSTANTS
+
+
+maxItems : Int
+maxItems =
+    100
+
+
+defaultName : String
+defaultName =
+    "World"
+
+
+
+-- MODEL
+
+
+type alias Model =
+    { count : Int
+    , name : String
+    , items : List String
+    , status : Status
+    , users : List User
+    , error : Maybe String
+    }
+
+
+type Status
+    = Idle
+    | Loading
+    | Success
+    | Error String
+
+
+type alias User =
+    { id : Int
+    , name : String
+    , email : String
+    , active : Bool
+    }
+
+
+
+-- INIT
+
+
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( { count = 0
+      , name = defaultName
+      , items = [ "First", "Second", "Third" ]
+      , status = Idle
+      , users = []
+      , error = Nothing
+      }
+    , Cmd.none
+    )
+
+
+
+-- MESSAGE
+
+
+type Msg
+    = Increment
+    | Decrement
+    | Reset
+    | SetName String
+    | AddItem String
+    | RemoveItem Int
+    | FetchUsers
+    | GotUsers (Result Http.Error (List User))
+    | NoOp
+
+
+
+-- UPDATE
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Increment ->
+            ( { model | count = model.count + 1 }, Cmd.none )
+
+        Decrement ->
+            ( { model | count = max 0 (model.count - 1) }, Cmd.none )
+
+        Reset ->
+            ( { model | count = 0 }, Cmd.none )
+
+        SetName name ->
+            ( { model | name = name }, Cmd.none )
+
+        AddItem item ->
+            if String.isEmpty item then
+                ( model, Cmd.none )
+
+            else
+                ( { model | items = item :: model.items }, Cmd.none )
+
+        RemoveItem index ->
+            ( { model | items = removeAt index model.items }, Cmd.none )
+
+        FetchUsers ->
+            ( { model | status = Loading }, fetchUsers )
+
+        GotUsers result ->
+            case result of
+                Ok users ->
+                    ( { model | users = users, status = Success }, Cmd.none )
+
+                Err error ->
+                    ( { model | error = Just (httpErrorToString error), status = Error "Failed to fetch" }
+                    , Cmd.none
+                    )
+
+        NoOp ->
+            ( model, Cmd.none )
+
+
+
+-- VIEW
+
+
+view : Model -> Html Msg
+view model =
+    div [ class "app" ]
+        [ h1 [] [ text "Elm Application" ]
+        , viewCounter model.count
+        , viewGreeting model.name
+        , viewItems model.items
+        , viewUsers model.status model.users
+        , viewError model.error
+        ]
+
+
+viewCounter : Int -> Html Msg
+viewCounter count =
+    div [ class "counter" ]
+        [ button [ onClick Decrement ] [ text "-" ]
+        , p [] [ text (String.fromInt count) ]
+        , button [ onClick Increment ] [ text "+" ]
+        , button [ onClick Reset ] [ text "Reset" ]
+        ]
+
+
+viewGreeting : String -> Html Msg
+viewGreeting name =
+    div [ class "greeting" ]
+        [ input
+            [ type_ "text"
+            , placeholder "Enter your name"
+            , value name
+            , onInput SetName
+            ]
+            []
+        , p []
+            [ text
+                (if String.isEmpty name then
+                    "Hello!"
+
+                 else
+                    "Hello, " ++ name ++ "!"
+                )
+            ]
+        ]
+
+
+viewItems : List String -> Html Msg
+viewItems items =
+    div [ class "items" ]
+        [ ul []
+            (List.indexedMap viewItem items)
+        ]
+
+
+viewItem : Int -> String -> Html Msg
+viewItem index item =
+    li []
+        [ text item
+        , button [ onClick (RemoveItem index) ] [ text "×" ]
+        ]
+
+
+viewUsers : Status -> List User -> Html Msg
+viewUsers status users =
+    div [ class "users" ]
+        [ button [ onClick FetchUsers ] [ text "Fetch Users" ]
+        , case status of
+            Loading ->
+                p [] [ text "Loading..." ]
+
+            Error message ->
+                p [ class "error" ] [ text message ]
+
+            _ ->
+                ul [] (List.map viewUser users)
+        ]
+
+
+viewUser : User -> Html Msg
+viewUser user =
+    li []
+        [ text (user.name ++ " <" ++ user.email ++ ">")
+        , if user.active then
+            text " (active)"
+
+          else
+            text ""
+        ]
+
+
+viewError : Maybe String -> Html Msg
+viewError maybeError =
+    case maybeError of
+        Just error ->
+            div [ class "error" ] [ text error ]
+
+        Nothing ->
+            text ""
+
+
+
+-- HTTP
+
+
+fetchUsers : Cmd Msg
+fetchUsers =
+    Http.get
+        { url = "/api/users"
+        , expect = Http.expectJson GotUsers usersDecoder
+        }
+
+
+usersDecoder : Decoder (List User)
+usersDecoder =
+    Decode.list userDecoder
+
+
+userDecoder : Decoder User
+userDecoder =
+    Decode.map4 User
+        (Decode.field "id" Decode.int)
+        (Decode.field "name" Decode.string)
+        (Decode.field "email" Decode.string)
+        (Decode.field "active" Decode.bool)
+
+
+encodeUser : User -> Encode.Value
+encodeUser user =
+    Encode.object
+        [ ( "id", Encode.int user.id )
+        , ( "name", Encode.string user.name )
+        , ( "email", Encode.string user.email )
+        , ( "active", Encode.bool user.active )
+        ]
+
+
+
+-- HELPERS
+
+
+removeAt : Int -> List a -> List a
+removeAt index list =
+    List.take index list ++ List.drop (index + 1) list
+
+
+httpErrorToString : Http.Error -> String
+httpErrorToString error =
+    case error of
+        Http.BadUrl url ->
+            "Bad URL: " ++ url
+
+        Http.Timeout ->
+            "Request timed out"
+
+        Http.NetworkError ->
+            "Network error"
+
+        Http.BadStatus status ->
+            "Bad status: " ++ String.fromInt status
+
+        Http.BadBody message ->
+            "Bad body: " ++ message
+
+
+add : Int -> Int -> Int
+add a b =
+    a + b
+
+
+factorial : Int -> Int
+factorial n =
+    if n <= 1 then
+        1
+
+    else
+        n * factorial (n - 1)
+
+
+isEven : Int -> Bool
+isEven n =
+    modBy 2 n == 0
+
+
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , view = view
+        , subscriptions = \_ -> Sub.none
+        }

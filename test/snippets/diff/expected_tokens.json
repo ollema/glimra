@@ -1,0 +1,6304 @@
+{
+  "catppuccin-mocha": {
+    "fg": "#cdd6f4",
+    "bg": "#1e1e2e",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/src/config.json",
+          "offset": 99,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 121,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,15 +1,18 ",
+          "offset": 123,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 136,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 167,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"1.0.0\",",
+          "offset": 168,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 190,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"2.0.0\",",
+          "offset": 191,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 251,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"author\": \"Developer Name\",",
+          "offset": 252,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 303,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.0\",",
+          "offset": 304,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 329,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.17.1\"",
+          "offset": 330,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 355,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.21\",",
+          "offset": 356,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 382,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.18.2\",",
+          "offset": 383,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 409,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"axios\": \"^1.4.0\"",
+          "offset": 410,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 491,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 492,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 507,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\"",
+          "offset": 508,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 527,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 528,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 532,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 533,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 548,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\",",
+          "offset": 549,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 569,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"build\": \"tsc\",",
+          "offset": 570,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 590,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"start\": \"node dist/index.js\"",
+          "offset": 591,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 625,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 626,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 661,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 662,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ /dev/null",
+          "offset": 772,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 786,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,20 +0,0 ",
+          "offset": 788,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 800,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 803,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "// Utility functions",
+          "offset": 804,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 825,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function formatDate(date: Date): string {",
+          "offset": 826,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 875,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return date.toISOString();",
+          "offset": 876,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 905,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 906,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 910,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function capitalize(str: string): string {",
+          "offset": 911,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 961,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 962,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 1015,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 1016,
+          "color": "#F38BA8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/README.md",
+          "offset": 1111,
+          "color": "#89B4FA",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 1127,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": " -0,0 +1,10 ",
+          "offset": 1129,
+          "color": "#CDD6F4",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 1141,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1144,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "# My Project",
+          "offset": 1145,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1160,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "A sample project demonstrating diff highlighting.",
+          "offset": 1161,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1213,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "## Installation",
+          "offset": 1214,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#9399B2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1232,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "```bash",
+          "offset": 1233,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1241,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm install",
+          "offset": 1242,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1254,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm run build",
+          "offset": 1255,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1269,
+          "color": "#9399B2",
+          "fontStyle": 0
+        },
+        {
+          "content": "```",
+          "offset": 1270,
+          "color": "#A6E3A1",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "dracula": {
+    "fg": "#F8F8F2",
+    "bg": "#282A36",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/src/config.json",
+          "offset": 99,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,15 +1,18 @@",
+          "offset": 121,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"version\": \"1.0.0\",",
+          "offset": 167,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"version\": \"2.0.0\",",
+          "offset": 190,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"author\": \"Developer Name\",",
+          "offset": 251,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"lodash\": \"^4.17.0\",",
+          "offset": 303,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"express\": \"^4.17.1\"",
+          "offset": 329,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"lodash\": \"^4.17.21\",",
+          "offset": 355,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"express\": \"^4.18.2\",",
+          "offset": 382,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"axios\": \"^1.4.0\"",
+          "offset": 409,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"scripts\": {",
+          "offset": 491,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"test\": \"jest\"",
+          "offset": 507,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  }",
+          "offset": 527,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"scripts\": {",
+          "offset": 532,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"test\": \"jest\",",
+          "offset": 548,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"build\": \"tsc\",",
+          "offset": 569,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"start\": \"node dist/index.js\"",
+          "offset": 590,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  }",
+          "offset": 625,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+}",
+          "offset": 661,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ /dev/null",
+          "offset": 772,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,20 +0,0 @@",
+          "offset": 786,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-// Utility functions",
+          "offset": 803,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function formatDate(date: Date): string {",
+          "offset": 825,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return date.toISOString();",
+          "offset": 875,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 905,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function capitalize(str: string): string {",
+          "offset": 910,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 961,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 1015,
+          "color": "#FF5555",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/README.md",
+          "offset": 1111,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -0,0 +1,10 @@",
+          "offset": 1127,
+          "color": "#6272A4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+# My Project",
+          "offset": 1144,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+A sample project demonstrating diff highlighting.",
+          "offset": 1160,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+## Installation",
+          "offset": 1213,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```bash",
+          "offset": 1232,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm install",
+          "offset": 1241,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm run build",
+          "offset": 1254,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```",
+          "offset": 1269,
+          "color": "#50FA7B",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "github-dark": {
+    "fg": "#e1e4e8",
+    "bg": "#24292e",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/src/config.json",
+          "offset": 99,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,15 +1,18 @@",
+          "offset": 121,
+          "color": "#B392F0",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"version\": \"1.0.0\",",
+          "offset": 167,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"version\": \"2.0.0\",",
+          "offset": 190,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"author\": \"Developer Name\",",
+          "offset": 251,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"lodash\": \"^4.17.0\",",
+          "offset": 303,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"express\": \"^4.17.1\"",
+          "offset": 329,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"lodash\": \"^4.17.21\",",
+          "offset": 355,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"express\": \"^4.18.2\",",
+          "offset": 382,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"axios\": \"^1.4.0\"",
+          "offset": 409,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"scripts\": {",
+          "offset": 491,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"test\": \"jest\"",
+          "offset": 507,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  }",
+          "offset": 527,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"scripts\": {",
+          "offset": 532,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"test\": \"jest\",",
+          "offset": 548,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"build\": \"tsc\",",
+          "offset": 569,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"start\": \"node dist/index.js\"",
+          "offset": 590,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  }",
+          "offset": 625,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+}",
+          "offset": 661,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ /dev/null",
+          "offset": 772,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,20 +0,0 @@",
+          "offset": 786,
+          "color": "#B392F0",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": "-// Utility functions",
+          "offset": 803,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function formatDate(date: Date): string {",
+          "offset": 825,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return date.toISOString();",
+          "offset": 875,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 905,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function capitalize(str: string): string {",
+          "offset": 910,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 961,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 1015,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#E1E4E8",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/README.md",
+          "offset": 1111,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -0,0 +1,10 @@",
+          "offset": 1127,
+          "color": "#B392F0",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": "+# My Project",
+          "offset": 1144,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+A sample project demonstrating diff highlighting.",
+          "offset": 1160,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+## Installation",
+          "offset": 1213,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```bash",
+          "offset": 1232,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm install",
+          "offset": 1241,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm run build",
+          "offset": 1254,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```",
+          "offset": 1269,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "gruvbox-dark-medium": {
+    "fg": "#ebdbb2",
+    "bg": "#282828",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 77,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/config.json",
+          "offset": 80,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 99,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/src/config.json",
+          "offset": 102,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 121,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,15 +1,18 ",
+          "offset": 123,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 136,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 167,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"1.0.0\",",
+          "offset": 168,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 190,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"2.0.0\",",
+          "offset": 191,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 251,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"author\": \"Developer Name\",",
+          "offset": 252,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 303,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.0\",",
+          "offset": 304,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 329,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.17.1\"",
+          "offset": 330,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 355,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.21\",",
+          "offset": 356,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 382,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.18.2\",",
+          "offset": 383,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 409,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"axios\": \"^1.4.0\"",
+          "offset": 410,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 491,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 492,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 507,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\"",
+          "offset": 508,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 527,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 528,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 532,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 533,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 548,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\",",
+          "offset": 549,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 569,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"build\": \"tsc\",",
+          "offset": 570,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 590,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"start\": \"node dist/index.js\"",
+          "offset": 591,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 625,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 626,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 661,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 662,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 753,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/utils.ts",
+          "offset": 756,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 772,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 775,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 786,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,20 +0,0 ",
+          "offset": 788,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 800,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 803,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "// Utility functions",
+          "offset": 804,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 825,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function formatDate(date: Date): string {",
+          "offset": 826,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 875,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return date.toISOString();",
+          "offset": 876,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 905,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 906,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 910,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function capitalize(str: string): string {",
+          "offset": 911,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 961,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 962,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 1015,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 1016,
+          "color": "#D65D0E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 1097,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 1100,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 1111,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/README.md",
+          "offset": 1114,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 1127,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": " -0,0 +1,10 ",
+          "offset": 1129,
+          "color": "#EBDBB2",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 1141,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1144,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "# My Project",
+          "offset": 1145,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1160,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "A sample project demonstrating diff highlighting.",
+          "offset": 1161,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1213,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "## Installation",
+          "offset": 1214,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#A89984",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1232,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "```bash",
+          "offset": 1233,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1241,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm install",
+          "offset": 1242,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1254,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm run build",
+          "offset": 1255,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1269,
+          "color": "#A89984",
+          "fontStyle": 0
+        },
+        {
+          "content": "```",
+          "offset": 1270,
+          "color": "#B8BB26",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "monokai": {
+    "fg": "#F8F8F2",
+    "bg": "#272822",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/src/config.json",
+          "offset": 99,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,15 +1,18 @@",
+          "offset": 121,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"version\": \"1.0.0\",",
+          "offset": 167,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"version\": \"2.0.0\",",
+          "offset": 190,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"author\": \"Developer Name\",",
+          "offset": 251,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"lodash\": \"^4.17.0\",",
+          "offset": 303,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"express\": \"^4.17.1\"",
+          "offset": 329,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"lodash\": \"^4.17.21\",",
+          "offset": 355,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"express\": \"^4.18.2\",",
+          "offset": 382,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"axios\": \"^1.4.0\"",
+          "offset": 409,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"scripts\": {",
+          "offset": 491,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"test\": \"jest\"",
+          "offset": 507,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  }",
+          "offset": 527,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"scripts\": {",
+          "offset": 532,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"test\": \"jest\",",
+          "offset": 548,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"build\": \"tsc\",",
+          "offset": 569,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"start\": \"node dist/index.js\"",
+          "offset": 590,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  }",
+          "offset": 625,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+}",
+          "offset": 661,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ /dev/null",
+          "offset": 772,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,20 +0,0 @@",
+          "offset": 786,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-// Utility functions",
+          "offset": 803,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function formatDate(date: Date): string {",
+          "offset": 825,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return date.toISOString();",
+          "offset": 875,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 905,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function capitalize(str: string): string {",
+          "offset": 910,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 961,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 1015,
+          "color": "#F92672",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#F8F8F2",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/README.md",
+          "offset": 1111,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -0,0 +1,10 @@",
+          "offset": 1127,
+          "color": "#75715E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+# My Project",
+          "offset": 1144,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+A sample project demonstrating diff highlighting.",
+          "offset": 1160,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+## Installation",
+          "offset": 1213,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```bash",
+          "offset": 1232,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm install",
+          "offset": 1241,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm run build",
+          "offset": 1254,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```",
+          "offset": 1269,
+          "color": "#A6E22E",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "night-owl": {
+    "fg": "#d6deeb",
+    "bg": "#011627",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 77,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/config.json",
+          "offset": 80,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 99,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/src/config.json",
+          "offset": 102,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,15 +1,18 @@",
+          "offset": 121,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 167,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"1.0.0\",",
+          "offset": 168,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 190,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"2.0.0\",",
+          "offset": 191,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 251,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"author\": \"Developer Name\",",
+          "offset": 252,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 303,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.0\",",
+          "offset": 304,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 329,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.17.1\"",
+          "offset": 330,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 355,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.21\",",
+          "offset": 356,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 382,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.18.2\",",
+          "offset": 383,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 409,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"axios\": \"^1.4.0\"",
+          "offset": 410,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 491,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 492,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 507,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\"",
+          "offset": 508,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 527,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 528,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 532,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 533,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 548,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\",",
+          "offset": 549,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 569,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"build\": \"tsc\",",
+          "offset": 570,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 590,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"start\": \"node dist/index.js\"",
+          "offset": 591,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 625,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 626,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 661,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 662,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 753,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/utils.ts",
+          "offset": 756,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 772,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 775,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,20 +0,0 @@",
+          "offset": 786,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 803,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "// Utility functions",
+          "offset": 804,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 825,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function formatDate(date: Date): string {",
+          "offset": 826,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 875,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return date.toISOString();",
+          "offset": 876,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 905,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 906,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#EF535090",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 910,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function capitalize(str: string): string {",
+          "offset": 911,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 961,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 962,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 1015,
+          "color": "#EF535090",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 1016,
+          "color": "#EF535090",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 1097,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 1100,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 1111,
+          "color": "#A2BFFC",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/README.md",
+          "offset": 1114,
+          "color": "#A2BFFC",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "@@ -0,0 +1,10 @@",
+          "offset": 1127,
+          "color": "#D6DEEB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1144,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "# My Project",
+          "offset": 1145,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1160,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "A sample project demonstrating diff highlighting.",
+          "offset": 1161,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1213,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "## Installation",
+          "offset": 1214,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1232,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "```bash",
+          "offset": 1233,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1241,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm install",
+          "offset": 1242,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1254,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm run build",
+          "offset": 1255,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1269,
+          "color": "#C5E478FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "```",
+          "offset": 1270,
+          "color": "#C5E478FF",
+          "fontStyle": 1
+        }
+      ],
+      []
+    ]
+  },
+  "nord": {
+    "fg": "#d8dee9ff",
+    "bg": "#2e3440ff",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 99,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/src/config.json",
+          "offset": 102,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 121,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,15 +1,18 ",
+          "offset": 123,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 136,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 167,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"1.0.0\",",
+          "offset": 168,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 190,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"2.0.0\",",
+          "offset": 191,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 251,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"author\": \"Developer Name\",",
+          "offset": 252,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 303,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.0\",",
+          "offset": 304,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 329,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.17.1\"",
+          "offset": 330,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 355,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.21\",",
+          "offset": 356,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 382,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.18.2\",",
+          "offset": 383,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 409,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"axios\": \"^1.4.0\"",
+          "offset": 410,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 491,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 492,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 507,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\"",
+          "offset": 508,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 527,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 528,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 532,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 533,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 548,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\",",
+          "offset": 549,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 569,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"build\": \"tsc\",",
+          "offset": 570,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 590,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"start\": \"node dist/index.js\"",
+          "offset": 591,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 625,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 626,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 661,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 662,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 772,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 775,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 786,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,20 +0,0 ",
+          "offset": 788,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 800,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 803,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "// Utility functions",
+          "offset": 804,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 825,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function formatDate(date: Date): string {",
+          "offset": 826,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 875,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return date.toISOString();",
+          "offset": 876,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 905,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 906,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 910,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function capitalize(str: string): string {",
+          "offset": 911,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 961,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 962,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 1015,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 1016,
+          "color": "#BF616A",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 1111,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/README.md",
+          "offset": 1114,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 1127,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        },
+        {
+          "content": " -0,0 +1,10 ",
+          "offset": 1129,
+          "color": "#D8DEE9FF",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 1141,
+          "color": "#8FBCBB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1144,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "# My Project",
+          "offset": 1145,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1160,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "A sample project demonstrating diff highlighting.",
+          "offset": 1161,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1213,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "## Installation",
+          "offset": 1214,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1232,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "```bash",
+          "offset": 1233,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1241,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm install",
+          "offset": 1242,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1254,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm run build",
+          "offset": 1255,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1269,
+          "color": "#ECEFF4",
+          "fontStyle": 0
+        },
+        {
+          "content": "```",
+          "offset": 1270,
+          "color": "#A3BE8C",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "one-dark-pro": {
+    "fg": "#abb2bf",
+    "bg": "#282c34",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/config.json",
+          "offset": 77,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/src/config.json",
+          "offset": 99,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,15 +1,18 @@",
+          "offset": 121,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"version\": \"1.0.0\",",
+          "offset": 167,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"version\": \"2.0.0\",",
+          "offset": 190,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"author\": \"Developer Name\",",
+          "offset": 251,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"lodash\": \"^4.17.0\",",
+          "offset": 303,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"express\": \"^4.17.1\"",
+          "offset": 329,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"lodash\": \"^4.17.21\",",
+          "offset": 355,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"express\": \"^4.18.2\",",
+          "offset": 382,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"axios\": \"^1.4.0\"",
+          "offset": 409,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"scripts\": {",
+          "offset": 491,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"test\": \"jest\"",
+          "offset": 507,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  }",
+          "offset": 527,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"scripts\": {",
+          "offset": 532,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"test\": \"jest\",",
+          "offset": 548,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"build\": \"tsc\",",
+          "offset": 569,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"start\": \"node dist/index.js\"",
+          "offset": 590,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  }",
+          "offset": 625,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+}",
+          "offset": 661,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- a/src/utils.ts",
+          "offset": 753,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ /dev/null",
+          "offset": 772,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -1,20 +0,0 @@",
+          "offset": 786,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-// Utility functions",
+          "offset": 803,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function formatDate(date: Date): string {",
+          "offset": 825,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return date.toISOString();",
+          "offset": 875,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 905,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function capitalize(str: string): string {",
+          "offset": 910,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 961,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 1015,
+          "color": "#E06C75",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "--- /dev/null",
+          "offset": 1097,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++ b/README.md",
+          "offset": 1111,
+          "color": "#61AFEF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@ -0,0 +1,10 @@",
+          "offset": 1127,
+          "color": "#ABB2BF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+# My Project",
+          "offset": 1144,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+A sample project demonstrating diff highlighting.",
+          "offset": 1160,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+## Installation",
+          "offset": 1213,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```bash",
+          "offset": 1232,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm install",
+          "offset": 1241,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm run build",
+          "offset": 1254,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```",
+          "offset": 1269,
+          "color": "#98C379",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "tokyo-night": {
+    "fg": "#a9b1d6",
+    "bg": "#1a1b26",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 77,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/config.json",
+          "offset": 80,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 99,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/src/config.json",
+          "offset": 102,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 121,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,15 +1,18 ",
+          "offset": 123,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 136,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 167,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"1.0.0\",",
+          "offset": 168,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 190,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"version\": \"2.0.0\",",
+          "offset": 191,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 251,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"author\": \"Developer Name\",",
+          "offset": 252,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 303,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.0\",",
+          "offset": 304,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 329,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.17.1\"",
+          "offset": 330,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 355,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"lodash\": \"^4.17.21\",",
+          "offset": 356,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 382,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"express\": \"^4.18.2\",",
+          "offset": 383,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 409,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"axios\": \"^1.4.0\"",
+          "offset": 410,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 491,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 492,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 507,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\"",
+          "offset": 508,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 527,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 528,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 532,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  \"scripts\": {",
+          "offset": 533,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 548,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"test\": \"jest\",",
+          "offset": 549,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 569,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"build\": \"tsc\",",
+          "offset": 570,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 590,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "    \"start\": \"node dist/index.js\"",
+          "offset": 591,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 625,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  }",
+          "offset": 626,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 661,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 662,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 753,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/utils.ts",
+          "offset": 756,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 772,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 775,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 786,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " -1,20 +0,0 ",
+          "offset": 788,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 800,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 803,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "// Utility functions",
+          "offset": 804,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 825,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function formatDate(date: Date): string {",
+          "offset": 826,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 875,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return date.toISOString();",
+          "offset": 876,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 905,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 906,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 910,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "export function capitalize(str: string): string {",
+          "offset": 911,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 961,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 962,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 1015,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "}",
+          "offset": 1016,
+          "color": "#914C54",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 1097,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 1100,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 1111,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/README.md",
+          "offset": 1114,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 1127,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": " -0,0 +1,10 ",
+          "offset": 1129,
+          "color": "#A9B1D6",
+          "fontStyle": 0
+        },
+        {
+          "content": "@@",
+          "offset": 1141,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1144,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "# My Project",
+          "offset": 1145,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1160,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "A sample project demonstrating diff highlighting.",
+          "offset": 1161,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1213,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "## Installation",
+          "offset": 1214,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1232,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "```bash",
+          "offset": 1233,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1241,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm install",
+          "offset": 1242,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1254,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "npm run build",
+          "offset": 1255,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1269,
+          "color": "#89DDFF",
+          "fontStyle": 0
+        },
+        {
+          "content": "```",
+          "offset": 1270,
+          "color": "#449DAB",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  },
+  "vitesse-dark": {
+    "fg": "#dbd7caee",
+    "bg": "#121212",
+    "tokens": [
+      [
+        {
+          "content": "diff --git a/src/config.json b/src/config.json",
+          "offset": 0,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 1234567..abcdefg 100644",
+          "offset": 47,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 77,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/config.json",
+          "offset": 80,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 99,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/src/config.json",
+          "offset": 102,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 121,
+          "color": "#666666",
+          "fontStyle": 2
+        },
+        {
+          "content": " -1,15 +1,18 ",
+          "offset": 123,
+          "color": "#B392F0",
+          "fontStyle": 2
+        },
+        {
+          "content": "@@",
+          "offset": 136,
+          "color": "#666666",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": " {",
+          "offset": 139,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"name\": \"my-project\",",
+          "offset": 142,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"version\": \"1.0.0\",",
+          "offset": 167,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"version\": \"2.0.0\",",
+          "offset": 190,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"description\": \"A sample project\",",
+          "offset": 213,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"author\": \"Developer Name\",",
+          "offset": 251,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"dependencies\": {",
+          "offset": 282,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"lodash\": \"^4.17.0\",",
+          "offset": 303,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"express\": \"^4.17.1\"",
+          "offset": 329,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"lodash\": \"^4.17.21\",",
+          "offset": 355,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"express\": \"^4.18.2\",",
+          "offset": 382,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"axios\": \"^1.4.0\"",
+          "offset": 409,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 432,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   \"devDependencies\": {",
+          "offset": 438,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "     \"jest\": \"^29.0.0\"",
+          "offset": 462,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "   },",
+          "offset": 485,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  \"scripts\": {",
+          "offset": 491,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-    \"test\": \"jest\"",
+          "offset": 507,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  }",
+          "offset": 527,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  \"scripts\": {",
+          "offset": 532,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"test\": \"jest\",",
+          "offset": 548,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"build\": \"tsc\",",
+          "offset": 569,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+    \"start\": \"node dist/index.js\"",
+          "offset": 590,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+  }",
+          "offset": 625,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": " }",
+          "offset": 630,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "\\ No newline at end of file",
+          "offset": 633,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+}",
+          "offset": 661,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/src/utils.ts b/src/utils.ts",
+          "offset": 664,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "deleted file mode 100644",
+          "offset": 705,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 9876543..0000000",
+          "offset": 730,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 753,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " a/src/utils.ts",
+          "offset": 756,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 772,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 775,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 786,
+          "color": "#666666",
+          "fontStyle": 2
+        },
+        {
+          "content": " -1,20 +0,0 ",
+          "offset": 788,
+          "color": "#B392F0",
+          "fontStyle": 2
+        },
+        {
+          "content": "@@",
+          "offset": 800,
+          "color": "#666666",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": "-// Utility functions",
+          "offset": 803,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function formatDate(date: Date): string {",
+          "offset": 825,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return date.toISOString();",
+          "offset": 875,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 905,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-",
+          "offset": 908,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-export function capitalize(str: string): string {",
+          "offset": 910,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-  return str.charAt(0).toUpperCase() + str.slice(1);",
+          "offset": 961,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "-}",
+          "offset": 1015,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "diff --git a/README.md b/README.md",
+          "offset": 1018,
+          "color": "#79B8FF",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "new file mode 100644",
+          "offset": 1053,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "index 0000000..fedcba9",
+          "offset": 1074,
+          "color": "#DBD7CAEE",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "---",
+          "offset": 1097,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " /dev/null",
+          "offset": 1100,
+          "color": "#FDAEB7",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+++",
+          "offset": 1111,
+          "color": "#666666",
+          "fontStyle": 0
+        },
+        {
+          "content": " b/README.md",
+          "offset": 1114,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "@@",
+          "offset": 1127,
+          "color": "#666666",
+          "fontStyle": 2
+        },
+        {
+          "content": " -0,0 +1,10 ",
+          "offset": 1129,
+          "color": "#B392F0",
+          "fontStyle": 2
+        },
+        {
+          "content": "@@",
+          "offset": 1141,
+          "color": "#666666",
+          "fontStyle": 2
+        }
+      ],
+      [
+        {
+          "content": "+# My Project",
+          "offset": 1144,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1158,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+A sample project demonstrating diff highlighting.",
+          "offset": 1160,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1211,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+## Installation",
+          "offset": 1213,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+",
+          "offset": 1230,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```bash",
+          "offset": 1232,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm install",
+          "offset": 1241,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+npm run build",
+          "offset": 1254,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      [
+        {
+          "content": "+```",
+          "offset": 1269,
+          "color": "#85E89D",
+          "fontStyle": 0
+        }
+      ],
+      []
+    ]
+  }
+}

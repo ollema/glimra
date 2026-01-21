@@ -1,0 +1,122 @@
+// Single-line comment
+/* Multi-line
+   comment */
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <memory>
+
+// Constants
+const int MAX_SIZE = 100;
+constexpr double PI = 3.14159;
+
+// Enum class
+enum class Status { Active, Inactive, Pending };
+
+// Template class
+template<typename T>
+class Container {
+private:
+    std::vector<T> items;
+
+public:
+    Container() = default;
+    ~Container() = default;
+
+    void add(const T& item) {
+        items.push_back(item);
+    }
+
+    T& operator[](size_t index) {
+        return items[index];
+    }
+
+    [[nodiscard]] size_t size() const noexcept {
+        return items.size();
+    }
+};
+
+// Struct with constructor
+struct Person {
+    std::string name;
+    int age;
+
+    Person(std::string n, int a) : name(std::move(n)), age(a) {}
+
+    bool isAdult() const { return age >= 18; }
+};
+
+// Function with auto return type
+auto add(int a, int b) -> int {
+    return a + b;
+}
+
+// Lambda expression
+auto multiply = [](int a, int b) -> int {
+    return a * b;
+};
+
+// Generic function with concepts (C++20)
+template<typename T>
+requires std::integral<T>
+T square(T x) {
+    return x * x;
+}
+
+int main() {
+    // Variables
+    int x = 42;
+    auto y = 3.14;
+    const char* greeting = "Hello, World!";
+    std::string message = "C++ is powerful";
+
+    // Smart pointers
+    auto ptr = std::make_unique<Person>("Alice", 30);
+    std::shared_ptr<Person> shared = std::make_shared<Person>("Bob", 25);
+
+    // Range-based for loop
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    for (const auto& num : numbers) {
+        std::cout << num << " ";
+    }
+
+    // If-else
+    if (x > 0) {
+        std::cout << "Positive\n";
+    } else if (x < 0) {
+        std::cout << "Negative\n";
+    } else {
+        std::cout << "Zero\n";
+    }
+
+    // Switch
+    switch (x % 3) {
+        case 0:
+            std::cout << "Divisible by 3\n";
+            break;
+        case 1:
+        case 2:
+            std::cout << "Remainder: " << x % 3 << "\n";
+            break;
+        default:
+            break;
+    }
+
+    // While loop
+    int i = 0;
+    while (i < 5) {
+        i++;
+    }
+
+    // Lambda with capture
+    int factor = 2;
+    auto scale = [factor](int val) { return val * factor; };
+
+    // Container usage
+    Container<int> container;
+    container.add(10);
+    container.add(20);
+
+    return 0;
+}

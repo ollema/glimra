@@ -1,0 +1,132 @@
+# TOML Configuration File
+
+# Basic key-value pairs
+title = "TOML Example"
+version = "1.0.0"
+enabled = true
+
+# Integer formats
+integer = 42
+hex = 0xDEADBEEF
+oct = 0o755
+bin = 0b11010110
+
+# Float formats
+float = 3.14159
+infinity = inf
+negative_infinity = -inf
+not_a_number = nan
+scientific = 6.022e23
+
+# Strings
+basic_string = "Hello, World!"
+multiline_basic = """
+This is a
+multiline string.
+"""
+
+literal_string = 'No escapes: \n \t'
+multiline_literal = '''
+Line 1
+Line 2
+Line 3
+'''
+
+# Dates and times
+date = 2024-01-15
+time = 14:30:00
+datetime = 2024-01-15T14:30:00Z
+datetime_local = 2024-01-15T14:30:00
+datetime_offset = 2024-01-15T14:30:00-05:00
+
+# Arrays
+numbers = [1, 2, 3, 4, 5]
+mixed = ["string", 42, true, 3.14]
+nested = [[1, 2], [3, 4]]
+
+multiline_array = [
+    "apple",
+    "banana",
+    "cherry",
+]
+
+# Inline tables
+point = { x = 10, y = 20 }
+person = { name = "Alice", age = 30 }
+
+# Standard tables
+[database]
+host = "localhost"
+port = 5432
+name = "myapp"
+ssl = true
+max_connections = 100
+
+[database.credentials]
+username = "admin"
+password = "secret123"
+
+# Array of tables
+[[servers]]
+name = "alpha"
+ip = "10.0.0.1"
+role = "primary"
+
+[[servers]]
+name = "beta"
+ip = "10.0.0.2"
+role = "secondary"
+
+[[servers]]
+name = "gamma"
+ip = "10.0.0.3"
+role = "replica"
+
+# Nested tables
+[application]
+name = "MyApp"
+debug = false
+
+[application.logging]
+level = "info"
+format = "json"
+output = "stdout"
+
+[application.logging.file]
+path = "/var/log/myapp.log"
+max_size = "100MB"
+max_backups = 5
+
+[application.features]
+feature_a = true
+feature_b = false
+feature_c = true
+
+# Environment-specific configuration
+[environments.development]
+debug = true
+log_level = "debug"
+api_url = "http://localhost:8080"
+
+[environments.production]
+debug = false
+log_level = "warn"
+api_url = "https://api.example.com"
+
+# Package manifest style (like Cargo.toml)
+[package]
+name = "my-project"
+version = "0.1.0"
+authors = ["Alice <alice@example.com>", "Bob <bob@example.com>"]
+edition = "2021"
+description = "A sample project"
+license = "MIT"
+repository = "https://github.com/example/my-project"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+log = "0.4"
+
+[dev-dependencies]
+criterion = "0.5"

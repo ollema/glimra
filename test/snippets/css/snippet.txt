@@ -1,0 +1,76 @@
+/* CSS Variables */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --font-size-base: 16px;
+}
+
+/* Element and class selectors */
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+/* ID selector */
+#main-header {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  padding: 1rem 2rem;
+}
+
+/* Class with pseudo-classes */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+/* Attribute selector */
+input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Media query */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+/* Keyframes animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}

@@ -1,0 +1,192 @@
+---
+// Frontmatter - runs at build time
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+// TypeScript interfaces
+interface Props {
+  title: string;
+  description?: string;
+}
+
+// Props with defaults
+const { title, description = 'Default description' } = Astro.props as Props;
+
+// Variables
+const name = 'Astro';
+const items = ['First', 'Second', 'Third'];
+const isActive = true;
+
+// Fetch data at build time
+const posts = await getCollection('blog');
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+
+// Functions
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+// Dynamic routes
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+// Constants
+const SITE_URL = import.meta.env.SITE;
+const API_KEY = import.meta.env.API_KEY;
+---
+
+<!-- HTML template -->
+<Layout title={title}>
+  <!-- Text interpolation -->
+  <h1>{title}</h1>
+  <p>{description}</p>
+  <p>Welcome to {name}!</p>
+
+  <!-- Expressions -->
+  <p>The answer is {40 + 2}</p>
+  <p>Uppercase: {name.toUpperCase()}</p>
+
+  <!-- Conditional rendering -->
+  {isActive && <span class="active">Active</span>}
+
+  {isActive ? (
+    <p>Status: Active</p>
+  ) : (
+    <p>Status: Inactive</p>
+  )}
+
+  <!-- List rendering -->
+  <ul>
+    {items.map((item, index) => (
+      <li key={index}>{item}</li>
+    ))}
+  </ul>
+
+  <!-- Dynamic attributes -->
+  <img src={`/images/${name.toLowerCase()}.png`} alt={name} />
+  <a href={SITE_URL}>Home</a>
+
+  <!-- Class list -->
+  <div class:list={['base-class', { active: isActive }, isActive && 'highlighted']}>
+    Styled content
+  </div>
+
+  <!-- Spread attributes -->
+  <Component {...props} />
+
+  <!-- HTML comments preserved -->
+  <!-- This is a comment -->
+
+  <!-- Slots -->
+  <Card>
+    <h2 slot="header">Card Title</h2>
+    <p>Card content goes here</p>
+    <span slot="footer">Footer text</span>
+  </Card>
+
+  <!-- Named slots -->
+  <slot name="header" />
+  <slot />
+  <slot name="footer" />
+
+  <!-- set:html directive -->
+  <div set:html={htmlContent} />
+
+  <!-- Client directives for hydration -->
+  <ReactCounter client:load count={0} />
+  <VueComponent client:visible />
+  <SvelteComponent client:idle />
+  <SolidComponent client:only="solid" />
+  <PreactComponent client:media="(max-width: 600px)" />
+
+  <!-- define:vars for CSS -->
+  <style define:vars={{ textColor: 'red', fontSize: '16px' }}>
+    h1 {
+      color: var(--textColor);
+      font-size: var(--fontSize);
+    }
+  </style>
+
+  <!-- is:global for global styles -->
+  <style is:global>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
+  <!-- Inline scripts -->
+  <script>
+    // Client-side JavaScript
+    const button = document.querySelector('button');
+    button?.addEventListener('click', () => {
+      console.log('Clicked!');
+    });
+  </script>
+
+  <!-- Module scripts -->
+  <script type="module">
+    import { animate } from 'motion';
+
+    animate('.element', { opacity: 1 });
+  </script>
+
+  <!-- Inline script that doesn't get processed -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+
+  <!-- Blog posts -->
+  <section>
+    {posts.map((post) => (
+      <article>
+        <h2><a href={`/blog/${post.slug}`}>{post.data.title}</a></h2>
+        <time datetime={post.data.date.toISOString()}>
+          {formatDate(post.data.date)}
+        </time>
+        <p>{post.data.description}</p>
+      </article>
+    ))}
+  </section>
+
+  <!-- Markdown rendering -->
+  <article>
+    <Content />
+  </article>
+</Layout>
+
+<style>
+  /* Scoped styles */
+  h1 {
+    color: #333;
+    font-size: 2rem;
+  }
+
+  .active {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+</style>

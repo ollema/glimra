@@ -1,0 +1,603 @@
+{
+  "language": "ini",
+  "total": 11,
+  "successful": 11,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "#",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 35
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 39
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(?!\\G)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Assertion",
+                        "kind": "search_start"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(^[\\t ]+)?(?=#)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Assertion",
+                          "kind": "string_start"
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterClass",
+                            "kind": "union",
+                            "negate": false,
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 9
+                              },
+                              {
+                                "type": "Character",
+                                "value": 32
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 35
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "(^[\\t ]+)?(?=;)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "CapturingGroup",
+                  "number": 1,
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Assertion",
+                          "kind": "string_start"
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterClass",
+                            "kind": "union",
+                            "negate": false,
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 9
+                              },
+                              {
+                                "type": "Character",
+                                "value": 32
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 59
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": ";",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 59
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\\\.",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "dot"
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\b([-.0-9A-Z_a-z]+)\\b\\s*(=)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 1,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterClass",
+                          "kind": "union",
+                          "negate": false,
+                          "body": [
+                            {
+                              "type": "Character",
+                              "value": 45
+                            },
+                            {
+                              "type": "Character",
+                              "value": 46
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 48
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 57
+                              }
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 90
+                              }
+                            },
+                            {
+                              "type": "Character",
+                              "value": 95
+                            },
+                            {
+                              "type": "CharacterClassRange",
+                              "min": {
+                                "type": "Character",
+                                "value": 97
+                              },
+                              "max": {
+                                "type": "Character",
+                                "value": 122
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 61
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\n",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^(\\[)(.*?)(])",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "lazy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "dot"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 3,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 93
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    }
+  ]
+}

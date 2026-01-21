@@ -1,0 +1,244 @@
+; Single-line comment
+
+;; Double semicolon comment (more common)
+
+(comment
+  "Multi-line comment block
+   This is not evaluated")
+
+;; Namespace declaration
+(ns example.core
+  (:require [clojure.string :as str]
+            [clojure.set :as set]
+            [clojure.java.io :as io])
+  (:import [java.util Date UUID]
+           [java.time LocalDateTime]))
+
+;; Constants
+(def max-size 100)
+(def pi 3.14159)
+(def greeting "Hello, World!")
+
+;; Private var
+(def ^:private secret-key "abc123")
+
+;; Dynamic var
+(def ^:dynamic *debug* false)
+
+;; Basic data types
+(def my-int 42)
+(def my-float 3.14)
+(def my-ratio 1/3)
+(def my-string "Hello")
+(def my-char \a)
+(def my-keyword :status)
+(def my-symbol 'my-symbol)
+(def my-bool true)
+(def my-nil nil)
+
+;; Collections
+(def my-list '(1 2 3 4 5))
+(def my-vector [1 2 3 4 5])
+(def my-set #{1 2 3 4 5})
+(def my-map {:name "Alice" :age 30 :active true})
+
+;; Nested collections
+(def nested {:users [{:name "Alice" :roles #{:admin :user}}
+                     {:name "Bob" :roles #{:user}}]
+             :settings {:theme "dark" :notifications true}})
+
+;; Function definition
+(defn add [a b]
+  (+ a b))
+
+;; Function with docstring
+(defn greet
+  "Greets a person by name"
+  [name]
+  (str "Hello, " name "!"))
+
+;; Multi-arity function
+(defn greet-all
+  ([] (greet-all "World"))
+  ([name] (str "Hello, " name "!"))
+  ([greeting name] (str greeting ", " name "!")))
+
+;; Variadic function
+(defn sum [& numbers]
+  (reduce + 0 numbers))
+
+;; Private function
+(defn- helper-fn [x]
+  (* x 2))
+
+;; Higher-order function
+(defn apply-twice [f x]
+  (f (f x)))
+
+;; Anonymous functions
+(def increment (fn [x] (+ x 1)))
+(def double-it #(* % 2))
+(def add-nums #(+ %1 %2))
+
+;; Let bindings
+(defn calculate [x]
+  (let [doubled (* x 2)
+        squared (* doubled doubled)]
+    (+ squared 1)))
+
+;; Destructuring
+(defn process-person [{:keys [name age] :or {age 0}}]
+  (str name " is " age " years old"))
+
+(defn first-two [[a b & rest]]
+  [a b])
+
+;; Conditionals
+(defn classify [n]
+  (cond
+    (neg? n) "negative"
+    (zero? n) "zero"
+    (< n 10) "small"
+    :else "large"))
+
+(defn status-message [status]
+  (case status
+    :active "Currently active"
+    :inactive "Not active"
+    :pending "Awaiting activation"
+    "Unknown status"))
+
+;; If expression
+(defn abs [n]
+  (if (neg? n)
+    (- n)
+    n))
+
+;; When and when-not
+(defn log-if-debug [msg]
+  (when *debug*
+    (println "DEBUG:" msg)))
+
+;; Threading macros
+(defn process-data [data]
+  (-> data
+      (str/trim)
+      (str/lower-case)
+      (str/split #"\s+")))
+
+(defn transform-numbers [numbers]
+  (->> numbers
+       (filter even?)
+       (map #(* % 2))
+       (reduce +)))
+
+;; Loop/recur
+(defn factorial [n]
+  (loop [n n
+         acc 1]
+    (if (<= n 1)
+      acc
+      (recur (dec n) (* acc n)))))
+
+;; Lazy sequences
+(def natural-numbers (iterate inc 0))
+(def evens (filter even? natural-numbers))
+
+;; Sequence operations
+(defn example-seq-ops []
+  (let [numbers (range 1 11)]
+    {:doubled (map #(* % 2) numbers)
+     :evens (filter even? numbers)
+     :sum (reduce + numbers)
+     :first-three (take 3 numbers)
+     :partitioned (partition 2 numbers)}))
+
+;; Records
+(defrecord Person [name age email])
+
+(def alice (->Person "Alice" 30 "alice@example.com"))
+(def bob (map->Person {:name "Bob" :age 25}))
+
+;; Protocols
+(defprotocol Describable
+  (describe [this] "Returns a description"))
+
+(extend-type Person
+  Describable
+  (describe [p]
+    (str (:name p) " is " (:age p) " years old")))
+
+;; Multimethods
+(defmulti area :shape)
+
+(defmethod area :circle [{:keys [radius]}]
+  (* pi radius radius))
+
+(defmethod area :rectangle [{:keys [width height]}]
+  (* width height))
+
+(defmethod area :default [_]
+  0)
+
+;; Atoms for state
+(def counter (atom 0))
+
+(defn increment-counter! []
+  (swap! counter inc))
+
+(defn reset-counter! []
+  (reset! counter 0))
+
+;; Refs and transactions
+(def account-a (ref 100))
+(def account-b (ref 200))
+
+(defn transfer [from to amount]
+  (dosync
+    (alter from - amount)
+    (alter to + amount)))
+
+;; Agents
+(def log-agent (agent []))
+
+(defn log-message [msg]
+  (send log-agent conj msg))
+
+;; Error handling
+(defn safe-divide [a b]
+  (try
+    (/ a b)
+    (catch ArithmeticException e
+      (println "Cannot divide by zero")
+      nil)
+    (finally
+      (println "Division attempted"))))
+
+;; Java interop
+(defn current-time []
+  (LocalDateTime/now))
+
+(defn create-uuid []
+  (UUID/randomUUID))
+
+(defn string-length [s]
+  (.length s))
+
+;; Macros
+(defmacro unless [condition & body]
+  `(if (not ~condition)
+     (do ~@body)))
+
+(defmacro with-timing [& body]
+  `(let [start# (System/currentTimeMillis)
+         result# (do ~@body)
+         end# (System/currentTimeMillis)]
+     (println "Elapsed time:" (- end# start#) "ms")
+     result#))
+
+;; Main function
+(defn -main [& args]
+  (println (greet "World"))
+  (println "Factorial 5:" (factorial 5))
+  (println (describe alice))
+  (println "Circle area:" (area {:shape :circle :radius 5})))

@@ -1,0 +1,120 @@
+# Imports
+import os
+from typing import List, Optional, Dict
+from dataclasses import dataclass
+from functools import wraps
+
+# Constants
+MAX_SIZE: int = 100
+PI = 3.14159
+
+# Decorator
+def log_calls(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
+# Dataclass
+@dataclass
+class Person:
+    name: str
+    age: int
+    active: bool = True
+
+# Class with methods
+class Calculator:
+    """A simple calculator class."""
+
+    def __init__(self, initial: int = 0):
+        self._value = initial
+
+    @property
+    def value(self) -> int:
+        return self._value
+
+    @log_calls
+    def add(self, n: int) -> "Calculator":
+        self._value += n
+        return self
+
+    @staticmethod
+    def is_even(n: int) -> bool:
+        return n % 2 == 0
+
+    @classmethod
+    def from_string(cls, s: str) -> "Calculator":
+        return cls(int(s))
+
+# Function with type hints
+def process_items(items: List[int]) -> Dict[str, int]:
+    return {
+        "sum": sum(items),
+        "count": len(items),
+        "max": max(items) if items else 0,
+    }
+
+# Async function
+async def fetch_data(url: str) -> Optional[str]:
+    try:
+        # Simulated async operation
+        return f"Data from {url}"
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+# List comprehension
+numbers = [1, 2, 3, 4, 5]
+squares = [x ** 2 for x in numbers]
+evens = [x for x in numbers if x % 2 == 0]
+
+# Dictionary comprehension
+word_lengths = {word: len(word) for word in ["hello", "world"]}
+
+# Generator expression
+gen = (x * 2 for x in range(10))
+
+# Context manager
+with open("file.txt", "r") as f:
+    content = f.read()
+
+# Exception handling
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Cannot divide by zero: {e}")
+except Exception:
+    print("Unknown error")
+else:
+    print("Success")
+finally:
+    print("Cleanup")
+
+# Match statement (Python 3.10+)
+def describe(value):
+    match value:
+        case 0:
+            return "zero"
+        case int(n) if n > 0:
+            return "positive"
+        case int():
+            return "negative"
+        case str(s):
+            return f"string: {s}"
+        case _:
+            return "unknown"
+
+# Lambda and higher-order functions
+doubled = list(map(lambda x: x * 2, numbers))
+filtered = list(filter(lambda x: x > 2, numbers))
+
+# F-strings with expressions
+name = "Alice"
+age = 30
+message = f"{name=}, {age=}, next year: {age + 1}"
+
+if __name__ == "__main__":
+    person = Person("Bob", 25)
+    calc = Calculator(10).add(5)
+    print(f"Result: {calc.value}")

@@ -1,0 +1,149 @@
+; Single-line comment with semicolon
+# Single-line comment with hash
+
+; Global settings (before any section)
+global_setting = value
+
+; ========================================
+; Application Configuration
+; ========================================
+
+[general]
+; Basic application settings
+app_name = My Application
+version = 1.0.0
+debug = true
+log_level = INFO
+
+; String values with different quotes
+title = "Quoted String"
+description = 'Single quoted'
+unquoted = Plain text value
+
+; Numbers
+port = 8080
+timeout = 30
+max_connections = 100
+pi = 3.14159
+
+; Boolean values
+enabled = true
+disabled = false
+use_ssl = yes
+use_compression = no
+active = on
+inactive = off
+
+; Empty value
+empty_value =
+
+[database]
+; Database connection settings
+host = localhost
+port = 5432
+name = myapp_production
+user = admin
+password = secret123
+
+; Connection pool
+pool_size = 10
+pool_timeout = 30
+max_overflow = 5
+
+; Options with special characters
+connection_string = "postgresql://user:pass@host:5432/db?sslmode=require"
+query = SELECT * FROM users WHERE active = 1
+
+[database.replica]
+; Nested section for replica settings
+host = replica.example.com
+port = 5432
+read_only = true
+
+[server]
+; Web server configuration
+bind_address = 0.0.0.0
+port = 443
+workers = 4
+
+; SSL settings
+ssl_enabled = true
+ssl_cert = /etc/ssl/certs/server.crt
+ssl_key = /etc/ssl/private/server.key
+
+; Timeouts in seconds
+read_timeout = 60
+write_timeout = 60
+idle_timeout = 120
+
+[logging]
+; Logging configuration
+level = DEBUG
+format = %(asctime)s - %(name)s - %(levelname)s - %(message)s
+file = /var/log/myapp/app.log
+max_size = 10485760
+backup_count = 5
+console = true
+
+[cache]
+; Cache configuration
+backend = redis
+host = localhost
+port = 6379
+db = 0
+prefix = myapp:
+ttl = 3600
+compression = true
+
+[email]
+; Email settings
+smtp_host = smtp.example.com
+smtp_port = 587
+smtp_user = noreply@example.com
+smtp_password = emailpassword
+use_tls = true
+from_address = "My App <noreply@example.com>"
+admin_email = admin@example.com
+
+[features]
+; Feature flags
+new_dashboard = true
+beta_features = false
+experimental_api = false
+dark_mode = true
+two_factor_auth = enabled
+
+[paths]
+; File system paths
+data_dir = /var/lib/myapp
+upload_dir = /var/lib/myapp/uploads
+temp_dir = /tmp/myapp
+static_dir = ./static
+templates_dir = ./templates
+
+; Windows-style paths
+windows_path = C:\Program Files\MyApp
+unc_path = \\server\share\folder
+
+[api]
+; API configuration
+base_url = https://api.example.com/v1
+timeout = 30000
+retry_count = 3
+rate_limit = 100
+api_key = sk-12345abcde67890fghij
+
+; Endpoints
+users_endpoint = /users
+products_endpoint = /products
+orders_endpoint = /orders
+
+[environment]
+; Environment-specific overrides
+env = production
+region = us-east-1
+instance_id = i-1234567890abcdef0
+
+; Feature toggles per environment
+enable_profiling = false
+enable_debug_toolbar = false

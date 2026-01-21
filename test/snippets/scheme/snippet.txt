@@ -1,0 +1,267 @@
+; Single-line comment
+
+#|
+  Multi-line
+  block comment
+  (R6RS/R7RS syntax)
+|#
+
+;;; Triple semicolon for section headers
+
+;; Imports (R7RS)
+(import (scheme base)
+        (scheme write)
+        (scheme case-lambda))
+
+;; Constants
+(define MAX-SIZE 100)
+(define PI 3.14159)
+(define GREETING "Hello, World!")
+
+;; Basic values
+(define my-number 42)
+(define my-float 3.14)
+(define my-string "Hello, Scheme!")
+(define my-char #\a)
+(define my-bool #t)
+(define my-symbol 'my-symbol)
+
+;; Lists
+(define my-list '(1 2 3 4 5))
+(define my-list-2 (list 1 2 3 4 5))
+(define my-pair (cons 'a 'b))
+(define my-nested '((1 2) (3 4) (5 6)))
+
+;; Vectors
+(define my-vector #(1 2 3 4 5))
+(define my-vector-2 (vector 'a 'b 'c))
+
+;; Simple function
+(define (add a b)
+  (+ a b))
+
+;; Function with documentation
+(define (greet name)
+  ;; Returns a greeting string
+  (string-append "Hello, " name "!"))
+
+;; Lambda expressions
+(define increment (lambda (x) (+ x 1)))
+(define double (lambda (x) (* x 2)))
+
+;; Multi-argument lambda
+(define sum-all
+  (lambda args
+    (apply + args)))
+
+;; Case-lambda for multiple arities
+(define greet-many
+  (case-lambda
+    (() "Hello!")
+    ((name) (string-append "Hello, " name "!"))
+    ((greeting name) (string-append greeting ", " name "!"))))
+
+;; Recursive function
+(define (factorial n)
+  (if (<= n 1)
+      1
+      (* n (factorial (- n 1)))))
+
+;; Tail-recursive with named let
+(define (factorial-tail n)
+  (let loop ((n n) (acc 1))
+    (if (<= n 1)
+        acc
+        (loop (- n 1) (* acc n)))))
+
+;; Higher-order functions
+(define (apply-twice f x)
+  (f (f x)))
+
+(define (compose f g)
+  (lambda (x) (f (g x))))
+
+(define (curry f)
+  (lambda (x)
+    (lambda (y)
+      (f x y))))
+
+;; Conditional expressions
+(define (classify n)
+  (cond
+    ((< n 0) "negative")
+    ((= n 0) "zero")
+    ((< n 10) "small")
+    (else "large")))
+
+;; If expression
+(define (abs-value n)
+  (if (< n 0)
+      (- n)
+      n))
+
+;; Case expression
+(define (day-type day)
+  (case day
+    ((saturday sunday) "weekend")
+    ((monday tuesday wednesday thursday friday) "weekday")
+    (else "unknown")))
+
+;; Let bindings
+(define (calculate x)
+  (let ((doubled (* x 2))
+        (squared (* x x)))
+    (+ doubled squared)))
+
+;; Let* for sequential bindings
+(define (process x)
+  (let* ((a (* x 2))
+         (b (+ a 10))
+         (c (* b b)))
+    c))
+
+;; Letrec for mutually recursive functions
+(define (even-odd n)
+  (letrec ((is-even? (lambda (n)
+                       (if (zero? n)
+                           #t
+                           (is-odd? (- n 1)))))
+           (is-odd? (lambda (n)
+                      (if (zero? n)
+                          #f
+                          (is-even? (- n 1))))))
+    (list (is-even? n) (is-odd? n))))
+
+;; List operations
+(define numbers '(1 2 3 4 5))
+
+(define (double-list lst)
+  (map (lambda (x) (* x 2)) lst))
+
+(define (filter-evens lst)
+  (filter even? lst))
+
+(define (sum-list lst)
+  (fold-right + 0 lst))
+
+;; List processing with recursion
+(define (length lst)
+  (if (null? lst)
+      0
+      (+ 1 (length (cdr lst)))))
+
+(define (append-lists lst1 lst2)
+  (if (null? lst1)
+      lst2
+      (cons (car lst1)
+            (append-lists (cdr lst1) lst2))))
+
+(define (reverse-list lst)
+  (let loop ((lst lst) (acc '()))
+    (if (null? lst)
+        acc
+        (loop (cdr lst) (cons (car lst) acc)))))
+
+;; Association lists
+(define person-alist
+  '((name . "Alice")
+    (age . 30)
+    (email . "alice@example.com")))
+
+(define (alist-get key alist)
+  (let ((pair (assoc key alist)))
+    (if pair
+        (cdr pair)
+        #f)))
+
+;; Quasiquote and unquote
+(define (make-point x y)
+  `(point (x ,x) (y ,y)))
+
+(define (expand-list items)
+  `(items ,@items))
+
+;; Macros with syntax-rules
+(define-syntax when
+  (syntax-rules ()
+    ((when condition body ...)
+     (if condition
+         (begin body ...)))))
+
+(define-syntax unless
+  (syntax-rules ()
+    ((unless condition body ...)
+     (if (not condition)
+         (begin body ...)))))
+
+(define-syntax swap!
+  (syntax-rules ()
+    ((swap! x y)
+     (let ((tmp x))
+       (set! x y)
+       (set! y tmp)))))
+
+;; More complex macro
+(define-syntax for
+  (syntax-rules (in)
+    ((for var in lst body ...)
+     (for-each (lambda (var) body ...) lst))))
+
+;; Error handling (R7RS)
+(define (safe-divide a b)
+  (guard (ex
+          ((error-object? ex)
+           (display "Error: ")
+           (display (error-object-message ex))
+           (newline)
+           #f))
+    (/ a b)))
+
+;; Delay and force (lazy evaluation)
+(define lazy-value
+  (delay (begin
+           (display "Computing...")
+           (newline)
+           42)))
+
+;; Call with current continuation
+(define (find-first pred lst)
+  (call/cc
+   (lambda (return)
+     (for-each (lambda (x)
+                 (if (pred x)
+                     (return x)))
+               lst)
+     #f)))
+
+;; Multiple values
+(define (divmod a b)
+  (values (quotient a b) (remainder a b)))
+
+(define (use-divmod)
+  (call-with-values
+   (lambda () (divmod 17 5))
+   (lambda (q r)
+     (display "Quotient: ") (display q) (newline)
+     (display "Remainder: ") (display r) (newline))))
+
+;; Dynamic wind
+(define (with-file filename proc)
+  (let ((port #f))
+    (dynamic-wind
+      (lambda () (set! port (open-input-file filename)))
+      (lambda () (proc port))
+      (lambda () (close-input-port port)))))
+
+;; Main
+(define (main)
+  (display (greet "World"))
+  (newline)
+  (display "Factorial 5: ")
+  (display (factorial 5))
+  (newline)
+  (display "Doubled: ")
+  (display (double-list numbers))
+  (newline))
+
+(main)

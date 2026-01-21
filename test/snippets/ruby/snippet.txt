@@ -1,0 +1,179 @@
+# frozen_string_literal: true
+
+# Module definition
+module Greeting
+  def greet
+    "Hello, #{name}!"
+  end
+end
+
+# Class definition
+class Person
+  include Greeting
+  attr_accessor :name, :age
+  attr_reader :id
+
+  @@count = 0
+
+  def initialize(name, age)
+    @name = name
+    @age = age
+    @id = @@count += 1
+  end
+
+  def adult?
+    age >= 18
+  end
+
+  def <=>(other)
+    age <=> other.age
+  end
+
+  def to_s
+    "Person(#{name}, #{age})"
+  end
+
+  class << self
+    def create(name:, age:)
+      new(name, age)
+    end
+
+    def count
+      @@count
+    end
+  end
+
+  private
+
+  def secret_method
+    "This is private"
+  end
+end
+
+# Inheritance
+class Employee < Person
+  attr_accessor :role, :salary
+
+  def initialize(name, age, role, salary)
+    super(name, age)
+    @role = role
+    @salary = salary
+  end
+
+  def annual_salary
+    salary * 12
+  end
+end
+
+# Blocks, Procs, and Lambdas
+def with_timing
+  start = Time.now
+  result = yield
+  puts "Took #{Time.now - start} seconds"
+  result
+end
+
+square = ->(x) { x * x }
+double = proc { |x| x * 2 }
+
+# Array methods
+numbers = [1, 2, 3, 4, 5]
+doubled = numbers.map { |n| n * 2 }
+evens = numbers.select(&:even?)
+sum = numbers.reduce(0, :+)
+
+# Hash operations
+person_hash = {
+  name: "Alice",
+  age: 30,
+  city: "NYC"
+}
+person_hash[:email] = "alice@example.com"
+person_hash.each { |key, value| puts "#{key}: #{value}" }
+
+# Symbols and strings
+symbol = :my_symbol
+string = "Hello, World!"
+interpolated = "The answer is #{40 + 2}"
+heredoc = <<~HEREDOC
+  This is a heredoc.
+  It preserves formatting.
+HEREDOC
+
+# Regular expressions
+pattern = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+email = "test@example.com"
+match = email.match(pattern)
+
+# Exception handling
+def divide(a, b)
+  raise ArgumentError, "Cannot divide by zero" if b.zero?
+  a / b
+rescue ArgumentError => e
+  puts "Error: #{e.message}"
+  nil
+ensure
+  puts "Division attempted"
+end
+
+# Struct
+Point = Struct.new(:x, :y) do
+  def distance_from_origin
+    Math.sqrt(x**2 + y**2)
+  end
+end
+
+# Enumerable
+class Fibonacci
+  include Enumerable
+
+  def initialize(limit)
+    @limit = limit
+  end
+
+  def each
+    a, b = 0, 1
+    while a <= @limit
+      yield a
+      a, b = b, a + b
+    end
+  end
+end
+
+# Module mixins
+module Cacheable
+  def cache
+    @cache ||= {}
+  end
+
+  def cached(key, &block)
+    cache[key] ||= block.call
+  end
+end
+
+# Metaprogramming
+class DynamicClass
+  %w[foo bar baz].each do |method_name|
+    define_method(method_name) do
+      "Called #{method_name}"
+    end
+  end
+
+  def method_missing(name, *args)
+    "Unknown method: #{name}"
+  end
+
+  def respond_to_missing?(name, include_private = false)
+    true
+  end
+end
+
+# Main execution
+if __FILE__ == $PROGRAM_NAME
+  alice = Person.create(name: "Alice", age: 30)
+  puts alice.greet
+  puts Person.count
+
+  fib = Fibonacci.new(100)
+  puts fib.take(10).to_a
+end

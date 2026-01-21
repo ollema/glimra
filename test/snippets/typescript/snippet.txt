@@ -1,0 +1,154 @@
+/* eslint-disable */
+// @ts-nocheck
+
+// Type aliases and interfaces
+type UserId = string;
+type Status = "active" | "inactive" | "pending";
+
+interface Person {
+  readonly id: UserId;
+  name: string;
+  age: number;
+  status?: Status;
+}
+
+// Generic interface
+interface Repository<T> {
+  find(id: string): T | undefined;
+  save(item: T): void;
+  delete(id: string): boolean;
+}
+
+// Enum
+enum Color {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE",
+}
+
+// Class with access modifiers
+class User implements Person {
+  readonly id: UserId;
+  private _password: string;
+  protected role: string = "user";
+
+  constructor(
+    public name: string,
+    public age: number,
+    public status: Status = "active"
+  ) {
+    this.id = crypto.randomUUID();
+    this._password = "";
+  }
+
+  get password(): string {
+    return "********";
+  }
+
+  set password(value: string) {
+    this._password = value;
+  }
+
+  greet(): string {
+    return `Hello, I'm ${this.name}`;
+  }
+}
+
+// Abstract class
+abstract class Animal {
+  abstract makeSound(): string;
+
+  move(): void {
+    console.log("Moving...");
+  }
+}
+
+// Generic class
+class Stack<T> {
+  private items: T[] = [];
+
+  push(item: T): void {
+    this.items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+}
+
+// Generic function with constraints
+function merge<T extends object, U extends object>(a: T, b: U): T & U {
+  return { ...a, ...b };
+}
+
+// Arrow functions with types
+const add = (a: number, b: number): number => a + b;
+const greet = (name: string): string => `Hello, ${name}!`;
+
+// Async/await with types
+async function fetchUser(id: string): Promise<Person | null> {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) throw new Error("Not found");
+    return await response.json();
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
+// Type guards
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function processValue(value: string | number): string {
+  if (isString(value)) {
+    return value.toUpperCase();
+  }
+  return value.toFixed(2);
+}
+
+// Mapped types
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
+// Conditional types
+type NonNullable<T> = T extends null | undefined ? never : T;
+
+// Template literal types
+type EventName = `on${Capitalize<string>}`;
+
+// Destructuring with types
+const { name, age }: Person = { id: "1", name: "Alice", age: 30 };
+const [first, ...rest]: number[] = [1, 2, 3, 4, 5];
+
+// Optional chaining and nullish coalescing
+const user: Person | null = null;
+const userName = user?.name ?? "Anonymous";
+
+// Decorators (experimental)
+function log(target: any, key: string, descriptor: PropertyDescriptor) {
+  const original = descriptor.value;
+  descriptor.value = function (...args: any[]) {
+    console.log(`Calling ${key}`);
+    return original.apply(this, args);
+  };
+}
+
+// Namespace
+namespace Validation {
+  export function isValid(s: string): boolean {
+    return s.length > 0;
+  }
+}
+
+// Module exports
+export { User, Stack, add };
+export type { Person, Repository };
+export default User;

@@ -1,0 +1,119 @@
+# Markdown Syntax Guide
+
+## Headers
+
+# H1 Header
+## H2 Header
+### H3 Header
+#### H4 Header
+##### H5 Header
+###### H6 Header
+
+## Emphasis
+
+*italic text* or _italic text_
+**bold text** or __bold text__
+***bold and italic***
+~~strikethrough~~
+
+## Lists
+
+### Unordered List
+- Item 1
+- Item 2
+  - Nested item 2.1
+  - Nested item 2.2
+- Item 3
+
+### Ordered List
+1. First item
+2. Second item
+   1. Nested item 2.1
+   2. Nested item 2.2
+3. Third item
+
+### Task List
+- [x] Completed task
+- [ ] Incomplete task
+- [ ] Another task
+
+## Links and Images
+
+[Link text](https://example.com)
+[Link with title](https://example.com "Title")
+
+![Alt text](image.png)
+![Image with title](image.png "Image title")
+
+## Code
+
+Inline `code` example.
+
+```javascript
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+```
+
+```python
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+```
+
+## Blockquotes
+
+> This is a blockquote.
+> It can span multiple lines.
+>
+> > Nested blockquote.
+
+## Tables
+
+| Column 1 | Column 2 | Column 3 |
+|----------|:--------:|---------:|
+| Left     | Center   | Right    |
+| aligned  | aligned  | aligned  |
+| data     | data     | data     |
+
+## Horizontal Rules
+
+---
+
+***
+
+___
+
+## HTML Elements
+
+<details>
+<summary>Click to expand</summary>
+
+Hidden content here.
+
+</details>
+
+<kbd>Ctrl</kbd> + <kbd>C</kbd>
+
+## Footnotes
+
+Here's a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+
+## Definition Lists
+
+Term 1
+: Definition 1
+
+Term 2
+: Definition 2a
+: Definition 2b
+
+## Abbreviations
+
+The HTML specification is maintained by the W3C.
+
+*[HTML]: Hyper Text Markup Language
+*[W3C]: World Wide Web Consortium

@@ -1,0 +1,33 @@
+{
+  "language": "gleam",
+  "grammar_file": "gleam.json",
+  "pattern_count": 26,
+  "patterns": [
+    "\"",
+    "(&&|\\|\\|)",
+    "(<-|->)",
+    "(<=|>=|[<>])",
+    "([!=]=)",
+    "([-%*+/])",
+    "([-*+/]\\.)",
+    "([<>]=?\\.)",
+    "//.*",
+    "<>",
+    "=",
+    "\\)",
+    "\\.\\.",
+    "\\\\.",
+    "\\b([0-9][0-9_]*)(\\.([0-9_]*)?(e-?[0-9]+)?)?\\b",
+    "\\b(\\p{lower}\\p{word}*):",
+    "\\b(\\p{lower}\\p{word}*):\\s",
+    "\\b(\\p{lower}\\p{word}*)\\b\\s*\\(",
+    "\\b(as|use|case|if|fn|import|let|assert|pub|type|opaque|const|todo|panic|else|echo)\\b",
+    "\\b0[Bb][01_]*\\b",
+    "\\b0[Oo][0-7_]*\\b",
+    "\\b0[Xx][_\\h]+\\b",
+    "\\b_\\p{word}+{0,1}\\b",
+    "\\p{upper}\\p{alnum}*",
+    "\\|",
+    "\\|>"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"@shikijs/core": "^3.21.0",
+		"@shikijs/engine-javascript": "^3.21.0",
+		"oniguruma-parser": "^0.12.1",
+		"oniguruma-to-es": "^4.3.4"
+	}
+}

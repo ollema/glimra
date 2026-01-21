@@ -1,0 +1,273 @@
+# Single-line comment
+
+#[
+  Multi-line
+  comment
+]#
+
+## Documentation comment
+
+import std/[strutils, sequtils, tables, options, asyncdispatch, json]
+
+# Constants
+const
+  MaxSize = 100
+  Pi = 3.14159
+  Greeting = "Hello, World!"
+
+# Compile-time evaluation
+const FactorialFive = block:
+  var result = 1
+  for i in 1..5:
+    result *= i
+  result
+
+# Enum type
+type
+  Status = enum
+    Active = "active"
+    Inactive = "inactive"
+    Pending = "pending"
+
+# Object type
+type
+  Person = object
+    name: string
+    age: int
+    email: Option[string]
+
+  # Ref object (reference type)
+  PersonRef = ref object
+    name: string
+    age: int
+
+# Variant type (case object)
+type
+  Shape = object
+    case kind: ShapeKind
+    of skCircle:
+      radius: float
+    of skRectangle:
+      width, height: float
+    of skTriangle:
+      base, height2: float
+
+  ShapeKind = enum
+    skCircle, skRectangle, skTriangle
+
+# Generic type
+type
+  Container[T] = object
+    items: seq[T]
+    count: int
+
+# Simple function (proc)
+proc add(a, b: int): int =
+  result = a + b
+
+# Function with implicit result
+proc multiply(a, b: int): int =
+  a * b
+
+# Function with docstring
+proc greet(name: string): string =
+  ## Greets a person by name
+  "Hello, " & name & "!"
+
+# Procedure (no return value)
+proc sayHello(name: string) =
+  echo "Hello, ", name, "!"
+
+# Function with default parameters
+proc greetWith(name: string, greeting = "Hello"): string =
+  greeting & ", " & name & "!"
+
+# Recursive function
+proc factorial(n: int): int =
+  if n <= 1: 1
+  else: n * factorial(n - 1)
+
+# Iterator
+iterator countUp(start, stop: int): int =
+  var i = start
+  while i <= stop:
+    yield i
+    inc i
+
+# Closure iterator
+iterator items[T](container: Container[T]): T =
+  for item in container.items:
+    yield item
+
+# Higher-order function
+proc applyTwice[T](f: proc(x: T): T, x: T): T =
+  f(f(x))
+
+# Lambda (anonymous procedure)
+let increment = proc(x: int): int = x + 1
+let double = (x: int) => x * 2
+
+# Generic procedure
+proc findFirst[T](items: seq[T], pred: proc(x: T): bool): Option[T] =
+  for item in items:
+    if pred(item):
+      return some(item)
+  none(T)
+
+# Object methods
+proc newPerson(name: string, age: int): Person =
+  Person(name: name, age: age, email: none(string))
+
+proc describe(p: Person): string =
+  result = p.name & " is " & $p.age & " years old"
+  if p.email.isSome:
+    result &= ", email: " & p.email.get
+
+proc isAdult(p: Person): bool =
+  p.age >= 18
+
+# Method with var parameter (mutates)
+proc birthday(p: var Person) =
+  inc p.age
+
+# Templates (compile-time code generation)
+template withTiming(body: untyped) =
+  let start = cpuTime()
+  body
+  echo "Elapsed: ", cpuTime() - start, " seconds"
+
+template unless(cond: bool, body: untyped) =
+  if not cond:
+    body
+
+# Macros
+macro debug(args: varargs[untyped]): untyped =
+  result = newNimNode(nnkStmtList)
+  for arg in args:
+    result.add quote do:
+      echo astToStr(`arg`), " = ", `arg`
+
+# Control flow
+proc classifyNumber(n: int): string =
+  if n < 0:
+    "negative"
+  elif n == 0:
+    "zero"
+  elif n < 10:
+    "small"
+  else:
+    "large"
+
+# Case expression
+proc describeStatus(s: Status): string =
+  case s
+  of Active: "Currently active"
+  of Inactive: "Not active"
+  of Pending: "Awaiting activation"
+
+# Pattern matching-like with case
+proc shapeArea(s: Shape): float =
+  case s.kind
+  of skCircle:
+    Pi * s.radius * s.radius
+  of skRectangle:
+    s.width * s.height
+  of skTriangle:
+    0.5 * s.base * s.height2
+
+# Loops
+proc sumList(nums: seq[int]): int =
+  result = 0
+  for n in nums:
+    result += n
+
+proc processItems(items: seq[string]) =
+  for i, item in items.pairs:
+    echo i, ": ", item
+
+# While loop
+proc countdown(n: int) =
+  var count = n
+  while count > 0:
+    echo count
+    dec count
+
+# Block expressions
+proc complexCalculation(x: int): int =
+  block:
+    let doubled = x * 2
+    let squared = doubled * doubled
+    squared + 1
+
+# Exception handling
+proc safeDivide(a, b: int): Option[int] =
+  try:
+    some(a div b)
+  except DivByZeroDefect:
+    echo "Cannot divide by zero"
+    none(int)
+
+proc validateAge(age: int): int =
+  if age < 0:
+    raise newException(ValueError, "Age cannot be negative")
+  if age > 150:
+    raise newException(ValueError, "Age seems unrealistic")
+  age
+
+# Defer statement
+proc processFile(filename: string) =
+  let f = open(filename)
+  defer: close(f)
+  # Process file...
+
+# Async/await
+proc fetchData(url: string): Future[string] {.async.} =
+  # Simulated async operation
+  await sleepAsync(100)
+  return "Data from " & url
+
+proc fetchAll(): Future[seq[string]] {.async.} =
+  let urls = @["url1", "url2", "url3"]
+  var futures: seq[Future[string]]
+  for url in urls:
+    futures.add(fetchData(url))
+  result = await all(futures)
+
+# Pragmas and effects
+proc pureFunction(x: int): int {.noSideEffect.} =
+  x * 2
+
+proc deprecatedProc() {.deprecated: "Use newProc instead".} =
+  discard
+
+# Operator definition
+proc `+`(a, b: Person): Person =
+  Person(name: a.name & " & " & b.name, age: (a.age + b.age) div 2)
+
+# Method resolution
+method speak(p: Person): string {.base.} =
+  "Hello, I'm " & p.name
+
+# Type conversion
+proc toJson(p: Person): JsonNode =
+  %*{
+    "name": p.name,
+    "age": p.age,
+    "email": if p.email.isSome: p.email.get else: nil
+  }
+
+# Main
+when isMainModule:
+  let alice = newPerson("Alice", 30)
+  echo alice.describe()
+  echo "Factorial 5: ", factorial(5)
+
+  let numbers = @[1, 2, 3, 4, 5]
+  let doubled = numbers.mapIt(it * 2)
+  let evens = numbers.filterIt(it mod 2 == 0)
+
+  echo "Doubled: ", doubled
+  echo "Evens: ", evens
+
+  for n in countUp(1, 5):
+    echo n

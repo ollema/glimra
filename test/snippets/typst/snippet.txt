@@ -1,0 +1,237 @@
+// Typst document - modern typesetting system
+
+// Import and configure
+#import "@preview/cetz:0.1.2": canvas, plot
+#import "@preview/tablex:0.0.6": tablex, rowspanx, colspanx
+
+#set document(
+  title: "A Comprehensive Typst Example",
+  author: ("John Doe", "Jane Smith"),
+  date: datetime.today(),
+)
+
+#set page(
+  paper: "a4",
+  margin: (x: 2.5cm, y: 3cm),
+  header: [
+    #set text(8pt)
+    _Typst Example Document_
+    #h(1fr)
+    #counter(page).display()
+  ],
+)
+
+#set text(font: "New Computer Modern", size: 11pt)
+#set par(justify: true)
+#set heading(numbering: "1.1")
+
+// Custom show rules
+#show heading.where(level: 1): it => {
+  pagebreak(weak: true)
+  text(size: 18pt, weight: "bold", it)
+  v(0.5em)
+}
+
+#show link: it => text(fill: blue, underline(it))
+
+// Custom functions
+#let theorem(title, body) = block(
+  width: 100%,
+  inset: 10pt,
+  stroke: 1pt + gray,
+  radius: 4pt,
+  [*Theorem (#title)*: #body]
+)
+
+#let definition(term, body) = {
+  [*Definition* (#emph(term)): #body]
+}
+
+#let note(body) = rect(
+  width: 100%,
+  fill: yellow.lighten(80%),
+  inset: 10pt,
+  [*Note:* #body]
+)
+
+// Title
+#align(center)[
+  #text(size: 24pt, weight: "bold")[A Comprehensive Typst Example]
+
+  #v(1em)
+
+  #text(size: 12pt)[John Doe #h(2em) Jane Smith]
+
+  #v(0.5em)
+
+  #text(size: 10pt, fill: gray)[#datetime.today().display()]
+]
+
+#v(2em)
+
+// Abstract
+#rect(width: 100%, inset: 15pt, stroke: none, fill: gray.lighten(90%))[
+  *Abstract*
+
+  This document demonstrates various Typst features including mathematical
+  typesetting, custom functions, tables, figures, and code blocks.
+]
+
+#outline(title: "Contents", indent: auto)
+
+= Introduction <intro>
+
+This is a sample document showcasing Typst syntax highlighting.
+See @math for mathematical content and @fig-graph for a figure example.
+
+== Basic Formatting
+
+Text can be *bold*, _italic_, or `monospaced`.
+You can also use #underline[underlined] text or #strike[strikethrough].
+
+- First item
+- Second item with nested list:
+  + Nested first
+  + Nested second
+- Third item
+
+Numbered lists work similarly:
++ First
++ Second
++ Third
+
+= Mathematics <math>
+
+== Inline and Display Math
+
+Inline math: $E = m c^2$ and $sum_(i=1)^n i = (n(n+1))/2$.
+
+Display math:
+$ integral_(-infinity)^infinity e^(-x^2) dif x = sqrt(pi) $ <eq-gaussian>
+
+The Gaussian integral in @eq-gaussian is fundamental.
+
+== Aligned Equations
+
+$
+nabla dot bold(E) &= rho / epsilon_0 \
+nabla dot bold(B) &= 0 \
+nabla times bold(E) &= -(diff bold(B)) / (diff t) \
+nabla times bold(B) &= mu_0 bold(J) + mu_0 epsilon_0 (diff bold(E)) / (diff t)
+$
+
+== Matrices
+
+$
+A = mat(
+  a_(11), a_(12), dots, a_(1n);
+  a_(21), a_(22), dots, a_(2n);
+  dots.v, dots.v, dots.down, dots.v;
+  a_(m 1), a_(m 2), dots, a_(m n);
+)
+$
+
+#theorem("Pythagorean Theorem")[
+  For a right triangle with legs $a$ and $b$ and hypotenuse $c$:
+  $ a^2 + b^2 = c^2 $
+]
+
+#definition("Continuity")[
+  A function $f: RR -> RR$ is continuous at $x_0$ if
+  $ lim_(x -> x_0) f(x) = f(x_0) $
+]
+
+= Figures and Tables
+
+#figure(
+  canvas({
+    import plot: *
+    plot.plot(
+      size: (8, 5),
+      x-label: $x$,
+      y-label: $f(x)$,
+      {
+        plot.add(
+          domain: (-2, 2),
+          x => calc.pow(x, 2),
+          label: $x^2$,
+        )
+        plot.add(
+          domain: (-2, 2),
+          x => calc.pow(x, 3),
+          label: $x^3$,
+          style: (stroke: red),
+        )
+      }
+    )
+  }),
+  caption: [Polynomial functions],
+) <fig-graph>
+
+#figure(
+  table(
+    columns: 3,
+    align: (left, center, right),
+    [*Name*], [*Symbol*], [*Value*],
+    [Pi], [$pi$], [3.14159],
+    [Euler's number], [$e$], [2.71828],
+    [Golden ratio], [$phi$], [1.61803],
+  ),
+  caption: [Mathematical constants],
+) <tab-constants>
+
+= Code Blocks
+
+```python
+def fibonacci(n: int) -> int:
+    """Calculate the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Example usage
+for i in range(10):
+    print(f"F({i}) = {fibonacci(i)}")
+```
+
+#note[
+  Typst supports syntax highlighting for many programming languages
+  including Python, Rust, JavaScript, and more.
+]
+
+= Advanced Features
+
+== Variables and Scripting
+
+#let x = 5
+#let y = 10
+#let result = x + y
+
+The sum of #x and #y is #result.
+
+#let items = ("apple", "banana", "cherry")
+#for item in items [
+  - #item
+]
+
+== Conditional Content
+
+#let show_extra = true
+#if show_extra [
+  This content is conditionally displayed.
+]
+
+== Custom Styling
+
+#let styled-text(body) = {
+  set text(fill: gradient.linear(..color.map.rainbow))
+  body
+}
+
+#styled-text[Rainbow gradient text!]
+
+= Conclusion
+
+For more information, see the #link("https://typst.app/docs")[Typst documentation].
+
+#bibliography("references.bib", style: "ieee")

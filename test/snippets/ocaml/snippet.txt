@@ -1,0 +1,234 @@
+(* Single-line comment *)
+
+(*
+   Multi-line
+   comment
+*)
+
+(** Documentation comment *)
+
+(* Module imports *)
+open Printf
+open List
+
+(* Type alias *)
+type name = string
+type age = int
+
+(* Variant type *)
+type status =
+  | Active
+  | Inactive
+  | Pending of string
+
+(* Record type *)
+type person = {
+  name: string;
+  age: int;
+  mutable email: string option;
+}
+
+(* Parameterized type *)
+type 'a result =
+  | Ok of 'a
+  | Error of string
+
+type ('a, 'b) either =
+  | Left of 'a
+  | Right of 'b
+
+(* Recursive type *)
+type 'a tree =
+  | Leaf
+  | Node of 'a * 'a tree * 'a tree
+
+(* Constants *)
+let max_size = 100
+let pi = 3.14159
+
+(* Simple function *)
+let add x y = x + y
+
+(* Function with type annotation *)
+let multiply (x: int) (y: int) : int = x * y
+
+(* Recursive function *)
+let rec factorial n =
+  if n <= 1 then 1
+  else n * factorial (n - 1)
+
+(* Tail-recursive version *)
+let factorial_tail n =
+  let rec aux acc n =
+    if n <= 1 then acc
+    else aux (acc * n) (n - 1)
+  in
+  aux 1 n
+
+(* Pattern matching function *)
+let describe_number = function
+  | 0 -> "zero"
+  | 1 -> "one"
+  | n when n < 0 -> "negative"
+  | n when n < 10 -> "small"
+  | _ -> "large"
+
+(* Pattern matching with variants *)
+let status_to_string = function
+  | Active -> "active"
+  | Inactive -> "inactive"
+  | Pending reason -> "pending: " ^ reason
+
+(* Record operations *)
+let create_person name age =
+  { name; age; email = None }
+
+let greet person =
+  sprintf "Hello, %s! You are %d years old." person.name person.age
+
+let with_email person email =
+  { person with email = Some email }
+
+(* Option handling *)
+let safe_divide x y =
+  if y = 0 then None
+  else Some (x / y)
+
+let get_or_default opt default =
+  match opt with
+  | Some value -> value
+  | None -> default
+
+(* Result handling *)
+let validate_age age =
+  if age < 0 then Error "Age cannot be negative"
+  else if age > 150 then Error "Age seems unrealistic"
+  else Ok age
+
+(* List operations *)
+let double_list lst = List.map (fun x -> x * 2) lst
+
+let sum_list lst = List.fold_left (+) 0 lst
+
+let filter_evens lst = List.filter (fun x -> x mod 2 = 0) lst
+
+(* List pattern matching *)
+let rec length = function
+  | [] -> 0
+  | _ :: tail -> 1 + length tail
+
+let head_or_default default = function
+  | [] -> default
+  | x :: _ -> x
+
+(* Higher-order functions *)
+let apply_twice f x = f (f x)
+
+let compose f g x = f (g x)
+
+let pipeline x fs = List.fold_left (fun acc f -> f acc) x fs
+
+(* Lambda expressions *)
+let increment = List.map (fun x -> x + 1)
+let square = fun x -> x * x
+
+(* Let bindings *)
+let compute x =
+  let doubled = x * 2 in
+  let squared = doubled * doubled in
+  squared + 1
+
+(* Local function *)
+let process_list lst =
+  let helper acc = function
+    | [] -> List.rev acc
+    | x :: xs -> helper ((x + 1) :: acc) xs
+  in
+  helper [] lst
+
+(* Tree operations *)
+let rec tree_sum = function
+  | Leaf -> 0
+  | Node (value, left, right) -> value + tree_sum left + tree_sum right
+
+let rec tree_map f = function
+  | Leaf -> Leaf
+  | Node (value, left, right) ->
+      Node (f value, tree_map f left, tree_map f right)
+
+(* Imperative features *)
+let counter = ref 0
+
+let increment_counter () =
+  counter := !counter + 1;
+  !counter
+
+let imperative_sum lst =
+  let sum = ref 0 in
+  List.iter (fun x -> sum := !sum + x) lst;
+  !sum
+
+(* For loop *)
+let print_range start stop =
+  for i = start to stop do
+    printf "%d\n" i
+  done
+
+(* While loop *)
+let countdown n =
+  let count = ref n in
+  while !count > 0 do
+    printf "%d\n" !count;
+    decr count
+  done
+
+(* Exception handling *)
+exception Not_found_custom of string
+exception Invalid_argument_custom of string * int
+
+let find_element lst pred =
+  try
+    Some (List.find pred lst)
+  with Not_found -> None
+
+let safe_operation () =
+  try
+    let result = 10 / 0 in
+    Ok result
+  with Division_by_zero -> Error "Cannot divide by zero"
+
+(* Module definition *)
+module IntSet = Set.Make(Int)
+
+module Person = struct
+  type t = person
+
+  let create name age = { name; age; email = None }
+  let compare p1 p2 = String.compare p1.name p2.name
+end
+
+(* Functor *)
+module MakeCollection (Elt : sig
+  type t
+  val compare : t -> t -> int
+end) = struct
+  module S = Set.Make(Elt)
+
+  let empty = S.empty
+  let add = S.add
+  let mem = S.mem
+end
+
+(* Main entry point *)
+let () =
+  let alice = create_person "Alice" 30 in
+  let bob = { name = "Bob"; age = 25; email = Some "bob@example.com" } in
+
+  printf "%s\n" (greet alice);
+  printf "Factorial 5: %d\n" (factorial 5);
+
+  List.iter (fun p -> printf "Person: %s\n" p.name) [alice; bob];
+
+  match validate_age 25 with
+  | Ok age -> printf "Valid age: %d\n" age
+  | Error msg -> printf "Error: %s\n" msg

@@ -1,0 +1,140 @@
+package com.example.app
+
+import kotlinx.coroutines.*
+import kotlin.math.sqrt
+
+// Constants
+const val MAX_SIZE = 100
+val PI = 3.14159
+
+// Enum class
+enum class Status(val code: Int) {
+    ACTIVE(1),
+    INACTIVE(0),
+    PENDING(2);
+
+    fun isActive() = this == ACTIVE
+}
+
+// Data class
+data class Person(
+    val name: String,
+    val age: Int,
+    var email: String? = null
+)
+
+// Sealed class
+sealed class Result<out T> {
+    data class Success<T>(val data: T) : Result<T>()
+    data class Error(val message: String) : Result<Nothing>()
+    object Loading : Result<Nothing>()
+}
+
+// Interface
+interface Repository<T> {
+    suspend fun getById(id: Int): T?
+    suspend fun getAll(): List<T>
+    suspend fun save(item: T): Boolean
+}
+
+// Class with primary constructor
+class Calculator(private val precision: Int = 2) {
+
+    // Companion object
+    companion object {
+        fun create(): Calculator = Calculator()
+    }
+
+    // Extension function
+    fun Double.format(): String = "%.${precision}f".format(this)
+
+    // Operator overloading
+    operator fun invoke(a: Double, b: Double): Double = a + b
+
+    // Generic function
+    fun <T : Number> sum(vararg numbers: T): Double {
+        return numbers.sumOf { it.toDouble() }
+    }
+}
+
+// Object declaration (singleton)
+object Logger {
+    fun log(message: String) = println("[LOG] $message")
+}
+
+// Extension function
+fun String.toTitleCase(): String {
+    return split(" ").joinToString(" ") { word ->
+        word.lowercase().replaceFirstChar { it.uppercase() }
+    }
+}
+
+// Higher-order function
+inline fun <T> measureTime(block: () -> T): Pair<T, Long> {
+    val start = System.currentTimeMillis()
+    val result = block()
+    return result to (System.currentTimeMillis() - start)
+}
+
+// Suspend function
+suspend fun fetchData(url: String): String = withContext(Dispatchers.IO) {
+    delay(1000)
+    "Data from $url"
+}
+
+// Main function with coroutines
+fun main() = runBlocking {
+    // Variable declarations
+    val immutable = "cannot change"
+    var mutable = 0
+
+    // Null safety
+    val nullable: String? = null
+    val length = nullable?.length ?: 0
+
+    // When expression
+    val description = when (val status = Status.ACTIVE) {
+        Status.ACTIVE -> "Is active"
+        Status.INACTIVE -> "Is inactive"
+        Status.PENDING -> "Is pending"
+    }
+
+    // Collections
+    val numbers = listOf(1, 2, 3, 4, 5)
+    val doubled = numbers.map { it * 2 }
+    val evens = numbers.filter { it % 2 == 0 }
+    val sum = numbers.reduce { acc, n -> acc + n }
+
+    // Destructuring
+    val (name, age) = Person("Alice", 30)
+
+    // Range and loops
+    for (i in 1..10 step 2) {
+        println(i)
+    }
+
+    // Lambda
+    val square: (Int) -> Int = { it * it }
+
+    // Async/await
+    val deferred = async { fetchData("https://api.example.com") }
+    val data = deferred.await()
+
+    // Try-catch expression
+    val result = try {
+        "123".toInt()
+    } catch (e: NumberFormatException) {
+        0
+    }
+
+    // Smart cast
+    fun processResult(result: Result<String>) {
+        when (result) {
+            is Result.Success -> println(result.data)
+            is Result.Error -> println(result.message)
+            Result.Loading -> println("Loading...")
+        }
+    }
+
+    Logger.log("Program completed")
+}

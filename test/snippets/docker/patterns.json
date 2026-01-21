@@ -1,0 +1,14 @@
+{
+  "language": "docker",
+  "grammar_file": "docker.json",
+  "pattern_count": 7,
+  "patterns": [
+    "\"",
+    "'",
+    "\\\\.",
+    "^(\\s*)((#).*$\\n?)",
+    "^\\s*(?i:(ONBUILD)\\s+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\s",
+    "^\\s*(?i:(ONBUILD)\\s+)?(?i:(CMD|ENTRYPOINT))\\s",
+    "^\\s*\\b(?i:(FROM))\\b.*?\\b(?i:(AS))\\b"
+  ]
+}

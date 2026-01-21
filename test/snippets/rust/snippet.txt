@@ -1,0 +1,167 @@
+// Imports
+use std::collections::HashMap;
+use std::fmt::{self, Display};
+
+// Constants
+const MAX_SIZE: usize = 100;
+static GREETING: &str = "Hello";
+
+// Enum with variants
+#[derive(Debug, Clone)]
+enum Status {
+    Active,
+    Inactive,
+    Pending { reason: String },
+}
+
+// Struct with derive macros
+#[derive(Debug, Clone, PartialEq)]
+struct Person {
+    name: String,
+    age: u32,
+    status: Status,
+}
+
+// Implement methods
+impl Person {
+    fn new(name: &str, age: u32) -> Self {
+        Self {
+            name: name.to_string(),
+            age,
+            status: Status::Active,
+        }
+    }
+
+    fn greet(&self) -> String {
+        format!("{}, {}!", GREETING, self.name)
+    }
+
+    fn is_adult(&self) -> bool {
+        self.age >= 18
+    }
+}
+
+// Implement trait
+impl Display for Person {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} (age {})", self.name, self.age)
+    }
+}
+
+// Generic function with trait bounds
+fn find_max<T: Ord + Clone>(items: &[T]) -> Option<T> {
+    items.iter().max().cloned()
+}
+
+// Function returning Result
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err("Division by zero".to_string())
+    } else {
+        Ok(a / b)
+    }
+}
+
+// Pattern matching
+fn describe_number(n: i32) -> &'static str {
+    match n {
+        0 => "zero",
+        1..=9 => "single digit",
+        10..=99 => "double digit",
+        n if n < 0 => "negative",
+        _ => "large number",
+    }
+}
+
+// Closure and iterator methods
+fn process_numbers(numbers: Vec<i32>) -> i32 {
+    numbers
+        .iter()
+        .filter(|&&x| x > 0)
+        .map(|x| x * 2)
+        .fold(0, |acc, x| acc + x)
+}
+
+// Async function (requires async runtime)
+async fn fetch_data(url: &str) -> Result<String, String> {
+    // Simulated async operation
+    Ok(format!("Data from {}", url))
+}
+
+// Lifetime annotations
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() { x } else { y }
+}
+
+fn main() {
+    // Variables and mutability
+    let immutable = 42;
+    let mut mutable = 0;
+    mutable += 1;
+
+    // Shadowing
+    let x = 5;
+    let x = x + 1;
+
+    // Tuple and destructuring
+    let tuple = (1, "hello", 3.14);
+    let (a, b, c) = tuple;
+
+    // Array and slice
+    let array: [i32; 5] = [1, 2, 3, 4, 5];
+    let slice = &array[1..4];
+
+    // Vector
+    let mut vec = vec![1, 2, 3];
+    vec.push(4);
+
+    // HashMap
+    let mut scores: HashMap<String, i32> = HashMap::new();
+    scores.insert("Alice".to_string(), 95);
+    scores.insert("Bob".to_string(), 87);
+
+    // If let
+    if let Some(score) = scores.get("Alice") {
+        println!("Alice's score: {}", score);
+    }
+
+    // Loop with break value
+    let result = loop {
+        mutable += 1;
+        if mutable >= 10 {
+            break mutable * 2;
+        }
+    };
+
+    // For loop
+    for (i, val) in array.iter().enumerate() {
+        println!("[{}] = {}", i, val);
+    }
+
+    // While let
+    let mut stack = vec![1, 2, 3];
+    while let Some(top) = stack.pop() {
+        println!("{}", top);
+    }
+
+    // Error handling with ?
+    fn try_divide() -> Result<i32, String> {
+        let a = divide(10, 2)?;
+        let b = divide(a, 2)?;
+        Ok(b)
+    }
+
+    // Struct instantiation
+    let person = Person::new("Alice", 30);
+    println!("{}", person.greet());
+
+    // Match with Result
+    match divide(10, 2) {
+        Ok(result) => println!("Result: {}", result),
+        Err(e) => eprintln!("Error: {}", e),
+    }
+
+    // Macros
+    println!("Sum: {}", process_numbers(vec![1, 2, 3, 4, 5]));
+    assert_eq!(2 + 2, 4);
+}

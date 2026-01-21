@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Variables and strings
+my_var="Hello, World!"
+readonly CONSTANT="immutable"
+numbers=(1 2 3 4 5)
+
+# Function definition
+function greet() {
+    local name="$1"
+    echo "Hello, $name!"
+}
+
+# Conditionals
+if [ "$1" == "test" ]; then
+    greet "User"
+elif [ -z "$1" ]; then
+    echo "No argument"
+else
+    echo "Unknown: $1"
+fi
+
+# Loops
+for i in "${numbers[@]}"; do
+    echo "Number: $i"
+done
+
+while read -r line; do
+    echo "$line"
+done < /dev/null
+
+# Case statement
+case "$1" in
+    start) echo "Starting..." ;;
+    stop)  echo "Stopping..." ;;
+    *)     echo "Usage: $0 {start|stop}" ;;
+esac
+
+# Pipes and command substitution
+date_now=$(date +%Y-%m-%d)
+echo "Today: $date_now" | tr '[:lower:]' '[:upper:]'

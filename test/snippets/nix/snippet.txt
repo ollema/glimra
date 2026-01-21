@@ -1,0 +1,186 @@
+# Single-line comment
+
+/*
+  Multi-line
+  comment
+*/
+
+# Import and with expressions
+{ pkgs ? import <nixpkgs> { }
+, lib ? pkgs.lib
+, stdenv ? pkgs.stdenv
+}:
+
+let
+  # Basic values
+  name = "example";
+  version = "1.0.0";
+  port = 8080;
+  enabled = true;
+
+  # List
+  dependencies = [ "git" "curl" "wget" ];
+
+  # Attribute set (record)
+  config = {
+    host = "localhost";
+    port = 3000;
+    debug = true;
+    nested = {
+      value = 42;
+    };
+  };
+
+  # Function with pattern matching
+  greet = { name, greeting ? "Hello" }:
+    "${greeting}, ${name}!";
+
+  # Simple function
+  add = a: b: a + b;
+
+  # Function with multiple arguments
+  multiply = x: y: z: x * y * z;
+
+  # Recursive function
+  factorial = n:
+    if n <= 1
+    then 1
+    else n * factorial (n - 1);
+
+  # List operations
+  doubled = map (x: x * 2) [ 1 2 3 4 5 ];
+  filtered = builtins.filter (x: x > 2) [ 1 2 3 4 5 ];
+
+  # Attribute set operations
+  merged = config // { port = 8080; extra = "value"; };
+
+  # String interpolation
+  message = ''
+    Multi-line string
+    Name: ${name}
+    Version: ${version}
+    Port: ${toString port}
+  '';
+
+  # Path literal
+  configPath = ./config.nix;
+  absolutePath = /etc/nixos/configuration.nix;
+
+  # Conditional expression
+  environment = if enabled then "production" else "development";
+
+  # With expression for scope
+  withExample = with lib; concatStringsSep ", " dependencies;
+
+  # Assert expression
+  checkedPort = assert port > 0 && port < 65536; port;
+
+  # Inherit from scope
+  person = {
+    inherit name;
+    age = 30;
+  };
+
+  # Derivation
+  myPackage = stdenv.mkDerivation {
+    pname = name;
+    inherit version;
+
+    src = pkgs.fetchFromGitHub {
+      owner = "example";
+      repo = name;
+      rev = "v${version}";
+      sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    };
+
+    buildInputs = with pkgs; [
+      cmake
+      pkg-config
+    ];
+
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+
+    configurePhase = ''
+      cmake -B build
+    '';
+
+    buildPhase = ''
+      cmake --build build
+    '';
+
+    installPhase = ''
+      mkdir -p $out/bin
+      cp build/${name} $out/bin/
+    '';
+
+    meta = with lib; {
+      description = "An example package";
+      homepage = "https://github.com/example/${name}";
+      license = licenses.mit;
+      maintainers = [ maintainers.example ];
+      platforms = platforms.unix;
+    };
+  };
+
+  # Override pattern
+  customPkg = pkgs.hello.override {
+    stdenv = pkgs.clangStdenv;
+  };
+
+  # Overlay
+  overlay = final: prev: {
+    myHello = prev.hello.overrideAttrs (old: {
+      pname = "my-hello";
+    });
+  };
+
+  # NixOS module pattern
+  moduleExample = { config, lib, pkgs, ... }: {
+    options.services.example = {
+      enable = lib.mkEnableOption "example service";
+
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8080;
+        description = "Port to listen on";
+      };
+    };
+
+    config = lib.mkIf config.services.example.enable {
+      systemd.services.example = {
+        description = "Example Service";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          ExecStart = "${myPackage}/bin/${name}";
+          Restart = "always";
+        };
+      };
+    };
+  };
+
+in
+{
+  inherit name version myPackage;
+
+  # Exposed functions
+  inherit greet add multiply factorial;
+
+  # Shell for development
+  shell = pkgs.mkShell {
+    buildInputs = with pkgs; dependencies ++ [
+      nixfmt
+      nil
+    ];
+
+    shellHook = ''
+      echo "Development shell for ${name}"
+      export PORT=${toString port}
+    '';
+  };
+
+  # flake-like outputs
+  packages.default = myPackage;
+  devShells.default = pkgs.mkShell {
+    inputsFrom = [ myPackage ];
+  };
+}

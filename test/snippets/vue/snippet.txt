@@ -1,0 +1,204 @@
+<script setup lang="ts">
+// Composition API with script setup
+import { ref, computed, watch, onMounted, defineProps, defineEmits } from 'vue'
+
+// Props with TypeScript
+interface Props {
+  title: string
+  count?: number
+  items: string[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  count: 0
+})
+
+// Emits
+const emit = defineEmits<{
+  (e: 'update', value: number): void
+  (e: 'submit', data: { name: string }): void
+}>()
+
+// Reactive state
+const message = ref('Hello, Vue!')
+const counter = ref(0)
+const user = ref({
+  name: 'Alice',
+  age: 25
+})
+
+// Computed property
+const doubledCount = computed(() => counter.value * 2)
+const greeting = computed(() => `${message.value}, ${user.value.name}!`)
+
+// Methods
+function increment() {
+  counter.value++
+  emit('update', counter.value)
+}
+
+function decrement() {
+  counter.value--
+}
+
+async function fetchData() {
+  try {
+    const response = await fetch('/api/data')
+    return response.json()
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
+// Watchers
+watch(counter, (newVal, oldVal) => {
+  console.log(`Counter changed from ${oldVal} to ${newVal}`)
+})
+
+watch(
+  () => user.value.name,
+  (name) => {
+    console.log(`Name changed to ${name}`)
+  },
+  { immediate: true }
+)
+
+// Lifecycle hooks
+onMounted(() => {
+  console.log('Component mounted')
+})
+</script>
+
+<script lang="ts">
+// Options API (can coexist with setup)
+export default {
+  name: 'MyComponent',
+  inheritAttrs: false
+}
+</script>
+
+<template>
+  <div class="container">
+    <!-- Text interpolation -->
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+
+    <!-- Attribute binding -->
+    <img :src="imageUrl" :alt="title" />
+    <a :href="`/users/${user.name}`">Profile</a>
+
+    <!-- Class and style binding -->
+    <div
+      :class="{ active: isActive, 'text-danger': hasError }"
+      :style="{ color: textColor, fontSize: fontSize + 'px' }"
+    >
+      Styled content
+    </div>
+
+    <!-- Conditional rendering -->
+    <div v-if="counter > 10">More than 10</div>
+    <div v-else-if="counter > 5">More than 5</div>
+    <div v-else>Less than or equal to 5</div>
+
+    <div v-show="isVisible">Visible when true</div>
+
+    <!-- List rendering -->
+    <ul>
+      <li v-for="(item, index) in items" :key="index">
+        {{ index }}: {{ item }}
+      </li>
+    </ul>
+
+    <template v-for="item in items" :key="item.id">
+      <span>{{ item.name }}</span>
+      <span>{{ item.value }}</span>
+    </template>
+
+    <!-- Event handling -->
+    <button @click="increment">Increment</button>
+    <button @click="decrement">Decrement</button>
+    <button @click.prevent.stop="handleSubmit">Submit</button>
+
+    <input @keyup.enter="onEnter" />
+
+    <!-- Two-way binding -->
+    <input v-model="message" />
+    <input v-model.trim="username" />
+    <input v-model.number="age" type="number" />
+
+    <select v-model="selected">
+      <option value="">Choose...</option>
+      <option v-for="opt in options" :key="opt.value" :value="opt.value">
+        {{ opt.label }}
+      </option>
+    </select>
+
+    <!-- Slots -->
+    <BaseLayout>
+      <template #header>
+        <h1>Header Content</h1>
+      </template>
+
+      <template #default>
+        <p>Main content</p>
+      </template>
+
+      <template #footer="{ year }">
+        <p>Footer &copy; {{ year }}</p>
+      </template>
+    </BaseLayout>
+
+    <!-- Dynamic component -->
+    <component :is="currentComponent" v-bind="componentProps" />
+
+    <!-- Teleport -->
+    <Teleport to="body">
+      <div class="modal">Modal content</div>
+    </Teleport>
+
+    <!-- Suspense -->
+    <Suspense>
+      <template #default>
+        <AsyncComponent />
+      </template>
+      <template #fallback>
+        <div>Loading...</div>
+      </template>
+    </Suspense>
+  </div>
+</template>
+
+<style scoped>
+/* Scoped styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
+
+.active {
+  background-color: #42b883;
+}
+
+/* Deep selector for child components */
+:deep(.child-class) {
+  color: red;
+}
+
+/* Slotted content */
+:slotted(.slot-class) {
+  font-weight: bold;
+}
+</style>
+
+<style>
+/* Global styles */
+:root {
+  --primary-color: #42b883;
+}
+</style>

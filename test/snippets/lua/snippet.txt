@@ -1,0 +1,185 @@
+-- Variables and basic types
+local name = "Lua"
+local version = 5.4
+local isAwesome = true
+local nothing = nil
+
+-- Table as array
+local fruits = {"apple", "banana", "cherry"}
+fruits[4] = "date"
+
+-- Table as dictionary
+local person = {
+    name = "Alice",
+    age = 30,
+    ["full name"] = "Alice Smith"
+}
+
+-- Nested tables
+local config = {
+    database = {
+        host = "localhost",
+        port = 5432
+    },
+    debug = true
+}
+
+-- Functions
+local function add(a, b)
+    return a + b
+end
+
+-- Anonymous function
+local multiply = function(a, b)
+    return a * b
+end
+
+-- Variadic function
+local function sum(...)
+    local args = {...}
+    local total = 0
+    for _, v in ipairs(args) do
+        total = total + v
+    end
+    return total
+end
+
+-- Multiple return values
+local function divmod(a, b)
+    return math.floor(a / b), a % b
+end
+
+-- Closures
+local function counter()
+    local count = 0
+    return function()
+        count = count + 1
+        return count
+    end
+end
+
+-- Metatables and metamethods
+local Vector = {}
+Vector.__index = Vector
+
+function Vector.new(x, y)
+    local self = setmetatable({}, Vector)
+    self.x = x or 0
+    self.y = y or 0
+    return self
+end
+
+function Vector:__add(other)
+    return Vector.new(self.x + other.x, self.y + other.y)
+end
+
+function Vector:__tostring()
+    return string.format("Vector(%d, %d)", self.x, self.y)
+end
+
+function Vector:magnitude()
+    return math.sqrt(self.x^2 + self.y^2)
+end
+
+-- Control structures
+local function describe_number(n)
+    if n > 0 then
+        return "positive"
+    elseif n < 0 then
+        return "negative"
+    else
+        return "zero"
+    end
+end
+
+-- Loops
+local function demonstrate_loops()
+    -- For loop with numeric range
+    for i = 1, 10, 2 do
+        print(i)
+    end
+
+    -- For loop with iterator
+    for index, value in ipairs(fruits) do
+        print(index, value)
+    end
+
+    -- For loop with pairs
+    for key, value in pairs(person) do
+        print(key, value)
+    end
+
+    -- While loop
+    local i = 0
+    while i < 5 do
+        i = i + 1
+    end
+
+    -- Repeat-until loop
+    repeat
+        i = i - 1
+    until i == 0
+end
+
+-- String manipulation
+local function string_examples()
+    local str = "Hello, World!"
+    local upper = string.upper(str)
+    local sub = string.sub(str, 1, 5)
+    local formatted = string.format("Name: %s, Age: %d", name, 25)
+    local found = string.find(str, "World")
+    local replaced = string.gsub(str, "World", "Lua")
+    return formatted
+end
+
+-- Pattern matching
+local function parse_date(date_str)
+    local year, month, day = string.match(date_str, "(%d+)-(%d+)-(%d+)")
+    return {year = tonumber(year), month = tonumber(month), day = tonumber(day)}
+end
+
+-- Error handling
+local function safe_divide(a, b)
+    if b == 0 then
+        error("Division by zero", 2)
+    end
+    return a / b
+end
+
+local function protected_call()
+    local success, result = pcall(safe_divide, 10, 0)
+    if not success then
+        print("Error: " .. result)
+    end
+    return success
+end
+
+-- Coroutines
+local function producer()
+    return coroutine.create(function()
+        for i = 1, 5 do
+            coroutine.yield(i * 10)
+        end
+    end)
+end
+
+-- Module pattern
+local Calculator = {}
+
+function Calculator.new()
+    local self = {}
+    self.result = 0
+
+    function self:add(n)
+        self.result = self.result + n
+        return self
+    end
+
+    function self:get()
+        return self.result
+    end
+
+    return self
+end
+
+return Calculator

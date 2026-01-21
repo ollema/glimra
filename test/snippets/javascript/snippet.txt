@@ -1,0 +1,102 @@
+// Variables and constants
+const PI = 3.14159;
+let counter = 0;
+var legacy = "old style";
+
+// Arrow functions
+const add = (a, b) => a + b;
+const greet = (name) => {
+  return `Hello, ${name}!`;
+};
+
+// Traditional function
+function multiply(a, b) {
+  return a * b;
+}
+
+// Class definition
+class Person {
+  #privateField = "secret";
+
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    return `Hi, I'm ${this.name}`;
+  }
+
+  static species = "Human";
+
+  get info() {
+    return `${this.name}, ${this.age}`;
+  }
+
+  set info(value) {
+    [this.name, this.age] = value.split(",");
+  }
+}
+
+// Inheritance
+class Employee extends Person {
+  constructor(name, age, role) {
+    super(name, age);
+    this.role = role;
+  }
+}
+
+// Async/await
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
+
+// Promises
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Destructuring
+const { name, age } = { name: "Alice", age: 30 };
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+
+// Spread operator
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1, c: 3 };
+
+// Template literals
+const message = `
+  Name: ${name}
+  Age: ${age}
+  Sum: ${add(5, 3)}
+`;
+
+// Array methods
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((n) => n * 2);
+const evens = numbers.filter((n) => n % 2 === 0);
+const sum = numbers.reduce((acc, n) => acc + n, 0);
+
+// Optional chaining and nullish coalescing
+const user = { profile: { name: "Bob" } };
+const userName = user?.profile?.name ?? "Anonymous";
+
+// Loops
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+for (const num of numbers) {
+  console.log(num);
+}
+
+// Export (ES modules)
+export { Person, add, multiply };
+export default Employee;

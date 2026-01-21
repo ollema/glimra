@@ -1,0 +1,183 @@
+-- Single-line comment
+{- Multi-line
+   comment -}
+
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Data.List (sort, nub, foldl')
+import Data.Maybe (fromMaybe, isJust)
+import Data.Text (Text)
+import qualified Data.Text as T
+import qualified Data.Map as Map
+import Control.Monad (when, forM_, guard)
+import Control.Applicative ((<|>))
+
+-- Type alias
+type Name = String
+type Age = Int
+
+-- Newtype
+newtype UserId = UserId Int deriving (Show, Eq)
+
+-- Data type with multiple constructors
+data Status = Active | Inactive | Pending deriving (Show, Eq, Ord)
+
+-- Record syntax
+data Person = Person
+  { personName :: Name
+  , personAge  :: Age
+  , personEmail :: Maybe String
+  } deriving (Show, Eq)
+
+-- Parameterized data type
+data Result a = Success a | Failure String deriving (Show)
+
+-- GADT
+data Expr a where
+  LitInt  :: Int -> Expr Int
+  LitBool :: Bool -> Expr Bool
+  Add     :: Expr Int -> Expr Int -> Expr Int
+  If      :: Expr Bool -> Expr a -> Expr a -> Expr a
+
+-- Type class definition
+class Describable a where
+  describe :: a -> String
+  describe _ = "No description"
+
+instance Describable Person where
+  describe p = personName p ++ " is " ++ show (personAge p) ++ " years old"
+
+instance Describable Status where
+  describe Active = "Currently active"
+  describe Inactive = "Not active"
+  describe Pending = "Awaiting activation"
+
+-- Functor instance for Result
+instance Functor Result where
+  fmap f (Success a) = Success (f a)
+  fmap _ (Failure e) = Failure e
+
+instance Applicative Result where
+  pure = Success
+  Success f <*> Success a = Success (f a)
+  Failure e <*> _ = Failure e
+  _ <*> Failure e = Failure e
+
+instance Monad Result where
+  Success a >>= f = f a
+  Failure e >>= _ = Failure e
+
+-- Simple function
+add :: Int -> Int -> Int
+add x y = x + y
+
+-- Point-free style
+double :: Int -> Int
+double = (* 2)
+
+-- Pattern matching
+factorial :: Integer -> Integer
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+
+-- Guards
+classify :: Int -> String
+classify n
+  | n < 0     = "negative"
+  | n == 0    = "zero"
+  | n < 10    = "small"
+  | otherwise = "large"
+
+-- Case expression
+describeList :: [a] -> String
+describeList xs = case xs of
+  []  -> "empty"
+  [_] -> "singleton"
+  _   -> "longer list with " ++ show (length xs) ++ " elements"
+
+-- Let and where
+quadratic :: Double -> Double -> Double -> Double -> [Double]
+quadratic a b c x = [y1, y2]
+  where
+    discriminant = b * b - 4 * a * c
+    y1 = (-b + sqrt discriminant) / (2 * a)
+    y2 = (-b - sqrt discriminant) / (2 * a)
+
+-- Lambda expressions
+increment :: [Int] -> [Int]
+increment = map (\x -> x + 1)
+
+-- List comprehension
+evens :: [Int] -> [Int]
+evens xs = [x | x <- xs, even x]
+
+pairs :: [(Int, Int)]
+pairs = [(x, y) | x <- [1..3], y <- [1..3], x /= y]
+
+-- Higher-order functions
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f (f x)
+
+compose :: (b -> c) -> (a -> b) -> a -> c
+compose f g = \x -> f (g x)
+
+-- Folds
+sumList :: [Int] -> Int
+sumList = foldl' (+) 0
+
+productList :: [Int] -> Int
+productList = foldr (*) 1
+
+-- Maybe handling
+safeDivide :: Int -> Int -> Maybe Int
+safeDivide _ 0 = Nothing
+safeDivide x y = Just (x `div` y)
+
+findPerson :: [Person] -> Name -> Maybe Person
+findPerson people name = case filter (\p -> personName p == name) people of
+  [p] -> Just p
+  _   -> Nothing
+
+-- Either for error handling
+validateAge :: Int -> Either String Age
+validateAge age
+  | age < 0   = Left "Age cannot be negative"
+  | age > 150 = Left "Age seems unrealistic"
+  | otherwise = Right age
+
+-- Do notation for monads
+greetUser :: IO ()
+greetUser = do
+  putStrLn "What is your name?"
+  name <- getLine
+  putStrLn $ "Hello, " ++ name ++ "!"
+  when (length name > 10) $
+    putStrLn "That's a long name!"
+
+-- Applicative style
+createPerson :: Maybe String -> Maybe Int -> Maybe Person
+createPerson mName mAge = Person <$> mName <*> mAge <*> pure Nothing
+
+-- Record update syntax
+birthday :: Person -> Person
+birthday p = p { personAge = personAge p + 1 }
+
+-- Main function
+main :: IO ()
+main = do
+  let alice = Person "Alice" 30 (Just "alice@example.com")
+  let bob = Person "Bob" 25 Nothing
+
+  putStrLn $ describe alice
+  putStrLn $ "Factorial 5: " ++ show (factorial 5)
+
+  forM_ [alice, bob] $ \person -> do
+    putStrLn $ "Processing: " ++ personName person
+
+  case validateAge 25 of
+    Left err  -> putStrLn $ "Error: " ++ err
+    Right age -> putStrLn $ "Valid age: " ++ show age

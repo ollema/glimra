@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A sample HTML page">
+    <title>Sample Page</title>
+    <!-- External stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline styles -->
+    <style>
+        body { font-family: sans-serif; }
+        .highlight { background-color: yellow; }
+    </style>
+</head>
+<body class="main-content" data-theme="light">
+    <!-- Header section -->
+    <header id="main-header">
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about" target="_blank">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <h1>Hello, World!</h1>
+            <p>This is a <strong>sample</strong> paragraph with <em>formatting</em>.</p>
+            <p>Special characters: &amp; &lt; &gt; &quot; &copy;</p>
+        </article>
+
+        <!-- Form example -->
+        <form action="/submit" method="POST" novalidate>
+            <fieldset>
+                <legend>User Information</legend>
+
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter name">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="0" max="120">
+
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" rows="4" cols="50"></textarea>
+
+                <label for="country">Country:</label>
+                <select id="country" name="country">
+                    <option value="">Select...</option>
+                    <option value="us" selected>United States</option>
+                    <option value="uk">United Kingdom</option>
+                </select>
+
+                <label>
+                    <input type="checkbox" name="subscribe" checked> Subscribe
+                </label>
+
+                <button type="submit" disabled>Submit</button>
+            </fieldset>
+        </form>
+
+        <!-- Media elements -->
+        <figure>
+            <img src="image.jpg" alt="Description" width="300" height="200" loading="lazy">
+            <figcaption>An image caption</figcaption>
+        </figure>
+
+        <video controls width="640" height="360" poster="poster.jpg">
+            <source src="video.mp4" type="video/mp4">
+            <track kind="subtitles" src="subs.vtt" srclang="en" label="English">
+            Your browser does not support video.
+        </video>
+
+        <!-- Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Item 1</td>
+                    <td>100</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Example Inc.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js" defer></script>
+    <script type="module">
+        import { init } from './module.js';
+        init();
+    </script>
+</body>
+</html>

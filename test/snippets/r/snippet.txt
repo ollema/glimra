@@ -1,0 +1,167 @@
+# Single-line comment
+
+# Load packages
+library(dplyr)
+library(ggplot2)
+
+# Constants
+MAX_SIZE <- 100
+PI <- 3.14159
+
+# Variables
+x <- 42
+y = 10  # Alternative assignment
+z <<- 5  # Global assignment
+
+# Vectors
+numbers <- c(1, 2, 3, 4, 5)
+names <- c("Alice", "Bob", "Charlie")
+logical_vec <- c(TRUE, FALSE, TRUE)
+
+# Sequences
+seq_1 <- 1:10
+seq_2 <- seq(1, 10, by = 2)
+rep_vec <- rep(1, times = 5)
+
+# Matrix
+mat <- matrix(1:9, nrow = 3, ncol = 3)
+mat[1, 2]  # Access element
+
+# Data frame
+df <- data.frame(
+  name = c("Alice", "Bob", "Charlie"),
+  age = c(25, 30, 35),
+  score = c(85.5, 90.0, 78.5),
+  stringsAsFactors = FALSE
+)
+
+# List
+person <- list(
+  name = "Alice",
+  age = 25,
+  scores = c(85, 90, 78),
+  active = TRUE
+)
+
+# Accessing list elements
+person$name
+person[["age"]]
+person[[3]]
+
+# Function definition
+add <- function(a, b) {
+  result <- a + b
+  return(result)
+}
+
+# Function with default arguments
+greet <- function(name, greeting = "Hello") {
+  message <- paste(greeting, name, sep = ", ")
+  print(message)
+  invisible(message)  # Return without printing
+}
+
+# Anonymous function
+square <- function(x) x^2
+cube <- \(x) x^3  # Shorthand (R 4.1+)
+
+# Apply functions
+doubled <- sapply(numbers, function(x) x * 2)
+filtered <- numbers[numbers > 2]
+mapped <- lapply(names, toupper)
+
+# Control flow - if-else
+if (x > 0) {
+  print("Positive")
+} else if (x < 0) {
+  print("Negative")
+} else {
+  print("Zero")
+}
+
+# Vectorized ifelse
+result <- ifelse(numbers > 3, "big", "small")
+
+# For loop
+for (i in 1:5) {
+  print(i)
+}
+
+# For loop with vector
+for (name in names) {
+  print(name)
+}
+
+# While loop
+i <- 0
+while (i < 5) {
+  i <- i + 1
+}
+
+# Repeat loop with break
+repeat {
+  i <- i + 1
+  if (i >= 10) break
+}
+
+# Next (continue)
+for (i in 1:10) {
+  if (i %% 2 == 0) next
+  print(i)
+}
+
+# String operations
+s1 <- "Hello"
+s2 <- 'World'
+combined <- paste(s1, s2, sep = ", ")
+formatted <- sprintf("The value is %d and %.2f", x, PI)
+
+# Regular expressions
+matches <- grep("^A", names, value = TRUE)
+replaced <- gsub("o", "0", "Hello World")
+
+# dplyr operations
+result <- df %>%
+  filter(age > 25) %>%
+  mutate(score_scaled = score / 100) %>%
+  select(name, score_scaled) %>%
+  arrange(desc(score_scaled))
+
+# Statistical functions
+mean_val <- mean(numbers)
+sd_val <- sd(numbers)
+summary(df)
+
+# Error handling
+tryCatch({
+  result <- log(-1)
+}, warning = function(w) {
+  print(paste("Warning:", w))
+}, error = function(e) {
+  print(paste("Error:", e))
+}, finally = {
+  print("Cleanup")
+})
+
+# Formula
+formula <- y ~ x + z
+
+# S3 class
+person_class <- structure(
+  list(name = "Alice", age = 25),
+  class = "Person"
+)
+
+# S3 method
+print.Person <- function(x, ...) {
+  cat("Person:", x$name, "Age:", x$age, "\n")
+}
+
+# NULL and NA
+null_val <- NULL
+na_val <- NA
+na_int <- NA_integer_
+
+# Check for missing
+is.null(null_val)
+is.na(na_val)

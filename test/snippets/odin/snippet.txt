@@ -1,0 +1,338 @@
+package main
+
+import "core:fmt"
+import "core:strings"
+import "core:math"
+import "core:mem"
+import "core:os"
+
+// Constants
+PI :: 3.14159265359
+MAX_ENTITIES :: 1000
+
+// Enum with explicit values
+Status :: enum u8 {
+    Active = 0,
+    Inactive = 1,
+    Pending = 2,
+    Error = 255,
+}
+
+// Bit set enum
+Flags :: enum {
+    Read,
+    Write,
+    Execute,
+}
+Permission :: bit_set[Flags]
+
+// Union type
+Value :: union {
+    int,
+    f64,
+    string,
+    bool,
+}
+
+// Struct with using
+Vector2 :: struct {
+    x, y: f32,
+}
+
+Vector3 :: struct {
+    using xy: Vector2,
+    z: f32,
+}
+
+// Struct with default values
+Entity :: struct {
+    id:       u64,
+    name:     string,
+    position: Vector3,
+    velocity: Vector3,
+    status:   Status,
+    health:   int,
+}
+
+// Polymorphic struct
+Array :: struct($T: typeid) {
+    data:     [^]T,
+    len:      int,
+    capacity: int,
+}
+
+// Procedures
+vector_add :: proc(a, b: Vector3) -> Vector3 {
+    return {a.x + b.x, a.y + b.y, a.z + b.z}
+}
+
+vector_dot :: proc(a, b: Vector3) -> f32 {
+    return a.x * b.x + a.y * b.y + a.z * b.z
+}
+
+vector_length :: proc(v: Vector3) -> f32 {
+    return math.sqrt(vector_dot(v, v))
+}
+
+vector_normalize :: proc(v: Vector3) -> Vector3 {
+    len := vector_length(v)
+    if len > 0 {
+        return {v.x / len, v.y / len, v.z / len}
+    }
+    return {}
+}
+
+// Procedure with multiple return values
+divide :: proc(a, b: int) -> (result: int, ok: bool) {
+    if b == 0 {
+        return 0, false
+    }
+    return a / b, true
+}
+
+// Procedure overloading
+print_value :: proc {
+    print_int,
+    print_float,
+    print_string,
+}
+
+print_int :: proc(v: int) {
+    fmt.printf("int: %d\n", v)
+}
+
+print_float :: proc(v: f64) {
+    fmt.printf("float: %f\n", v)
+}
+
+print_string :: proc(v: string) {
+    fmt.printf("string: %s\n", v)
+}
+
+// Variadic procedure
+sum :: proc(numbers: ..int) -> int {
+    total := 0
+    for n in numbers {
+        total += n
+    }
+    return total
+}
+
+// Generic procedure
+find :: proc($T: typeid, arr: []T, value: T) -> (index: int, found: bool) {
+    for item, i in arr {
+        if item == value {
+            return i, true
+        }
+    }
+    return -1, false
+}
+
+// Procedure with context
+allocate_entity :: proc(allocator := context.allocator) -> ^Entity {
+    entity := new(Entity, allocator)
+    entity.status = .Active
+    entity.health = 100
+    return entity
+}
+
+// Procedure with defer
+read_file :: proc(path: string) -> (data: []byte, ok: bool) {
+    file, err := os.open(path)
+    if err != os.ERROR_NONE {
+        return nil, false
+    }
+    defer os.close(file)
+
+    size, _ := os.file_size(file)
+    buffer := make([]byte, size)
+    os.read(file, buffer)
+
+    return buffer, true
+}
+
+// Methods using `using`
+entity_update :: proc(e: ^Entity, dt: f32) {
+    e.position = vector_add(e.position, {e.velocity.x * dt, e.velocity.y * dt, e.velocity.z * dt})
+}
+
+entity_is_alive :: proc(e: ^Entity) -> bool {
+    return e.health > 0 && e.status == .Active
+}
+
+// Matrix operations
+Matrix4 :: [4][4]f32
+
+matrix_identity :: proc() -> Matrix4 {
+    return {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1},
+    }
+}
+
+matrix_multiply :: proc(a, b: Matrix4) -> Matrix4 {
+    result: Matrix4
+    for i in 0..<4 {
+        for j in 0..<4 {
+            for k in 0..<4 {
+                result[i][j] += a[i][k] * b[k][j]
+            }
+        }
+    }
+    return result
+}
+
+// Main procedure
+main :: proc() {
+    // Variables
+    x := 42
+    y: f64 = 3.14
+    name := "Odin"
+
+    // Arrays
+    fixed_array: [5]int = {1, 2, 3, 4, 5}
+
+    // Dynamic array
+    dynamic_array: [dynamic]int
+    defer delete(dynamic_array)
+
+    append(&dynamic_array, 10)
+    append(&dynamic_array, 20, 30, 40)
+
+    // Slices
+    slice := fixed_array[1:4]
+
+    // Maps
+    scores := make(map[string]int)
+    defer delete(scores)
+
+    scores["Alice"] = 95
+    scores["Bob"] = 87
+    scores["Charlie"] = 92
+
+    // Control flow
+    for i in 0..<10 {
+        if i % 2 == 0 {
+            fmt.printf("Even: %d\n", i)
+        } else {
+            fmt.printf("Odd: %d\n", i)
+        }
+    }
+
+    // For with index
+    for item, index in dynamic_array {
+        fmt.printf("[%d] = %d\n", index, item)
+    }
+
+    // While-style loop
+    counter := 0
+    for counter < 5 {
+        fmt.println(counter)
+        counter += 1
+    }
+
+    // Switch statement
+    status := Status.Active
+    switch status {
+    case .Active:
+        fmt.println("Entity is active")
+    case .Inactive:
+        fmt.println("Entity is inactive")
+    case .Pending:
+        fmt.println("Entity is pending")
+    case .Error:
+        fmt.println("Entity has error")
+    }
+
+    // Pattern matching with switch
+    value: Value = 42
+    switch v in value {
+    case int:
+        fmt.printf("Integer: %d\n", v)
+    case f64:
+        fmt.printf("Float: %f\n", v)
+    case string:
+        fmt.printf("String: %s\n", v)
+    case bool:
+        fmt.printf("Bool: %v\n", v)
+    case:
+        fmt.println("Unknown type")
+    }
+
+    // Struct instantiation
+    entity := Entity{
+        id = 1,
+        name = "Player",
+        position = {0, 0, 0},
+        velocity = {1, 0, 0},
+        status = .Active,
+        health = 100,
+    }
+
+    // Pointers
+    entity_ptr := &entity
+    entity_ptr.health -= 10
+
+    // Multiple return values
+    result, ok := divide(10, 3)
+    if ok {
+        fmt.printf("Result: %d\n", result)
+    }
+
+    // Defer
+    {
+        temp := make([]byte, 1024)
+        defer delete(temp)
+        // Use temp...
+    }
+
+    // Procedure overloading
+    print_value(42)
+    print_value(3.14)
+    print_value("Hello")
+
+    // Variadic call
+    total := sum(1, 2, 3, 4, 5)
+    fmt.printf("Sum: %d\n", total)
+
+    // Generic procedure
+    numbers := []int{10, 20, 30, 40, 50}
+    idx, found := find(int, numbers, 30)
+    if found {
+        fmt.printf("Found at index: %d\n", idx)
+    }
+
+    // Bit sets
+    perms: Permission = {.Read, .Write}
+    if .Read in perms {
+        fmt.println("Has read permission")
+    }
+
+    // String builder
+    builder := strings.builder_make()
+    defer strings.builder_destroy(&builder)
+
+    strings.write_string(&builder, "Hello, ")
+    strings.write_string(&builder, name)
+    strings.write_string(&builder, "!")
+
+    message := strings.to_string(builder)
+    fmt.println(message)
+
+    // Matrix operations
+    identity := matrix_identity()
+    fmt.println("Identity matrix created")
+
+    // Vector operations
+    v1 := Vector3{1, 2, 3}
+    v2 := Vector3{4, 5, 6}
+    v3 := vector_add(v1, v2)
+    fmt.printf("Sum: (%f, %f, %f)\n", v3.x, v3.y, v3.z)
+
+    // Update entity
+    entity_update(&entity, 0.016)
+    fmt.printf("Entity position: (%f, %f, %f)\n",
+               entity.position.x, entity.position.y, entity.position.z)
+}

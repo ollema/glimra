@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+#define SQUARE(x) ((x) * (x))
+
+// Enum definition
+typedef enum {
+    STATUS_OK = 0,
+    STATUS_ERROR = 1
+} Status;
+
+// Struct definition
+typedef struct {
+    char *name;
+    int age;
+    float score;
+} Person;
+
+// Function with pointer
+int add(int a, int b) {
+    return a + b;
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    // Variables and constants
+    const int MAX = 10;
+    int numbers[5] = {1, 2, 3, 4, 5};
+    int *ptr = numbers;
+
+    // Struct usage
+    Person person = {"Alice", 30, 95.5f};
+
+    // Loops
+    for (int i = 0; i < 5; i++) {
+        printf("numbers[%d] = %d\n", i, numbers[i]);
+    }
+
+    int j = 0;
+    while (j < 3) {
+        printf("j = %d\n", j++);
+    }
+
+    // Conditionals
+    if (person.age >= 18) {
+        printf("%s is an adult\n", person.name);
+    } else {
+        printf("%s is a minor\n", person.name);
+    }
+
+    // Switch statement
+    Status status = STATUS_OK;
+    switch (status) {
+        case STATUS_OK:
+            printf("Success!\n");
+            break;
+        case STATUS_ERROR:
+            printf("Error!\n");
+            break;
+        default:
+            printf("Unknown status\n");
+    }
+
+    // Macro and pointer arithmetic
+    printf("Square of 5: %d\n", SQUARE(5));
+    printf("First element via pointer: %d\n", *ptr);
+
+    return 0;
+}

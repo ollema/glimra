@@ -1,0 +1,330 @@
+# Single-line comment
+
+# Multi-line comments use multiple #
+# There is no special syntax
+
+# Documentation comment
+# :nodoc: hides from docs
+
+require "json"
+require "http/client"
+
+# Constants
+MAX_SIZE = 100
+PI       = 3.14159
+GREETING = "Hello, World!"
+
+# Enum
+enum Status
+  Active
+  Inactive
+  Pending
+
+  def active?
+    self == Active
+  end
+end
+
+# Struct (value type, immutable by default)
+struct Point
+  getter x : Float64
+  getter y : Float64
+
+  def initialize(@x, @y)
+  end
+
+  def distance_to(other : Point) : Float64
+    Math.sqrt((other.x - @x) ** 2 + (other.y - @y) ** 2)
+  end
+
+  def +(other : Point) : Point
+    Point.new(@x + other.x, @y + other.y)
+  end
+end
+
+# Record macro (shorthand for struct)
+record Person, name : String, age : Int32, email : String? = nil
+
+# Class
+class Calculator
+  property value : Int32
+
+  def initialize(@value = 0)
+  end
+
+  def add(n : Int32) : self
+    @value += n
+    self
+  end
+
+  def subtract(n : Int32) : self
+    @value -= n
+    self
+  end
+
+  def self.create(initial : Int32) : Calculator
+    new(initial)
+  end
+end
+
+# Inheritance
+class Animal
+  getter name : String
+
+  def initialize(@name)
+  end
+
+  def speak : String
+    "..."
+  end
+end
+
+class Dog < Animal
+  def speak : String
+    "Woof!"
+  end
+
+  def fetch
+    puts "#{@name} fetches the ball"
+  end
+end
+
+# Module as mixin
+module Describable
+  abstract def describe : String
+
+  def print_description
+    puts describe
+  end
+end
+
+class Product
+  include Describable
+  include JSON::Serializable
+
+  getter name : String
+  getter price : Float64
+
+  def initialize(@name, @price)
+  end
+
+  def describe : String
+    "#{@name}: $#{@price}"
+  end
+end
+
+# Generic class
+class Container(T)
+  getter items : Array(T)
+
+  def initialize
+    @items = [] of T
+  end
+
+  def add(item : T)
+    @items << item
+  end
+
+  def first? : T?
+    @items.first?
+  end
+end
+
+# Simple function
+def add(a : Int32, b : Int32) : Int32
+  a + b
+end
+
+# Function with default arguments
+def greet(name : String, greeting = "Hello") : String
+  "#{greeting}, #{name}!"
+end
+
+# Function with splat
+def sum(*numbers : Int32) : Int32
+  numbers.sum
+end
+
+# Function with named arguments
+def create_user(*, name : String, email : String, age : Int32 = 0)
+  {name: name, email: email, age: age}
+end
+
+# Recursive function
+def factorial(n : Int32) : Int32
+  return 1 if n <= 1
+  n * factorial(n - 1)
+end
+
+# Higher-order function
+def apply_twice(x : Int32, &block : Int32 -> Int32) : Int32
+  block.call(block.call(x))
+end
+
+# Blocks and procs
+double = ->(x : Int32) { x * 2 }
+increment = Proc(Int32, Int32).new { |x| x + 1 }
+
+# Control flow
+def classify(n : Int32) : String
+  case n
+  when .< 0
+    "negative"
+  when 0
+    "zero"
+  when 1..9
+    "small"
+  else
+    "large"
+  end
+end
+
+# Pattern matching with case
+def describe_value(value)
+  case value
+  when Int32
+    "integer: #{value}"
+  when String
+    "string: #{value}"
+  when Array
+    "array with #{value.size} elements"
+  when {x: Int32, y: Int32}
+    "point at (#{value[:x]}, #{value[:y]})"
+  else
+    "unknown"
+  end
+end
+
+# If expression
+def abs(n : Int32) : Int32
+  if n < 0
+    -n
+  else
+    n
+  end
+end
+
+# Unless
+def validate(value : String?)
+  unless value
+    raise "Value cannot be nil"
+  end
+end
+
+# Loops
+def sum_array(numbers : Array(Int32)) : Int32
+  total = 0
+  numbers.each do |n|
+    total += n
+  end
+  total
+end
+
+# While loop
+def countdown(n : Int32)
+  while n > 0
+    puts n
+    n -= 1
+  end
+end
+
+# Collections
+numbers = [1, 2, 3, 4, 5]
+doubled = numbers.map { |n| n * 2 }
+evens = numbers.select(&.even?)
+sum = numbers.reduce(0) { |acc, n| acc + n }
+
+# Hash
+config = {
+  "host"  => "localhost",
+  "port"  => 3000,
+  "debug" => true,
+}
+
+# Named tuple
+person = {name: "Alice", age: 30}
+
+# Tuple
+coordinates = {1.0, 2.0, 3.0}
+
+# Nil handling
+def find_user(id : Int32) : Person?
+  return nil if id < 0
+  Person.new("User", 25)
+end
+
+user = find_user(1)
+name = user.try(&.name) || "Anonymous"
+
+# If with assignment
+if found = find_user(1)
+  puts found.name
+end
+
+# Exception handling
+def safe_divide(a : Int32, b : Int32) : Int32?
+  begin
+    a // b
+  rescue DivisionByZeroError
+    puts "Cannot divide by zero"
+    nil
+  ensure
+    puts "Division attempted"
+  end
+end
+
+# Raise with custom exception
+class ValidationError < Exception
+end
+
+def validate_age(age : Int32) : Int32
+  raise ValidationError.new("Age cannot be negative") if age < 0
+  raise ValidationError.new("Age seems unrealistic") if age > 150
+  age
+end
+
+# Macros
+macro define_getter(name, type)
+  getter {{name}} : {{type}}
+end
+
+macro debug(*args)
+  {% for arg in args %}
+    puts "{{arg}} = #{{{arg}}}"
+  {% end %}
+end
+
+# String interpolation
+name = "Crystal"
+message = "Hello, #{name}!"
+heredoc = <<-TEXT
+  This is a heredoc.
+  It preserves whitespace.
+  Name: #{name}
+  TEXT
+
+# Regex
+email_regex = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+valid = "test@example.com".matches?(email_regex)
+
+# Fibers and channels
+channel = Channel(Int32).new
+
+spawn do
+  channel.send(42)
+end
+
+value = channel.receive
+
+# Async HTTP (requires adding shard)
+# response = HTTP::Client.get("https://api.example.com")
+
+# Main
+alice = Person.new("Alice", 30, "alice@example.com")
+puts "#{alice.name} is #{alice.age} years old"
+puts "Factorial 5: #{factorial(5)}"
+
+container = Container(Int32).new
+container.add(10)
+container.add(20)
+puts "First item: #{container.first?}"

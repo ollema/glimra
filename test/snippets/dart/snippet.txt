@@ -1,0 +1,197 @@
+// Single-line comment
+/* Multi-line
+   comment */
+
+/// Documentation comment
+library app;
+
+import 'dart:async';
+import 'dart:collection';
+
+// Constants
+const int maxSize = 100;
+const pi = 3.14159;
+
+// Enum
+enum Status { active, inactive, pending }
+
+// Mixin
+mixin Loggable {
+  void log(String message) {
+    print('[LOG] $message');
+  }
+}
+
+// Abstract class
+abstract class Entity {
+  int get id;
+  bool save();
+}
+
+// Class with mixin
+class Person extends Entity with Loggable {
+  final String name;
+  int age;
+  Status status;
+
+  // Named constructor
+  Person(this.name, this.age, {this.status = Status.active});
+
+  // Factory constructor
+  factory Person.guest() {
+    return Person('Guest', 0);
+  }
+
+  @override
+  int get id => name.hashCode;
+
+  @override
+  bool save() {
+    log('Saving person: $name');
+    return true;
+  }
+
+  // Getter
+  bool get isAdult => age >= 18;
+
+  // Setter
+  set statusValue(Status value) => status = value;
+
+  // Method with optional parameters
+  String greet({String? greeting}) {
+    greeting ??= 'Hello';
+    return '$greeting, I\'m $name';
+  }
+
+  // Arrow function
+  String describe() => '$name is $age years old';
+}
+
+// Extension method
+extension StringExtension on String {
+  String capitalize() {
+    if (isEmpty) return this;
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+}
+
+// Generic class
+class Container<T> {
+  final List<T> _items = [];
+
+  void add(T item) => _items.add(item);
+  T operator [](int index) => _items[index];
+  int get length => _items.length;
+}
+
+// Function with type parameters
+T? findFirst<T>(List<T> items, bool Function(T) predicate) {
+  for (final item in items) {
+    if (predicate(item)) return item;
+  }
+  return null;
+}
+
+// Async function
+Future<String> fetchData(String url) async {
+  await Future.delayed(Duration(seconds: 1));
+  return 'Data from $url';
+}
+
+// Stream generator
+Stream<int> countUp(int max) async* {
+  for (var i = 0; i < max; i++) {
+    yield i;
+  }
+}
+
+void main() async {
+  // Variables
+  var x = 42;
+  final name = 'Dart';
+  late String description;
+
+  // Null safety
+  String? nullable;
+  String nonNull = nullable ?? 'default';
+  int? length = nullable?.length;
+
+  // Collections
+  List<int> numbers = [1, 2, 3, 4, 5];
+  Set<String> uniqueNames = {'Alice', 'Bob', 'Charlie'};
+  Map<String, int> scores = {'Alice': 95, 'Bob': 87};
+
+  // Collection operations
+  var doubled = numbers.map((n) => n * 2).toList();
+  var evens = numbers.where((n) => n % 2 == 0).toList();
+  var sum = numbers.fold<int>(0, (a, b) => a + b);
+
+  // Spread operator
+  var more = [...numbers, 6, 7, 8];
+
+  // If-else
+  if (x > 0) {
+    print('Positive');
+  } else if (x < 0) {
+    print('Negative');
+  } else {
+    print('Zero');
+  }
+
+  // Conditional expression
+  var result = x > 0 ? 'positive' : 'non-positive';
+
+  // Switch
+  switch (x % 3) {
+    case 0:
+      print('Divisible by 3');
+      break;
+    case 1:
+    case 2:
+      print('Remainder: ${x % 3}');
+      break;
+  }
+
+  // For loops
+  for (var i = 0; i < 5; i++) {
+    print(i);
+  }
+
+  for (final num in numbers) {
+    print(num);
+  }
+
+  // While loop
+  var i = 0;
+  while (i < 5) {
+    i++;
+  }
+
+  // Try-catch
+  try {
+    throw Exception('Something went wrong');
+  } on Exception catch (e) {
+    print(e);
+  } finally {
+    print('Cleanup');
+  }
+
+  // Await async
+  var data = await fetchData('https://example.com');
+  print(data);
+
+  // String interpolation
+  var message = 'The value of x is $x and doubled is ${x * 2}';
+
+  // Records (Dart 3+)
+  var record = (1, 'hello', active: true);
+  var (num1, str, active: isActive) = record;
+
+  // Pattern matching (Dart 3+)
+  description = switch (x) {
+    0 => 'zero',
+    > 0 => 'positive',
+    < 0 => 'negative',
+    _ => 'unknown',
+  };
+}

@@ -1,0 +1,82 @@
+// Module imports
+import gleam/int
+import gleam/io
+import gleam/list
+import gleam/option.{type Option, None, Some}
+import gleam/result
+
+// Custom type definition
+pub type User {
+  User(name: String, age: Int, active: Bool)
+  Guest
+}
+
+// Type alias
+pub type UserId =
+  Int
+
+// Constants
+pub const max_users: Int = 100
+
+// Public function with type annotations
+pub fn add(a: Int, b: Int) -> Int {
+  a + b
+}
+
+// Private function
+fn multiply(a: Int, b: Int) -> Int {
+  a * b
+}
+
+// Function using case expression
+pub fn describe_user(user: User) -> String {
+  case user {
+    User(name, age, True) ->
+      name <> " is " <> int.to_string(age) <> " and active"
+    User(name, _, False) -> name <> " is inactive"
+    Guest -> "Anonymous guest"
+  }
+}
+
+// Function with guards
+pub fn classify_age(age: Int) -> String {
+  case age {
+    a if a < 0 -> "Invalid"
+    a if a < 18 -> "Minor"
+    a if a < 65 -> "Adult"
+    _ -> "Senior"
+  }
+}
+
+// Working with Option
+pub fn safe_divide(a: Int, b: Int) -> Option(Int) {
+  case b {
+    0 -> None
+    _ -> Some(a / b)
+  }
+}
+
+// Using pipes and list functions
+pub fn process_numbers(numbers: List(Int)) -> Int {
+  numbers
+  |> list.filter(fn(n) { n > 0 })
+  |> list.map(fn(n) { n * 2 })
+  |> list.fold(0, fn(acc, n) { acc + n })
+}
+
+// Result handling
+pub fn parse_and_add(a: String, b: String) -> Result(Int, Nil) {
+  use x <- result.try(int.parse(a))
+  use y <- result.try(int.parse(b))
+  Ok(x + y)
+}
+
+// Main function
+pub fn main() {
+  let user = User("Alice", 30, True)
+  let numbers = [1, 2, 3, 4, 5]
+
+  io.println(describe_user(user))
+  io.println("Sum: " <> int.to_string(process_numbers(numbers)))
+  io.println("Product: " <> int.to_string(multiply(3, 4)))
+}

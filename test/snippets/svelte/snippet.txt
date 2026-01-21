@@ -1,0 +1,236 @@
+<script lang="ts">
+  // Imports
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { writable, derived } from 'svelte/store';
+  import type { Writable } from 'svelte/store';
+
+  // Props
+  export let name: string = 'World';
+  export let count: number = 0;
+  export let items: string[] = [];
+
+  // Event dispatcher
+  const dispatch = createEventDispatcher<{
+    increment: number;
+    submit: { name: string };
+  }>();
+
+  // Reactive variables
+  let message = 'Hello';
+  let inputValue = '';
+  let isActive = false;
+
+  // Store
+  const counter: Writable<number> = writable(0);
+  const doubled = derived(counter, ($counter) => $counter * 2);
+
+  // Reactive declarations
+  $: greeting = `${message}, ${name}!`;
+  $: doubledCount = count * 2;
+  $: console.log('Count changed:', count);
+
+  // Reactive block
+  $: {
+    if (count > 10) {
+      console.log('Count is large');
+    }
+  }
+
+  // Functions
+  function increment() {
+    count += 1;
+    dispatch('increment', count);
+  }
+
+  function decrement() {
+    count = Math.max(0, count - 1);
+  }
+
+  async function fetchData(url: string): Promise<any> {
+    try {
+      const response = await fetch(url);
+      return response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  // Lifecycle
+  onMount(() => {
+    console.log('Component mounted');
+
+    return () => {
+      console.log('Cleanup on unmount');
+    };
+  });
+
+  onDestroy(() => {
+    console.log('Component destroyed');
+  });
+
+  // Event handlers
+  function handleClick(event: MouseEvent) {
+    event.preventDefault();
+    isActive = !isActive;
+  }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      dispatch('submit', { name: inputValue });
+    }
+  }
+</script>
+
+<!-- Basic text and expressions -->
+<h1>{greeting}</h1>
+<p>Count: {count} (doubled: {doubledCount})</p>
+
+<!-- HTML rendering -->
+<div>{@html '<strong>Bold text</strong>'}</div>
+
+<!-- Attribute binding -->
+<img src={imageUrl} alt={name} />
+<a href="/users/{name.toLowerCase()}">Profile</a>
+
+<!-- Class directive -->
+<div class:active={isActive} class:highlighted={count > 5}>
+  Styled content
+</div>
+
+<!-- Style directive -->
+<div style:color={textColor} style:font-size="{fontSize}px">
+  Inline styles
+</div>
+
+<!-- Conditional rendering -->
+{#if count > 10}
+  <p>Count is greater than 10</p>
+{:else if count > 5}
+  <p>Count is greater than 5</p>
+{:else}
+  <p>Count is 5 or less</p>
+{/if}
+
+<!-- List rendering -->
+<ul>
+  {#each items as item, index (item.id)}
+    <li>{index}: {item.name}</li>
+  {:else}
+    <li>No items found</li>
+  {/each}
+</ul>
+
+<!-- Keyed each block -->
+{#each items as item (item.id)}
+  <Item {item} />
+{/each}
+
+<!-- Await blocks -->
+{#await fetchData('/api/data')}
+  <p>Loading...</p>
+{:then data}
+  <p>Data: {JSON.stringify(data)}</p>
+{:catch error}
+  <p>Error: {error.message}</p>
+{/await}
+
+<!-- Event handling -->
+<button on:click={increment}>Increment</button>
+<button on:click={decrement}>Decrement</button>
+<button on:click|preventDefault|stopPropagation={handleClick}>
+  Toggle
+</button>
+
+<input on:keydown={handleKeydown} />
+<input on:input={(e) => inputValue = e.currentTarget.value} />
+
+<!-- Two-way binding -->
+<input bind:value={inputValue} />
+<input bind:value={name} placeholder="Enter name" />
+<input type="checkbox" bind:checked={isActive} />
+<select bind:value={selected}>
+  <option value="">Choose...</option>
+  {#each options as opt}
+    <option value={opt.value}>{opt.label}</option>
+  {/each}
+</select>
+
+<!-- Component binding -->
+<ChildComponent bind:this={componentRef} bind:value={childValue} />
+
+<!-- Slots -->
+<div class="wrapper">
+  <slot name="header">Default header</slot>
+  <slot>Default content</slot>
+  <slot name="footer" {count} {name}>
+    Default footer
+  </slot>
+</div>
+
+<!-- Using slots -->
+<Card>
+  <span slot="header">Header content</span>
+  <p>Main content</p>
+  <span slot="footer" let:count>Footer: {count}</span>
+</Card>
+
+<!-- Store subscription -->
+<p>Counter value: {$counter}</p>
+<p>Doubled: {$doubled}</p>
+<button on:click={() => counter.update(n => n + 1)}>
+  Increment store
+</button>
+
+<!-- Actions -->
+<div use:clickOutside on:outclick={handleOutsideClick}>
+  Click outside to close
+</div>
+
+<!-- Transitions -->
+{#if isVisible}
+  <div transition:fade={{ duration: 300 }}>
+    Fading content
+  </div>
+{/if}
+
+{#if isOpen}
+  <div in:fly={{ y: 200 }} out:fade>
+    Flying in, fading out
+  </div>
+{/if}
+
+<!-- Special elements -->
+<svelte:window on:keydown={handleGlobalKeydown} bind:innerWidth={width} />
+<svelte:body on:click={handleBodyClick} />
+<svelte:head>
+  <title>{name} - Page Title</title>
+</svelte:head>
+<svelte:component this={currentComponent} {props} />
+
+<style>
+  /* Scoped styles */
+  h1 {
+    color: #ff3e00;
+    font-size: 2rem;
+  }
+
+  .active {
+    background-color: #40b3ff;
+  }
+
+  .highlighted {
+    border: 2px solid gold;
+  }
+
+  /* Global styles */
+  :global(body) {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Targeting child components */
+  div :global(.child-class) {
+    color: red;
+  }
+</style>

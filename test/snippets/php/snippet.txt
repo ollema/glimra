@@ -1,0 +1,145 @@
+<?php
+// Single-line comment
+/* Multi-line
+   comment */
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use Exception;
+use DateTime;
+
+// Constants
+const MAX_SIZE = 100;
+define('PI', 3.14159);
+
+// Interface
+interface Greetable {
+    public function greet(): string;
+}
+
+// Trait
+trait Loggable {
+    protected function log(string $message): void {
+        echo "[LOG] $message\n";
+    }
+}
+
+// Enum (PHP 8.1+)
+enum Status: string {
+    case Active = 'active';
+    case Inactive = 'inactive';
+    case Pending = 'pending';
+}
+
+// Abstract class
+abstract class Entity {
+    protected int $id;
+
+    abstract public function save(): bool;
+}
+
+// Class with traits and interfaces
+class Person extends Entity implements Greetable {
+    use Loggable;
+
+    private string $name;
+    private int $age;
+    public readonly DateTime $createdAt;
+
+    public function __construct(
+        string $name,
+        int $age,
+        private Status $status = Status::Active
+    ) {
+        $this->name = $name;
+        $this->age = $age;
+        $this->createdAt = new DateTime();
+    }
+
+    public function greet(): string {
+        return "Hello, I'm {$this->name}";
+    }
+
+    public function save(): bool {
+        $this->log("Saving person: {$this->name}");
+        return true;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public static function create(string $name, int $age): self {
+        return new self($name, $age);
+    }
+}
+
+// Function with typed parameters
+function add(int $a, int $b): int {
+    return $a + $b;
+}
+
+// Arrow function (PHP 7.4+)
+$multiply = fn(int $a, int $b): int => $a * $b;
+
+// Nullable types
+function findUser(?int $id): ?Person {
+    if ($id === null) {
+        return null;
+    }
+    return Person::create("User", 25);
+}
+
+// Match expression (PHP 8.0+)
+function describe(mixed $value): string {
+    return match(true) {
+        is_int($value) => 'integer',
+        is_string($value) => 'string',
+        is_array($value) => 'array',
+        default => 'unknown',
+    };
+}
+
+// Arrays and array functions
+$numbers = [1, 2, 3, 4, 5];
+$doubled = array_map(fn($n) => $n * 2, $numbers);
+$evens = array_filter($numbers, fn($n) => $n % 2 === 0);
+$sum = array_reduce($numbers, fn($carry, $n) => $carry + $n, 0);
+
+// Associative array
+$config = [
+    'host' => 'localhost',
+    'port' => 3306,
+    'debug' => true,
+];
+
+// String operations
+$name = "World";
+$greeting = "Hello, $name!";
+$heredoc = <<<EOT
+This is a heredoc string.
+Variables like $name are interpolated.
+EOT;
+
+// Try-catch
+try {
+    throw new Exception("Something went wrong");
+} catch (Exception $e) {
+    echo $e->getMessage();
+} finally {
+    echo "Cleanup";
+}
+
+// Null coalescing and safe operator
+$value = $config['missing'] ?? 'default';
+$length = $person?->getName()?->length();
+
+// List/foreach
+foreach ($numbers as $index => $value) {
+    echo "$index: $value\n";
+}
+
+// Spread operator
+$merged = [...$numbers, ...[6, 7, 8]];

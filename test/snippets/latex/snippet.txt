@@ -1,0 +1,176 @@
+\documentclass[12pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning}
+
+% Custom commands
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+% Document metadata
+\title{A Comprehensive \LaTeX{} Example}
+\author{John Doe \and Jane Smith}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document demonstrates various \LaTeX{} features including mathematical
+typesetting, theorems, figures, tables, and bibliographic references.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\label{sec:intro}
+
+This is a sample document that showcases \LaTeX{} syntax highlighting.
+We reference Section~\ref{sec:math} for mathematical content.
+
+\subsection{Basic Formatting}
+
+Text can be \textbf{bold}, \textit{italic}, \underline{underlined},
+or \texttt{monospaced}. You can also use \emph{emphasis} for semantic markup.
+
+\begin{itemize}
+    \item First item
+    \item Second item with nested list:
+    \begin{enumerate}
+        \item Nested first
+        \item Nested second
+    \end{enumerate}
+    \item Third item
+\end{itemize}
+
+\section{Mathematics}
+\label{sec:math}
+
+\subsection{Inline and Display Math}
+
+Inline math: $E = mc^2$ and $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$.
+
+Display math with equation environment:
+\begin{equation}
+    \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+    \label{eq:gaussian}
+\end{equation}
+
+The Gaussian integral in Equation~\eqref{eq:gaussian} is fundamental.
+
+\subsection{Aligned Equations}
+
+\begin{align}
+    \nabla \cdot \mathbf{E} &= \frac{\rho}{\varepsilon_0} \\
+    \nabla \cdot \mathbf{B} &= 0 \\
+    \nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t} \\
+    \nabla \times \mathbf{B} &= \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\end{align}
+
+\subsection{Matrices}
+
+\[
+A = \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix}
+\]
+
+\begin{theorem}[Pythagorean Theorem]
+\label{thm:pythagoras}
+For a right triangle with legs $a$ and $b$ and hypotenuse $c$:
+\[ a^2 + b^2 = c^2 \]
+\end{theorem}
+
+\begin{proof}
+The proof follows from the properties of similar triangles.
+Consider the altitude from the right angle to the hypotenuse\ldots
+\end{proof}
+
+\begin{definition}
+A function $f: \R \to \R$ is \emph{continuous} at $x_0$ if
+\[
+    \lim_{x \to x_0} f(x) = f(x_0)
+\]
+\end{definition}
+
+\section{Figures and Tables}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node[draw, circle] (A) {$A$};
+        \node[draw, circle, right of=A] (B) {$B$};
+        \node[draw, circle, below of=A] (C) {$C$};
+        \draw[->] (A) -- (B);
+        \draw[->] (A) -- (C);
+        \draw[->] (B) -- (C);
+    \end{tikzpicture}
+    \caption{A simple directed graph}
+    \label{fig:graph}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|l|c|r|}
+        \hline
+        \textbf{Name} & \textbf{Symbol} & \textbf{Value} \\
+        \hline
+        Pi & $\pi$ & 3.14159 \\
+        Euler's number & $e$ & 2.71828 \\
+        Golden ratio & $\phi$ & 1.61803 \\
+        \hline
+    \end{tabular}
+    \caption{Mathematical constants}
+    \label{tab:constants}
+\end{table}
+
+\section{Code Listings}
+
+\begin{lstlisting}[language=Python, caption={A Python function}]
+def fibonacci(n):
+    """Calculate the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+\end{lstlisting}
+
+\section{Conclusion}
+
+See \cite{knuth1984} for more on \TeX{} and typesetting.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\appendix
+\section{Additional Proofs}
+
+% Comment: This appendix contains supplementary material
+Additional content goes here\ldots
+
+\end{document}

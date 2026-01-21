@@ -1,0 +1,108 @@
+%% Module definition
+-module(calculator).
+-behaviour(gen_server).
+
+%% API exports
+-export([start_link/0, add/2, divide/2, factorial/1]).
+-export([init/1, handle_call/3, handle_cast/2, terminate/2]).
+
+%% Macros
+-define(DEFAULT_TIMEOUT, 5000).
+-define(IS_POSITIVE(N), is_number(N) andalso N > 0).
+
+%% Records
+-record(state, {
+    count = 0 :: non_neg_integer(),
+    history = [] :: [term()]
+}).
+
+%% Type specifications
+-type result() :: {ok, number()} | {error, string()}.
+-spec add(number(), number()) -> number().
+-spec divide(number(), number()) -> result().
+
+%% Public API
+start_link() ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+
+add(A, B) when is_number(A), is_number(B) ->
+    A + B.
+
+divide(_, 0) ->
+    {error, "Division by zero"};
+divide(A, B) ->
+    {ok, A / B}.
+
+%% Pattern matching with guards
+factorial(0) -> 1;
+factorial(N) when N > 0, is_integer(N) ->
+    N * factorial(N - 1).
+
+%% List operations
+sum_list([]) -> 0;
+sum_list([H | T]) -> H + sum_list(T).
+
+map_double(List) ->
+    [X * 2 || X <- List, X > 0].
+
+%% Case expression
+describe_status(Status) ->
+    case Status of
+        ok -> "Success";
+        error -> "Failure";
+        {error, Reason} -> io_lib:format("Failed: ~p", [Reason]);
+        _ -> "Unknown"
+    end.
+
+%% If expression
+check_number(N) ->
+    if
+        N > 0 -> positive;
+        N < 0 -> negative;
+        true -> zero
+    end.
+
+%% gen_server callbacks
+init([]) ->
+    {ok, #state{}}.
+
+handle_call({add, A, B}, _From, State = #state{count = Count}) ->
+    Result = A + B,
+    NewState = State#state{count = Count + 1},
+    {reply, Result, NewState};
+
+handle_call(get_count, _From, State = #state{count = Count}) ->
+    {reply, Count, State}.
+
+handle_cast(reset, _State) ->
+    {noreply, #state{}}.
+
+terminate(_Reason, _State) ->
+    ok.
+
+%% Fun (anonymous function)
+apply_operation(Fun, A, B) ->
+    Fun(A, B).
+
+example_usage() ->
+    Add = fun(X, Y) -> X + Y end,
+    Multiply = fun(X, Y) -> X * Y end,
+    Sum = apply_operation(Add, 5, 3),
+    Product = apply_operation(Multiply, 5, 3),
+    {Sum, Product}.
+
+%% Binary pattern matching
+parse_packet(<<Type:8, Length:16, Data:Length/binary, _Rest/binary>>) ->
+    {Type, Data};
+parse_packet(_) ->
+    {error, invalid_packet}.
+
+%% Try-catch
+safe_divide(A, B) ->
+    try
+        Result = A / B,
+        {ok, Result}
+    catch
+        error:badarith -> {error, "Division error"};
+        _:_ -> {error, "Unknown error"}
+    end.

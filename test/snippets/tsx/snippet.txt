@@ -1,0 +1,232 @@
+// Single-line comment
+/* Multi-line
+   comment */
+
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import type { FC, ReactNode, MouseEvent, ChangeEvent } from 'react';
+
+// Type definitions
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'guest';
+}
+
+interface Props {
+  title: string;
+  count?: number;
+  children?: ReactNode;
+  onUpdate: (value: number) => void;
+}
+
+type Status = 'idle' | 'loading' | 'success' | 'error';
+
+// Generic type
+type Result<T, E = Error> =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+// Constants
+const MAX_COUNT = 100;
+const DEFAULT_USER: User = {
+  id: 0,
+  name: 'Guest',
+  email: 'guest@example.com',
+  role: 'guest',
+};
+
+// Custom hook
+function useCounter(initial: number = 0) {
+  const [count, setCount] = useState(initial);
+
+  const increment = useCallback(() => {
+    setCount((prev) => prev + 1);
+  }, []);
+
+  const decrement = useCallback(() => {
+    setCount((prev) => Math.max(0, prev - 1));
+  }, []);
+
+  const reset = useCallback(() => {
+    setCount(initial);
+  }, [initial]);
+
+  return { count, increment, decrement, reset };
+}
+
+// Async hook
+function useFetch<T>(url: string): Result<T> & { loading: boolean } {
+  const [state, setState] = useState<Result<T> & { loading: boolean }>({
+    success: false,
+    error: new Error('Not fetched'),
+    loading: true,
+  });
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data: T) => setState({ success: true, data, loading: false }))
+      .catch((error) => setState({ success: false, error, loading: false }));
+  }, [url]);
+
+  return state;
+}
+
+// Functional component with props
+const Counter: FC<Props> = ({ title, count: initialCount = 0, onUpdate }) => {
+  const { count, increment, decrement } = useCounter(initialCount);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    onUpdate(count);
+  }, [count, onUpdate]);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    increment();
+  };
+
+  return (
+    <div className="counter">
+      <h2>{title}</h2>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <input ref={inputRef} type="text" />
+    </div>
+  );
+};
+
+// Component with generics
+interface ListProps<T> {
+  items: T[];
+  renderItem: (item: T, index: number) => ReactNode;
+  keyExtractor: (item: T) => string | number;
+}
+
+function List<T>({ items, renderItem, keyExtractor }: ListProps<T>) {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={keyExtractor(item)}>{renderItem(item, index)}</li>
+      ))}
+    </ul>
+  );
+}
+
+// Main App component
+const App: FC = () => {
+  const [status, setStatus] = useState<Status>('idle');
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [formData, setFormData] = useState({ name: '', email: '' });
+
+  // Memoized value
+  const activeUsers = useMemo(
+    () => users.filter((u) => u.role !== 'guest'),
+    [users]
+  );
+
+  // Memoized callback
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
+  // Effect with cleanup
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchUsers() {
+      setStatus('loading');
+      try {
+        const res = await fetch('/api/users', { signal: controller.signal });
+        const data: User[] = await res.json();
+        setUsers(data);
+        setStatus('success');
+      } catch (error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
+          setStatus('error');
+        }
+      }
+    }
+
+    fetchUsers();
+
+    return () => controller.abort();
+  }, []);
+
+  // Conditional rendering
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'error') {
+    return <div>Error loading data</div>;
+  }
+
+  return (
+    <div className="app">
+      <h1>User Management</h1>
+
+      {/* Form */}
+      <form onSubmit={(e) => e.preventDefault()}>
+        <input
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Name"
+        />
+        <input
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <button type="submit">Add User</button>
+      </form>
+
+      {/* User list with generic component */}
+      <List
+        items={activeUsers}
+        keyExtractor={(user) => user.id}
+        renderItem={(user) => (
+          <div onClick={() => setSelectedUser(user)}>
+            <span>{user.name}</span>
+            <span>{user.email}</span>
+            <span className={`role-${user.role}`}>{user.role}</span>
+          </div>
+        )}
+      />
+
+      {/* Conditional with fragments */}
+      {selectedUser && (
+        <>
+          <h2>Selected User</h2>
+          <p>Name: {selectedUser.name}</p>
+          <p>Email: {selectedUser.email}</p>
+        </>
+      )}
+
+      {/* Counter component */}
+      <Counter
+        title="My Counter"
+        count={5}
+        onUpdate={(value) => console.log('Updated:', value)}
+      />
+
+      {/* Inline styles */}
+      <div style={{ color: 'blue', fontSize: '14px' }}>
+        Styled content
+      </div>
+
+      {/* Template literal in JSX */}
+      <p>{`Total users: ${users.length}`}</p>
+    </div>
+  );
+};
+
+export default App;
+export { Counter, List };
+export type { User, Props, Status };

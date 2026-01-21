@@ -1,0 +1,156 @@
+# YAML Configuration File
+---
+# Document metadata
+version: "1.0"
+name: YAML Example
+enabled: true
+
+# Scalars
+string: Hello, World!
+integer: 42
+float: 3.14159
+boolean: true
+null_value: null
+date: 2024-01-15
+timestamp: 2024-01-15T14:30:00Z
+
+# String styles
+single_quoted: 'Single quoted string'
+double_quoted: "Double quoted with escapes: \n\t"
+literal_block: |
+  This is a literal block.
+  Line breaks are preserved.
+  Indentation is maintained.
+folded_block: >
+  This is a folded block.
+  Newlines become spaces.
+  Empty lines separate paragraphs.
+
+# Lists (sequences)
+simple_list:
+  - item1
+  - item2
+  - item3
+
+inline_list: [apple, banana, cherry]
+
+nested_list:
+  - - a
+    - b
+  - - c
+    - d
+
+# Maps (dictionaries)
+person:
+  name: Alice
+  age: 30
+  email: alice@example.com
+  active: true
+
+inline_map: {name: Bob, age: 25}
+
+# Complex structures
+database:
+  host: localhost
+  port: 5432
+  credentials:
+    username: admin
+    password: secret123
+  options:
+    ssl: true
+    timeout: 30
+    max_connections: 100
+
+# Array of objects
+users:
+  - id: 1
+    name: Alice
+    roles:
+      - admin
+      - user
+  - id: 2
+    name: Bob
+    roles:
+      - user
+  - id: 3
+    name: Charlie
+    roles:
+      - moderator
+      - user
+
+# Anchors and aliases
+defaults: &defaults
+  adapter: postgres
+  host: localhost
+  pool: 5
+
+development:
+  <<: *defaults
+  database: myapp_dev
+
+production:
+  <<: *defaults
+  database: myapp_prod
+  host: db.example.com
+  pool: 25
+
+# Environment variables (common pattern)
+environment:
+  NODE_ENV: production
+  API_KEY: ${API_KEY}
+  DATABASE_URL: postgres://user:pass@host:5432/db
+
+# Kubernetes-style configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: default
+  labels:
+    app: my-app
+    version: v1
+  annotations:
+    description: "My application service"
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: my-app
+
+# Docker Compose style
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+      - NGINX_HOST=example.com
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgres://db:5432/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# Multi-document separator
+---
+# Second document
+title: Second Document
+content: This is a separate YAML document

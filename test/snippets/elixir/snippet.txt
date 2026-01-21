@@ -1,0 +1,96 @@
+# Module definition
+defmodule MyApp.Calculator do
+  @moduledoc """
+  A simple calculator module demonstrating Elixir features.
+  """
+
+  # Module attributes
+  @default_precision 2
+
+  # Type specifications
+  @type result :: {:ok, number()} | {:error, String.t()}
+
+  # Guards
+  defguard is_positive(n) when is_number(n) and n > 0
+
+  # Public functions
+  def add(a, b) when is_number(a) and is_number(b) do
+    a + b
+  end
+
+  def divide(_a, 0), do: {:error, "Division by zero"}
+  def divide(a, b), do: {:ok, a / b}
+
+  # Pattern matching
+  def describe_list([]), do: "empty"
+  def describe_list([_]), do: "single element"
+  def describe_list([head | tail]), do: "head: #{head}, tail length: #{length(tail)}"
+
+  # Pipeline operator
+  def process_numbers(numbers) do
+    numbers
+    |> Enum.filter(&(&1 > 0))
+    |> Enum.map(&(&1 * 2))
+    |> Enum.sum()
+  end
+
+  # Case expression
+  def check_status(status) do
+    case status do
+      :ok -> "Success"
+      :error -> "Failure"
+      {:error, reason} -> "Failed: #{reason}"
+      _ -> "Unknown"
+    end
+  end
+
+  # With statement
+  def fetch_user_data(user_id) do
+    with {:ok, user} <- get_user(user_id),
+         {:ok, profile} <- get_profile(user),
+         {:ok, settings} <- get_settings(user) do
+      {:ok, %{user: user, profile: profile, settings: settings}}
+    else
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  # Private functions
+  defp get_user(id), do: {:ok, %{id: id, name: "User #{id}"}}
+  defp get_profile(user), do: {:ok, %{bio: "Bio for #{user.name}"}}
+  defp get_settings(_user), do: {:ok, %{theme: "dark"}}
+end
+
+# GenServer example
+defmodule MyApp.Counter do
+  use GenServer
+
+  # Client API
+  def start_link(initial_value \\ 0) do
+    GenServer.start_link(__MODULE__, initial_value, name: __MODULE__)
+  end
+
+  def increment, do: GenServer.cast(__MODULE__, :increment)
+  def get_value, do: GenServer.call(__MODULE__, :get)
+
+  # Server callbacks
+  @impl true
+  def init(initial_value), do: {:ok, initial_value}
+
+  @impl true
+  def handle_cast(:increment, state), do: {:noreply, state + 1}
+
+  @impl true
+  def handle_call(:get, _from, state), do: {:reply, state, state}
+end
+
+# Struct definition
+defmodule MyApp.User do
+  @enforce_keys [:email]
+  defstruct [:id, :email, :name, active: true]
+end
+
+# Protocol implementation
+defimpl String.Chars, for: MyApp.User do
+  def to_string(user), do: "User<#{user.email}>"
+end

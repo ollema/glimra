@@ -1,0 +1,164 @@
+(module
+  ;; Single-line comment
+
+  ;; Memory definition
+  (memory (export "memory") 1)
+
+  ;; Global variables
+  (global $counter (mut i32) (i32.const 0))
+  (global $pi f64 (f64.const 3.14159))
+
+  ;; Type definitions
+  (type $binary_op (func (param i32 i32) (result i32)))
+  (type $unary_op (func (param i32) (result i32)))
+
+  ;; Import from host
+  (import "env" "log" (func $log (param i32)))
+  (import "env" "memory" (memory 1))
+
+  ;; Table for indirect calls
+  (table 4 funcref)
+  (elem (i32.const 0) $add $sub $mul $div)
+
+  ;; Simple function
+  (func $add (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.add
+  )
+
+  ;; Function with export
+  (func (export "subtract") (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.sub
+  )
+
+  ;; Named export
+  (func $mul (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.mul
+  )
+  (export "multiply" (func $mul))
+
+  ;; Division with error handling
+  (func $div (param $a i32) (param $b i32) (result i32)
+    (if (result i32) (i32.eqz (local.get $b))
+      (then (i32.const 0))
+      (else
+        local.get $a
+        local.get $b
+        i32.div_s
+      )
+    )
+  )
+
+  ;; Function with local variables
+  (func $factorial (export "factorial") (param $n i32) (result i32)
+    (local $result i32)
+    (local $i i32)
+
+    (local.set $result (i32.const 1))
+    (local.set $i (i32.const 1))
+
+    (block $break
+      (loop $continue
+        (br_if $break (i32.gt_s (local.get $i) (local.get $n)))
+
+        (local.set $result
+          (i32.mul (local.get $result) (local.get $i))
+        )
+
+        (local.set $i
+          (i32.add (local.get $i) (i32.const 1))
+        )
+
+        (br $continue)
+      )
+    )
+
+    local.get $result
+  )
+
+  ;; Fibonacci using recursion
+  (func $fib (export "fibonacci") (param $n i32) (result i32)
+    (if (result i32) (i32.le_s (local.get $n) (i32.const 1))
+      (then (local.get $n))
+      (else
+        (i32.add
+          (call $fib (i32.sub (local.get $n) (i32.const 1)))
+          (call $fib (i32.sub (local.get $n) (i32.const 2)))
+        )
+      )
+    )
+  )
+
+  ;; Memory operations
+  (func $store_value (export "store") (param $addr i32) (param $value i32)
+    (i32.store (local.get $addr) (local.get $value))
+  )
+
+  (func $load_value (export "load") (param $addr i32) (result i32)
+    (i32.load (local.get $addr))
+  )
+
+  ;; Global counter operations
+  (func $increment (export "increment") (result i32)
+    (global.set $counter
+      (i32.add (global.get $counter) (i32.const 1))
+    )
+    (global.get $counter)
+  )
+
+  (func $get_counter (export "getCounter") (result i32)
+    global.get $counter
+  )
+
+  ;; Floating point operations
+  (func $circle_area (export "circleArea") (param $radius f64) (result f64)
+    (f64.mul
+      (global.get $pi)
+      (f64.mul (local.get $radius) (local.get $radius))
+    )
+  )
+
+  ;; Indirect call through table
+  (func $apply_op (export "applyOp") (param $op i32) (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    local.get $op
+    call_indirect (type $binary_op)
+  )
+
+  ;; Select instruction
+  (func $max (export "max") (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    local.get $a
+    local.get $b
+    i32.gt_s
+    select
+  )
+
+  ;; Block and branch
+  (func $classify (export "classify") (param $n i32) (result i32)
+    (block $positive (result i32)
+      (block $negative (result i32)
+        (block $zero (result i32)
+          (br_if $zero (i32.eqz (local.get $n)))
+          (br_if $negative (i32.lt_s (local.get $n) (i32.const 0)))
+          (br $positive (i32.const 1))
+        )
+        (return (i32.const 0))
+      )
+      (return (i32.const -1))
+    )
+  )
+
+  ;; Start function
+  (func $init
+    (global.set $counter (i32.const 0))
+  )
+  (start $init)
+)

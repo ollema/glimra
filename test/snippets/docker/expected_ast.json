@@ -1,0 +1,1155 @@
+{
+  "language": "docker",
+  "total": 7,
+  "successful": 7,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 39
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "\\\\.",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "dot"
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^(\\s*)((#).*$\\n?)",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "space",
+                          "negate": false
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CapturingGroup",
+                "number": 2,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 3,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "dot"
+                        }
+                      },
+                      {
+                        "type": "Assertion",
+                        "kind": "string_end_newline"
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "Character",
+                          "value": 10
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\s",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "Group",
+                  "flags": {
+                    "enable": {
+                      "ignoreCase": true
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CapturingGroup",
+                          "number": 1,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Character",
+                                  "value": 79
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 78
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 66
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 85
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 73
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 76
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 68
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterSet",
+                            "kind": "space",
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "flags": {
+                  "enable": {
+                    "ignoreCase": true
+                  }
+                },
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 68
+                              },
+                              {
+                                "type": "Character",
+                                "value": 68
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 71
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 67
+                              },
+                              {
+                                "type": "Character",
+                                "value": 77
+                              },
+                              {
+                                "type": "Character",
+                                "value": 68
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 67
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 80
+                              },
+                              {
+                                "type": "Character",
+                                "value": 89
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 89
+                              },
+                              {
+                                "type": "Character",
+                                "value": 80
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 86
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 88
+                              },
+                              {
+                                "type": "Character",
+                                "value": 80
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 83
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 70
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 77
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 72
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              },
+                              {
+                                "type": "Character",
+                                "value": 72
+                              },
+                              {
+                                "type": "Character",
+                                "value": 67
+                              },
+                              {
+                                "type": "Character",
+                                "value": 72
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 67
+                              },
+                              {
+                                "type": "Character",
+                                "value": 75
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 76
+                              },
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 66
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 77
+                              },
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              },
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 85
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 83
+                              },
+                              {
+                                "type": "Character",
+                                "value": 72
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 83
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 80
+                              },
+                              {
+                                "type": "Character",
+                                "value": 83
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 71
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 85
+                              },
+                              {
+                                "type": "Character",
+                                "value": 83
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 86
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 76
+                              },
+                              {
+                                "type": "Character",
+                                "value": 85
+                              },
+                              {
+                                "type": "Character",
+                                "value": 77
+                              },
+                              {
+                                "type": "Character",
+                                "value": 69
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 87
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 75
+                              },
+                              {
+                                "type": "Character",
+                                "value": 68
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "space",
+                "negate": false
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(CMD|ENTRYPOINT))\\s",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "Group",
+                  "flags": {
+                    "enable": {
+                      "ignoreCase": true
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "CapturingGroup",
+                          "number": 1,
+                          "body": [
+                            {
+                              "type": "Alternative",
+                              "body": [
+                                {
+                                  "type": "Character",
+                                  "value": 79
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 78
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 66
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 85
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 73
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 76
+                                },
+                                {
+                                  "type": "Character",
+                                  "value": 68
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 1,
+                          "max": null,
+                          "body": {
+                            "type": "CharacterSet",
+                            "kind": "space",
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "flags": {
+                  "enable": {
+                    "ignoreCase": true
+                  }
+                },
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 67
+                              },
+                              {
+                                "type": "Character",
+                                "value": 77
+                              },
+                              {
+                                "type": "Character",
+                                "value": 68
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 69
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 89
+                              },
+                              {
+                                "type": "Character",
+                                "value": 80
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 73
+                              },
+                              {
+                                "type": "Character",
+                                "value": 78
+                              },
+                              {
+                                "type": "Character",
+                                "value": 84
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "space",
+                "negate": false
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    },
+    {
+      "pattern": "^\\s*\\b(?i:(FROM))\\b.*?\\b(?i:(AS))\\b",
+      "success": true,
+      "ast": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Assertion",
+                "kind": "string_start"
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "space",
+                  "negate": false
+                }
+              },
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              },
+              {
+                "type": "Group",
+                "flags": {
+                  "enable": {
+                    "ignoreCase": true
+                  }
+                },
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 1,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 70
+                              },
+                              {
+                                "type": "Character",
+                                "value": 82
+                              },
+                              {
+                                "type": "Character",
+                                "value": 79
+                              },
+                              {
+                                "type": "Character",
+                                "value": 77
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              },
+              {
+                "type": "Quantifier",
+                "kind": "lazy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "dot"
+                }
+              },
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              },
+              {
+                "type": "Group",
+                "flags": {
+                  "enable": {
+                    "ignoreCase": true
+                  }
+                },
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CapturingGroup",
+                        "number": 2,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "Character",
+                                "value": 65
+                              },
+                              {
+                                "type": "Character",
+                                "value": 83
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Assertion",
+                "kind": "word_boundary",
+                "negate": false
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "extended": false,
+          "digitIsAscii": false,
+          "posixIsAscii": false,
+          "spaceIsAscii": false,
+          "wordIsAscii": false,
+          "textSegmentMode": null
+        }
+      }
+    }
+  ]
+}

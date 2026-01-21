@@ -1,0 +1,138 @@
+package com.example.app
+
+import scala.concurrent.{Future, ExecutionContext}
+import scala.util.{Try, Success, Failure}
+
+// Object (singleton)
+object Constants {
+  val MaxSize: Int = 100
+  val Pi: Double = 3.14159
+}
+
+// Enum (Scala 3 style)
+enum Status:
+  case Active, Inactive, Pending
+
+// Case class (immutable data)
+case class Person(name: String, age: Int, email: Option[String] = None)
+
+// Sealed trait (ADT)
+sealed trait Result[+A]
+case class Ok[A](value: A) extends Result[A]
+case class Err(message: String) extends Result[Nothing]
+
+// Trait with abstract and concrete methods
+trait Repository[T] {
+  def findById(id: Int): Option[T]
+  def findAll: List[T]
+  def save(item: T): Boolean
+
+  def exists(id: Int): Boolean = findById(id).isDefined
+}
+
+// Class with primary constructor
+class Calculator(precision: Int = 2) {
+  // Companion object
+  def this() = this(2)
+
+  def add(a: Double, b: Double): Double = a + b
+
+  def divide(a: Double, b: Double): Result[Double] =
+    if b == 0 then Err("Division by zero")
+    else Ok(a / b)
+
+  // Method with type parameter
+  def sum[T: Numeric](values: T*): T = {
+    val num = implicitly[Numeric[T]]
+    values.reduce(num.plus)
+  }
+}
+
+object Calculator {
+  def apply(): Calculator = new Calculator()
+}
+
+// Extension methods (Scala 3)
+extension (s: String)
+  def toTitleCase: String = s.split(" ").map(_.capitalize).mkString(" ")
+  def isBlank: Boolean = s.trim.isEmpty
+
+// Given instances (Scala 3 implicits)
+given ExecutionContext = ExecutionContext.global
+
+// Higher-order functions
+def measureTime[T](block: => T): (T, Long) = {
+  val start = System.currentTimeMillis()
+  val result = block
+  (result, System.currentTimeMillis() - start)
+}
+
+// Pattern matching
+def describe(x: Any): String = x match {
+  case i: Int if i > 0 => s"positive int: $i"
+  case s: String => s"string: $s"
+  case Person(name, age, _) => s"person: $name, $age"
+  case Nil => "empty list"
+  case head :: tail => s"list with head $head"
+  case _ => "something else"
+}
+
+// For comprehension
+def processUsers(users: List[Person]): List[String] =
+  for {
+    user <- users
+    if user.age >= 18
+    email <- user.email
+  } yield s"${user.name}: $email"
+
+// Async with Future
+def fetchData(url: String)(using ec: ExecutionContext): Future[String] =
+  Future {
+    Thread.sleep(1000)
+    s"Data from $url"
+  }
+
+// Main application
+@main def run(): Unit = {
+  // Variable declarations
+  val immutable = "cannot change"
+  var mutable = 0
+
+  // Collections
+  val numbers = List(1, 2, 3, 4, 5)
+  val doubled = numbers.map(_ * 2)
+  val evens = numbers.filter(_ % 2 == 0)
+  val sum = numbers.foldLeft(0)(_ + _)
+
+  // Option handling
+  val maybeName: Option[String] = Some("Alice")
+  val greeting = maybeName.map(n => s"Hello, $n").getOrElse("Hello, stranger")
+
+  // Try for error handling
+  val result: Try[Int] = Try("123".toInt)
+  result match {
+    case Success(n) => println(s"Parsed: $n")
+    case Failure(e) => println(s"Error: ${e.getMessage}")
+  }
+
+  // Using extension method
+  val title = "hello world".toTitleCase
+
+  // Case class copy
+  val alice = Person("Alice", 30)
+  val olderAlice = alice.copy(age = 31)
+
+  // Destructuring
+  val Person(name, age, _) = alice
+
+  // Partial functions
+  val toInt: PartialFunction[String, Int] = {
+    case s if s.forall(_.isDigit) => s.toInt
+  }
+
+  // Collection operations
+  val grouped = numbers.groupBy(_ % 2)
+  val zipped = numbers.zip(doubled)
+
+  println(s"Sum: $sum, Title: $title")
+}

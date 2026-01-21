@@ -1,0 +1,246 @@
+import Foundation
+
+// MARK: - Constants and Variables
+
+let maxSize = 100
+var counter = 0
+
+// MARK: - Enums
+
+enum Status: String, CaseIterable {
+    case active = "active"
+    case inactive = "inactive"
+    case pending = "pending"
+
+    var description: String {
+        rawValue.capitalized
+    }
+}
+
+enum Result<T, E: Error> {
+    case success(T)
+    case failure(E)
+}
+
+// MARK: - Structs
+
+struct Person: Codable, Equatable {
+    let id: UUID
+    var name: String
+    var age: Int
+    var email: String?
+
+    init(name: String, age: Int, email: String? = nil) {
+        self.id = UUID()
+        self.name = name
+        self.age = age
+        self.email = email
+    }
+
+    var isAdult: Bool {
+        age >= 18
+    }
+
+    mutating func celebrateBirthday() {
+        age += 1
+    }
+}
+
+// MARK: - Protocols
+
+protocol Repository {
+    associatedtype Item
+    func findById(_ id: UUID) -> Item?
+    func findAll() -> [Item]
+    func save(_ item: Item) throws
+}
+
+protocol Describable {
+    var description: String { get }
+}
+
+// MARK: - Classes
+
+class Calculator {
+    private(set) var precision: Int
+
+    init(precision: Int = 2) {
+        self.precision = precision
+    }
+
+    func add(_ a: Double, _ b: Double) -> Double {
+        a + b
+    }
+
+    func divide(_ a: Double, _ b: Double) throws -> Double {
+        guard b != 0 else {
+            throw CalculatorError.divisionByZero
+        }
+        return a / b
+    }
+}
+
+enum CalculatorError: Error {
+    case divisionByZero
+    case overflow
+}
+
+// MARK: - Extensions
+
+extension String {
+    var isBlank: Bool {
+        trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    func toTitleCase() -> String {
+        split(separator: " ")
+            .map { $0.capitalized }
+            .joined(separator: " ")
+    }
+}
+
+extension Array where Element: Numeric {
+    func sum() -> Element {
+        reduce(0, +)
+    }
+}
+
+// MARK: - Generics
+
+func swap<T>(_ a: inout T, _ b: inout T) {
+    let temp = a
+    a = b
+    b = temp
+}
+
+struct Stack<Element> {
+    private var items: [Element] = []
+
+    var isEmpty: Bool { items.isEmpty }
+    var count: Int { items.count }
+
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+
+    mutating func pop() -> Element? {
+        items.popLast()
+    }
+
+    func peek() -> Element? {
+        items.last
+    }
+}
+
+// MARK: - Closures and Higher-Order Functions
+
+let numbers = [1, 2, 3, 4, 5]
+let doubled = numbers.map { $0 * 2 }
+let evens = numbers.filter { $0 % 2 == 0 }
+let sum = numbers.reduce(0, +)
+
+func measureTime<T>(_ operation: () -> T) -> (result: T, duration: TimeInterval) {
+    let start = Date()
+    let result = operation()
+    return (result, Date().timeIntervalSince(start))
+}
+
+// MARK: - Async/Await
+
+func fetchData(from url: URL) async throws -> Data {
+    let (data, response) = try await URLSession.shared.data(from: url)
+    guard let httpResponse = response as? HTTPURLResponse,
+          httpResponse.statusCode == 200 else {
+        throw URLError(.badServerResponse)
+    }
+    return data
+}
+
+actor DataManager {
+    private var cache: [String: Data] = [:]
+
+    func getData(for key: String) -> Data? {
+        cache[key]
+    }
+
+    func setData(_ data: Data, for key: String) {
+        cache[key] = data
+    }
+}
+
+// MARK: - Property Wrappers
+
+@propertyWrapper
+struct Clamped<Value: Comparable> {
+    private var value: Value
+    private let range: ClosedRange<Value>
+
+    var wrappedValue: Value {
+        get { value }
+        set { value = min(max(newValue, range.lowerBound), range.upperBound) }
+    }
+
+    init(wrappedValue: Value, _ range: ClosedRange<Value>) {
+        self.range = range
+        self.value = min(max(wrappedValue, range.lowerBound), range.upperBound)
+    }
+}
+
+// MARK: - Main
+
+@main
+struct App {
+    static func main() async {
+        // Variables
+        var person = Person(name: "Alice", age: 30)
+        person.celebrateBirthday()
+
+        // Optional binding
+        if let email = person.email {
+            print("Email: \(email)")
+        } else {
+            print("No email")
+        }
+
+        // Guard statement
+        func processUser(_ user: Person?) {
+            guard let user = user else {
+                print("No user")
+                return
+            }
+            print("Processing \(user.name)")
+        }
+
+        // Switch with pattern matching
+        let value: Any = 42
+        switch value {
+        case let i as Int where i > 0:
+            print("Positive integer: \(i)")
+        case let s as String:
+            print("String: \(s)")
+        case is Double:
+            print("Some double")
+        default:
+            print("Unknown type")
+        }
+
+        // Error handling
+        let calc = Calculator()
+        do {
+            let result = try calc.divide(10, 0)
+            print("Result: \(result)")
+        } catch CalculatorError.divisionByZero {
+            print("Cannot divide by zero")
+        } catch {
+            print("Unknown error: \(error)")
+        }
+
+        // Collection operations
+        let dict = ["a": 1, "b": 2, "c": 3]
+        for (key, value) in dict {
+            print("\(key): \(value)")
+        }
+
+        print("Sum: \(numbers.sum())")
+    }
+}

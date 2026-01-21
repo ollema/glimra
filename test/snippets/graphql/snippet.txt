@@ -1,0 +1,274 @@
+# Single-line comment
+
+"""
+Multi-line description
+for the schema
+"""
+
+# Custom scalar types
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# Enum type
+enum Status {
+  ACTIVE
+  INACTIVE
+  PENDING
+  DELETED
+}
+
+enum Role {
+  ADMIN
+  USER
+  GUEST
+}
+
+# Interface
+interface Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+interface Timestamped {
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+# Union type
+union SearchResult = User | Post | Comment
+
+# Input type
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  role: Role = USER
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  avatar: Upload
+}
+
+input PaginationInput {
+  limit: Int = 10
+  offset: Int = 0
+  cursor: String
+}
+
+input FilterInput {
+  status: Status
+  roles: [Role!]
+  search: String
+  dateRange: DateRangeInput
+}
+
+input DateRangeInput {
+  start: DateTime!
+  end: DateTime!
+}
+
+# Object types
+type User implements Node & Timestamped {
+  id: ID!
+  name: String!
+  email: String!
+  avatar: String
+  role: Role!
+  status: Status!
+  posts(pagination: PaginationInput): PostConnection!
+  friends: [User!]!
+  settings: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Post implements Node {
+  id: ID!
+  title: String!
+  content: String!
+  published: Boolean!
+  author: User!
+  comments(first: Int, after: String): CommentConnection!
+  tags: [String!]!
+  viewCount: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Comment implements Node {
+  id: ID!
+  text: String!
+  author: User!
+  post: Post!
+  parentComment: Comment
+  replies: [Comment!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+# Connection types (Relay-style pagination)
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type PostEdge {
+  cursor: String!
+  node: Post!
+}
+
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CommentEdge {
+  cursor: String!
+  node: Comment!
+}
+
+type CommentConnection {
+  edges: [CommentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+# Query type
+type Query {
+  # Get current user
+  me: User
+
+  # Get user by ID
+  user(id: ID!): User
+
+  # List users with filtering
+  users(
+    pagination: PaginationInput
+    filter: FilterInput
+  ): [User!]!
+
+  # Get post by ID
+  post(id: ID!): Post
+
+  # List posts
+  posts(
+    first: Int
+    after: String
+    published: Boolean
+  ): PostConnection!
+
+  # Search across types
+  search(query: String!, types: [String!]): [SearchResult!]!
+
+  # Node interface query
+  node(id: ID!): Node
+}
+
+# Mutation type
+type Mutation {
+  # User mutations
+  createUser(input: CreateUserInput!): CreateUserPayload!
+  updateUser(id: ID!, input: UpdateUserInput!): UpdateUserPayload!
+  deleteUser(id: ID!): DeleteUserPayload!
+
+  # Post mutations
+  createPost(
+    title: String!
+    content: String!
+    tags: [String!]
+  ): Post!
+
+  updatePost(
+    id: ID!
+    title: String
+    content: String
+    published: Boolean
+  ): Post!
+
+  deletePost(id: ID!): Boolean!
+
+  # Comment mutations
+  addComment(postId: ID!, text: String!, parentId: ID): Comment!
+  deleteComment(id: ID!): Boolean!
+
+  # File upload
+  uploadAvatar(file: Upload!): String!
+}
+
+# Mutation payloads
+type CreateUserPayload {
+  user: User
+  errors: [Error!]
+}
+
+type UpdateUserPayload {
+  user: User
+  errors: [Error!]
+}
+
+type DeleteUserPayload {
+  success: Boolean!
+  errors: [Error!]
+}
+
+type Error {
+  field: String
+  message: String!
+  code: String!
+}
+
+# Subscription type
+type Subscription {
+  # Subscribe to new posts
+  postCreated: Post!
+
+  # Subscribe to comments on a post
+  commentAdded(postId: ID!): Comment!
+
+  # Subscribe to user status changes
+  userStatusChanged(userId: ID!): User!
+
+  # Subscribe to notifications
+  notification(userId: ID!): Notification!
+}
+
+type Notification {
+  id: ID!
+  type: String!
+  message: String!
+  read: Boolean!
+  createdAt: DateTime!
+}
+
+# Directives
+directive @auth(
+  requires: Role = USER
+) on FIELD_DEFINITION | OBJECT
+
+directive @deprecated(
+  reason: String = "No longer supported"
+) on FIELD_DEFINITION | ENUM_VALUE
+
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+# Schema definition
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

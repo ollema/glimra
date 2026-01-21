@@ -1,0 +1,222 @@
+const std = @import("std");
+const Allocator = std.mem.Allocator;
+const ArrayList = std.ArrayList;
+
+// Constants
+const MAX_SIZE: usize = 100;
+const PI: f64 = 3.14159;
+
+// Enums
+const Status = enum {
+    active,
+    inactive,
+    pending,
+
+    pub fn isActive(self: Status) bool {
+        return self == .active;
+    }
+};
+
+// Error set
+const CalculatorError = error{
+    DivisionByZero,
+    Overflow,
+    InvalidInput,
+};
+
+// Struct
+const Person = struct {
+    name: []const u8,
+    age: u32,
+    email: ?[]const u8 = null,
+
+    pub fn init(name: []const u8, age: u32) Person {
+        return Person{
+            .name = name,
+            .age = age,
+        };
+    }
+
+    pub fn isAdult(self: Person) bool {
+        return self.age >= 18;
+    }
+
+    pub fn greet(self: Person) void {
+        std.debug.print("Hello, {s}!\n", .{self.name});
+    }
+};
+
+// Union
+const Value = union(enum) {
+    int: i64,
+    float: f64,
+    string: []const u8,
+    none: void,
+
+    pub fn format(self: Value) void {
+        switch (self) {
+            .int => |i| std.debug.print("int: {}\n", .{i}),
+            .float => |f| std.debug.print("float: {d}\n", .{f}),
+            .string => |s| std.debug.print("string: {s}\n", .{s}),
+            .none => std.debug.print("none\n", .{}),
+        }
+    }
+};
+
+// Generic function
+fn max(comptime T: type, a: T, b: T) T {
+    return if (a > b) a else b;
+}
+
+// Generic struct
+fn Stack(comptime T: type) type {
+    return struct {
+        const Self = @This();
+
+        items: []T,
+        len: usize,
+        allocator: Allocator,
+
+        pub fn init(allocator: Allocator) Self {
+            return Self{
+                .items = &[_]T{},
+                .len = 0,
+                .allocator = allocator,
+            };
+        }
+
+        pub fn push(self: *Self, value: T) !void {
+            if (self.len >= self.items.len) {
+                self.items = try self.allocator.realloc(self.items, self.len + 1);
+            }
+            self.items[self.len] = value;
+            self.len += 1;
+        }
+
+        pub fn pop(self: *Self) ?T {
+            if (self.len == 0) return null;
+            self.len -= 1;
+            return self.items[self.len];
+        }
+
+        pub fn deinit(self: *Self) void {
+            self.allocator.free(self.items);
+        }
+    };
+}
+
+// Error handling
+fn divide(a: i32, b: i32) CalculatorError!i32 {
+    if (b == 0) {
+        return CalculatorError.DivisionByZero;
+    }
+    return @divTrunc(a, b);
+}
+
+// Optional handling
+fn findFirst(haystack: []const u8, needle: u8) ?usize {
+    for (haystack, 0..) |char, index| {
+        if (char == needle) {
+            return index;
+        }
+    }
+    return null;
+}
+
+// Comptime function
+fn fibonacci(comptime n: u32) u32 {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Inline assembly
+fn addWithCarry(a: u32, b: u32) struct { result: u32, carry: u1 } {
+    var result: u32 = undefined;
+    const carry = @addWithOverflow(&result, a, b);
+    return .{ .result = result, .carry = carry };
+}
+
+// Test
+test "basic addition" {
+    const result = 2 + 2;
+    try std.testing.expectEqual(@as(i32, 4), result);
+}
+
+test "divide" {
+    const result = try divide(10, 2);
+    try std.testing.expectEqual(@as(i32, 5), result);
+
+    const err = divide(10, 0);
+    try std.testing.expectError(CalculatorError.DivisionByZero, err);
+}
+
+// Main function
+pub fn main() !void {
+    // Allocator
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
+    // Variables
+    const immutable: i32 = 42;
+    var mutable: i32 = 0;
+    mutable += 1;
+
+    // Arrays and slices
+    const array = [_]i32{ 1, 2, 3, 4, 5 };
+    const slice = array[1..4];
+
+    // ArrayList
+    var list = ArrayList(i32).init(allocator);
+    defer list.deinit();
+    try list.append(1);
+    try list.append(2);
+    try list.append(3);
+
+    // For loop
+    for (array) |value| {
+        std.debug.print("{}\n", .{value});
+    }
+
+    // While loop
+    var i: usize = 0;
+    while (i < 5) : (i += 1) {
+        std.debug.print("{}\n", .{i});
+    }
+
+    // If expression
+    const result = if (immutable > 0) "positive" else "non-positive";
+
+    // Switch expression
+    const status = Status.active;
+    const description = switch (status) {
+        .active => "Active",
+        .inactive => "Inactive",
+        .pending => "Pending",
+    };
+
+    // Error handling
+    const div_result = divide(10, 2) catch |err| {
+        std.debug.print("Error: {}\n", .{err});
+        return err;
+    };
+
+    // Optional handling
+    if (findFirst("hello", 'l')) |index| {
+        std.debug.print("Found at index: {}\n", .{index});
+    } else {
+        std.debug.print("Not found\n", .{});
+    }
+
+    // Struct usage
+    const person = Person.init("Alice", 30);
+    person.greet();
+
+    // Comptime
+    const fib_10 = comptime fibonacci(10);
+    std.debug.print("Fibonacci(10) = {}\n", .{fib_10});
+
+    std.debug.print("Result: {}, Description: {s}\n", .{ div_result, description });
+    _ = result;
+    _ = slice;
+}
