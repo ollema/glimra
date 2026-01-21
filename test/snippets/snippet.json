@@ -1,6 +1,0 @@
-{
-  "name": "Joe",
-  "age": 30,
-  "student": false,
-  "skills": ["gleam", "erlang", "heavy metal"]
-}

@@ -1,8 +1,0 @@
-% this is a comment
--module(math).
--export([add/2]).
-
-add(A, B) ->
-    Result = A + B,
-    io:format("Result: ~p~n", [Result]),
-    Result.
