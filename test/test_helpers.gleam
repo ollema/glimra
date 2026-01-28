@@ -11,7 +11,6 @@ import gleam/dynamic/decode
 import gleam/int
 import gleam/json
 import gleam/list
-import gleam/option.{None}
 import gleam/result
 import gleam/string
 import glimra
@@ -20,6 +19,7 @@ import glimra/oniguruma_parser/json as ast_json
 import glimra/oniguruma_parser/parser
 import glimra/themes.{type BundledTheme, theme_id}
 import glimra/types/token.{type ThemedToken, ThemedToken}
+import json_compare
 import simplifile
 import startest/expect
 
@@ -544,7 +544,7 @@ fn decode_pattern_entry(dyn: decode.Dynamic) -> Result(ExpectedAstPattern, Nil) 
         })
 
       let ast_json = case decode.run(dyn, ast_decoder) {
-        Ok(ast_dyn) -> json.to_string(dynamic_to_json(ast_dyn))
+        Ok(ast_dyn) -> json_compare.stringify_dynamic(ast_dyn)
         Error(_) -> ""
       }
 
@@ -554,48 +554,6 @@ fn decode_pattern_entry(dyn: decode.Dynamic) -> Result(ExpectedAstPattern, Nil) 
         ast_json: ast_json,
       ))
     }
-  }
-}
-
-/// Convert a dynamic value back to json.Json for serialization
-fn dynamic_to_json(dyn: decode.Dynamic) -> json.Json {
-  // Try to decode as various types and convert to JSON
-  case decode.run(dyn, decode.string) {
-    Ok(s) -> json.string(s)
-    Error(_) ->
-      case decode.run(dyn, decode.int) {
-        Ok(i) -> json.int(i)
-        Error(_) ->
-          case decode.run(dyn, decode.float) {
-            Ok(f) -> json.float(f)
-            Error(_) ->
-              case decode.run(dyn, decode.bool) {
-                Ok(b) -> json.bool(b)
-                Error(_) ->
-                  case decode.run(dyn, decode.list(decode.dynamic)) {
-                    Ok(lst) -> json.array(lst, dynamic_to_json)
-                    Error(_) ->
-                      case
-                        decode.run(
-                          dyn,
-                          decode.dict(decode.string, decode.dynamic),
-                        )
-                      {
-                        Ok(d) ->
-                          d
-                          |> dict.to_list
-                          |> list.map(fn(pair) {
-                            #(pair.0, dynamic_to_json(pair.1))
-                          })
-                          |> json.object
-                        Error(_) ->
-                          // null or unknown - treat as null
-                          json.null()
-                      }
-                  }
-              }
-          }
-      }
   }
 }
 
@@ -613,8 +571,15 @@ pub fn validate_expected_ast(lang: Language) -> Nil {
           // Skip patterns that failed in JS parser
           Error(Nil)
         True -> {
-          // Parse with Gleam parser
-          let parse_opts = parser.default_options()
+          // Parse with Gleam parser using same options as JS generator
+          // (singleline=true, capture_group=true, skip_backref_validation=true)
+          let parse_opts =
+            parser.ParseOptions(
+              ..parser.default_options(),
+              singleline: True,
+              capture_group: True,
+              skip_backref_validation: True,
+            )
           case parser.parse(entry.pattern, parse_opts) {
             Error(err) ->
               Ok("Pattern \"" <> entry.pattern <> "\" failed to parse: " <> err)
@@ -653,114 +618,7 @@ pub fn validate_expected_ast(lang: Language) -> Nil {
 }
 
 /// Compare two JSON strings semantically (ignoring key order)
+/// Uses FFI to JavaScript to avoid stack overflow on large ASTs
 fn compare_json_strings(a: String, b: String) -> Bool {
-  // Parse both as dynamic and compare
-  let a_decoder = decode.dynamic
-  let b_decoder = decode.dynamic
-
-  case json.parse(a, a_decoder), json.parse(b, b_decoder) {
-    Ok(a_dyn), Ok(b_dyn) -> compare_dynamic(a_dyn, b_dyn)
-    _, _ -> False
-  }
-}
-
-/// Compare two dynamic values recursively
-fn compare_dynamic(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try string
-  case decode.run(a, decode.string), decode.run(b, decode.string) {
-    Ok(a_str), Ok(b_str) -> a_str == b_str
-    Error(_), Error(_) -> compare_dynamic_non_string(a, b)
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_non_string(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try int
-  case decode.run(a, decode.int), decode.run(b, decode.int) {
-    Ok(a_int), Ok(b_int) -> a_int == b_int
-    Error(_), Error(_) -> compare_dynamic_non_int(a, b)
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_non_int(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try float
-  case decode.run(a, decode.float), decode.run(b, decode.float) {
-    Ok(a_float), Ok(b_float) -> a_float == b_float
-    Error(_), Error(_) -> compare_dynamic_non_float(a, b)
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_non_float(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try bool
-  case decode.run(a, decode.bool), decode.run(b, decode.bool) {
-    Ok(a_bool), Ok(b_bool) -> a_bool == b_bool
-    Error(_), Error(_) -> compare_dynamic_non_bool(a, b)
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_non_bool(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try list
-  case
-    decode.run(a, decode.list(decode.dynamic)),
-    decode.run(b, decode.list(decode.dynamic))
-  {
-    Ok(a_list), Ok(b_list) -> compare_dynamic_lists(a_list, b_list)
-    Error(_), Error(_) -> compare_dynamic_non_list(a, b)
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_lists(
-  a: List(decode.Dynamic),
-  b: List(decode.Dynamic),
-) -> Bool {
-  case list.length(a) == list.length(b) {
-    False -> False
-    True ->
-      list.zip(a, b)
-      |> list.all(fn(pair) { compare_dynamic(pair.0, pair.1) })
-  }
-}
-
-fn compare_dynamic_non_list(a: decode.Dynamic, b: decode.Dynamic) -> Bool {
-  // Try object (dict)
-  case
-    decode.run(a, decode.dict(decode.string, decode.dynamic)),
-    decode.run(b, decode.dict(decode.string, decode.dynamic))
-  {
-    Ok(a_dict), Ok(b_dict) -> compare_dynamic_dicts(a_dict, b_dict)
-    Error(_), Error(_) -> {
-      // Both might be null - check via optional decoder
-      case
-        decode.run(a, decode.optional(decode.string)),
-        decode.run(b, decode.optional(decode.string))
-      {
-        Ok(None), Ok(None) -> True
-        _, _ -> False
-      }
-    }
-    _, _ -> False
-  }
-}
-
-fn compare_dynamic_dicts(
-  a: dict.Dict(String, decode.Dynamic),
-  b: dict.Dict(String, decode.Dynamic),
-) -> Bool {
-  let a_keys = dict.keys(a) |> list.sort(string.compare)
-  let b_keys = dict.keys(b) |> list.sort(string.compare)
-  case a_keys == b_keys {
-    False -> False
-    True ->
-      a_keys
-      |> list.all(fn(key) {
-        case dict.get(a, key), dict.get(b, key) {
-          Ok(a_val), Ok(b_val) -> compare_dynamic(a_val, b_val)
-          _, _ -> False
-        }
-      })
-  }
+  json_compare.compare_json(a, b)
 }

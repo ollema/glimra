@@ -98,6 +98,30 @@ type Context {
 }
 
 // ============================================================================
+// Loop State Types (for stack-safe iterative parsing)
+// ============================================================================
+
+/// Result of a single parsing step - either continue looping or finish
+type LoopStep(state, result) {
+  LoopContinue(state)
+  LoopDone(result)
+}
+
+/// State for top-level/group body parsing loop
+type AltLoopState {
+  AltLoopState(ctx: Context, alts: List(AlternativeNode))
+}
+
+/// State for character class contents parsing loop
+type CharClassLoopState {
+  CharClassLoopState(
+    ctx: Context,
+    current_elements: List(CharacterClassElement),
+    intersections: List(List(CharacterClassElement)),
+  )
+}
+
+// ============================================================================
 // Main Parse Function
 // ============================================================================
 
@@ -143,7 +167,10 @@ pub fn parse(
   // Validate backrefs and subroutines
   use _ <- result.try(validate_refs(final_ctx, options.capture_group))
 
-  Ok(ast)
+  // Mark capturing groups that are referenced by subroutines
+  let final_ast = mark_subroutined_groups(ast, final_ctx.subroutines)
+
+  Ok(final_ast)
 }
 
 /// Convert token flag properties to AST flags node
@@ -170,45 +197,58 @@ fn token_flags_to_ast_flags(props: FlagProperties) -> FlagsNode {
 // Top-level Parsing
 // ============================================================================
 
-/// Parse the top level of a pattern (alternations)
+/// Parse the top level of a pattern (alternations) - iterative version
 fn parse_top_level(
   ctx: Context,
 ) -> Result(#(List(AlternativeNode), Context), String) {
   let first_alt = AlternativeNode(body: [])
-  parse_top_level_loop(ctx, [first_alt])
+  parse_top_level_loop(AltLoopState(ctx: ctx, alts: [first_alt]))
 }
 
-fn parse_top_level_loop(
-  ctx: Context,
-  alts: List(AlternativeNode),
-) -> Result(#(List(AlternativeNode), Context), String) {
+/// Single step of top-level parsing
+fn parse_top_level_step(
+  state: AltLoopState,
+) -> LoopStep(AltLoopState, Result(#(List(AlternativeNode), Context), String)) {
+  let AltLoopState(ctx: ctx, alts: alts) = state
   case current_token(ctx) {
-    None -> Ok(#(list.reverse(alts), ctx))
+    None -> LoopDone(Ok(#(list.reverse(alts), ctx)))
     Some(token) -> {
       case token {
         AlternatorToken(..) -> {
           // Start new alternative
           let new_alt = AlternativeNode(body: [])
-          parse_top_level_loop(advance(ctx), [new_alt, ..alts])
+          LoopContinue(AltLoopState(ctx: advance(ctx), alts: [new_alt, ..alts]))
         }
         QuantifierToken(kind: kind, min: min, max: max, ..) -> {
           // Handle quantifier by modifying the previous element
-          use updated_alts <- result.try(attach_quantifier_to_alt(
-            alts,
-            kind,
-            min,
-            max,
-          ))
-          parse_top_level_loop(advance(ctx), updated_alts)
+          case attach_quantifier_to_alt(alts, kind, min, max) {
+            Error(e) -> LoopDone(Error(e))
+            Ok(updated_alts) ->
+              LoopContinue(AltLoopState(ctx: advance(ctx), alts: updated_alts))
+          }
         }
         _ -> {
           // Parse element and add to current alternative
-          use #(element, new_ctx) <- result.try(parse_element(ctx))
-          let updated_alts = add_to_current_alt(alts, element)
-          parse_top_level_loop(new_ctx, updated_alts)
+          case parse_element(ctx) {
+            Error(e) -> LoopDone(Error(e))
+            Ok(#(element, new_ctx)) -> {
+              let updated_alts = add_to_current_alt(alts, element)
+              LoopContinue(AltLoopState(ctx: new_ctx, alts: updated_alts))
+            }
+          }
         }
       }
     }
+  }
+}
+
+/// Tail-recursive loop for top-level parsing
+fn parse_top_level_loop(
+  state: AltLoopState,
+) -> Result(#(List(AlternativeNode), Context), String) {
+  case parse_top_level_step(state) {
+    LoopDone(result) -> result
+    LoopContinue(new_state) -> parse_top_level_loop(new_state)
   }
 }
 
@@ -643,7 +683,7 @@ fn parse_character_class(
   Ok(#(CharacterClassE(node), ctx3))
 }
 
-/// Parse character class contents
+/// Parse character class contents - iterative version
 fn parse_char_class_contents(
   ctx: Context,
   current_elements: List(CharacterClassElement),
@@ -652,102 +692,146 @@ fn parse_char_class_contents(
   #(List(CharacterClassElement), List(List(CharacterClassElement)), Context),
   String,
 ) {
+  parse_char_class_loop(CharClassLoopState(
+    ctx: ctx,
+    current_elements: current_elements,
+    intersections: intersections,
+  ))
+}
+
+/// Result type for character class parsing
+type CharClassResult =
+  Result(
+    #(List(CharacterClassElement), List(List(CharacterClassElement)), Context),
+    String,
+  )
+
+/// Single step of character class contents parsing
+fn parse_char_class_step(
+  state: CharClassLoopState,
+) -> LoopStep(CharClassLoopState, CharClassResult) {
+  let CharClassLoopState(
+    ctx: ctx,
+    current_elements: current_elements,
+    intersections: intersections,
+  ) = state
+
   case current_token(ctx) {
-    None -> Error("Unclosed character class")
+    None -> LoopDone(Error("Unclosed character class"))
 
     Some(CharacterClassCloseToken(..)) ->
-      Ok(#(current_elements, intersections, advance(ctx)))
+      LoopDone(Ok(#(current_elements, intersections, advance(ctx))))
 
     Some(CharacterClassIntersectorToken(..)) -> {
       // Start new intersection part
-      parse_char_class_contents(advance(ctx), [], [
-        current_elements,
-        ..intersections
-      ])
+      LoopContinue(
+        CharClassLoopState(
+          ctx: advance(ctx),
+          current_elements: [],
+          intersections: [current_elements, ..intersections],
+        ),
+      )
     }
 
     Some(CharacterClassHyphenToken(..)) -> {
       // Might be a range or literal hyphen
-      use #(element, is_range, new_ctx) <- result.try(parse_char_class_hyphen(
-        ctx,
-        current_elements,
-      ))
-      // If it's a range, remove the previous min character from elements
-      let updated_elements = case is_range {
-        True ->
-          case current_elements {
-            [_, ..rest] -> rest
-            [] -> []
+      case parse_char_class_hyphen(ctx, current_elements) {
+        Error(e) -> LoopDone(Error(e))
+        Ok(#(element, is_range, new_ctx)) -> {
+          // If it's a range, remove the previous min character from elements
+          let updated_elements = case is_range {
+            True ->
+              case current_elements {
+                [_, ..rest] -> rest
+                [] -> []
+              }
+            False -> current_elements
           }
-        False -> current_elements
+          LoopContinue(CharClassLoopState(
+            ctx: new_ctx,
+            current_elements: [element, ..updated_elements],
+            intersections: intersections,
+          ))
+        }
       }
-      parse_char_class_contents(
-        new_ctx,
-        [element, ..updated_elements],
-        intersections,
-      )
     }
 
     Some(CharacterClassOpenToken(negate: negate, ..)) -> {
-      // Nested character class
+      // Nested character class - this recurses but depth is bounded by nesting level
       let ctx2 = advance(ctx)
-      use #(elements, inner_ints, ctx3) <- result.try(
-        parse_char_class_contents(ctx2, [], []),
-      )
-      let inner_node = case inner_ints {
-        [] ->
-          CharacterClassNode(
-            kind: Union,
-            negate: negate,
-            body: list.reverse(elements),
-          )
-        _ -> {
-          let all_parts = [elements, ..inner_ints]
-          let body =
-            list.map(all_parts, fn(part) {
-              let reversed = list.reverse(part)
-              case reversed {
-                [single] -> single
-                _ ->
-                  CharacterClassCCE(CharacterClassNode(
-                    kind: Union,
-                    negate: False,
-                    body: reversed,
-                  ))
-              }
-            })
-          CharacterClassNode(kind: Intersection, negate: negate, body: body)
+      case parse_char_class_contents(ctx2, [], []) {
+        Error(e) -> LoopDone(Error(e))
+        Ok(#(elements, inner_ints, ctx3)) -> {
+          let inner_node = case inner_ints {
+            [] ->
+              CharacterClassNode(
+                kind: Union,
+                negate: negate,
+                body: list.reverse(elements),
+              )
+            _ -> {
+              let all_parts = [elements, ..inner_ints]
+              let body =
+                list.map(all_parts, fn(part) {
+                  let reversed = list.reverse(part)
+                  case reversed {
+                    [single] -> single
+                    _ ->
+                      CharacterClassCCE(CharacterClassNode(
+                        kind: Union,
+                        negate: False,
+                        body: reversed,
+                      ))
+                  }
+                })
+              CharacterClassNode(kind: Intersection, negate: negate, body: body)
+            }
+          }
+          LoopContinue(CharClassLoopState(
+            ctx: ctx3,
+            current_elements: [
+              CharacterClassCCE(inner_node),
+              ..current_elements
+            ],
+            intersections: intersections,
+          ))
         }
       }
-      parse_char_class_contents(
-        ctx3,
-        [CharacterClassCCE(inner_node), ..current_elements],
-        intersections,
-      )
     }
 
     Some(CharacterToken(value: value, ..)) -> {
       let element = CharacterCCE(CharacterNode(value: value))
-      parse_char_class_contents(
-        advance(ctx),
-        [element, ..current_elements],
-        intersections,
-      )
+      LoopContinue(CharClassLoopState(
+        ctx: advance(ctx),
+        current_elements: [element, ..current_elements],
+        intersections: intersections,
+      ))
     }
 
     Some(CharacterSetToken(kind: kind, value: value, negate: negate, ..)) -> {
-      use node <- result.try(parse_character_set(ctx, kind, value, negate))
-      parse_char_class_contents(
-        advance(ctx),
-        [CharacterSetCCE(node), ..current_elements],
-        intersections,
-      )
+      case parse_character_set(ctx, kind, value, negate) {
+        Error(e) -> LoopDone(Error(e))
+        Ok(node) ->
+          LoopContinue(CharClassLoopState(
+            ctx: advance(ctx),
+            current_elements: [CharacterSetCCE(node), ..current_elements],
+            intersections: intersections,
+          ))
+      }
     }
 
     Some(token) ->
-      Error(
+      LoopDone(Error(
         "Unexpected token in character class: " <> token_types.token_raw(token),
-      )
+      ))
+  }
+}
+
+/// Tail-recursive loop for character class contents parsing
+fn parse_char_class_loop(state: CharClassLoopState) -> CharClassResult {
+  case parse_char_class_step(state) {
+    LoopDone(result) -> result
+    LoopContinue(new_state) -> parse_char_class_loop(new_state)
   }
 }
 
@@ -903,37 +987,58 @@ fn parse_group(
   }
 }
 
-/// Parse group body (handles alternation)
+/// Parse group body (handles alternation) - iterative version
 fn parse_group_body(
   ctx: Context,
   alts: List(AlternativeNode),
 ) -> Result(#(List(AlternativeNode), Context), String) {
-  case current_token(ctx) {
-    None -> Error("Unclosed group")
+  parse_group_body_loop(AltLoopState(ctx: ctx, alts: alts))
+}
 
-    Some(GroupCloseToken(..)) -> Ok(#(list.reverse(alts), advance(ctx)))
+/// Single step of group body parsing
+fn parse_group_body_step(
+  state: AltLoopState,
+) -> LoopStep(AltLoopState, Result(#(List(AlternativeNode), Context), String)) {
+  let AltLoopState(ctx: ctx, alts: alts) = state
+  case current_token(ctx) {
+    None -> LoopDone(Error("Unclosed group"))
+
+    Some(GroupCloseToken(..)) ->
+      LoopDone(Ok(#(list.reverse(alts), advance(ctx))))
 
     Some(AlternatorToken(..)) -> {
       let new_alt = AlternativeNode(body: [])
-      parse_group_body(advance(ctx), [new_alt, ..alts])
+      LoopContinue(AltLoopState(ctx: advance(ctx), alts: [new_alt, ..alts]))
     }
 
     Some(QuantifierToken(kind: kind, min: min, max: max, ..)) -> {
       // Handle quantifier by modifying the previous element
-      use updated_alts <- result.try(attach_quantifier_to_alt(
-        alts,
-        kind,
-        min,
-        max,
-      ))
-      parse_group_body(advance(ctx), updated_alts)
+      case attach_quantifier_to_alt(alts, kind, min, max) {
+        Error(e) -> LoopDone(Error(e))
+        Ok(updated_alts) ->
+          LoopContinue(AltLoopState(ctx: advance(ctx), alts: updated_alts))
+      }
     }
 
     Some(_) -> {
-      use #(element, new_ctx) <- result.try(parse_element(ctx))
-      let updated_alts = add_to_current_alt(alts, element)
-      parse_group_body(new_ctx, updated_alts)
+      case parse_element(ctx) {
+        Error(e) -> LoopDone(Error(e))
+        Ok(#(element, new_ctx)) -> {
+          let updated_alts = add_to_current_alt(alts, element)
+          LoopContinue(AltLoopState(ctx: new_ctx, alts: updated_alts))
+        }
+      }
     }
+  }
+}
+
+/// Tail-recursive loop for group body parsing
+fn parse_group_body_loop(
+  state: AltLoopState,
+) -> Result(#(List(AlternativeNode), Context), String) {
+  case parse_group_body_step(state) {
+    LoopDone(result) -> result
+    LoopContinue(new_state) -> parse_group_body_loop(new_state)
   }
 }
 
@@ -1245,4 +1350,183 @@ pub fn create_absence_function(
   body: List(AlternativeNode),
 ) -> AbsenceFunctionNode {
   AbsenceFunctionNode(kind: kind, body: body)
+}
+
+// ============================================================================
+// Post-processing: Mark Subroutined Groups
+// ============================================================================
+
+/// Mark capturing groups that are referenced by subroutines
+fn mark_subroutined_groups(
+  ast: OnigurumaAst,
+  subroutines: List(SubroutineNode),
+) -> OnigurumaAst {
+  // Collect all referenced group numbers and names
+  let #(numbered_refs, named_refs) = collect_subroutine_refs(subroutines)
+
+  // Traverse and update the AST
+  let updated_body =
+    list.map(ast.body, fn(alt) {
+      mark_alternative(alt, numbered_refs, named_refs)
+    })
+
+  RegexNode(..ast, body: updated_body)
+}
+
+/// Collect all numbered and named group references from subroutines
+fn collect_subroutine_refs(
+  subroutines: List(SubroutineNode),
+) -> #(List(Int), List(String)) {
+  list.fold(subroutines, #([], []), fn(acc, sub) {
+    let #(numbers, names) = acc
+    case sub.ref {
+      NumberedSubroutineRef(n) -> #([n, ..numbers], names)
+      NamedSubroutineRef(name) -> #(numbers, [name, ..names])
+    }
+  })
+}
+
+/// Mark subroutined groups in an alternative
+fn mark_alternative(
+  alt: AlternativeNode,
+  numbered_refs: List(Int),
+  named_refs: List(String),
+) -> AlternativeNode {
+  AlternativeNode(
+    body: list.map(alt.body, fn(elem) {
+      mark_element(elem, numbered_refs, named_refs)
+    }),
+  )
+}
+
+/// Mark subroutined groups in an element
+fn mark_element(
+  elem: AlternativeElement,
+  numbered_refs: List(Int),
+  named_refs: List(String),
+) -> AlternativeElement {
+  case elem {
+    CapturingGroupE(node) -> {
+      let is_by_number = list.contains(numbered_refs, node.number)
+      let is_by_name = case node.name {
+        Some(name) -> list.contains(named_refs, name)
+        None -> False
+      }
+      case is_by_number || is_by_name {
+        True ->
+          CapturingGroupE(
+            CapturingGroupNode(
+              ..node,
+              is_subroutined: Some(True),
+              body: list.map(node.body, fn(a) {
+                mark_alternative(a, numbered_refs, named_refs)
+              }),
+            ),
+          )
+        False ->
+          CapturingGroupE(
+            CapturingGroupNode(
+              ..node,
+              body: list.map(node.body, fn(a) {
+                mark_alternative(a, numbered_refs, named_refs)
+              }),
+            ),
+          )
+      }
+    }
+    GroupE(node) ->
+      GroupE(
+        GroupNode(
+          ..node,
+          body: list.map(node.body, fn(a) {
+            mark_alternative(a, numbered_refs, named_refs)
+          }),
+        ),
+      )
+    LookaroundAssertionE(node) ->
+      LookaroundAssertionE(
+        LookaroundAssertionNode(
+          ..node,
+          body: list.map(node.body, fn(a) {
+            mark_alternative(a, numbered_refs, named_refs)
+          }),
+        ),
+      )
+    QuantifierE(node) ->
+      QuantifierE(
+        QuantifierNode(
+          ..node,
+          body: mark_quantifiable(node.body, numbered_refs, named_refs),
+        ),
+      )
+    AbsenceFunctionE(node) ->
+      AbsenceFunctionE(
+        AbsenceFunctionNode(
+          ..node,
+          body: list.map(node.body, fn(a) {
+            mark_alternative(a, numbered_refs, named_refs)
+          }),
+        ),
+      )
+    // Other elements don't contain nested groups
+    _ -> elem
+  }
+}
+
+/// Mark subroutined groups in a quantifiable node
+fn mark_quantifiable(
+  node: QuantifiableNode,
+  numbered_refs: List(Int),
+  named_refs: List(String),
+) -> QuantifiableNode {
+  case node {
+    ast_types.CapturingGroupQ(cg) -> {
+      let is_by_number = list.contains(numbered_refs, cg.number)
+      let is_by_name = case cg.name {
+        Some(name) -> list.contains(named_refs, name)
+        None -> False
+      }
+      case is_by_number || is_by_name {
+        True ->
+          ast_types.CapturingGroupQ(
+            CapturingGroupNode(
+              ..cg,
+              is_subroutined: Some(True),
+              body: list.map(cg.body, fn(a) {
+                mark_alternative(a, numbered_refs, named_refs)
+              }),
+            ),
+          )
+        False ->
+          ast_types.CapturingGroupQ(
+            CapturingGroupNode(
+              ..cg,
+              body: list.map(cg.body, fn(a) {
+                mark_alternative(a, numbered_refs, named_refs)
+              }),
+            ),
+          )
+      }
+    }
+    ast_types.GroupQ(g) ->
+      ast_types.GroupQ(
+        GroupNode(
+          ..g,
+          body: list.map(g.body, fn(a) {
+            mark_alternative(a, numbered_refs, named_refs)
+          }),
+        ),
+      )
+    ast_types.AbsenceFunctionQ(af) ->
+      ast_types.AbsenceFunctionQ(
+        AbsenceFunctionNode(
+          ..af,
+          body: list.map(af.body, fn(a) {
+            mark_alternative(a, numbered_refs, named_refs)
+          }),
+        ),
+      )
+    // Other quantifiables don't contain nested groups
+    _ -> node
+  }
 }

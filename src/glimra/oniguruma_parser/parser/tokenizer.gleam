@@ -55,6 +55,26 @@ type Context {
   )
 }
 
+// ============================================================================
+// Loop State Types (for stack-safe iterative tokenization)
+// ============================================================================
+
+/// Result of a single loop step - either continue looping or finish
+type TokLoopStep(state, result) {
+  TokLoopContinue(state)
+  TokLoopDone(result)
+}
+
+/// State for main tokenization loop
+type TokLoopState {
+  TokLoopState(ctx: Context, acc: List(TokenOrIntermediate))
+}
+
+/// State for character class contents tokenization loop
+type CharClassTokState {
+  CharClassTokState(ctx: Context, depth: Int, acc: List(TokenOrIntermediate))
+}
+
 /// Get current mod x (extended) flag value
 fn get_current_mod_x(ctx: Context) -> Bool {
   case ctx.x_stack {
@@ -121,18 +141,43 @@ pub fn tokenize(
   Ok(TokenizeResult(tokens: final_tokens, flags: flag_props))
 }
 
-/// Main tokenization loop
+/// Main tokenization loop - iterative version
 fn tokenize_loop(
   ctx: Context,
   acc: List(TokenOrIntermediate),
 ) -> Result(#(List(TokenOrIntermediate), Context), String) {
+  do_tokenize_loop(TokLoopState(ctx: ctx, acc: acc))
+}
+
+/// Single step of tokenization
+fn tokenize_loop_step(
+  state: TokLoopState,
+) -> TokLoopStep(
+  TokLoopState,
+  Result(#(List(TokenOrIntermediate), Context), String),
+) {
+  let TokLoopState(ctx: ctx, acc: acc) = state
   case peek_char(ctx) {
-    None -> Ok(#(list.reverse(acc), ctx))
+    None -> TokLoopDone(Ok(#(list.reverse(acc), ctx)))
     Some(char) -> {
-      use #(result_tokens, new_ctx) <- result.try(tokenize_one(ctx, char))
-      let new_acc = list.append(list.reverse(result_tokens), acc)
-      tokenize_loop(new_ctx, new_acc)
+      case tokenize_one(ctx, char) {
+        Error(e) -> TokLoopDone(Error(e))
+        Ok(#(result_tokens, new_ctx)) -> {
+          let new_acc = list.append(list.reverse(result_tokens), acc)
+          TokLoopContinue(TokLoopState(ctx: new_ctx, acc: new_acc))
+        }
+      }
     }
+  }
+}
+
+/// Tail-recursive loop driver for tokenization
+fn do_tokenize_loop(
+  state: TokLoopState,
+) -> Result(#(List(TokenOrIntermediate), Context), String) {
+  case tokenize_loop_step(state) {
+    TokLoopDone(result) -> result
+    TokLoopContinue(new_state) -> do_tokenize_loop(new_state)
   }
 }
 
@@ -257,14 +302,26 @@ fn tokenize_char_class(
   Ok(#(list.flatten([[RegularToken(open_token)], inner_tokens]), ctx3))
 }
 
-/// Tokenize contents of a character class
+/// Tokenize contents of a character class - iterative version
 fn tokenize_char_class_contents(
   ctx: Context,
   depth: Int,
   acc: List(TokenOrIntermediate),
 ) -> Result(#(List(TokenOrIntermediate), Context), String) {
+  do_char_class_tok_loop(CharClassTokState(ctx: ctx, depth: depth, acc: acc))
+}
+
+/// Single step of character class tokenization
+fn char_class_tok_step(
+  state: CharClassTokState,
+) -> TokLoopStep(
+  CharClassTokState,
+  Result(#(List(TokenOrIntermediate), Context), String),
+) {
+  let CharClassTokState(ctx: ctx, depth: depth, acc: acc) = state
+
   case peek_char(ctx) {
-    None -> Error("Unclosed character class")
+    None -> TokLoopDone(Error("Unclosed character class"))
 
     Some("]") -> {
       // Check if this is the first character (literal ])
@@ -279,10 +336,12 @@ fn tokenize_char_class_contents(
           // Literal ] at start
           let cp = string_to_codepoint("]")
           let new_ctx = advance(ctx, 1)
-          tokenize_char_class_contents(new_ctx, depth, [
-            RegularToken(CharacterToken(value: cp, raw: "]")),
-            ..acc
-          ])
+          TokLoopContinue(
+            CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+              RegularToken(CharacterToken(value: cp, raw: "]")),
+              ..acc
+            ]),
+          )
         }
         False -> {
           // Closing bracket
@@ -290,18 +349,22 @@ fn tokenize_char_class_contents(
           let new_ctx = advance(ctx, 1)
           case new_depth {
             0 ->
-              Ok(#(
-                list.reverse([
+              TokLoopDone(
+                Ok(#(
+                  list.reverse([
+                    RegularToken(CharacterClassCloseToken(raw: "]")),
+                    ..acc
+                  ]),
+                  new_ctx,
+                )),
+              )
+            _ ->
+              TokLoopContinue(
+                CharClassTokState(ctx: new_ctx, depth: new_depth, acc: [
                   RegularToken(CharacterClassCloseToken(raw: "]")),
                   ..acc
                 ]),
-                new_ctx,
-              ))
-            _ ->
-              tokenize_char_class_contents(new_ctx, new_depth, [
-                RegularToken(CharacterClassCloseToken(raw: "]")),
-                ..acc
-              ])
+              )
           }
         }
       }
@@ -312,64 +375,82 @@ fn tokenize_char_class_contents(
       case peek_char_at(ctx, 1) {
         Some(":") -> {
           // POSIX class
-          use #(token, new_ctx) <- result.try(tokenize_posix_class(ctx))
-          tokenize_char_class_contents(new_ctx, depth, [
-            RegularToken(token),
-            ..acc
-          ])
+          case tokenize_posix_class(ctx) {
+            Error(e) -> TokLoopDone(Error(e))
+            Ok(#(token, new_ctx)) ->
+              TokLoopContinue(
+                CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+                  RegularToken(token),
+                  ..acc
+                ]),
+              )
+          }
         }
         Some("^") -> {
           // Nested negated char class
           let new_ctx = advance(ctx, 2)
-          tokenize_char_class_contents(new_ctx, depth + 1, [
-            RegularToken(CharacterClassOpenToken(negate: True, raw: "[^")),
-            ..acc
-          ])
+          TokLoopContinue(
+            CharClassTokState(ctx: new_ctx, depth: depth + 1, acc: [
+              RegularToken(CharacterClassOpenToken(negate: True, raw: "[^")),
+              ..acc
+            ]),
+          )
         }
         _ -> {
           // Nested char class
           let new_ctx = advance(ctx, 1)
-          tokenize_char_class_contents(new_ctx, depth + 1, [
-            RegularToken(CharacterClassOpenToken(negate: False, raw: "[")),
-            ..acc
-          ])
+          TokLoopContinue(
+            CharClassTokState(ctx: new_ctx, depth: depth + 1, acc: [
+              RegularToken(CharacterClassOpenToken(negate: False, raw: "[")),
+              ..acc
+            ]),
+          )
         }
       }
     }
 
     Some("\\") -> {
-      use #(tokens, new_ctx) <- result.try(tokenize_escape(ctx, True))
-      tokenize_char_class_contents(
-        new_ctx,
-        depth,
-        list.append(list.reverse(tokens), acc),
-      )
+      case tokenize_escape(ctx, True) {
+        Error(e) -> TokLoopDone(Error(e))
+        Ok(#(tokens, new_ctx)) ->
+          TokLoopContinue(CharClassTokState(
+            ctx: new_ctx,
+            depth: depth,
+            acc: list.append(list.reverse(tokens), acc),
+          ))
+      }
     }
 
     Some("-") -> {
       let new_ctx = advance(ctx, 1)
-      tokenize_char_class_contents(new_ctx, depth, [
-        RegularToken(CharacterClassHyphenToken(raw: "-")),
-        ..acc
-      ])
+      TokLoopContinue(
+        CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+          RegularToken(CharacterClassHyphenToken(raw: "-")),
+          ..acc
+        ]),
+      )
     }
 
     Some("&") -> {
       case peek_char_at(ctx, 1) {
         Some("&") -> {
           let new_ctx = advance(ctx, 2)
-          tokenize_char_class_contents(new_ctx, depth, [
-            RegularToken(CharacterClassIntersectorToken(raw: "&&")),
-            ..acc
-          ])
+          TokLoopContinue(
+            CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+              RegularToken(CharacterClassIntersectorToken(raw: "&&")),
+              ..acc
+            ]),
+          )
         }
         _ -> {
           let cp = string_to_codepoint("&")
           let new_ctx = advance(ctx, 1)
-          tokenize_char_class_contents(new_ctx, depth, [
-            RegularToken(CharacterToken(value: cp, raw: "&")),
-            ..acc
-          ])
+          TokLoopContinue(
+            CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+              RegularToken(CharacterToken(value: cp, raw: "&")),
+              ..acc
+            ]),
+          )
         }
       }
     }
@@ -377,11 +458,23 @@ fn tokenize_char_class_contents(
     Some(char) -> {
       let cp = string_to_codepoint(char)
       let new_ctx = advance(ctx, 1)
-      tokenize_char_class_contents(new_ctx, depth, [
-        RegularToken(CharacterToken(value: cp, raw: char)),
-        ..acc
-      ])
+      TokLoopContinue(
+        CharClassTokState(ctx: new_ctx, depth: depth, acc: [
+          RegularToken(CharacterToken(value: cp, raw: char)),
+          ..acc
+        ]),
+      )
     }
+  }
+}
+
+/// Tail-recursive loop driver for character class tokenization
+fn do_char_class_tok_loop(
+  state: CharClassTokState,
+) -> Result(#(List(TokenOrIntermediate), Context), String) {
+  case char_class_tok_step(state) {
+    TokLoopDone(result) -> result
+    TokLoopContinue(new_state) -> do_char_class_tok_loop(new_state)
   }
 }
 
