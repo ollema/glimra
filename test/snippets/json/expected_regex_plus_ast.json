@@ -1,0 +1,1577 @@
+{
+  "language": "json",
+  "total": 19,
+  "successful": 19,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 34
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "(,)|(?=})",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 44
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 125
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "(//).*$\\n?",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CapturingGroup",
+                "number": 1,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 47
+                      },
+                      {
+                        "type": "Character",
+                        "value": 47
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": null,
+                "body": {
+                  "type": "CharacterSet",
+                  "kind": "dot"
+                }
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": false,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": 1,
+                        "body": {
+                          "type": "Character",
+                          "value": 10
+                        }
+                      },
+                      {
+                        "type": "Assertion",
+                        "kind": "string_end"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "Character",
+                  "value": 10
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": ",",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 44
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "-?(?:0|[1-9]\\d*)(?:(?:\\.\\d+)?(?:[Ee][-+]?\\d+)?)?",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "Character",
+                  "value": 45
+                }
+              },
+              {
+                "type": "Group",
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 48
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "CharacterClassRange",
+                            "min": {
+                              "type": "Character",
+                              "value": 49
+                            },
+                            "max": {
+                              "type": "Character",
+                              "value": 57
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 0,
+                        "max": null,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "property",
+                          "value": "Nd",
+                          "negate": false
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Quantifier",
+                "kind": "greedy",
+                "min": 0,
+                "max": 1,
+                "body": {
+                  "type": "Group",
+                  "body": [
+                    {
+                      "type": "Alternative",
+                      "body": [
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 0,
+                          "max": 1,
+                          "body": {
+                            "type": "Group",
+                            "body": [
+                              {
+                                "type": "Alternative",
+                                "body": [
+                                  {
+                                    "type": "Character",
+                                    "value": 46
+                                  },
+                                  {
+                                    "type": "Quantifier",
+                                    "kind": "greedy",
+                                    "min": 1,
+                                    "max": null,
+                                    "body": {
+                                      "type": "CharacterSet",
+                                      "kind": "property",
+                                      "value": "Nd",
+                                      "negate": false
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "Quantifier",
+                          "kind": "greedy",
+                          "min": 0,
+                          "max": 1,
+                          "body": {
+                            "type": "Group",
+                            "body": [
+                              {
+                                "type": "Alternative",
+                                "body": [
+                                  {
+                                    "type": "CharacterClass",
+                                    "kind": "union",
+                                    "negate": false,
+                                    "body": [
+                                      {
+                                        "type": "Character",
+                                        "value": 69
+                                      },
+                                      {
+                                        "type": "Character",
+                                        "value": 101
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Quantifier",
+                                    "kind": "greedy",
+                                    "min": 0,
+                                    "max": 1,
+                                    "body": {
+                                      "type": "CharacterClass",
+                                      "kind": "union",
+                                      "negate": false,
+                                      "body": [
+                                        {
+                                          "type": "Character",
+                                          "value": 45
+                                        },
+                                        {
+                                          "type": "Character",
+                                          "value": 43
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "type": "Quantifier",
+                                    "kind": "greedy",
+                                    "min": 1,
+                                    "max": null,
+                                    "body": {
+                                      "type": "CharacterSet",
+                                      "kind": "property",
+                                      "value": "Nd",
+                                      "negate": false
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "/\\*",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 47
+              },
+              {
+                "type": "Character",
+                "value": 42
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "/\\*\\*(?!/)",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 47
+              },
+              {
+                "type": "Character",
+                "value": 42
+              },
+              {
+                "type": "Character",
+                "value": 42
+              },
+              {
+                "type": "LookaroundAssertion",
+                "kind": "lookahead",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 47
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": ":",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 58
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "[^,\\s]",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 44
+                  },
+                  {
+                    "type": "CharacterSet",
+                    "kind": "property",
+                    "value": "space",
+                    "negate": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "[^]\\s]",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 93
+                  },
+                  {
+                    "type": "CharacterSet",
+                    "kind": "property",
+                    "value": "space",
+                    "negate": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "[^}\\s]",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "CharacterClass",
+                "kind": "union",
+                "negate": true,
+                "body": [
+                  {
+                    "type": "Character",
+                    "value": 125
+                  },
+                  {
+                    "type": "CharacterSet",
+                    "kind": "property",
+                    "value": "space",
+                    "negate": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\*/",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 42
+              },
+              {
+                "type": "Character",
+                "value": 47
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\[",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 91
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\\\(?:[\"/\\\\bfnrt]|u\\h{4})",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "Group",
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "CharacterClass",
+                        "kind": "union",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Character",
+                            "value": 34
+                          },
+                          {
+                            "type": "Character",
+                            "value": 47
+                          },
+                          {
+                            "type": "Character",
+                            "value": 92
+                          },
+                          {
+                            "type": "Character",
+                            "value": 98
+                          },
+                          {
+                            "type": "Character",
+                            "value": 102
+                          },
+                          {
+                            "type": "Character",
+                            "value": 110
+                          },
+                          {
+                            "type": "Character",
+                            "value": 114
+                          },
+                          {
+                            "type": "Character",
+                            "value": 116
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Quantifier",
+                        "kind": "greedy",
+                        "min": 4,
+                        "max": 4,
+                        "body": {
+                          "type": "CharacterSet",
+                          "kind": "property",
+                          "value": "AHex",
+                          "negate": false
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\\\.",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 92
+              },
+              {
+                "type": "CharacterSet",
+                "kind": "dot"
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\b(?:true|false|null)\\b",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Group",
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookbehind",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookahead",
+                        "negate": true,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookbehind",
+                        "negate": true,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookahead",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Group",
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 116
+                      },
+                      {
+                        "type": "Character",
+                        "value": 114
+                      },
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 102
+                      },
+                      {
+                        "type": "Character",
+                        "value": 97
+                      },
+                      {
+                        "type": "Character",
+                        "value": 108
+                      },
+                      {
+                        "type": "Character",
+                        "value": 115
+                      },
+                      {
+                        "type": "Character",
+                        "value": 101
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "Character",
+                        "value": 110
+                      },
+                      {
+                        "type": "Character",
+                        "value": 117
+                      },
+                      {
+                        "type": "Character",
+                        "value": 108
+                      },
+                      {
+                        "type": "Character",
+                        "value": 108
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Group",
+                "body": [
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookbehind",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookahead",
+                        "negate": true,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Alternative",
+                    "body": [
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookbehind",
+                        "negate": true,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LookaroundAssertion",
+                        "kind": "lookahead",
+                        "negate": false,
+                        "body": [
+                          {
+                            "type": "Alternative",
+                            "body": [
+                              {
+                                "type": "CharacterClass",
+                                "kind": "union",
+                                "negate": false,
+                                "body": [
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "L",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "M",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "N",
+                                    "negate": false
+                                  },
+                                  {
+                                    "type": "CharacterSet",
+                                    "kind": "property",
+                                    "value": "Pc",
+                                    "negate": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "\\{",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 123
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "]",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 93
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    },
+    {
+      "pattern": "}",
+      "success": true,
+      "regexPlusAst": {
+        "type": "Regex",
+        "body": [
+          {
+            "type": "Alternative",
+            "body": [
+              {
+                "type": "Character",
+                "value": 125
+              }
+            ]
+          }
+        ],
+        "flags": {
+          "type": "Flags",
+          "ignoreCase": false,
+          "dotAll": false,
+          "global": false,
+          "hasIndices": false,
+          "multiline": false,
+          "sticky": false
+        },
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_originMap": [],
+        "_strategy": null
+      }
+    }
+  ]
+}

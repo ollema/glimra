@@ -43,3 +43,17 @@ export function run_generate_expected_ast(configJson) {
     return new Error(message)
   }
 }
+
+export function run_generate_expected_regex_plus_ast(configJson) {
+  try {
+    const output = execFileSync('node', ['dev/generate_expected_regex_plus_ast.mjs', configJson], {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'inherit'],
+    })
+    return new Ok(output)
+  }
+  catch (error) {
+    const message = error.stdout || error.message
+    return new Error(message)
+  }
+}

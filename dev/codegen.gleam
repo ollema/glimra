@@ -37,6 +37,11 @@ fn run_extract_patterns_ffi(config_json: String) -> Result(String, String)
 @external(javascript, "./codegen_ffi.mjs", "run_generate_expected_ast")
 fn run_generate_expected_ast_ffi(config_json: String) -> Result(String, String)
 
+@external(javascript, "./codegen_ffi.mjs", "run_generate_expected_regex_plus_ast")
+fn run_generate_expected_regex_plus_ast_ffi(
+  config_json: String,
+) -> Result(String, String)
+
 pub fn main() {
   case argv.load().arguments {
     [source_path] -> run_all(source_path)
@@ -661,6 +666,30 @@ fn run_generate_expected_ast() {
 }
 
 // ============================================================================
+// Generate expected RegexPlusAst command (for transform testing)
+// ============================================================================
+
+fn run_generate_expected_regex_plus_ast() {
+  io.println("Generating expected RegexPlusAst for patterns...")
+  io.println("")
+
+  let config_json = build_config_json()
+
+  case run_generate_expected_regex_plus_ast_ffi(config_json) {
+    Ok(output) -> {
+      io.println(output)
+    }
+    Error(error_msg) -> {
+      io.println("Error running generate_expected_regex_plus_ast.mjs:")
+      io.println(error_msg)
+      io.println("")
+      io.println("Make sure the oniguruma-to-es JS reference is available:")
+      io.println("  js_reference/oniguruma-to-es/src/transform.js")
+    }
+  }
+}
+
+// ============================================================================
 // All command
 // ============================================================================
 
@@ -688,6 +717,12 @@ fn run_all(source_path: String) {
   io.println("")
 
   run_generate_expected_ast()
+
+  io.println("")
+  io.println("========================================")
+  io.println("")
+
+  run_generate_expected_regex_plus_ast()
 
   io.println("")
   io.println("========================================")
