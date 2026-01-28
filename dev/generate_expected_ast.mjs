@@ -73,7 +73,7 @@ function parsePattern(pattern) {
   try {
     // Use options that match how oniguruma-to-es calls the parser
     const ast = parse(pattern, {
-      flags: '',
+      flags: '', // TODO: is it a fair assumption that no flags are used?
       rules: {
         captureGroup: true,
         singleline: true,

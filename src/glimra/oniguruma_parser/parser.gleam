@@ -661,8 +661,8 @@ fn parse_character_class(
         body: list.reverse(elements),
       )
     _ -> {
-      // Has intersections
-      let all_parts = [elements, ..intersections]
+      // Has intersections - reverse to get correct order since we prepend during parsing
+      let all_parts = list.reverse([elements, ..intersections])
       let body =
         list.map(all_parts, fn(part) {
           let reversed = list.reverse(part)
@@ -770,7 +770,8 @@ fn parse_char_class_step(
                 body: list.reverse(elements),
               )
             _ -> {
-              let all_parts = [elements, ..inner_ints]
+              // Reverse to get correct order since we prepend during parsing
+              let all_parts = list.reverse([elements, ..inner_ints])
               let body =
                 list.map(all_parts, fn(part) {
                   let reversed = list.reverse(part)

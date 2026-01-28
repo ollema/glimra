@@ -46,7 +46,7 @@ pub fn default_options() -> TokenizeOptions {
 type Context {
   Context(
     pattern: String,
-    graphemes: List(String),
+    codepoints: List(String),
     pos: Int,
     capture_group: Bool,
     singleline: Bool,
@@ -115,10 +115,15 @@ pub fn tokenize(
 ) -> Result(TokenizeResult, String) {
   let flag_props = get_flag_properties(options.flags)
 
+  // Convert to codepoints (not graphemes) so combining characters are separate
+  let codepoints =
+    string.to_utf_codepoints(pattern)
+    |> list.map(fn(cp) { string.from_utf_codepoints([cp]) })
+
   let ctx =
     Context(
       pattern: pattern,
-      graphemes: string.to_graphemes(pattern),
+      codepoints: codepoints,
       pos: 0,
       capture_group: options.capture_group,
       singleline: options.singleline,
@@ -324,10 +329,11 @@ fn char_class_tok_step(
     None -> TokLoopDone(Error("Unclosed character class"))
 
     Some("]") -> {
-      // Check if this is the first character (literal ])
+      // Check if this is the first character after [ or [^ (literal ])
+      // In `[^]...]` the ] right after [^ is a literal character
       let is_first = case acc {
         [] -> True
-        [RegularToken(CharacterClassOpenToken(..))] -> True
+        [RegularToken(CharacterClassOpenToken(..)), ..] -> True
         _ -> False
       }
 
@@ -2019,25 +2025,25 @@ fn parse_flag_chars(
 // Helper Functions
 // ============================================================================
 
-/// Peek at current character
+/// Peek at current character (codepoint)
 fn peek_char(ctx: Context) -> Option(String) {
-  ctx.graphemes
+  ctx.codepoints
   |> list.drop(ctx.pos)
   |> list.first
   |> option.from_result
 }
 
-/// Peek at character at offset from current position
+/// Peek at character (codepoint) at offset from current position
 fn peek_char_at(ctx: Context, offset: Int) -> Option(String) {
-  ctx.graphemes
+  ctx.codepoints
   |> list.drop(ctx.pos + offset)
   |> list.first
   |> option.from_result
 }
 
-/// Peek at n characters from current position
+/// Peek at n characters (codepoints) from current position
 fn peek_chars(ctx: Context, n: Int) -> String {
-  ctx.graphemes
+  ctx.codepoints
   |> list.drop(ctx.pos)
   |> list.take(n)
   |> string.join("")
