@@ -2,7 +2,7 @@
 /// Used for testing the parser against the JS reference implementation.
 import gleam/json.{type Json}
 import gleam/list
-import gleam/option.{None, Some}
+import gleam/option.{type Option, None, Some}
 import glimra/oniguruma_parser/parser/ast_types.{
   type AbsenceFunctionKind, type AbsenceFunctionNode, type AlternativeElement,
   type AlternativeNode, type AssertionKind, type AssertionNode,
@@ -126,9 +126,14 @@ fn backref_ref_to_json(ref: BackreferenceRef) -> Json {
 
 /// Convert a CapturingGroupNode to JSON
 pub fn capturing_group_to_json(node: CapturingGroupNode) -> Json {
+  // -1 is a sentinel for null (used for dummy captures)
+  let number_json = case node.number {
+    -1 -> json.null()
+    n -> json.int(n)
+  }
   let base = [
     #("type", json.string("CapturingGroup")),
-    #("number", json.int(node.number)),
+    #("number", number_json),
     #("body", json.array(node.body, alternative_to_json)),
   ]
   let with_name = case node.name {
@@ -432,5 +437,79 @@ fn subroutine_ref_to_json(ref: SubroutineRef) -> Json {
 /// Serialize an AST to a JSON string
 pub fn ast_to_string(ast: RegexNode) -> String {
   regex_to_json(ast)
+  |> json.to_string
+}
+
+// ============================================================================
+// RegexPlusAst Serialization
+// ============================================================================
+
+import gleam/dict
+import glimra/oniguruma_to_es/transform/types.{
+  type RegexPlusAst, type RegexPlusFlags, type Strategy, type TransformOptions,
+  ClipSearch,
+}
+
+/// Convert a RegexPlusAst to JSON
+pub fn regex_plus_ast_to_json(rpa: RegexPlusAst) -> Json {
+  json.object([
+    #("type", json.string("Regex")),
+    #("body", json.array(rpa.ast.body, alternative_to_json)),
+    #("flags", regex_plus_flags_to_json(rpa.flags)),
+    #("options", transform_options_to_json(rpa.options)),
+    #("_originMap", origin_map_to_json(rpa.origin_map)),
+    #("_strategy", strategy_to_json(rpa.strategy)),
+  ])
+}
+
+/// Convert RegexPlusFlags to JSON
+fn regex_plus_flags_to_json(flags: RegexPlusFlags) -> Json {
+  json.object([
+    #("type", json.string("Flags")),
+    #("ignoreCase", json.bool(flags.ignore_case)),
+    #("dotAll", json.bool(flags.dot_all)),
+    #("global", json.bool(flags.global)),
+    #("hasIndices", json.bool(flags.has_indices)),
+    #("multiline", json.bool(flags.multiline)),
+    #("sticky", json.bool(flags.sticky)),
+  ])
+}
+
+/// Convert TransformOptions to JSON
+fn transform_options_to_json(options: TransformOptions) -> Json {
+  json.object([
+    #(
+      "disable",
+      json.object([
+        #("x", json.bool(options.disable.x)),
+        #("n", json.bool(options.disable.n)),
+      ]),
+    ),
+    #("force", json.object([#("v", json.bool(options.force.v))])),
+  ])
+}
+
+/// Convert origin map to JSON (as array of pairs)
+fn origin_map_to_json(origin_map: dict.Dict(Int, Int)) -> Json {
+  let pairs =
+    dict.to_list(origin_map)
+    |> list.map(fn(pair) {
+      let #(copy_num, origin_num) = pair
+      json.array([json.int(copy_num), json.int(origin_num)], fn(x) { x })
+    })
+  json.preprocessed_array(pairs)
+}
+
+/// Convert Strategy to JSON
+fn strategy_to_json(strategy: Option(Strategy)) -> Json {
+  case strategy {
+    None -> json.null()
+    Some(ClipSearch) -> json.string("clip_search")
+  }
+}
+
+/// Serialize a RegexPlusAst to a JSON string
+pub fn regex_plus_ast_to_string(rpa: RegexPlusAst) -> String {
+  regex_plus_ast_to_json(rpa)
   |> json.to_string
 }

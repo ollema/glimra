@@ -1,16 +1,12 @@
 import glimra/languages
-import glimra/themes
 import startest.{describe, it}
 import test_helpers
+import glimra/themes
 
 pub fn elm_tests() {
   describe("elm expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Elm,
-        "snippet",
-        themes.CatppuccinMocha,
-      )
+      test_helpers.validate_snippet(languages.Elm, "snippet", themes.CatppuccinMocha)
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Elm, "snippet", themes.Dracula)
@@ -19,11 +15,7 @@ pub fn elm_tests() {
       test_helpers.validate_snippet(languages.Elm, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Elm,
-        "snippet",
-        themes.GruvboxDarkMedium,
-      )
+      test_helpers.validate_snippet(languages.Elm, "snippet", themes.GruvboxDarkMedium)
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Elm, "snippet", themes.Monokai)
@@ -41,11 +33,7 @@ pub fn elm_tests() {
       test_helpers.validate_snippet(languages.Elm, "snippet", themes.TokyoNight)
     }),
     it("validates with vitesse-dark theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Elm,
-        "snippet",
-        themes.VitesseDark,
-      )
+      test_helpers.validate_snippet(languages.Elm, "snippet", themes.VitesseDark)
     }),
   ])
 }
@@ -54,6 +42,14 @@ pub fn elm_ast_tests() {
   describe("elm expected ast validation", [
     it("parses all patterns correctly", fn() {
       test_helpers.validate_expected_ast(languages.Elm)
+    }),
+  ])
+}
+
+pub fn elm_regex_plus_ast_tests() {
+  describe("elm expected regex_plus_ast validation", [
+    it("transforms all patterns correctly", fn() {
+      test_helpers.validate_expected_regex_plus_ast(languages.Elm)
     }),
   ])
 }

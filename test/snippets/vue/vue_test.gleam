@@ -1,16 +1,12 @@
 import glimra/languages
-import glimra/themes
 import startest.{describe, it}
 import test_helpers
+import glimra/themes
 
 pub fn vue_tests() {
   describe("vue expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Vue,
-        "snippet",
-        themes.CatppuccinMocha,
-      )
+      test_helpers.validate_snippet(languages.Vue, "snippet", themes.CatppuccinMocha)
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Vue, "snippet", themes.Dracula)
@@ -19,11 +15,7 @@ pub fn vue_tests() {
       test_helpers.validate_snippet(languages.Vue, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Vue,
-        "snippet",
-        themes.GruvboxDarkMedium,
-      )
+      test_helpers.validate_snippet(languages.Vue, "snippet", themes.GruvboxDarkMedium)
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Vue, "snippet", themes.Monokai)
@@ -41,11 +33,7 @@ pub fn vue_tests() {
       test_helpers.validate_snippet(languages.Vue, "snippet", themes.TokyoNight)
     }),
     it("validates with vitesse-dark theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Vue,
-        "snippet",
-        themes.VitesseDark,
-      )
+      test_helpers.validate_snippet(languages.Vue, "snippet", themes.VitesseDark)
     }),
   ])
 }
@@ -54,6 +42,14 @@ pub fn vue_ast_tests() {
   describe("vue expected ast validation", [
     it("parses all patterns correctly", fn() {
       test_helpers.validate_expected_ast(languages.Vue)
+    }),
+  ])
+}
+
+pub fn vue_regex_plus_ast_tests() {
+  describe("vue expected regex_plus_ast validation", [
+    it("transforms all patterns correctly", fn() {
+      test_helpers.validate_expected_regex_plus_ast(languages.Vue)
     }),
   ])
 }

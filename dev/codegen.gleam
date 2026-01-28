@@ -209,6 +209,14 @@ pub fn " <> lang_id <> "_ast_tests() {
     }),
   ])
 }
+
+pub fn " <> lang_id <> "_regex_plus_ast_tests() {
+  describe(\"" <> lang_id <> " expected regex_plus_ast validation\", [
+    it(\"transforms all patterns correctly\", fn() {
+      test_helpers.validate_expected_regex_plus_ast(languages." <> lang_ctor <> ")
+    }),
+  ])
+}
 "
 }
 

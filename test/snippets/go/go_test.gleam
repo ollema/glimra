@@ -1,16 +1,12 @@
 import glimra/languages
-import glimra/themes
 import startest.{describe, it}
 import test_helpers
+import glimra/themes
 
 pub fn go_tests() {
   describe("go expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Go,
-        "snippet",
-        themes.CatppuccinMocha,
-      )
+      test_helpers.validate_snippet(languages.Go, "snippet", themes.CatppuccinMocha)
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Go, "snippet", themes.Dracula)
@@ -19,11 +15,7 @@ pub fn go_tests() {
       test_helpers.validate_snippet(languages.Go, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Go,
-        "snippet",
-        themes.GruvboxDarkMedium,
-      )
+      test_helpers.validate_snippet(languages.Go, "snippet", themes.GruvboxDarkMedium)
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Go, "snippet", themes.Monokai)
@@ -50,6 +42,14 @@ pub fn go_ast_tests() {
   describe("go expected ast validation", [
     it("parses all patterns correctly", fn() {
       test_helpers.validate_expected_ast(languages.Go)
+    }),
+  ])
+}
+
+pub fn go_regex_plus_ast_tests() {
+  describe("go expected regex_plus_ast validation", [
+    it("transforms all patterns correctly", fn() {
+      test_helpers.validate_expected_regex_plus_ast(languages.Go)
     }),
   ])
 }

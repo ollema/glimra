@@ -1,14 +1,15 @@
 /// Generated API tests for glimra public API functions
 /// Tests builder functions, query functions, and token options
 /// using JavaScript Shiki as the source of truth for token validation.
+
 import gleam/list
-import glimra
 import glimra/languages
-import glimra/themes
+import glimra
 import simplifile
 import startest.{describe, it}
 import startest/expect
 import test_helpers
+import glimra/themes
 
 // ============================================================================
 // Builder API Tests
@@ -20,11 +21,7 @@ pub fn builder_api_tests() {
     it("with_languages loads multiple languages", fn() {
       let assert Ok(highlighter) =
         glimra.new_highlighter()
-        |> glimra.with_languages([
-          languages.Javascript,
-          languages.Python,
-          languages.Rust,
-        ])
+        |> glimra.with_languages([languages.Javascript, languages.Python, languages.Rust])
         |> glimra.with_bundled_theme(themes.Nord)
         |> glimra.build()
 
@@ -46,58 +43,7 @@ pub fn builder_api_tests() {
         |> glimra.build()
 
       // Should have loaded all languages
-      let all_langs = [
-        languages.Astro,
-        languages.Bash,
-        languages.C,
-        languages.Clojure,
-        languages.Cpp,
-        languages.Crystal,
-        languages.Css,
-        languages.Dart,
-        languages.Diff,
-        languages.Docker,
-        languages.Elixir,
-        languages.Elm,
-        languages.Erlang,
-        languages.Glsl,
-        languages.Gleam,
-        languages.Go,
-        languages.Graphql,
-        languages.Haskell,
-        languages.Html,
-        languages.Ini,
-        languages.Javascript,
-        languages.Json,
-        languages.Julia,
-        languages.Kotlin,
-        languages.Latex,
-        languages.Lua,
-        languages.Markdown,
-        languages.Mojo,
-        languages.Nim,
-        languages.Nix,
-        languages.Odin,
-        languages.Ocaml,
-        languages.Php,
-        languages.Python,
-        languages.R,
-        languages.Ruby,
-        languages.Rust,
-        languages.Scala,
-        languages.Scheme,
-        languages.Svelte,
-        languages.Swift,
-        languages.Toml,
-        languages.Tsx,
-        languages.Typescript,
-        languages.Typst,
-        languages.Vue,
-        languages.Wasm,
-        languages.Wgsl,
-        languages.Yaml,
-        languages.Zig,
-      ]
+      let all_langs = [languages.Astro, languages.Bash, languages.C, languages.Clojure, languages.Cpp, languages.Crystal, languages.Css, languages.Dart, languages.Diff, languages.Docker, languages.Elixir, languages.Elm, languages.Erlang, languages.Glsl, languages.Gleam, languages.Go, languages.Graphql, languages.Haskell, languages.Html, languages.Ini, languages.Javascript, languages.Json, languages.Julia, languages.Kotlin, languages.Latex, languages.Lua, languages.Markdown, languages.Mojo, languages.Nim, languages.Nix, languages.Odin, languages.Ocaml, languages.Php, languages.Python, languages.R, languages.Ruby, languages.Rust, languages.Scala, languages.Scheme, languages.Svelte, languages.Swift, languages.Toml, languages.Tsx, languages.Typescript, languages.Typst, languages.Vue, languages.Wasm, languages.Wgsl, languages.Yaml, languages.Zig]
       list.each(all_langs, fn(lang) {
         glimra.has_language(highlighter, lang)
         |> expect.to_be_true()
@@ -109,11 +55,7 @@ pub fn builder_api_tests() {
       let assert Ok(highlighter) =
         glimra.new_highlighter()
         |> glimra.with_language(languages.Javascript)
-        |> glimra.with_bundled_themes([
-          themes.Nord,
-          themes.Dracula,
-          themes.Monokai,
-        ])
+        |> glimra.with_bundled_themes([themes.Nord, themes.Dracula, themes.Monokai])
         |> glimra.build()
 
       // Verify all themes are loaded
@@ -134,18 +76,7 @@ pub fn builder_api_tests() {
         |> glimra.build()
 
       // Should have loaded all themes
-      let all_themes = [
-        themes.CatppuccinMocha,
-        themes.Dracula,
-        themes.GithubDark,
-        themes.GruvboxDarkMedium,
-        themes.Monokai,
-        themes.NightOwl,
-        themes.Nord,
-        themes.OneDarkPro,
-        themes.TokyoNight,
-        themes.VitesseDark,
-      ]
+      let all_themes = [themes.CatppuccinMocha, themes.Dracula, themes.GithubDark, themes.GruvboxDarkMedium, themes.Monokai, themes.NightOwl, themes.Nord, themes.OneDarkPro, themes.TokyoNight, themes.VitesseDark]
       list.each(all_themes, fn(theme) {
         glimra.has_theme(highlighter, themes.Bundled(theme))
         |> expect.to_be_true()
@@ -164,10 +95,7 @@ pub fn builder_api_tests() {
         |> glimra.build()
 
       // Verify the custom theme is loaded
-      glimra.has_theme(
-        highlighter,
-        themes.Custom("my-custom-theme", theme_json),
-      )
+      glimra.has_theme(highlighter, themes.Custom("my-custom-theme", theme_json))
       |> expect.to_be_true()
     }),
 

@@ -17,6 +17,7 @@ import glimra
 import glimra/languages.{type Language, language_id}
 import glimra/oniguruma_parser/json as ast_json
 import glimra/oniguruma_parser/parser
+import glimra/oniguruma_to_es/transform
 import glimra/themes.{type BundledTheme, theme_id}
 import glimra/types/token.{type ThemedToken, ThemedToken}
 import json_compare
@@ -621,4 +622,193 @@ pub fn validate_expected_ast(lang: Language) -> Nil {
 /// Uses FFI to JavaScript to avoid stack overflow on large ASTs
 fn compare_json_strings(a: String, b: String) -> Bool {
   json_compare.compare_json(a, b)
+}
+
+// ============================================
+// RegexPlusAst Validation (for transform testing)
+// ============================================
+
+/// Type for expected RegexPlusAst pattern entry
+pub type ExpectedRegexPlusAstPattern {
+  ExpectedRegexPlusAstPattern(
+    pattern: String,
+    success: Bool,
+    regex_plus_ast_json: String,
+  )
+}
+
+/// Type for expected RegexPlusAst file
+pub type ExpectedRegexPlusAstFile {
+  ExpectedRegexPlusAstFile(
+    language: String,
+    total: Int,
+    successful: Int,
+    failed: Int,
+    patterns: List(ExpectedRegexPlusAstPattern),
+  )
+}
+
+/// Read expected RegexPlusAst from JSON file
+pub fn read_expected_regex_plus_ast(
+  lang: Language,
+) -> Result(ExpectedRegexPlusAstFile, String) {
+  let lang_id = language_id(lang)
+  let path = "test/snippets/" <> lang_id <> "/expected_regex_plus_ast.json"
+
+  case simplifile.read(path) {
+    Error(_) -> Error("Failed to read expected RegexPlusAst file: " <> path)
+    Ok(content) -> decode_expected_regex_plus_ast(content)
+  }
+}
+
+fn decode_expected_regex_plus_ast(
+  content: String,
+) -> Result(ExpectedRegexPlusAstFile, String) {
+  // Decode just the metadata
+  let metadata_decoder =
+    decode.field("language", decode.string, fn(language) {
+      decode.field("total", decode.int, fn(total) {
+        decode.field("successful", decode.int, fn(successful) {
+          decode.field("failed", decode.int, fn(failed) {
+            decode.success(#(language, total, successful, failed))
+          })
+        })
+      })
+    })
+
+  // First decode metadata
+  case json.parse(content, metadata_decoder) {
+    Error(_) -> Error("Failed to decode expected RegexPlusAst JSON metadata")
+    Ok(#(language, total, successful, failed)) -> {
+      // Now extract patterns using a different approach
+      let patterns_decoder =
+        decode.field("patterns", decode.list(decode.dynamic), fn(patterns_dyn) {
+          decode.success(patterns_dyn)
+        })
+
+      case json.parse(content, patterns_decoder) {
+        Error(_) -> Error("Failed to decode patterns array")
+        Ok(patterns_dyn) -> {
+          let patterns =
+            patterns_dyn
+            |> list.filter_map(fn(p) { decode_regex_plus_ast_pattern_entry(p) })
+          Ok(ExpectedRegexPlusAstFile(
+            language: language,
+            total: total,
+            successful: successful,
+            failed: failed,
+            patterns: patterns,
+          ))
+        }
+      }
+    }
+  }
+}
+
+fn decode_regex_plus_ast_pattern_entry(
+  dyn: decode.Dynamic,
+) -> Result(ExpectedRegexPlusAstPattern, Nil) {
+  let pattern_decoder =
+    decode.field("pattern", decode.string, fn(pattern) {
+      decode.field("success", decode.bool, fn(success) {
+        decode.success(#(pattern, success))
+      })
+    })
+
+  case decode.run(dyn, pattern_decoder) {
+    Error(_) -> Error(Nil)
+    Ok(#(pattern, success)) -> {
+      // Now get the regexPlusAst field as raw JSON
+      let ast_decoder =
+        decode.field("regexPlusAst", decode.dynamic, fn(ast_dyn) {
+          decode.success(ast_dyn)
+        })
+
+      let regex_plus_ast_json = case decode.run(dyn, ast_decoder) {
+        Ok(ast_dyn) -> json_compare.stringify_dynamic(ast_dyn)
+        Error(_) -> ""
+      }
+
+      Ok(ExpectedRegexPlusAstPattern(
+        pattern: pattern,
+        success: success,
+        regex_plus_ast_json: regex_plus_ast_json,
+      ))
+    }
+  }
+}
+
+/// Validate expected RegexPlusAst for a language by parsing, transforming, and comparing
+pub fn validate_expected_regex_plus_ast(lang: Language) -> Nil {
+  let expected =
+    read_expected_regex_plus_ast(lang)
+    |> expect.to_be_ok()
+
+  let errors =
+    expected.patterns
+    |> list.filter_map(fn(entry) {
+      case entry.success {
+        False ->
+          // Skip patterns that failed in JS
+          Error(Nil)
+        True -> {
+          // Parse with Gleam parser using same options as JS generator
+          let parse_opts =
+            parser.ParseOptions(
+              ..parser.default_options(),
+              singleline: True,
+              capture_group: True,
+              skip_backref_validation: True,
+            )
+          case parser.parse(entry.pattern, parse_opts) {
+            Error(err) ->
+              Ok("Pattern \"" <> entry.pattern <> "\" failed to parse: " <> err)
+            Ok(ast) -> {
+              // Transform the AST
+              let config = transform.default_config()
+              case transform.transform(ast, config) {
+                Error(err) ->
+                  Ok(
+                    "Pattern \""
+                    <> entry.pattern
+                    <> "\" failed to transform: "
+                    <> err,
+                  )
+                Ok(regex_plus_ast) -> {
+                  // Convert to JSON and compare semantically
+                  let gleam_json =
+                    ast_json.regex_plus_ast_to_string(regex_plus_ast)
+                  case
+                    compare_json_strings(gleam_json, entry.regex_plus_ast_json)
+                  {
+                    True -> Error(Nil)
+                    False ->
+                      Ok(
+                        "Pattern \""
+                        <> entry.pattern
+                        <> "\" RegexPlusAst mismatch:\nExpected: "
+                        <> string.slice(entry.regex_plus_ast_json, 0, 200)
+                        <> "\nGot: "
+                        <> string.slice(gleam_json, 0, 200),
+                      )
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+  case errors {
+    [] -> Nil
+    first_errors -> {
+      // Show first few errors
+      let error_msg =
+        first_errors
+        |> list.take(5)
+        |> string.join("\n\n")
+      error_msg |> expect.to_equal("")
+    }
+  }
 }

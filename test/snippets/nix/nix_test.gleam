@@ -1,16 +1,12 @@
 import glimra/languages
-import glimra/themes
 import startest.{describe, it}
 import test_helpers
+import glimra/themes
 
 pub fn nix_tests() {
   describe("nix expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Nix,
-        "snippet",
-        themes.CatppuccinMocha,
-      )
+      test_helpers.validate_snippet(languages.Nix, "snippet", themes.CatppuccinMocha)
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Nix, "snippet", themes.Dracula)
@@ -19,11 +15,7 @@ pub fn nix_tests() {
       test_helpers.validate_snippet(languages.Nix, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Nix,
-        "snippet",
-        themes.GruvboxDarkMedium,
-      )
+      test_helpers.validate_snippet(languages.Nix, "snippet", themes.GruvboxDarkMedium)
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Nix, "snippet", themes.Monokai)
@@ -41,11 +33,7 @@ pub fn nix_tests() {
       test_helpers.validate_snippet(languages.Nix, "snippet", themes.TokyoNight)
     }),
     it("validates with vitesse-dark theme", fn() {
-      test_helpers.validate_snippet(
-        languages.Nix,
-        "snippet",
-        themes.VitesseDark,
-      )
+      test_helpers.validate_snippet(languages.Nix, "snippet", themes.VitesseDark)
     }),
   ])
 }
@@ -54,6 +42,14 @@ pub fn nix_ast_tests() {
   describe("nix expected ast validation", [
     it("parses all patterns correctly", fn() {
       test_helpers.validate_expected_ast(languages.Nix)
+    }),
+  ])
+}
+
+pub fn nix_regex_plus_ast_tests() {
+  describe("nix expected regex_plus_ast validation", [
+    it("transforms all patterns correctly", fn() {
+      test_helpers.validate_expected_regex_plus_ast(languages.Nix)
     }),
   ])
 }
