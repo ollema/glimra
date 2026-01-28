@@ -1,12 +1,16 @@
 import glimra/languages
+import glimra/themes
 import startest.{describe, it}
 import test_helpers
-import glimra/themes
 
 pub fn css_tests() {
   describe("css expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(languages.Css, "snippet", themes.CatppuccinMocha)
+      test_helpers.validate_snippet(
+        languages.Css,
+        "snippet",
+        themes.CatppuccinMocha,
+      )
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Css, "snippet", themes.Dracula)
@@ -15,7 +19,11 @@ pub fn css_tests() {
       test_helpers.validate_snippet(languages.Css, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(languages.Css, "snippet", themes.GruvboxDarkMedium)
+      test_helpers.validate_snippet(
+        languages.Css,
+        "snippet",
+        themes.GruvboxDarkMedium,
+      )
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Css, "snippet", themes.Monokai)
@@ -33,7 +41,11 @@ pub fn css_tests() {
       test_helpers.validate_snippet(languages.Css, "snippet", themes.TokyoNight)
     }),
     it("validates with vitesse-dark theme", fn() {
-      test_helpers.validate_snippet(languages.Css, "snippet", themes.VitesseDark)
+      test_helpers.validate_snippet(
+        languages.Css,
+        "snippet",
+        themes.VitesseDark,
+      )
     }),
   ])
 }

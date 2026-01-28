@@ -11,20 +11,18 @@ import gleam/option.{type Option, None, Some}
 import glimra/oniguruma_parser/parser/ast_types.{
   type AlternativeElement, type AlternativeNode, type BackreferenceNode,
   type BackreferenceRef, type CapturingGroupNode, type CharacterClassElement,
-  type CharacterClassNode, type GroupNode, type LookaroundAssertionNode,
-  type QuantifiableNode, type QuantifierNode, type RegexNode,
-  type SubroutineNode, type SubroutineRef, AbsenceFunctionE, AbsenceFunctionNode,
-  AlternativeNode, AssertionE, BackreferenceE, BackreferenceNode,
-  CapturingGroupE, CapturingGroupNode, CharacterCCE, CharacterClassCCE,
-  CharacterClassE, CharacterClassNode, CharacterClassRangeCCE, CharacterE,
-  CharacterSetCCE, CharacterSetE, DirectiveE, GroupE, GroupNode,
+  type GroupNode, type QuantifiableNode, type QuantifierNode, type RegexNode,
+  type SubroutineNode, AbsenceFunctionE, AbsenceFunctionNode, AlternativeNode,
+  AssertionE, BackreferenceE, CapturingGroupE, CapturingGroupNode, CharacterCCE,
+  CharacterClassCCE, CharacterClassE, CharacterClassNode, CharacterClassRangeCCE,
+  CharacterE, CharacterSetCCE, CharacterSetE, DirectiveE, GroupE, GroupNode,
   LookaroundAssertionE, LookaroundAssertionNode, NamedCalloutE, NamedRef,
   NamedSubroutineRef, NumberedRef, NumberedSubroutineRef, QuantifierE,
   QuantifierNode, RegexNode, SubroutineE, SubroutineNode,
 }
 import glimra/oniguruma_to_es/transform/types.{
-  type GroupNameInfo, type SubroutineRefKey, GroupNameInfo, NamedKey,
-  NumberedKey,
+  type GroupNameInfo, type SubroutineRefEntry, type SubroutineRefKey,
+  GroupNameInfo, NamedKey, NumberedKey,
 }
 import glimra/oniguruma_to_es/transform/utils.{
   type CurrentFlags, are_flags_equal, clone_capturing_group,
@@ -46,7 +44,7 @@ pub type SecondPassState {
     multiplex_captures_to_left_by_ref: Dict(MultiplexKey, List(MultiplexEntry)),
     open_refs: Dict(Int, CapturingGroupNode),
     reffed_nodes_by_referencer: Dict(Int, List(CapturingGroupNode)),
-    subroutine_ref_map: Dict(SubroutineRefKey, CapturingGroupNode),
+    subroutine_ref_map: Dict(SubroutineRefKey, SubroutineRefEntry),
   )
 }
 
@@ -239,11 +237,24 @@ fn transform_capturing_group(
     Ok(_orig) -> {
       // Handle recursion - check if we're within the same group
       case dict.get(state.open_refs, node.number) {
-        Ok(_) -> {
+        Ok(open_node) -> {
           // This is a recursive reference - create a recursion marker
           let recursion_node =
-            SubroutineNode(ref: NumberedSubroutineRef(node.number))
-          #([SubroutineE(recursion_node)], state)
+            SubroutineNode(
+              ref: NumberedSubroutineRef(node.number),
+              is_recursive: Some(True),
+            )
+          // Track the referenced node for later renumbering in third pass
+          // Use a unique key based on the recursion node's identity
+          let recursion_key =
+            node.number * 1000 + dict.size(state.reffed_nodes_by_referencer)
+          let new_reffed =
+            dict.insert(state.reffed_nodes_by_referencer, recursion_key, [
+              open_node,
+            ])
+          let new_state =
+            SecondPassState(..state, reffed_nodes_by_referencer: new_reffed)
+          #([SubroutineE(recursion_node)], new_state)
         }
         Error(_) -> transform_capturing_group_normal(node, state)
       }
@@ -547,7 +558,7 @@ fn transform_subroutine(
 
   case dict.get(state.subroutine_ref_map, key) {
     Error(_) -> #([SubroutineE(node)], state)
-    Ok(reffed_group) -> {
+    Ok(reffed_entry) -> {
       // Check for global recursion
       case node.ref {
         NumberedSubroutineRef(0) -> {
@@ -557,14 +568,17 @@ fn transform_subroutine(
         _ -> {
           // Clone the referenced group
           let #(cloned, new_origin_map) =
-            clone_capturing_group(reffed_group, state.group_origin_by_copy)
+            clone_capturing_group(
+              reffed_entry.group,
+              state.group_origin_by_copy,
+            )
 
           let state_with_origin =
             SecondPassState(..state, group_origin_by_copy: new_origin_map)
 
           // Check if flags need to be wrapped
-          let reffed_flags = state.global_flags
-          // Simplified - should trace parent flags
+          // Use the flags stored with the referenced group
+          let reffed_flags = reffed_entry.flags
 
           case are_flags_equal(reffed_flags, state.current_flags) {
             True -> {

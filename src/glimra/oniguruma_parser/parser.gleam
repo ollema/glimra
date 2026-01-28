@@ -1078,7 +1078,7 @@ fn parse_subroutine(
     Error(_) -> #(NamedSubroutineRef(ref_str), ctx)
   }
 
-  let node = SubroutineNode(ref: ref)
+  let node = SubroutineNode(ref: ref, is_recursive: None)
   let ctx2 =
     Context(..new_ctx, subroutines: list.append(new_ctx.subroutines, [node]))
 
@@ -1342,7 +1342,7 @@ pub fn create_regex(flags: FlagsNode, body: List(AlternativeNode)) -> RegexNode 
 
 /// Create a subroutine node
 pub fn create_subroutine(ref: SubroutineRef) -> SubroutineNode {
-  SubroutineNode(ref: ref)
+  SubroutineNode(ref: ref, is_recursive: None)
 }
 
 /// Create an absence function node

@@ -8,20 +8,20 @@
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
-import gleam/option.{type Option, None, Some}
+import gleam/option.{None, Some}
+import gleam/set.{type Set}
+import gleam/string
 import glimra/oniguruma_parser/parser/ast_types.{
   type AlternativeElement, type AlternativeNode, type BackreferenceNode,
   type BackreferenceRef, type CapturingGroupNode, type CharacterClassElement,
-  type CharacterClassNode, type GroupNode, type LookaroundAssertionNode,
   type QuantifiableNode, type QuantifierNode, type RegexNode,
-  type SubroutineNode, type SubroutineRef, AbsenceFunctionE, AbsenceFunctionNode,
-  AlternativeNode, AssertionE, BackreferenceE, BackreferenceNode,
-  CapturingGroupE, CapturingGroupNode, CharacterCCE, CharacterClassCCE,
-  CharacterClassE, CharacterClassNode, CharacterClassRangeCCE, CharacterE,
-  CharacterSetCCE, CharacterSetE, DirectiveE, GroupE, GroupNode, Lookahead,
-  LookaroundAssertionE, LookaroundAssertionNode, NamedCalloutE, NamedRef,
-  NamedSubroutineRef, NumberedRef, NumberedSubroutineRef, QuantifierE,
-  QuantifierNode, RegexNode, SubroutineE, SubroutineNode,
+  type SubroutineNode, AbsenceFunctionE, AbsenceFunctionNode, AlternativeNode,
+  AssertionE, BackreferenceE, BackreferenceNode, CapturingGroupE,
+  CapturingGroupNode, CharacterCCE, CharacterClassCCE, CharacterClassE,
+  CharacterClassNode, CharacterClassRangeCCE, CharacterE, CharacterSetCCE,
+  CharacterSetE, DirectiveE, GroupE, GroupNode, Lookahead, LookaroundAssertionE,
+  LookaroundAssertionNode, NamedCalloutE, NamedRef, NumberedRef, QuantifierE,
+  QuantifierNode, RegexNode, SubroutineE,
 }
 import glimra/oniguruma_to_es/transform/types.{type GroupNameInfo}
 
@@ -32,6 +32,8 @@ import glimra/oniguruma_to_es/transform/types.{type GroupNameInfo}
 /// State for third pass transformation
 pub type ThirdPassState {
   ThirdPassState(
+    /// Names we've already emitted (used to remove duplicates)
+    emitted_names: Set(String),
     groups_by_name: Dict(String, Dict(CapturingGroupNode, GroupNameInfo)),
     highest_orphan_backref: Int,
     num_captures_to_left: Int,
@@ -83,15 +85,13 @@ fn add_dummy_captures(
           let dummy_captures =
             list.range(1, num_caps_needed)
             |> list.map(fn(_i) {
-              CapturingGroupE(
-                CapturingGroupNode(
-                  number: -1,
-                  // Sentinel for null
-                  name: None,
-                  is_subroutined: None,
-                  body: [AlternativeNode(body: [])],
-                ),
-              )
+              CapturingGroupE(CapturingGroupNode(
+                number: -1,
+                // Sentinel for null
+                name: None,
+                is_subroutined: None,
+                body: [AlternativeNode(body: [])],
+              ))
             })
 
           let new_last =
@@ -311,8 +311,7 @@ fn can_participate_with_node(
   open_groups: List(Int),
 ) -> Bool {
   // Capture must be defined and not currently open (we're inside it)
-  capture.number <= current_num
-  && !list.contains(open_groups, capture.number)
+  capture.number <= current_num && !list.contains(open_groups, capture.number)
 }
 
 // ============================================================================
@@ -328,26 +327,37 @@ fn transform_capturing_group(
 
   // Add to open groups (we're inside this group now)
   let state_with_open =
-    ThirdPassState(
-      ..state,
-      num_captures_to_left: new_num,
-      open_groups: [new_num, ..state.open_groups],
-    )
+    ThirdPassState(..state, num_captures_to_left: new_num, open_groups: [
+      new_num,
+      ..state.open_groups
+    ])
 
   // Check if name should be removed (duplicate)
-  let new_name = case node.name {
-    None -> None
+  // Use emitted_names set to track which names have been emitted
+  // First occurrence keeps the name, subsequent ones have it removed
+  let #(new_name, state_with_emitted) = case node.name {
+    None -> #(None, state_with_open)
     Some(name) -> {
-      case should_remove_duplicate_name(node, name, state.groups_by_name) {
-        True -> None
-        False -> Some(name)
+      case set.contains(state_with_open.emitted_names, name) {
+        True ->
+          // This name was already emitted, remove it
+          #(None, state_with_open)
+        False ->
+          // First occurrence, keep the name and add to emitted set
+          #(
+            Some(name),
+            ThirdPassState(
+              ..state_with_open,
+              emitted_names: set.insert(state_with_open.emitted_names, name),
+            ),
+          )
       }
     }
   }
 
   // Transform body
   let #(new_body, state_after_body) =
-    transform_alternatives(node.body, state_with_open)
+    transform_alternatives(node.body, state_with_emitted)
 
   // Remove from open groups (we've exited this group)
   let final_state =
@@ -361,23 +371,6 @@ fn transform_capturing_group(
   let new_node =
     CapturingGroupNode(..node, number: new_num, name: new_name, body: new_body)
   #([CapturingGroupE(new_node)], final_state)
-}
-
-/// Check if a duplicate name should be removed
-fn should_remove_duplicate_name(
-  node: CapturingGroupNode,
-  name: String,
-  groups_by_name: Dict(String, Dict(CapturingGroupNode, GroupNameInfo)),
-) -> Bool {
-  case dict.get(groups_by_name, name) {
-    Error(_) -> False
-    Ok(groups) -> {
-      case dict.get(groups, node) {
-        Error(_) -> False
-        Ok(info) -> info.has_duplicate_name_to_remove
-      }
-    }
-  }
 }
 
 // ============================================================================
@@ -513,5 +506,3 @@ fn transform_subroutine(
   // This is simplified - a full implementation would track the referenced group
   #([SubroutineE(node)], state)
 }
-
-import gleam/string

@@ -134,15 +134,21 @@ pub fn capturing_group_to_json(node: CapturingGroupNode) -> Json {
   let base = [
     #("type", json.string("CapturingGroup")),
     #("number", number_json),
-    #("body", json.array(node.body, alternative_to_json)),
   ]
+  // Name comes before body in the expected output
   let with_name = case node.name {
     Some(n) -> list.append(base, [#("name", json.string(n))])
     None -> base
   }
+  // Then body
+  let with_body =
+    list.append(with_name, [
+      #("body", json.array(node.body, alternative_to_json)),
+    ])
+  // Then isSubroutined
   let with_subroutined = case node.is_subroutined {
-    Some(s) -> list.append(with_name, [#("isSubroutined", json.bool(s))])
-    None -> with_name
+    Some(s) -> list.append(with_body, [#("isSubroutined", json.bool(s))])
+    None -> with_body
   }
   json.object(with_subroutined)
 }
@@ -307,10 +313,8 @@ fn flag_group_switches_to_json(switches: FlagGroupSwitches) -> Json {
 
 /// Convert a GroupNode to JSON
 pub fn group_to_json(node: GroupNode) -> Json {
-  let base = [
-    #("type", json.string("Group")),
-    #("body", json.array(node.body, alternative_to_json)),
-  ]
+  // Build fields in order: type, atomic?, flags?, body
+  let base = [#("type", json.string("Group"))]
   let with_atomic = case node.atomic {
     Some(a) -> list.append(base, [#("atomic", json.bool(a))])
     None -> base
@@ -320,7 +324,11 @@ pub fn group_to_json(node: GroupNode) -> Json {
       list.append(with_atomic, [#("flags", flag_group_modifiers_to_json(f))])
     None -> with_atomic
   }
-  json.object(with_flags)
+  let with_body =
+    list.append(with_flags, [
+      #("body", json.array(node.body, alternative_to_json)),
+    ])
+  json.object(with_body)
 }
 
 /// Convert a LookaroundAssertionNode to JSON
@@ -421,10 +429,15 @@ fn quantifiable_to_json(node: ast_types.QuantifiableNode) -> Json {
 
 /// Convert a SubroutineNode to JSON
 pub fn subroutine_to_json(node: SubroutineNode) -> Json {
-  json.object([
+  let base = [
     #("type", json.string("Subroutine")),
     #("ref", subroutine_ref_to_json(node.ref)),
-  ])
+  ]
+  let with_recursive = case node.is_recursive {
+    Some(True) -> list.append(base, [#("isRecursive", json.bool(True))])
+    _ -> base
+  }
+  json.object(with_recursive)
 }
 
 fn subroutine_ref_to_json(ref: SubroutineRef) -> Json {

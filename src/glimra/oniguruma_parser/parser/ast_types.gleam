@@ -226,7 +226,7 @@ pub const quantifier_max_infinity: Int = 2_147_483_647
 
 /// A subroutine call like \g<1>, \g<name>
 pub type SubroutineNode {
-  SubroutineNode(ref: SubroutineRef)
+  SubroutineNode(ref: SubroutineRef, is_recursive: Option(Bool))
 }
 
 /// A subroutine can refer to a group by number or name

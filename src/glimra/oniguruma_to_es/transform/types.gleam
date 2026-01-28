@@ -88,6 +88,12 @@ pub type SubroutineRefKey {
   NamedKey(String)
 }
 
+/// Entry in subroutine ref map - group with its flag context
+/// CurrentFlags is #(Bool, Bool) for (dotAll, ignoreCase)
+pub type SubroutineRefEntry {
+  SubroutineRefEntry(group: CapturingGroupNode, flags: #(Bool, Bool))
+}
+
 // ============================================================================
 // Group Name Info
 // ============================================================================

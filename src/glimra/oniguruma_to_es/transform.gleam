@@ -9,7 +9,8 @@
 ///   setup
 /// - Third Pass: Group renumbering, backref finalization, orphan backref handling
 import gleam/dict.{type Dict}
-import gleam/option.{type Option, None, Some}
+import gleam/option.{None}
+import gleam/set
 import glimra/oniguruma_parser/parser/ast_types.{
   type CapturingGroupNode, type RegexNode,
 }
@@ -18,9 +19,9 @@ import glimra/oniguruma_to_es/transform/second_pass
 import glimra/oniguruma_to_es/transform/third_pass
 import glimra/oniguruma_to_es/transform/types.{
   type Accuracy, type RegexPlusAst, type RegexPlusFlags, type Strategy,
-  type Target, type TransformConfig, type TransformOptions, ClipSearch,
-  DefaultAccuracy, DisableOptions, ES2024, ES2025, ForceOptions, RegexPlusAst,
-  RegexPlusFlags, StrictAccuracy, TransformConfig, TransformOptions,
+  type Target, type TransformConfig, type TransformOptions, DefaultAccuracy,
+  DisableOptions, ES2024, ES2025, ForceOptions, RegexPlusAst, RegexPlusFlags,
+  TransformConfig, TransformOptions,
 }
 
 // Re-export types for external use
@@ -69,12 +70,15 @@ pub fn transform(
   config: TransformConfig,
 ) -> Result(RegexPlusAst, String) {
   // First pass: syntactic transformations
+  // Initial current_flags: #(dotAll, ignoreCase) from AST flags
+  let initial_flags = #(ast.flags.dot_all, ast.flags.ignore_case)
   let first_pass_state =
     first_pass.FirstPassState(
       accuracy: config.accuracy,
       ascii_word_boundaries: config.ascii_word_boundaries,
       avoid_subclass: config.avoid_subclass,
       min_target_es2024: is_min_target_es2024(config.best_effort_target),
+      current_flags: initial_flags,
       digit_is_ascii: ast.flags.digit_is_ascii,
       space_is_ascii: ast.flags.space_is_ascii,
       word_is_ascii: ast.flags.word_is_ascii,
@@ -123,6 +127,7 @@ pub fn transform(
   // Third pass: group renumbering, backref finalization
   let third_pass_state =
     third_pass.ThirdPassState(
+      emitted_names: set.new(),
       groups_by_name: second_state_result.groups_by_name,
       highest_orphan_backref: 0,
       num_captures_to_left: 0,

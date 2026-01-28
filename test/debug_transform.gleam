@@ -1,15 +1,16 @@
 import gleam/io
 import gleam/option.{None}
+import glimra/oniguruma_parser/json
 import glimra/oniguruma_parser/parser
 import glimra/oniguruma_to_es/transform
-import glimra/oniguruma_parser/json
 import startest.{describe, it}
 import startest/expect
 
 pub fn debug_transform_tests() {
   describe("debug transform", [
     it("shows transform output for simple pattern", fn() {
-      let pattern = "\\b_\\p{word}+{0,1}\\b"
+      let pattern =
+        "(?i)((\\$)(?<name>[_a-z]+))\\s*(?:(->)\\s*(\\g<name>)|([0-9]+))"
       io.println("\n\nPattern: " <> pattern)
 
       // Use same options as test_helpers (TextMate grammar style)

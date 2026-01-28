@@ -13,6 +13,7 @@
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/option.{type Option, None, Some}
+import gleam/result
 import glimra/oniguruma_parser/parser/ast_types.{
   type AbsenceFunctionNode, type AlternativeElement, type AlternativeNode,
   type AssertionNode, type BackreferenceNode, type CapturingGroupNode,
@@ -20,13 +21,13 @@ import glimra/oniguruma_parser/parser/ast_types.{
   type DirectiveNode, type FlagGroupModifiers, type FlagGroupSwitches,
   type FlagsNode, type GroupNode, type LookaroundAssertionNode,
   type NamedCalloutNode, type QuantifiableNode, type QuantifierNode,
-  type RegexNode, type SubroutineNode, AbsenceFunctionE, AbsenceFunctionNode,
-  AlternativeNode, AssertionE, AssertionNode, BackreferenceE, BackreferenceNode,
-  CapturingGroupE, CapturingGroupNode, CharacterCCE, CharacterClassCCE,
-  CharacterClassE, CharacterClassNode, CharacterClassRangeCCE, CharacterE,
-  CharacterNode, CharacterSetCCE, CharacterSetE, CharacterSetNode, DirectiveE,
-  DirectiveNode, FlagGroupModifiers, FlagGroupSwitches, FlagsNode, GroupE,
-  Greedy, GroupNode, Intersection, LineEnd, LineStart, Lookahead, LookaroundAssertionE,
+  type RegexNode, type SubroutineNode, AbsenceFunctionE, AlternativeNode,
+  AssertionE, AssertionNode, BackreferenceE, BackreferenceNode, CapturingGroupE,
+  CapturingGroupNode, CharacterCCE, CharacterClassCCE, CharacterClassE,
+  CharacterClassNode, CharacterClassRangeCCE, CharacterE, CharacterNode,
+  CharacterSetCCE, CharacterSetE, CharacterSetNode, DirectiveE,
+  FlagGroupModifiers, FlagGroupSwitches, FlagsNode, Greedy, GroupE, GroupNode,
+  Intersection, LineEnd, LineStart, Lookahead, LookaroundAssertionE,
   LookaroundAssertionNode, Lookbehind, NamedCalloutE, NamedRef,
   NamedSubroutineRef, NumberedRef, NumberedSubroutineRef, QuantifierE,
   QuantifierNode, RegexNode, Repeater, SearchStart, StringEnd, StringEndNewline,
@@ -38,7 +39,7 @@ import glimra/oniguruma_to_es/transform/types.{
   DefaultAccuracy, NamedKey, NumberedKey, StrictAccuracy,
 }
 import glimra/oniguruma_to_es/transform/utils.{
-  get_or_insert_group_name, is_valid_js_group_name,
+  get_new_current_flags, get_or_insert_group_name, is_valid_js_group_name,
 }
 
 // ============================================================================
@@ -52,6 +53,8 @@ pub type FirstPassState {
     ascii_word_boundaries: Bool,
     avoid_subclass: Bool,
     min_target_es2024: Bool,
+    /// Current flag context: #(dotAll, ignoreCase)
+    current_flags: #(Bool, Bool),
     digit_is_ascii: Bool,
     space_is_ascii: Bool,
     word_is_ascii: Bool,
@@ -59,7 +62,7 @@ pub type FirstPassState {
     js_group_name_map: Dict(String, String),
     passed_lookbehind: Bool,
     strategy: Option(Strategy),
-    subroutine_ref_map: Dict(SubroutineRefKey, CapturingGroupNode),
+    subroutine_ref_map: Dict(SubroutineRefKey, types.SubroutineRefEntry),
     supported_g_nodes: List(AssertionNode),
   )
 }
@@ -67,11 +70,6 @@ pub type FirstPassState {
 // ============================================================================
 // Loop Step Types
 // ============================================================================
-
-type LoopStep(state, result) {
-  LoopContinue(state)
-  LoopDone(result)
-}
 
 // ============================================================================
 // Main Entry Point
@@ -85,9 +83,9 @@ pub fn run(
   // Check for supported \G nodes before transformation
   let state_with_g = check_supported_g_nodes(ast, state)
 
-  // Transform the body
+  // Transform the body (is_top_level = True for the regex root)
   let #(new_body, final_state) =
-    transform_alternatives(ast.body, state_with_g, 0)
+    transform_alternatives(ast.body, state_with_g, 0, True)
 
   // Transform flags (remove Onig-specific)
   let new_flags = transform_flags(ast.flags)
@@ -100,19 +98,44 @@ pub fn run(
 // ============================================================================
 
 /// Check for \G nodes at the start of every top-level alternative
+/// Note: Alternatives that contain ONLY \G are excluded - they just get removed
 fn check_supported_g_nodes(
   ast: RegexNode,
   state: FirstPassState,
 ) -> FirstPassState {
-  let leading_gs =
-    list.filter_map(ast.body, fn(alt) { get_leading_g(alt.body) })
+  // Separate lone-\G alternatives from others
+  let #(leading_gs, lone_g_count) =
+    list.fold(ast.body, #([], 0), fn(acc, alt) {
+      let #(gs, lone_count) = acc
+      case is_lone_g_alternative(alt.body) {
+        True -> #(gs, lone_count + 1)
+        False -> {
+          case get_leading_g(alt.body) {
+            Ok(found_gs) -> #(list.append(gs, found_gs), lone_count)
+            Error(Nil) -> #(gs, lone_count)
+          }
+        }
+      }
+    })
 
-  let has_alt_with_lead_g = list.length(leading_gs) > 0
-  let has_alt_without_lead_g = list.length(leading_gs) < list.length(ast.body)
+  // Count non-lone-G alternatives
+  let non_lone_count = list.length(ast.body) - lone_g_count
 
-  case has_alt_with_lead_g && !has_alt_without_lead_g {
-    True -> FirstPassState(..state, supported_g_nodes: list.flatten(leading_gs))
+  // Check if all non-lone alternatives have leading \G
+  let has_alt_with_lead_g = leading_gs != []
+  let has_alt_without_lead_g = list.length(leading_gs) < non_lone_count
+
+  case has_alt_with_lead_g && !has_alt_without_lead_g && non_lone_count > 0 {
+    True -> FirstPassState(..state, supported_g_nodes: leading_gs)
     False -> state
+  }
+}
+
+/// Check if an alternative contains only \G (nothing else)
+fn is_lone_g_alternative(elements: List(AlternativeElement)) -> Bool {
+  case elements {
+    [AssertionE(node)] -> node.kind == SearchStart
+    _ -> False
   }
 }
 
@@ -167,12 +190,79 @@ fn is_always_zero_length(element: AlternativeElement) -> Bool {
 // ============================================================================
 
 /// Transform a list of alternatives
+/// is_top_level: True only for the root Regex body, False for groups/lookarounds
 fn transform_alternatives(
   alts: List(AlternativeNode),
   state: FirstPassState,
   alt_index: Int,
+  is_top_level: Bool,
 ) -> #(List(AlternativeNode), FirstPassState) {
-  transform_alternatives_loop(alts, [], state, alt_index)
+  // First pass: collect flag directives from each alternative for propagation
+  let flag_directives_by_index = collect_flag_directives(alts, 0, dict.new())
+  transform_alternatives_loop(
+    alts,
+    [],
+    state,
+    alt_index,
+    flag_directives_by_index,
+    is_top_level,
+  )
+}
+
+/// Collect flag directives from alternatives for propagation to subsequent siblings
+fn collect_flag_directives(
+  alts: List(AlternativeNode),
+  index: Int,
+  acc: Dict(Int, List(FlagGroupModifiers)),
+) -> Dict(Int, List(FlagGroupModifiers)) {
+  case alts {
+    [] -> acc
+    [alt, ..rest] -> {
+      // Find flag directives in this alternative
+      let flag_directives =
+        list.filter_map(alt.body, fn(elem) {
+          case elem {
+            DirectiveE(dir) -> {
+              case dir.kind {
+                ast_types.Flags -> {
+                  case dir.flags {
+                    Some(flags) -> Ok(flags)
+                    None -> Error(Nil)
+                  }
+                }
+                _ -> Error(Nil)
+              }
+            }
+            _ -> Error(Nil)
+          }
+        })
+      // Register these flag directives for all subsequent alternatives
+      let updated_acc = case flag_directives {
+        [] -> acc
+        _ -> {
+          register_flags_for_siblings(rest, index + 1, flag_directives, acc)
+        }
+      }
+      collect_flag_directives(rest, index + 1, updated_acc)
+    }
+  }
+}
+
+/// Register flag directives for sibling alternatives
+fn register_flags_for_siblings(
+  remaining: List(AlternativeNode),
+  index: Int,
+  flags: List(FlagGroupModifiers),
+  acc: Dict(Int, List(FlagGroupModifiers)),
+) -> Dict(Int, List(FlagGroupModifiers)) {
+  case remaining {
+    [] -> acc
+    [_, ..rest] -> {
+      let existing = result.unwrap(dict.get(acc, index), [])
+      let updated = dict.insert(acc, index, list.append(existing, flags))
+      register_flags_for_siblings(rest, index + 1, flags, updated)
+    }
+  }
 }
 
 fn transform_alternatives_loop(
@@ -180,19 +270,100 @@ fn transform_alternatives_loop(
   acc: List(AlternativeNode),
   state: FirstPassState,
   alt_index: Int,
+  flag_directives_by_index: Dict(Int, List(FlagGroupModifiers)),
+  is_top_level: Bool,
 ) -> #(List(AlternativeNode), FirstPassState) {
   case remaining {
     [] -> #(list.reverse(acc), state)
     [alt, ..rest] -> {
       let #(new_alt, new_state) =
-        transform_alternative(alt, state, alt_index, list.length(remaining))
+        transform_alternative(
+          alt,
+          state,
+          alt_index,
+          list.length(remaining),
+          is_top_level,
+        )
+      // Check if we need to wrap this alternative with inherited flag directives
+      let final_alt = case dict.get(flag_directives_by_index, alt_index) {
+        Ok(inherited_flags) if inherited_flags != [] -> {
+          wrap_alternative_with_flags(new_alt, inherited_flags)
+        }
+        _ -> new_alt
+      }
       transform_alternatives_loop(
         rest,
-        [new_alt, ..acc],
+        [final_alt, ..acc],
         new_state,
         alt_index + 1,
+        flag_directives_by_index,
+        is_top_level,
       )
     }
+  }
+}
+
+/// Wrap an alternative's content with a flag group for inherited flags
+fn wrap_alternative_with_flags(
+  alt: AlternativeNode,
+  inherited_flags: List(FlagGroupModifiers),
+) -> AlternativeNode {
+  // Combine all inherited flags
+  let combined_flags = combine_flag_modifiers(inherited_flags)
+  case combined_flags {
+    None -> alt
+    Some(flags) -> {
+      // Wrap the alternative's body in a flag group
+      let flag_group =
+        GroupNode(atomic: None, flags: Some(flags), body: [
+          AlternativeNode(body: alt.body),
+        ])
+      AlternativeNode(body: [GroupE(flag_group)])
+    }
+  }
+}
+
+/// Combine multiple flag modifiers into one
+fn combine_flag_modifiers(
+  modifiers: List(FlagGroupModifiers),
+) -> Option(FlagGroupModifiers) {
+  case modifiers {
+    [] -> None
+    [single] -> clean_group_flags(single)
+    [first, ..rest] -> {
+      // Merge all modifiers - later ones take precedence
+      let merged = list.fold(rest, first, merge_two_flag_modifiers)
+      clean_group_flags(merged)
+    }
+  }
+}
+
+/// Merge two flag modifiers
+fn merge_two_flag_modifiers(
+  a: FlagGroupModifiers,
+  b: FlagGroupModifiers,
+) -> FlagGroupModifiers {
+  FlagGroupModifiers(
+    enable: merge_switches(a.enable, b.enable),
+    disable: merge_switches(a.disable, b.disable),
+  )
+}
+
+/// Merge two flag switches
+fn merge_switches(
+  a: Option(FlagGroupSwitches),
+  b: Option(FlagGroupSwitches),
+) -> Option(FlagGroupSwitches) {
+  case a, b {
+    None, None -> None
+    Some(s), None -> Some(s)
+    None, Some(s) -> Some(s)
+    Some(s1), Some(s2) ->
+      Some(FlagGroupSwitches(
+        ignore_case: option.or(s2.ignore_case, s1.ignore_case),
+        dot_all: option.or(s2.dot_all, s1.dot_all),
+        extended: option.or(s2.extended, s1.extended),
+      ))
   }
 }
 
@@ -202,9 +373,18 @@ fn transform_alternative(
   state: FirstPassState,
   _alt_index: Int,
   _sibling_count: Int,
+  is_top_level: Bool,
 ) -> #(AlternativeNode, FirstPassState) {
-  let #(new_elements, new_state) = transform_elements(alt.body, state)
-  #(AlternativeNode(body: new_elements), new_state)
+  // Special case: at the TOP level only, if the alternative contains only \G,
+  // just remove it (leaving an empty alternative, without setting sticky or clip_search)
+  // This does NOT apply to \G inside groups or lookarounds
+  case is_top_level && is_lone_g_alternative(alt.body) {
+    True -> #(AlternativeNode(body: []), state)
+    False -> {
+      let #(new_elements, new_state) = transform_elements(alt.body, state)
+      #(AlternativeNode(body: new_elements), new_state)
+    }
+  }
 }
 
 // ============================================================================
@@ -227,12 +407,69 @@ fn transform_elements_loop(
   case remaining {
     [] -> #(list.reverse(acc), state)
     [elem, ..rest] -> {
-      let #(new_elems, new_state) = transform_element(elem, state)
-      transform_elements_loop(
-        rest,
-        list.append(list.reverse(new_elems), acc),
-        new_state,
-      )
+      // Check if this is a flag directive - needs special handling
+      case elem {
+        DirectiveE(directive_node) -> {
+          case directive_node.kind {
+            ast_types.Flags -> {
+              case directive_node.flags {
+                Some(flags) -> {
+                  // Update current_flags BEFORE transforming remaining elements
+                  // so that capturing groups are registered with the correct flag context
+                  let state_with_flags =
+                    FirstPassState(
+                      ..state,
+                      current_flags: get_new_current_flags(
+                        state.current_flags,
+                        flags,
+                      ),
+                    )
+                  // Transform remaining elements with updated flag context
+                  let #(remaining_transformed, new_state) =
+                    transform_elements(rest, state_with_flags)
+                  // Wrap remaining elements in a flag group
+                  let flag_group =
+                    GroupNode(
+                      atomic: None,
+                      flags: clean_group_flags(flags),
+                      body: [AlternativeNode(body: remaining_transformed)],
+                    )
+                  // Add the flag group to acc and return (rest already processed)
+                  // Restore original current_flags in returned state
+                  let final_state =
+                    FirstPassState(
+                      ..new_state,
+                      current_flags: state.current_flags,
+                    )
+                  #(list.reverse([GroupE(flag_group), ..acc]), final_state)
+                }
+                None -> {
+                  // No flags, just skip the directive
+                  transform_elements_loop(rest, acc, state)
+                }
+              }
+            }
+            _ -> {
+              // Other directive types - handle normally
+              let #(new_elems, new_state) = transform_element(elem, state)
+              transform_elements_loop(
+                rest,
+                list.append(list.reverse(new_elems), acc),
+                new_state,
+              )
+            }
+          }
+        }
+        _ -> {
+          // Non-directive element - handle normally
+          let #(new_elems, new_state) = transform_element(elem, state)
+          transform_elements_loop(
+            rest,
+            list.append(list.reverse(new_elems), acc),
+            new_state,
+          )
+        }
+      }
     }
   }
 }
@@ -272,7 +509,7 @@ fn transform_absence_function(
     Repeater -> {
       // Convert (?~...) to (?:(?:(?!...)\p{Any})*)
       let #(transformed_body, new_state) =
-        transform_alternatives(node.body, state, 0)
+        transform_alternatives(node.body, state, 0, False)
 
       // Create the inner lookahead: (?!...)
       let inner_lookahead =
@@ -435,39 +672,48 @@ fn transform_assertion(
               // Alt2: (?<![word])(?=[word]) - at start of word
               let alt1 =
                 AlternativeNode(body: [
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookbehind,
-                    negate: False,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookahead,
-                    negate: True,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookbehind,
+                      negate: False,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookahead,
+                      negate: True,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
                 ])
               let alt2 =
                 AlternativeNode(body: [
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookbehind,
-                    negate: True,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookahead,
-                    negate: False,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookbehind,
+                      negate: True,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookahead,
+                      negate: False,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
                 ])
-              let group = GroupNode(atomic: None, flags: None, body: [alt1, alt2])
+              let group =
+                GroupNode(atomic: None, flags: None, body: [alt1, alt2])
               #([GroupE(group)], state)
             }
             True -> {
@@ -476,39 +722,48 @@ fn transform_assertion(
               // Alt2: (?<![word])(?![word]) - outside a word
               let alt1 =
                 AlternativeNode(body: [
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookbehind,
-                    negate: False,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookahead,
-                    negate: False,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookbehind,
+                      negate: False,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookahead,
+                      negate: False,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
                 ])
               let alt2 =
                 AlternativeNode(body: [
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookbehind,
-                    negate: True,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
-                  LookaroundAssertionE(LookaroundAssertionNode(
-                    kind: Lookahead,
-                    negate: True,
-                    body: [
-                      AlternativeNode(body: [CharacterClassE(word_class)]),
-                    ],
-                  )),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookbehind,
+                      negate: True,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
+                  LookaroundAssertionE(
+                    LookaroundAssertionNode(
+                      kind: Lookahead,
+                      negate: True,
+                      body: [
+                        AlternativeNode(body: [CharacterClassE(word_class)]),
+                      ],
+                    ),
+                  ),
                 ])
-              let group = GroupNode(atomic: None, flags: None, body: [alt1, alt2])
+              let group =
+                GroupNode(atomic: None, flags: None, body: [alt1, alt2])
               #([GroupE(group)], state)
             }
           }
@@ -547,11 +802,12 @@ fn transform_capturing_group(
   node: CapturingGroupNode,
   state: FirstPassState,
 ) -> #(List(AlternativeElement), FirstPassState) {
-  // Register in subroutine ref map
+  // Register in subroutine ref map with current flag context
+  let entry = types.SubroutineRefEntry(group: node, flags: state.current_flags)
   let new_map =
-    dict.insert(state.subroutine_ref_map, NumberedKey(node.number), node)
+    dict.insert(state.subroutine_ref_map, NumberedKey(node.number), entry)
   let new_map2 = case node.name {
-    Some(name) -> dict.insert(new_map, NamedKey(name), node)
+    Some(name) -> dict.insert(new_map, NamedKey(name), entry)
     None -> new_map
   }
 
@@ -577,7 +833,8 @@ fn transform_capturing_group(
     )
 
   // Transform body
-  let #(new_body, final_state) = transform_alternatives(node.body, state2, 0)
+  let #(new_body, final_state) =
+    transform_alternatives(node.body, state2, 0, False)
 
   let new_node = CapturingGroupNode(..node, name: new_name, body: new_body)
 
@@ -759,11 +1016,9 @@ fn transform_character_set(
           // \N -> [^\n]
           let newline_char = CharacterNode(value: 10)
           let cc =
-            CharacterClassNode(
-              kind: ast_types.Union,
-              negate: True,
-              body: [CharacterCCE(newline_char)],
-            )
+            CharacterClassNode(kind: ast_types.Union, negate: True, body: [
+              CharacterCCE(newline_char),
+            ])
           #([CharacterClassE(cc)], state)
         }
         False -> {
@@ -798,18 +1053,14 @@ fn transform_character_set(
 
           // Alternative 2: [\n\v\f\x85\u2028\u2029]
           let other_newlines =
-            CharacterClassNode(
-              kind: ast_types.Union,
-              negate: False,
-              body: [
-                CharacterCCE(lf_node),
-                CharacterCCE(vt_node),
-                CharacterCCE(ff_node),
-                CharacterCCE(nel_node),
-                CharacterCCE(ls_node),
-                CharacterCCE(ps_node),
-              ],
-            )
+            CharacterClassNode(kind: ast_types.Union, negate: False, body: [
+              CharacterCCE(lf_node),
+              CharacterCCE(vt_node),
+              CharacterCCE(ff_node),
+              CharacterCCE(nel_node),
+              CharacterCCE(ls_node),
+              CharacterCCE(ps_node),
+            ])
 
           let alt2 = AlternativeNode(body: [CharacterClassE(other_newlines)])
 
@@ -905,90 +1156,69 @@ fn convert_posix_to_ast(
     // Multi-property cases - create character class
     "alnum" -> {
       // [\p{Alpha}\p{Nd}]
-      let cc = CharacterClassNode(
-        kind: Union,
-        negate: negate,
-        body: [
+      let cc =
+        CharacterClassNode(kind: Union, negate: negate, body: [
           CharacterSetCCE(make_property_node("Alpha", False)),
           CharacterSetCCE(make_property_node("Nd", False)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
     "blank" -> {
       // [\p{Zs}\t]
-      let cc = CharacterClassNode(
-        kind: Union,
-        negate: negate,
-        body: [
+      let cc =
+        CharacterClassNode(kind: Union, negate: negate, body: [
           CharacterSetCCE(make_property_node("Zs", False)),
           CharacterCCE(CharacterNode(value: 9)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
     "graph" -> {
       // [\P{space}&&\P{Cc}&&\P{Cn}&&\P{Cs}] - complex intersection
       // Simplified: use intersection if supported, otherwise approximate
-      let cc = CharacterClassNode(
-        kind: Intersection,
-        negate: negate,
-        body: [
+      let cc =
+        CharacterClassNode(kind: Intersection, negate: negate, body: [
           CharacterSetCCE(make_property_node("space", True)),
           CharacterSetCCE(make_property_node("Cc", True)),
           CharacterSetCCE(make_property_node("Cn", True)),
           CharacterSetCCE(make_property_node("Cs", True)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
     "print" -> {
       // [[\P{space}&&\P{Cc}&&\P{Cn}&&\P{Cs}]\p{Zs}] - union of graph + Zs
       // Simplified: union with graph intersection and Zs
-      let graph_cc = CharacterClassNode(
-        kind: Intersection,
-        negate: False,
-        body: [
+      let graph_cc =
+        CharacterClassNode(kind: Intersection, negate: False, body: [
           CharacterSetCCE(make_property_node("space", True)),
           CharacterSetCCE(make_property_node("Cc", True)),
           CharacterSetCCE(make_property_node("Cn", True)),
           CharacterSetCCE(make_property_node("Cs", True)),
-        ],
-      )
-      let cc = CharacterClassNode(
-        kind: Union,
-        negate: negate,
-        body: [
+        ])
+      let cc =
+        CharacterClassNode(kind: Union, negate: negate, body: [
           CharacterClassCCE(graph_cc),
           CharacterSetCCE(make_property_node("Zs", False)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
     "punct" -> {
       // [\p{P}\p{S}]
-      let cc = CharacterClassNode(
-        kind: Union,
-        negate: negate,
-        body: [
+      let cc =
+        CharacterClassNode(kind: Union, negate: negate, body: [
           CharacterSetCCE(make_property_node("P", False)),
           CharacterSetCCE(make_property_node("S", False)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
     "word" -> {
       // [\p{Alpha}\p{M}\p{Nd}\p{Pc}]
-      let cc = CharacterClassNode(
-        kind: Union,
-        negate: negate,
-        body: [
+      let cc =
+        CharacterClassNode(kind: Union, negate: negate, body: [
           CharacterSetCCE(make_property_node("Alpha", False)),
           CharacterSetCCE(make_property_node("M", False)),
           CharacterSetCCE(make_property_node("Nd", False)),
           CharacterSetCCE(make_property_node("Pc", False)),
-        ],
-      )
+        ])
       #([CharacterClassE(cc)], state)
     }
 
@@ -1012,16 +1242,12 @@ fn make_property_node(prop_value: String, negate: Bool) -> CharacterSetNode {
 
 /// Helper to create the default word character class [\p{L}\p{M}\p{N}\p{Pc}]
 fn make_word_char_class() -> CharacterClassNode {
-  CharacterClassNode(
-    kind: Union,
-    negate: False,
-    body: [
-      CharacterSetCCE(make_property_node("L", False)),
-      CharacterSetCCE(make_property_node("M", False)),
-      CharacterSetCCE(make_property_node("N", False)),
-      CharacterSetCCE(make_property_node("Pc", False)),
-    ],
-  )
+  CharacterClassNode(kind: Union, negate: False, body: [
+    CharacterSetCCE(make_property_node("L", False)),
+    CharacterSetCCE(make_property_node("M", False)),
+    CharacterSetCCE(make_property_node("N", False)),
+    CharacterSetCCE(make_property_node("Pc", False)),
+  ])
 }
 
 /// Transform directive
@@ -1059,9 +1285,24 @@ fn transform_group(
     Some(flags) -> clean_group_flags(flags)
   }
 
-  let #(new_body, new_state) = transform_alternatives(node.body, state, 0)
+  // Update current_flags if this group modifies flags
+  let state_with_flags = case node.flags {
+    None -> state
+    Some(flags) -> {
+      let new_current_flags = get_new_current_flags(state.current_flags, flags)
+      FirstPassState(..state, current_flags: new_current_flags)
+    }
+  }
+
+  let #(new_body, new_state) =
+    transform_alternatives(node.body, state_with_flags, 0, False)
+
+  // Restore the original current_flags after processing children
+  let final_state =
+    FirstPassState(..new_state, current_flags: state.current_flags)
+
   let new_node = GroupNode(..node, flags: new_flags, body: new_body)
-  #([GroupE(new_node)], new_state)
+  #([GroupE(new_node)], final_state)
 }
 
 /// Clean up group flags (remove extended flag)
@@ -1115,7 +1356,8 @@ fn transform_lookaround_assertion(
     Lookahead -> state
   }
 
-  let #(new_body, final_state) = transform_alternatives(node.body, state2, 0)
+  let #(new_body, final_state) =
+    transform_alternatives(node.body, state2, 0, False)
   let new_node = LookaroundAssertionNode(..node, body: new_body)
   #([LookaroundAssertionE(new_node)], final_state)
 }
@@ -1252,7 +1494,11 @@ fn transform_subroutine(
         False -> {
           let #(js_name, new_map) =
             get_or_insert_group_name(name, state.js_group_name_map)
-          let new_node = SubroutineNode(ref: NamedSubroutineRef(js_name))
+          let new_node =
+            SubroutineNode(
+              ref: NamedSubroutineRef(js_name),
+              is_recursive: node.is_recursive,
+            )
           #(
             [SubroutineE(new_node)],
             FirstPassState(..state, js_group_name_map: new_map),

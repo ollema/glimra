@@ -5,8 +5,8 @@ import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
 import glimra/oniguruma_parser/parser/ast_types.{
-  type CapturingGroupNode, type FlagGroupModifiers, type FlagGroupSwitches,
-  FlagGroupModifiers, FlagGroupSwitches,
+  type CapturingGroupNode, type FlagGroupModifiers, FlagGroupModifiers,
+  FlagGroupSwitches,
 }
 
 // ============================================================================

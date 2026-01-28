@@ -1,12 +1,16 @@
 import glimra/languages
+import glimra/themes
 import startest.{describe, it}
 import test_helpers
-import glimra/themes
 
 pub fn r_tests() {
   describe("r expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(languages.R, "snippet", themes.CatppuccinMocha)
+      test_helpers.validate_snippet(
+        languages.R,
+        "snippet",
+        themes.CatppuccinMocha,
+      )
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.R, "snippet", themes.Dracula)
@@ -15,7 +19,11 @@ pub fn r_tests() {
       test_helpers.validate_snippet(languages.R, "snippet", themes.GithubDark)
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(languages.R, "snippet", themes.GruvboxDarkMedium)
+      test_helpers.validate_snippet(
+        languages.R,
+        "snippet",
+        themes.GruvboxDarkMedium,
+      )
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.R, "snippet", themes.Monokai)

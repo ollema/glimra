@@ -1,21 +1,33 @@
 import glimra/languages
+import glimra/themes
 import startest.{describe, it}
 import test_helpers
-import glimra/themes
 
 pub fn typst_tests() {
   describe("typst expected tokens snippet validation", [
     it("validates with catppuccin-mocha theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.CatppuccinMocha)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.CatppuccinMocha,
+      )
     }),
     it("validates with dracula theme", fn() {
       test_helpers.validate_snippet(languages.Typst, "snippet", themes.Dracula)
     }),
     it("validates with github-dark theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.GithubDark)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.GithubDark,
+      )
     }),
     it("validates with gruvbox-dark-medium theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.GruvboxDarkMedium)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.GruvboxDarkMedium,
+      )
     }),
     it("validates with monokai theme", fn() {
       test_helpers.validate_snippet(languages.Typst, "snippet", themes.Monokai)
@@ -27,13 +39,25 @@ pub fn typst_tests() {
       test_helpers.validate_snippet(languages.Typst, "snippet", themes.Nord)
     }),
     it("validates with one-dark-pro theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.OneDarkPro)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.OneDarkPro,
+      )
     }),
     it("validates with tokyo-night theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.TokyoNight)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.TokyoNight,
+      )
     }),
     it("validates with vitesse-dark theme", fn() {
-      test_helpers.validate_snippet(languages.Typst, "snippet", themes.VitesseDark)
+      test_helpers.validate_snippet(
+        languages.Typst,
+        "snippet",
+        themes.VitesseDark,
+      )
     }),
   ])
 }
