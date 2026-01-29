@@ -1570,10 +1570,11 @@ pub fn generated_to_string(gen: generate_types.Generated) -> String {
 }
 
 fn generated_to_json(gen: generate_types.Generated) -> json.Json {
-  // Build _captureTransfers as an array of [key, values] pairs
+  // Build _captureTransfers as an array of [key, values] pairs, sorted by key
   let capture_transfers =
     gen.capture_transfers
     |> dict.to_list
+    |> list.sort(fn(a, b) { int.compare(a.0, b.0) })
     |> list.map(fn(entry) {
       let #(key, values) = entry
       json.array([json.int(key), json.array(values, json.int)], fn(x) { x })

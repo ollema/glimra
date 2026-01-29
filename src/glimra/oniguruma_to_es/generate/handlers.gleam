@@ -26,7 +26,7 @@ import glimra/oniguruma_to_es/generate/types.{
   type CaptureData, type GenWorkItem, type GenerateState, CaptureData,
   CurrentFlags, JoinResults, PopFlags, ProcessCharClassElement, ProcessElement,
   ProcessQuantifierBody, PushFlags, PushResult, RecordCapture, SetInCharClass,
-  SetInQuantifierBody, SetLastNodeWasBackref, WrapResult,
+  SetInIntersection, SetInQuantifierBody, SetLastNodeWasBackref, WrapResult,
 }
 import glimra/oniguruma_to_es/generate/unicode_case
 import glimra/oniguruma_to_es/transform/types as transform_types
@@ -349,24 +349,51 @@ pub fn push_character_class(
             body
             |> list.map(fn(el) { ProcessCharClassElement(el) })
 
+          let is_intersection = node.kind == Intersection
+
           let items = case state.in_char_class {
             True -> {
-              // Already in char class, just wrap
-              el_items
-              |> list.append([
-                JoinResults(count, separator),
-                WrapResult("[" <> negate_prefix, "]"),
-              ])
+              // Already in char class
+              case is_intersection {
+                True ->
+                  // Entering intersection, set state
+                  [SetInIntersection(True)]
+                  |> list.append(el_items)
+                  |> list.append([
+                    JoinResults(count, separator),
+                    WrapResult("[" <> negate_prefix, "]"),
+                    SetInIntersection(False),
+                  ])
+                False ->
+                  // Just wrap
+                  el_items
+                  |> list.append([
+                    JoinResults(count, separator),
+                    WrapResult("[" <> negate_prefix, "]"),
+                  ])
+              }
             }
             False -> {
               // Entering char class, manage state
-              [SetInCharClass(True)]
-              |> list.append(el_items)
-              |> list.append([
-                JoinResults(count, separator),
-                WrapResult("[" <> negate_prefix, "]"),
-                SetInCharClass(False),
-              ])
+              case is_intersection {
+                True ->
+                  [SetInCharClass(True), SetInIntersection(True)]
+                  |> list.append(el_items)
+                  |> list.append([
+                    JoinResults(count, separator),
+                    WrapResult("[" <> negate_prefix, "]"),
+                    SetInIntersection(False),
+                    SetInCharClass(False),
+                  ])
+                False ->
+                  [SetInCharClass(True)]
+                  |> list.append(el_items)
+                  |> list.append([
+                    JoinResults(count, separator),
+                    WrapResult("[" <> negate_prefix, "]"),
+                    SetInCharClass(False),
+                  ])
+              }
             }
           }
           Ok(#(items, state))
@@ -381,10 +408,16 @@ fn should_unwrap_char_class(
   state: GenerateState,
 ) -> Bool {
   // Only unwrap non-negated union classes when already inside a char class
-  // and when verbose mode is off
-  case state.in_char_class, node.kind, node.negate, list.is_empty(node.body) {
-    True, Union, False, False -> !state.verbose
-    _, _, _, _ -> False
+  // and when verbose mode is off. Never unwrap when inside an intersection.
+  case
+    state.in_char_class,
+    state.in_intersection,
+    node.kind,
+    node.negate,
+    list.is_empty(node.body)
+  {
+    True, False, Union, False, False -> !state.verbose
+    _, _, _, _, _ -> False
   }
 }
 

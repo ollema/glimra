@@ -65,6 +65,7 @@ pub type GenerateState {
     capture_map: Dict(Int, CaptureData),
     current_flags: CurrentFlags,
     in_char_class: Bool,
+    in_intersection: Bool,
     in_quantifier_body: Bool,
     last_node_was_backref: Bool,
     origin_map: List(#(CapturingGroupNode, CapturingGroupNode)),
@@ -117,6 +118,8 @@ pub type GenWorkItem {
   PopFlags
   /// State management: set in_char_class state
   SetInCharClass(value: Bool)
+  /// State management: set in_intersection state
+  SetInIntersection(value: Bool)
   /// State management: set in_quantifier_body state
   SetInQuantifierBody(value: Bool)
   /// State management: set last_node_was_backref

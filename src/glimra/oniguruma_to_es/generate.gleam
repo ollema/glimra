@@ -6,6 +6,7 @@
 //// a `Generated` result containing the pattern, flags, and metadata.
 
 import gleam/dict
+import gleam/int
 import gleam/list
 import gleam/option
 import gleam/result
@@ -18,8 +19,8 @@ import glimra/oniguruma_to_es/generate/types.{
   AppliedFlags, CurrentFlags, ES2024, ES2025, GenLoopState, GenerateConfig,
   GenerateState, Generated, GeneratedOptions, JoinResults, PopFlags,
   ProcessCharClassElement, ProcessElement, ProcessQuantifierBody, PushFlags,
-  PushResult, RecordCapture, SetInCharClass, SetInQuantifierBody,
-  SetLastNodeWasBackref, WrapResult,
+  PushResult, RecordCapture, SetInCharClass, SetInIntersection,
+  SetInQuantifierBody, SetLastNodeWasBackref, WrapResult,
 }
 import glimra/oniguruma_to_es/transform/types as transform_types
 
@@ -76,6 +77,7 @@ fn do_generate(
         ignore_case: ast.flags.ignore_case,
       ),
       in_char_class: False,
+      in_intersection: False,
       in_quantifier_body: False,
       last_node_was_backref: False,
       origin_map: ast.origin_map,
@@ -271,6 +273,11 @@ fn process_work_item(
       Ok(GenLoopState(..loop_state, state: new_state))
     }
 
+    SetInIntersection(value) -> {
+      let new_state = GenerateState(..loop_state.state, in_intersection: value)
+      Ok(GenLoopState(..loop_state, state: new_state))
+    }
+
     SetInQuantifierBody(value) -> {
       let new_state =
         GenerateState(..loop_state.state, in_quantifier_body: value)
@@ -360,6 +367,7 @@ fn build_capture_metadata(
         False -> Error(Nil)
       }
     })
+    |> list.sort(int.compare)
 
   let capture_transfers =
     entries
@@ -375,6 +383,8 @@ fn build_capture_metadata(
       let existing = dict.get(acc, target) |> result.unwrap([])
       dict.insert(acc, target, [source, ..existing])
     })
+    // Sort each value list
+    |> dict.map_values(fn(_key, values) { list.sort(values, int.compare) })
 
   #(capture_transfers, hidden_captures)
 }
