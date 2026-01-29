@@ -84,9 +84,10 @@ function regexPlusAstToJson(node) {
  */
 function parseAndTransform(pattern) {
   try {
-    // Use options that match how oniguruma-to-es calls the parser
+    // Use options that match how oniguruma-to-es/Shiki calls the parser
     const ast = parse(pattern, {
-      flags: '', // TODO: is it a fair assumption that no flags are used?
+      flags: '',
+      normalizeUnknownPropertyNames: true,
       rules: {
         captureGroup: true,
         singleline: true,
@@ -97,7 +98,7 @@ function parseAndTransform(pattern) {
 
     const regexPlusAst = transform(ast, {
       accuracy: 'default',
-      asciiWordBoundaries: false,
+      asciiWordBoundaries: true,
       avoidSubclass: false,
       bestEffortTarget: 'ES2025',
     })

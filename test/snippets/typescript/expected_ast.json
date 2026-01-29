@@ -80415,8 +80415,8 @@
                       },
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "upper",
+                        "kind": "property",
+                        "value": "Upper",
                         "negate": false
                       },
                       {
@@ -80626,8 +80626,8 @@
                               },
                               {
                                 "type": "CharacterSet",
-                                "kind": "posix",
-                                "value": "upper",
+                                "kind": "property",
+                                "value": "Upper",
                                 "negate": false
                               },
                               {
@@ -83815,8 +83815,8 @@
                             "body": [
                               {
                                 "type": "CharacterSet",
-                                "kind": "posix",
-                                "value": "upper",
+                                "kind": "property",
+                                "value": "Upper",
                                 "negate": false
                               },
                               {
@@ -259163,8 +259163,8 @@
                     "body": [
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "upper",
+                        "kind": "property",
+                        "value": "Upper",
                         "negate": false
                       },
                       {
@@ -259270,8 +259270,8 @@
                     "body": [
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "upper",
+                        "kind": "property",
+                        "value": "Upper",
                         "negate": false
                       },
                       {

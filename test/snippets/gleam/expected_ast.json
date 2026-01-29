@@ -906,8 +906,8 @@
                     "body": [
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "lower",
+                        "kind": "property",
+                        "value": "Lower",
                         "negate": false
                       },
                       {
@@ -969,8 +969,8 @@
                     "body": [
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "lower",
+                        "kind": "property",
+                        "value": "Lower",
                         "negate": false
                       },
                       {
@@ -1037,8 +1037,8 @@
                     "body": [
                       {
                         "type": "CharacterSet",
-                        "kind": "posix",
-                        "value": "lower",
+                        "kind": "property",
+                        "value": "Lower",
                         "negate": false
                       },
                       {
@@ -1771,8 +1771,8 @@
             "body": [
               {
                 "type": "CharacterSet",
-                "kind": "posix",
-                "value": "upper",
+                "kind": "property",
+                "value": "Upper",
                 "negate": false
               },
               {

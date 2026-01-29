@@ -16,7 +16,8 @@ import { fileURLToPath } from 'node:url'
 
 // Import from the installed oniguruma-parser package
 import { parse } from 'oniguruma-parser/parser'
-import { OnigUnicodePropertyMap } from 'oniguruma-parser/unicode'
+// Use JsUnicodePropertyMap to match what oniguruma-to-es/Shiki uses
+import { JsUnicodePropertyMap } from '../js_reference/oniguruma-to-es/src/unicode.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -71,15 +72,16 @@ function astToJson(node) {
  */
 function parsePattern(pattern) {
   try {
-    // Use options that match how oniguruma-to-es calls the parser
+    // Use options that match how oniguruma-to-es/Shiki calls the parser
     const ast = parse(pattern, {
-      flags: '', // TODO: is it a fair assumption that no flags are used?
+      flags: '',
+      normalizeUnknownPropertyNames: true,
       rules: {
         captureGroup: true,
         singleline: true,
       },
       skipBackrefValidation: true,
-      unicodePropertyMap: OnigUnicodePropertyMap,
+      unicodePropertyMap: JsUnicodePropertyMap,
     })
     return {
       success: true,
