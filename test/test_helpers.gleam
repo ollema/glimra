@@ -41,10 +41,11 @@ import glimra/oniguruma_parser/parser/ast_types.{
   SubroutineE, TextSegment, TextSegmentBoundary, Union, Word, WordBoundary,
   WordMode,
 }
+import glimra/oniguruma_parser/unicode
 import glimra/oniguruma_to_es/transform
 import glimra/oniguruma_to_es/transform/types.{
   type RegexPlusAst, type RegexPlusFlags, type Strategy, type TransformOptions,
-  ClipSearch,
+  ClipSearch, TransformConfig,
 }
 import glimra/themes.{type BundledTheme, theme_id}
 import glimra/types/token.{type ThemedToken, ThemedToken}
@@ -616,13 +617,18 @@ pub fn validate_expected_ast(lang: Language) -> Nil {
           Error(Nil)
         True -> {
           // Parse with Gleam parser using same options as JS generator
-          // (singleline=true, capture_group=true, skip_backref_validation=true)
+          // (singleline=true, capture_group=true, skip_backref_validation=true,
+          //  normalize_unknown_property_names=true, unicodePropertyMap=JsUnicodePropertyMap)
           let parse_opts =
             parser.ParseOptions(
               ..parser.default_options(),
               singleline: True,
               capture_group: True,
               skip_backref_validation: True,
+              normalize_unknown_property_names: True,
+              unicode_property_map: option.Some(
+                unicode.js_unicode_property_map(),
+              ),
             )
           case parser.parse(entry.pattern, parse_opts) {
             Error(err) ->
@@ -796,19 +802,30 @@ pub fn validate_expected_regex_plus_ast(lang: Language) -> Nil {
           Error(Nil)
         True -> {
           // Parse with Gleam parser using same options as JS generator
+          // (singleline=true, capture_group=true, skip_backref_validation=true,
+          //  normalize_unknown_property_names=true, unicodePropertyMap=JsUnicodePropertyMap)
           let parse_opts =
             parser.ParseOptions(
               ..parser.default_options(),
               singleline: True,
               capture_group: True,
               skip_backref_validation: True,
+              normalize_unknown_property_names: True,
+              unicode_property_map: option.Some(
+                unicode.js_unicode_property_map(),
+              ),
             )
           case parser.parse(entry.pattern, parse_opts) {
             Error(err) ->
               Ok("Pattern \"" <> entry.pattern <> "\" failed to parse: " <> err)
             Ok(ast) -> {
-              // Transform the AST
-              let config = transform.default_config()
+              // Transform the AST using same options as JS generator
+              // (asciiWordBoundaries=true, accuracy=default, etc.)
+              let config =
+                TransformConfig(
+                  ..transform.default_config(),
+                  ascii_word_boundaries: True,
+                )
               case transform.transform(ast, config) {
                 Error(err) ->
                   Ok(
