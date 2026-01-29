@@ -93,3 +93,11 @@ pub fn javascript_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn javascript_generated_tests() {
+  describe("javascript expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Javascript)
+    }),
+  ])
+}

@@ -42,6 +42,8 @@ import glimra/oniguruma_parser/parser/ast_types.{
   WordMode,
 }
 import glimra/oniguruma_parser/unicode
+import glimra/oniguruma_to_es/generate
+import glimra/oniguruma_to_es/generate/types as generate_types
 import glimra/oniguruma_to_es/transform
 import glimra/oniguruma_to_es/transform/types.{
   type RegexPlusAst, type RegexPlusFlags, type Strategy, type TransformOptions,
@@ -1349,4 +1351,259 @@ fn strategy_to_json(strategy: option.Option(Strategy)) -> json.Json {
     option.None -> json.null()
     option.Some(ClipSearch) -> json.string("clip_search")
   }
+}
+
+// ============================================
+// Generated Validation (for generate testing)
+// ============================================
+
+/// Type for expected Generated pattern entry
+pub type ExpectedGeneratedPattern {
+  ExpectedGeneratedPattern(
+    pattern: String,
+    success: Bool,
+    generated_json: String,
+  )
+}
+
+/// Type for expected Generated file
+pub type ExpectedGeneratedFile {
+  ExpectedGeneratedFile(
+    language: String,
+    total: Int,
+    successful: Int,
+    failed: Int,
+    patterns: List(ExpectedGeneratedPattern),
+  )
+}
+
+/// Read expected Generated from JSON file
+pub fn read_expected_generated(
+  lang: Language,
+) -> Result(ExpectedGeneratedFile, String) {
+  let lang_id = language_id(lang)
+  let path = "test/snippets/" <> lang_id <> "/expected_generated.json"
+
+  case simplifile.read(path) {
+    Error(_) -> Error("Failed to read expected Generated file: " <> path)
+    Ok(content) -> decode_expected_generated(content)
+  }
+}
+
+fn decode_expected_generated(
+  content: String,
+) -> Result(ExpectedGeneratedFile, String) {
+  // Decode just the metadata
+  let metadata_decoder =
+    decode.field("language", decode.string, fn(language) {
+      decode.field("total", decode.int, fn(total) {
+        decode.field("successful", decode.int, fn(successful) {
+          decode.field("failed", decode.int, fn(failed) {
+            decode.success(#(language, total, successful, failed))
+          })
+        })
+      })
+    })
+
+  // First decode metadata
+  case json.parse(content, metadata_decoder) {
+    Error(_) -> Error("Failed to decode expected Generated JSON metadata")
+    Ok(#(language, total, successful, failed)) -> {
+      // Now extract patterns
+      let patterns_decoder =
+        decode.field("patterns", decode.list(decode.dynamic), fn(patterns_dyn) {
+          decode.success(patterns_dyn)
+        })
+
+      case json.parse(content, patterns_decoder) {
+        Error(_) -> Error("Failed to decode patterns array")
+        Ok(patterns_dyn) -> {
+          let patterns =
+            patterns_dyn
+            |> list.filter_map(fn(p) { decode_generated_pattern_entry(p) })
+          Ok(ExpectedGeneratedFile(
+            language: language,
+            total: total,
+            successful: successful,
+            failed: failed,
+            patterns: patterns,
+          ))
+        }
+      }
+    }
+  }
+}
+
+fn decode_generated_pattern_entry(
+  dyn: decode.Dynamic,
+) -> Result(ExpectedGeneratedPattern, Nil) {
+  let pattern_decoder =
+    decode.field("pattern", decode.string, fn(pattern) {
+      decode.field("success", decode.bool, fn(success) {
+        decode.success(#(pattern, success))
+      })
+    })
+
+  case decode.run(dyn, pattern_decoder) {
+    Error(_) -> Error(Nil)
+    Ok(#(pattern, success)) -> {
+      // Now get the generated field as raw JSON
+      let gen_decoder =
+        decode.field("generated", decode.dynamic, fn(gen_dyn) {
+          decode.success(gen_dyn)
+        })
+
+      let generated_json = case decode.run(dyn, gen_decoder) {
+        Ok(gen_dyn) -> stringify_dynamic(gen_dyn)
+        Error(_) -> ""
+      }
+
+      Ok(ExpectedGeneratedPattern(
+        pattern: pattern,
+        success: success,
+        generated_json: generated_json,
+      ))
+    }
+  }
+}
+
+/// Validate expected Generated for a language by parsing, transforming, generating, and comparing
+pub fn validate_expected_generated(lang: Language) -> Nil {
+  let expected =
+    read_expected_generated(lang)
+    |> expect.to_be_ok()
+
+  let errors =
+    expected.patterns
+    |> list.filter_map(fn(entry) {
+      case entry.success {
+        False ->
+          // Skip patterns that failed in JS
+          Error(Nil)
+        True -> {
+          // Parse with Gleam parser using same options as JS generator
+          let parse_opts =
+            parser.ParseOptions(
+              ..parser.default_options(),
+              singleline: True,
+              capture_group: True,
+              skip_backref_validation: True,
+              normalize_unknown_property_names: True,
+              unicode_property_map: option.Some(
+                unicode.js_unicode_property_map(),
+              ),
+            )
+          case parser.parse(entry.pattern, parse_opts) {
+            Error(err) ->
+              Ok("Pattern \"" <> entry.pattern <> "\" failed to parse: " <> err)
+            Ok(ast) -> {
+              // Transform the AST
+              let config =
+                TransformConfig(
+                  ..transform.default_config(),
+                  ascii_word_boundaries: True,
+                )
+              case transform.transform(ast, config) {
+                Error(err) ->
+                  Ok(
+                    "Pattern \""
+                    <> entry.pattern
+                    <> "\" failed to transform: "
+                    <> err,
+                  )
+                Ok(regex_plus_ast) -> {
+                  // Generate the final output
+                  case
+                    generate.generate(regex_plus_ast, generate.default_config())
+                  {
+                    Error(err) ->
+                      Ok(
+                        "Pattern \""
+                        <> entry.pattern
+                        <> "\" failed to generate: "
+                        <> err,
+                      )
+                    Ok(generated) -> {
+                      // Convert to JSON and compare semantically
+                      let gleam_json = generated_to_string(generated)
+                      case
+                        compare_json_strings(gleam_json, entry.generated_json)
+                      {
+                        True -> Error(Nil)
+                        False -> {
+                          let diff = json_diff(entry.generated_json, gleam_json)
+                          Ok(
+                            "Pattern \""
+                            <> string.slice(entry.pattern, 0, 80)
+                            <> "...\" mismatch:\nDiff: "
+                            <> diff,
+                          )
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+  case errors {
+    [] -> Nil
+    first_errors -> {
+      // Show first few errors
+      let error_msg =
+        first_errors
+        |> list.take(5)
+        |> string.join("\n\n")
+      error_msg |> expect.to_equal("")
+    }
+  }
+}
+
+/// Serialize a Generated to a JSON string
+pub fn generated_to_string(gen: generate_types.Generated) -> String {
+  generated_to_json(gen)
+  |> json.to_string
+}
+
+fn generated_to_json(gen: generate_types.Generated) -> json.Json {
+  // Build _captureTransfers as an array of [key, values] pairs
+  let capture_transfers =
+    gen.capture_transfers
+    |> dict.to_list
+    |> list.map(fn(entry) {
+      let #(key, values) = entry
+      json.array([json.int(key), json.array(values, json.int)], fn(x) { x })
+    })
+
+  json.object([
+    #("pattern", json.string(gen.pattern)),
+    #("flags", json.string(gen.flags)),
+    #("options", generated_options_to_json(gen.options)),
+    #("_captureTransfers", json.preprocessed_array(capture_transfers)),
+    #("_hiddenCaptures", json.array(gen.hidden_captures, json.int)),
+  ])
+}
+
+fn generated_options_to_json(
+  options: generate_types.GeneratedOptions,
+) -> json.Json {
+  let base = [
+    #(
+      "disable",
+      json.object([
+        #("x", json.bool(options.disable.x)),
+        #("n", json.bool(options.disable.n)),
+      ]),
+    ),
+    #("force", json.object([#("v", json.bool(options.force.v))])),
+  ]
+  let with_plugin = case options.unicode_sets_plugin {
+    option.Some(v) -> list.append(base, [#("unicodeSetsPlugin", json.bool(v))])
+    option.None -> base
+  }
+  json.object(with_plugin)
 }

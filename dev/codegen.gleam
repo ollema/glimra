@@ -225,6 +225,14 @@ pub fn " <> lang_id <> "_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn " <> lang_id <> "_generated_tests() {
+  describe(\"" <> lang_id <> " expected generated validation\", [
+    it(\"generates all patterns correctly\", fn() {
+      test_helpers.validate_expected_generated(languages." <> lang_ctor <> ")
+    }),
+  ])
+}
 "
 }
 
