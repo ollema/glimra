@@ -65,3 +65,11 @@ pub fn php_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn php_generated_tests() {
+  describe("php expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Php)
+    }),
+  ])
+}

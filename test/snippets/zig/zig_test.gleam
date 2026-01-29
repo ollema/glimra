@@ -65,3 +65,11 @@ pub fn zig_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn zig_generated_tests() {
+  describe("zig expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Zig)
+    }),
+  ])
+}

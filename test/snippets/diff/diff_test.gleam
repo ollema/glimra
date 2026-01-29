@@ -77,3 +77,11 @@ pub fn diff_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn diff_generated_tests() {
+  describe("diff expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Diff)
+    }),
+  ])
+}

@@ -77,3 +77,11 @@ pub fn gleam_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn gleam_generated_tests() {
+  describe("gleam expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Gleam)
+    }),
+  ])
+}

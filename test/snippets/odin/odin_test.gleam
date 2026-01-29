@@ -77,3 +77,11 @@ pub fn odin_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn odin_generated_tests() {
+  describe("odin expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Odin)
+    }),
+  ])
+}

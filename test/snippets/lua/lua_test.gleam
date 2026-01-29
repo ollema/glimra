@@ -65,3 +65,11 @@ pub fn lua_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn lua_generated_tests() {
+  describe("lua expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Lua)
+    }),
+  ])
+}

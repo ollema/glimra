@@ -61,3 +61,11 @@ pub fn c_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn c_generated_tests() {
+  describe("c expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.C)
+    }),
+  ])
+}

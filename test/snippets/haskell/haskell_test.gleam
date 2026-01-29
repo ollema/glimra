@@ -89,3 +89,11 @@ pub fn haskell_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn haskell_generated_tests() {
+  describe("haskell expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Haskell)
+    }),
+  ])
+}

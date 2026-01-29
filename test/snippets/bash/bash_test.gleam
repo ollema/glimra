@@ -77,3 +77,11 @@ pub fn bash_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn bash_generated_tests() {
+  describe("bash expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Bash)
+    }),
+  ])
+}

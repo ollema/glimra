@@ -65,3 +65,11 @@ pub fn nix_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn nix_generated_tests() {
+  describe("nix expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Nix)
+    }),
+  ])
+}

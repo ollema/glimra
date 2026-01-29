@@ -81,3 +81,11 @@ pub fn python_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn python_generated_tests() {
+  describe("python expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Python)
+    }),
+  ])
+}

@@ -81,3 +81,11 @@ pub fn svelte_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn svelte_generated_tests() {
+  describe("svelte expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Svelte)
+    }),
+  ])
+}

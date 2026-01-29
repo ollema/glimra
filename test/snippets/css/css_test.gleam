@@ -65,3 +65,11 @@ pub fn css_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn css_generated_tests() {
+  describe("css expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Css)
+    }),
+  ])
+}

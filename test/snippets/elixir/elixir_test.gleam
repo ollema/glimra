@@ -81,3 +81,11 @@ pub fn elixir_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn elixir_generated_tests() {
+  describe("elixir expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Elixir)
+    }),
+  ])
+}

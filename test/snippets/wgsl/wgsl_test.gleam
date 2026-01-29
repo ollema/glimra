@@ -77,3 +77,11 @@ pub fn wgsl_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn wgsl_generated_tests() {
+  describe("wgsl expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Wgsl)
+    }),
+  ])
+}

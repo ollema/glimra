@@ -65,3 +65,11 @@ pub fn elm_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn elm_generated_tests() {
+  describe("elm expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Elm)
+    }),
+  ])
+}

@@ -81,3 +81,11 @@ pub fn erlang_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn erlang_generated_tests() {
+  describe("erlang expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Erlang)
+    }),
+  ])
+}

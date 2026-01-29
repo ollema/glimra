@@ -93,3 +93,11 @@ pub fn typescript_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn typescript_generated_tests() {
+  describe("typescript expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Typescript)
+    }),
+  ])
+}

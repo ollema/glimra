@@ -77,3 +77,11 @@ pub fn toml_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn toml_generated_tests() {
+  describe("toml expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Toml)
+    }),
+  ])
+}

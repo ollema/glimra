@@ -77,3 +77,11 @@ pub fn ocaml_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn ocaml_generated_tests() {
+  describe("ocaml expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Ocaml)
+    }),
+  ])
+}

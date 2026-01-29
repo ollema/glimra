@@ -65,3 +65,11 @@ pub fn ini_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn ini_generated_tests() {
+  describe("ini expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Ini)
+    }),
+  ])
+}

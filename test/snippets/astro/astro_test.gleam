@@ -77,3 +77,11 @@ pub fn astro_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn astro_generated_tests() {
+  describe("astro expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Astro)
+    }),
+  ])
+}

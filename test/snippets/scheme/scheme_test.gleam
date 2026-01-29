@@ -81,3 +81,11 @@ pub fn scheme_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn scheme_generated_tests() {
+  describe("scheme expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Scheme)
+    }),
+  ])
+}

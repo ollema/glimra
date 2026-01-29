@@ -81,3 +81,11 @@ pub fn docker_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn docker_generated_tests() {
+  describe("docker expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Docker)
+    }),
+  ])
+}

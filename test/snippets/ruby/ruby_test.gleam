@@ -77,3 +77,11 @@ pub fn ruby_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn ruby_generated_tests() {
+  describe("ruby expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Ruby)
+    }),
+  ])
+}

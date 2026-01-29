@@ -77,3 +77,11 @@ pub fn typst_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn typst_generated_tests() {
+  describe("typst expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Typst)
+    }),
+  ])
+}

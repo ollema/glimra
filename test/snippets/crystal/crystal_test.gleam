@@ -89,3 +89,11 @@ pub fn crystal_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn crystal_generated_tests() {
+  describe("crystal expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Crystal)
+    }),
+  ])
+}

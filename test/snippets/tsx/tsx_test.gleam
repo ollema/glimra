@@ -65,3 +65,11 @@ pub fn tsx_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn tsx_generated_tests() {
+  describe("tsx expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Tsx)
+    }),
+  ])
+}

@@ -77,3 +77,11 @@ pub fn html_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn html_generated_tests() {
+  describe("html expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Html)
+    }),
+  ])
+}

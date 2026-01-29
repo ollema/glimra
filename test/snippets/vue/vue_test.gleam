@@ -65,3 +65,11 @@ pub fn vue_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn vue_generated_tests() {
+  describe("vue expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Vue)
+    }),
+  ])
+}

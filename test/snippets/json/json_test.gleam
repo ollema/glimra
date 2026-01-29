@@ -77,3 +77,11 @@ pub fn json_regex_plus_ast_tests() {
     }),
   ])
 }
+
+pub fn json_generated_tests() {
+  describe("json expected generated validation", [
+    it("generates all patterns correctly", fn() {
+      test_helpers.validate_expected_generated(languages.Json)
+    }),
+  ])
+}
