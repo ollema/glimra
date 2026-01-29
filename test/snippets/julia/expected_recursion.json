@@ -1,0 +1,863 @@
+{
+  "language": "julia",
+  "total": 95,
+  "successful": 95,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "!:_(?:struct|mutable\\s+struct|abstract\\s+type|primitive\\s+type)\\s+([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\s*(<:)\\s*[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(?:\\{.*})?)?",
+      "success": true,
+      "recursion": {
+        "pattern": "!:_(?:struct|mutable\\p{space}+struct|abstract\\p{space}+type|primitive\\p{space}+type)\\p{space}+([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\p{space}*(<:)\\p{space}*[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(?:\\{[^\\n]*\\})?)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\"",
+      "success": true,
+      "recursion": {
+        "pattern": "\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\"\"\"",
+      "success": true,
+      "recursion": {
+        "pattern": "\"\"\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\"(?!\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "\"(?!\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "#",
+      "success": true,
+      "recursion": {
+        "pattern": "#",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "#=",
+      "success": true,
+      "recursion": {
+        "pattern": "#=",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "recursion": {
+        "pattern": "'",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "'(?!')",
+      "success": true,
+      "recursion": {
+        "pattern": "'(?!')",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\"\"\") ?(->)?",
+      "success": true,
+      "recursion": {
+        "pattern": "(\"\"\") ?(->)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\"\"\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+      "success": true,
+      "recursion": {
+        "pattern": "(\"\"\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\"\"\")([imsx]{0,4})?",
+      "success": true,
+      "recursion": {
+        "pattern": "(\"\"\")([imsx]{0,4})?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\")([imsx]{0,4})?",
+      "success": true,
+      "recursion": {
+        "pattern": "(\")([imsx]{0,4})?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "((?<![!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])\\b(?:0[Xx]\\h(?:_?\\h)*|0o[0-7](?:_?[0-7])*|0b[01](?:_?[01])*|(?:[0-9](?:_?[0-9])*\\.?(?!\\.)[0-9_]*|\\.[0-9](?:_?[0-9])*)(?:[Eef][-+]?[0-9](?:_?[0-9])*)?(?:(?:im|Inf(?:16|32|64)?|NaN(?:16|32|64)?|π|pi|ℯ)\\b)?|[0-9]+|Inf(?:16|32|64)?\\b|NaN(?:16|32|64)?\\b|π\\b|pi\\b|ℯ\\b))('*)",
+      "success": true,
+      "recursion": {
+        "pattern": "((?<![\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])\\b(?:0[Xx]\\p{AHex}(?:_?\\p{AHex})*|0o[0-7](?:_?[0-7])*|0b[01](?:_?[01])*|(?:[0-9](?:_?[0-9])*\\.?(?!\\.)[0-9_]*|\\.[0-9](?:_?[0-9])*)(?:[Eef][\\-\\+]?[0-9](?:_?[0-9])*)?(?:(?:im|Inf(?:16|32|64)?|NaN(?:16|32|64)?|π|pi|ℯ)\\b)?|[0-9]+|Inf(?:16|32|64)?\\b|NaN(?:16|32|64)?\\b|π\\b|pi\\b|ℯ\\b))('*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<!\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)\"",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<!\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<!\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)\"\"\"",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<!\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)\"\"\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![,\\s])(\\s*\\n)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<![\\,\\p{space}])(\\p{space}*\\n)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![]!)}′⁺-ₜ∇[:word:]]):[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(?![!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])(?![\"`])",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<![\\]\\!\\)\\}′⁺-ₜ∇\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}]):[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(?![\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])(?![\"\\`])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![^\\\\]\\\\)(\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<![^\\\\]\\\\)(\")([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![^\\\\]\\\\)(`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<![^\\\\]\\\\)(`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<!`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?`",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<!`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?`",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<!`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?```",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<!`)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?```",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=[]!)}′⁺-ₜ∇[:word:]]):",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=[\\]\\!\\)\\}′⁺-ₜ∇\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}]):",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\S\\s+)\\b(as)\\b(?=\\s+\\S)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\P{space}\\p{space}+)\\b(as)\\b(?=\\p{space}+\\P{space})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\s):(?=\\s)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\p{space}):(?=\\p{space})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\s)\\?(?=\\s)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\p{space})\\?(?=\\p{space})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\s)in(?=\\s)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\p{space})in(?=\\p{space})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(@doc)\\s((?:doc)?\"\"\")|(doc\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(@doc)\\p{space}((?:doc)?\"\"\")|(doc\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(R)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(R)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([\\s\\w]*)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "([\\p{space}\\p{L}\\p{M}\\p{N}\\p{Pc}]*)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(('|(\\.'))*\\.?')",
+      "success": true,
+      "recursion": {
+        "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(('|(\\.'))*\\.?')",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*})*})*})?(?=\\([^#]*\\)(::\\S+)?(\\s*\\bwhere\\b\\s+.+?)?\\s*?=(?![=>]))",
+      "success": true,
+      "recursion": {
+        "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^\\{\\}]|\\{(?:[^\\{\\}]|\\{[^\\{\\}]*\\})*\\})*\\})?(?=\\([^\\#]*\\)(::\\P{space}+)?(\\p{space}*\\bwhere\\b\\p{space}+[^\\n]+?)?\\p{space}*?=(?![\\=\\>]))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*})*})*})?\\.?(\\()",
+      "success": true,
+      "recursion": {
+        "pattern": "([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^\\{\\}]|\\{(?:[^\\{\\}]|\\{[^\\{\\}]*\\})*\\})*\\})?\\.?(\\()",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\))((?:\\.??')*\\.?')",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\))((?:\\.??')*\\.?')",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\))(\\.?'*)",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\))(\\.?'*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\.?((?<!<)<=|(?<!>)>=|[<>≤≥]|===?|≡|!=|≠|!==|[∈-∍∝∥∦∷∺∻∽∾≁-≎≐-≓≖-≟≢≣≦-⊋⊏-⊒⊜⊢⊣⊩⊬⊮⊰-⊷⋍⋐⋑⋕-⋭⋲-⋿⟂⟈⟉⟒⦷⧀⧁⧡⧣⧤⧥⩦⩧⩪-⩳⩵-⫙⫪⫫⫷-⫺]|<:|>:))",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\.?((?<!<)<=|(?<!>)>=|[\\<\\>≤≥]|===?|≡|!=|≠|!==|[∈-∍∝∥∦∷∺∻∽∾≁-≎≐-≓≖-≟≢≣≦-⊋⊏-⊒⊜⊢⊣⊩⊬⊮⊰-⊷⋍⋐⋑⋕-⋭⋲-⋿⟂⟈⟉⟒⦷⧀⧁⧡⧣⧤⧥⩦⩧⩪-⩳⩵-⫙⫪⫫⫷-⫺]|<:|>:))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(])((?:\\.??')*\\.?')",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\])((?:\\.??')*\\.?')",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(])(\\.?'*)",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\])(\\.?'*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(```)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+      "success": true,
+      "recursion": {
+        "pattern": "(```)([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(i?cxx)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(i?cxx)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(js)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(js)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(py)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(py)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(raw)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(raw)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(raw)(\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(raw)(\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(sql)(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(sql)(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(})(\\.?'*)",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\})(\\.?'*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ",",
+      "success": true,
+      "recursion": {
+        "pattern": ",",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "::|(?<=\\s)isa(?=\\s)",
+      "success": true,
+      "recursion": {
+        "pattern": "::|(?<=\\p{space})isa(?=\\p{space})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ":=|\\+=|-=|\\*=|//=|/=|\\.//=|\\./=|\\.\\*=|\\\\=|\\.\\\\=|\\^=|\\.\\^=|%=|\\.%=|÷=|\\.÷=|\\|=|&=|\\.&=|⊻=|\\.⊻=|\\$=|<<=|>>=|>>>=|=(?!=)",
+      "success": true,
+      "recursion": {
+        "pattern": ":=|\\+=|-=|\\*=|//=|/=|\\.//=|\\./=|\\.\\*=|\\\\=|\\.\\\\=|\\^=|\\.\\^=|%=|\\.%=|÷=|\\.÷=|\\|=|&=|\\.&=|⊻=|\\.⊻=|\\$=|<<=|>>=|>>>=|=(?!=)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ";",
+      "success": true,
+      "recursion": {
+        "pattern": ";",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "<<|>>>?|\\.>>>?|\\.<<",
+      "success": true,
+      "recursion": {
+        "pattern": "<<|>>>?|\\.>>>?|\\.<<",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "=#",
+      "success": true,
+      "recursion": {
+        "pattern": "=#",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "@(\\.|[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*|[[\\p{S}\\p{P}]&&[^@\\s]]+)",
+      "success": true,
+      "recursion": {
+        "pattern": "@(\\.|[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*|[[\\p{S}\\p{P}]&&[^\\@\\p{space}]]+)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\$(?=.+)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\$(?=[^\\n]+)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\$(\\()",
+      "success": true,
+      "recursion": {
+        "pattern": "\\$(\\()",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\$[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}[^←-⇿\\P{So}][^$\\P{Sc}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}][^$\\P{Sc}]]*",
+      "success": true,
+      "recursion": {
+        "pattern": "\\$[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}[^←-⇿\\P{So}][^\\$\\P{Sc}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}][^\\$\\P{Sc}]]*",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\(",
+      "success": true,
+      "recursion": {
+        "pattern": "\\(",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)(('|(\\.'))*\\.?')?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\)(('|(\\.'))*\\.?')?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\.(?=[@_\\p{L}])|\\.\\.+|[…⁝⋮-⋱]",
+      "success": true,
+      "recursion": {
+        "pattern": "\\.(?=[\\@_\\p{L}])|\\.\\.+|[…⁝⋮-⋱]",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\.?(?:<-->|->|-->|<--|[←→↔↚-↞↠↢↣↤↦↩-↬↮↶↷↺-↽⇀⇁⇄⇆⇇⇉⇋-⇐⇒⇔⇚-⇝⇠⇢⇴⇶-⇿⟵⟶⟷⟹-⟿⤀-⤇⤌-⤑⤔-⤘⤝-⤠⥄-⥈⥊⥋⥎⥐⥒⥓⥖⥗⥚⥛⥞⥟⥢⥤⥦-⥭⥰⥷⥺⧴⬰-⭄⭇-⭌￩￫]|=>)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\.?(?:<-->|->|-->|<--|[←→↔↚-↞↠↢↣↤↦↩-↬↮↶↷↺-↽⇀⇁⇄⇆⇇⇉⇋-⇐⇒⇔⇚-⇝⇠⇢⇴⇶-⇿⟵⟶⟷⟹-⟿⤀-⤇⤌-⤑⤔-⤘⤝-⤠⥄-⥈⥊⥋⥎⥐⥒⥓⥖⥗⥚⥛⥞⥟⥢⥤⥦-⥭⥰⥷⥺⧴⬰-⭄⭇-⭌￩￫]|=>)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\.?(?:\\+\\+|--|[-*+|¦±−∓∔∨∪∸≏⊎⊔⊕⊖⊞⊟⊻⊽⋎⋓⟇⧺⧻⨈⨢-⨮⨹⨺⩁⩂⩅⩊⩌⩏⩐⩒⩔⩖⩗⩛⩝⩡⩢⩣]|//?|[%\\&\\\\^±·×÷·⅋↑↓⇵∓∗-∜∤∧∩≀⊍⊓⊗-⊛⊠⊡⊼⋄-⋇⋉-⋌⋏⋒⌿▷⟑⟕⟖⟗⟰⟱⤈-⤋⤒⤓⥉⥌⥍⥏⥑⥔⥕⥘⥙⥜⥝⥠⥡⥣⥥⥮⥯⦸⦼⦾⦿⧶⧷⨇⨝⨟⨰-⨸⨻⨼⨽⩀⩃⩄⩋⩍⩎⩑⩓⩕⩘⩚⩜⩞⩟⩠⫛￪￬])",
+      "success": true,
+      "recursion": {
+        "pattern": "\\.?(?:\\+\\+|--|[\\-\\*\\+\\|¦±−∓∔∨∪∸≏⊎⊔⊕⊖⊞⊟⊻⊽⋎⋓⟇⧺⧻⨈⨢-⨮⨹⨺⩁⩂⩅⩊⩌⩏⩐⩒⩔⩖⩗⩛⩝⩡⩢⩣]|//?|[\\%\\&\\\\\\^±·×÷·⅋↑↓⇵∓∗-∜∤∧∩≀⊍⊓⊗-⊛⊠⊡⊼⋄-⋇⋉-⋌⋏⋒⌿▷⟑⟕⟖⟗⟰⟱⤈-⤋⤒⤓⥉⥌⥍⥏⥑⥔⥕⥘⥙⥜⥝⥠⥡⥣⥥⥮⥯⦸⦼⦾⦿⧶⧷⨇⨝⨟⨰-⨸⨻⨼⨽⩀⩃⩄⩋⩍⩎⩑⩓⩕⩘⩚⩜⩞⩟⩠⫛￪￬])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\[",
+      "success": true,
+      "recursion": {
+        "pattern": "\\[",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\(\\\\|[0-3]\\d{0,2}|[4-7]\\d?|x\\h{0,2}|u\\h{0,4}|U\\h{0,8}|.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\\\(\\\\|[0-3]\\p{Nd}{0,2}|[4-7]\\p{Nd}?|x\\p{AHex}{0,2}|u\\p{AHex}{0,4}|U\\p{AHex}{0,8}|[^\\n])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:ARGS|C_NULL|DEPOT_PATH|ENDIAN_BOM|ENV|LOAD_PATH|PROGRAM_FILE|stdin|stdout|stderr|VERSION|devnull)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:ARGS|C_NULL|DEPOT_PATH|ENDIAN_BOM|ENV|LOAD_PATH|PROGRAM_FILE|stdin|stdout|stderr|VERSION|devnull)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:true|false|nothing|missing)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:true|false|nothing|missing)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![.:_])(?:function|mutable\\s+struct|struct|macro|quote|abstract\\s+type|primitive\\s+type|module|baremodule|where)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\.\\:_])(?:function|mutable\\p{space}+struct|struct|macro|quote|abstract\\p{space}+type|primitive\\p{space}+type|module|baremodule|where)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])(?:global|local|const)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])(?:global|local|const)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])(?:if|else|elseif|for|while|begin|let|do|try|catch|finally|return|break|continue)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])(?:if|else|elseif|for|while|begin|let|do|try|catch|finally|return|break|continue)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])end\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])end\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])export\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])export\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])import\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])import\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?<![:_])using\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?<![\\:_])using\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(for)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(for)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(function|macro)(?:\\s+(?:[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(\\.))?([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:alpha:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*})*})*})?|\\s*)(?=\\()",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(function|macro)(?:\\p{space}+(?:[_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*(\\.))?([_ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^←-⇿\\P{So}]][\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]]*)(\\{(?:[^\\{\\}]|\\{(?:[^\\{\\}]|\\{[^\\{\\}]*\\})*\\})*\\})?|\\p{space}*)(?=\\()",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bCHANGED\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bCHANGED\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bFIXME\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bFIXME\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bTODO\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bTODO\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bXXX\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bXXX\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bbegin\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bbegin\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bend\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bend\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bouter\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bouter\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\n",
+      "success": true,
+      "recursion": {
+        "pattern": "\\n",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*([:<>]:)\\s*((?:Union)?\\([^)]*\\)|[$_∇[:alpha:]][!.′⁺-ₜ[:word:]]*(?:\\{(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*})*})*}|\".+?(?<!\\\\)\")?)(?:\\.\\.\\.)?(\\.?'*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*([\\:\\<\\>]:)\\p{space}*((?:Union)?\\([^\\)]*\\)|[\\$_∇\\p{Alpha}][\\!\\.′⁺-ₜ\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}]*(?:\\{(?:[^\\{\\}]|\\{(?:[^\\{\\}]|\\{[^\\{\\}]*\\})*\\})*\\}|\"[^\\n]+?(?<!\\\\)\")?)(?:\\.\\.\\.)?(\\.?'*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\{",
+      "success": true,
+      "recursion": {
+        "pattern": "\\{",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\|>",
+      "success": true,
+      "recursion": {
+        "pattern": "\\|>",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\|\\||&&|(?<![!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡[:word:]\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\D][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])!",
+      "success": true,
+      "recursion": {
+        "pattern": "\\|\\||&&|(?<![\\!_′-‷⁗ⁱ-⁾₁-₎℘℮⅀-⅄∂∅∆∇∎-∑∞-∢∫-∳∿⊤⊥⊾-⋃◸-◿♯⟀⟁⟘⟙⦛-⦴⨀-⨆⨉-⨖⨛⨜゛゜𝛁𝛛𝛻𝜕𝜵𝝏𝝯𝞉𝞩𝟃𝟎-𝟡\\p{Alpha}\\p{M}\\p{Nd}\\p{Pc}\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}\\p{Sc}[^\\x01-¡\\P{Mn}][^\\x01-¡\\P{Mc}][^\\x01-¡\\P{Nd}][^\\x01-¡\\P{Pc}][^\\x01-¡\\P{Sk}][^\\x01-¡\\P{Me}][^\\x01-¡\\P{No}][^←-⇿\\P{So}]])!",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\||\\.\\||&|\\.&|[~¬]|\\.~|⊻|\\.⊻",
+      "success": true,
+      "recursion": {
+        "pattern": "\\||\\.\\||&|\\.&|[\\~¬]|\\.~|⊻|\\.⊻",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s?(doc)?(\"\"\")\\s?$",
+      "success": true,
+      "recursion": {
+        "pattern": "^\\p{space}?(doc)?(\"\"\")\\p{space}?(?=\\n?$)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^public\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "^public\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "r\"",
+      "success": true,
+      "recursion": {
+        "pattern": "r\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "r\"\"\"",
+      "success": true,
+      "recursion": {
+        "pattern": "r\"\"\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "var\"",
+      "success": true,
+      "recursion": {
+        "pattern": "var\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "var\"\"\"",
+      "success": true,
+      "recursion": {
+        "pattern": "var\"\"\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "∘",
+      "success": true,
+      "recursion": {
+        "pattern": "∘",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    }
+  ]
+}

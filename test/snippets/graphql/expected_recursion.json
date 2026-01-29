@@ -1,0 +1,566 @@
+{
+  "language": "graphql",
+  "total": 62,
+  "successful": 62,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"\"\"",
+      "success": true,
+      "recursion": {
+        "pattern": "\"\"\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "#(?=([^\"]*\"[^\"]*\")*[^\"]*$).*$",
+      "success": true,
+      "recursion": {
+        "pattern": "#(?=([^\"]*\"[^\"]*\")*[^\"]*(?=\\n?$))[^\\n]*(?=\\n?$)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\"\"\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(\"\"\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\")",
+      "success": true,
+      "recursion": {
+        "pattern": "(\")",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=})",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=.)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?=[^\\n])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=[\\n),])",
+      "success": true,
+      "recursion": {
+        "pattern": "(?=[\\n\\)\\,])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\s*(([A-Z_a-z][0-9A-Z_a-z]*)\\s*([(:])|(})))|\\s*(,)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?=\\p{space}*(([A-Z_a-z][0-9A-Z_a-z]*)\\p{space}*([\\(\\:])|(\\})))|\\p{space}*(,)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\s*((\\$?[A-Z_a-z][0-9A-Z_a-z]*)\\s*([(:])|([)}])))|\\s*(,)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?=\\p{space}*((\\$?[A-Z_a-z][0-9A-Z_a-z]*)\\p{space}*([\\(\\:])|([\\)\\}])))|\\p{space}*(,)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\s*(?:([A-Z_a-z][0-9A-Z_a-z]*)\\s*(:)|\\)))|\\s*(,)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?=\\p{space}*(?:([A-Z_a-z][0-9A-Z_a-z]*)\\p{space}*(:)|\\)))|\\p{space}*(,)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\s*)(#).*",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\p{space}*)(#)[^\\n]*",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(})",
+      "success": true,
+      "recursion": {
+        "pattern": "(\\})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\[\"'/\\\\bfnrt]",
+      "success": true,
+      "recursion": {
+        "pattern": "\\\\[\"'\\/\\\\bfnrt]",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\u(\\h{4})",
+      "success": true,
+      "recursion": {
+        "pattern": "\\\\u(\\p{AHex}{4})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s(=)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}(=)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(&)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(&)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*((@)\\s*([A-Z_a-z][0-9A-Z_a-z]*))",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*((@)\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(([A-Z_a-z][0-9A-Z_a-z]*))\\s*(:)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(([A-Z_a-z][0-9A-Z_a-z]*))\\p{space}*(:)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(,)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(,)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(-?(0|[1-9][0-9]*)(\\.[0-9]+)?(([Ee])([-+])?[0-9]+)?)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(-?(0|[1-9][0-9]*)(\\.[0-9]+)?(([Ee])([\\-\\+])?[0-9]+)?)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(:)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(:)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(=)\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(=)\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(?!=\\b(true|false|null)\\b)([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(?!=\\b(true|false|null)\\b)([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(?=\\{)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(?=\\{)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*([A-Z_a-z][0-9A-Z_a-z]*)(?:\\s*(!))?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)(?:\\p{space}*(!))?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*([A-Z_a-z][0-9A-Z_a-z]*)(?=\\s*\\(|:)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)(?=\\p{space}*\\(|:)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*([A-Z_a-z][0-9A-Z_a-z]*)\\s*(:)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)\\p{space}*(:)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\$?[A-Z_a-z][0-9A-Z_a-z]*)(?=\\s*\\(|:)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\$?[A-Z_a-z][0-9A-Z_a-z]*)(?=\\p{space}*\\(|:)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\$[A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\$[A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\$\\{)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\$\\{)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\()",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\()",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\))",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\.\\.\\.)\\s*(?!\\bon\\b)([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\.\\.\\.)\\p{space}*(?!\\bon\\b)([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\.\\.\\.)\\s*(?:\\b(on)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*))?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\.\\.\\.)\\p{space}*(?:\\b(on)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*))?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\[)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\[)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\{)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\{)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\|)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\|)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\|)\\s*([A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\|)\\p{space}*([A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(\\|)\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\|)\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(])",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\])",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(])(?:\\s*(!))?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\])(?:\\p{space}*(!))?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*(})",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*(\\})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*+((\"))",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*+((\"))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*+(?:((\"))|(\\n))",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*+(?:((\"))|(\\n))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*+(\\[)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*+(\\[)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*+(\\{)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*+(\\{)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*+\\b(enum)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*+\\b(enum)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(?:(extends?)?\\b\\s*\\b(type)|(interface)|(input))\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(?:(extends?)?\\b\\p{space}*\\b(type)|(interface)|(input))\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(Int|Float|String|Boolean|ID)\\b(?:\\s*(!))?",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(Int|Float|String|Boolean|ID)\\b(?:\\p{space}*(!))?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(directive)\\b\\s*(@[A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(directive)\\b\\p{space}*(@[A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(fragment)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)?\\s*\\b(on)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(fragment)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)?\\p{space}*\\b(on)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(implements)\\b\\s*",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(implements)\\b\\p{space}*",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(null)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(null)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(on)\\b\\s*([A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(on)\\b\\p{space}*([A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(query|mutation)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(query|mutation)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(scalar)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(scalar)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(schema)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(schema)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(true|false)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(true|false)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\b(union)\\b\\s*([A-Z_a-z][0-9A-Z_a-z]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\b(union)\\b\\p{space}*([A-Z_a-z][0-9A-Z_a-z]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s*\\n",
+      "success": true,
+      "recursion": {
+        "pattern": "\\p{space}*\\n",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    }
+  ]
+}

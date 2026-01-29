@@ -1,0 +1,710 @@
+{
+  "language": "wasm",
+  "total": 78,
+  "successful": 78,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "recursion": {
+        "pattern": "\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(;;).*$",
+      "success": true,
+      "recursion": {
+        "pattern": "(;;)[^\\n]*(?=\\n?$)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()(?:module|import|export|memory|data|table|elem|start|func|type|param|result|global|local)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\()(?:module|import|export|memory|data|table|elem|start|func|type|param|result|global|local)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()\\s*(mut)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\()\\p{space}*(mut)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()event\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\()event\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(data)\\s+(passive)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\(data)\\p{space}+(passive)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(func|\\(start|call|return_call|ref\\.func)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\(func|\\(start|call|return_call|ref\\.func)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(type)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\(type)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\s)\\$[!#-'*+\\--:<-Z\\\\^-z|~]*",
+      "success": true,
+      "recursion": {
+        "pattern": "(?<=\\p{space})\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ";\\)",
+      "success": true,
+      "recursion": {
+        "pattern": ";\\)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b(?:0x\\h\\h*|\\d\\d*)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "[\\-\\+]?\\b(?:0x\\p{AHex}\\p{AHex}*|\\p{Nd}\\p{Nd}*)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b0x(\\h*\\.\\h+|\\h+\\.?)[Pp][-+]?[0-9]+\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "[\\-\\+]?\\b0x(\\p{AHex}*\\.\\p{AHex}+|\\p{AHex}+\\.?)[Pp][\\-\\+]?[0-9]+\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b[0-9][0-9]*(?:\\.[0-9][0-9]*)?(?:[Ee][-+]?[0-9]+)?\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "[\\-\\+]?\\b[0-9][0-9]*(?:\\.[0-9][0-9]*)?(?:[Ee][\\-\\+]?[0-9]+)?\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\binf\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "[\\-\\+]?\\binf\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\bnan:0x\\h\\h*\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "[\\-\\+]?\\bnan:0x\\p{AHex}\\p{AHex}*\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[^()\\s]+",
+      "success": true,
+      "recursion": {
+        "pattern": "[^\\(\\)\\p{space}]+",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\$[!#-'*+\\--:<-Z\\\\^-z|~]*\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\(;",
+      "success": true,
+      "recursion": {
+        "pattern": "\\(;",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\([\"'\\\\nt]|\\h{2})",
+      "success": true,
+      "recursion": {
+        "pattern": "\\\\([\"'\\\\nt]|\\p{AHex}{2})",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:drop|select)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:drop|select)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:extern|func|null)ref\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:extern|func|null)ref\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:extern|func|null)ref\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:extern|func|null)ref\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:i32|i64|f32|f64)\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:i32|i64|f32|f64)\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:i8|i16|ref|funcref|externref|anyref|eqref|i31ref|nullfuncref|nullexternref|structref|arrayref|nullref)\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:i8|i16|ref|funcref|externref|anyref|eqref|i31ref|nullfuncref|nullexternref|structref|arrayref|nullref)\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:struct|array|sub|final|rec|field|mut)\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:struct|array|sub|final|rec|field|mut)\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:try|catch|throw|rethrow|br_on_exn)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:try|catch|throw|rethrow|br_on_exn)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:type|func|extern|any|eq|nofunc|noextern|struct|array|none)\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:type|func|extern|any|eq|nofunc|noextern|struct|array|none)\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:unreachable|nop|block|loop|if|then|else|end|br|br_if|br_table|return|call|call_indirect)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(?:unreachable|nop|block|loop|if|then|else|end|br|br_if|br_table|return|call|call_indirect)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(array)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set|len|new_canon_fixed|new_canon_data|new_canon_elem)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(array)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set|len|new_canon_fixed|new_canon_data|new_canon_elem)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(atomic)\\.(?:notify|fence)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(atomic)\\.(?:notify|fence)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(extern)\\.(?:in|ex)ternalize\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(extern)\\.(?:in|ex)ternalize\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f(?:32|64))\\.(?:load|store)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f(?:32|64))\\.(?:load|store)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f(?:32|64))\\.(const|eq|ne|lt|gt|le|ge|abs|neg|ceil|floor|trunc|nearest|sqrt|add|sub|mul|div|min|max|copysign)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f(?:32|64))\\.(const|eq|ne|lt|gt|le|ge|abs|neg|ceil|floor|trunc|nearest|sqrt|add|sub|mul|div|min|max|copysign)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f32)\\.(convert_i(32|64)_[su]|demote_f64|reinterpret_i32)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f32)\\.(convert_i(32|64)_[su]|demote_f64|reinterpret_i32)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt|convert_i32x4_[su])\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt|convert_i32x4_[su])\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f64)\\.(convert_i(32|64)_[su]|promote_f32|reinterpret_i64)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f64)\\.(convert_i(32|64)_[su]|promote_f32|reinterpret_i64)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(f64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(global)\\.[gs]et\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(global)\\.[gs]et\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i(?:32|64))\\.(const|eqz?|ne|lt_[su]|gt_[su]|le_[su]|ge_[su]|clz|ctz|popcnt|add|sub|mul|div_[su]|rem_[su]|and|or|xor|shl|shr_[su]|rotl|rotr)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i(?:32|64))\\.(const|eqz?|ne|lt_[su]|gt_[su]|le_[su]|ge_[su]|clz|ctz|popcnt|add|sub|mul|div_[su]|rem_[su]|and|or|xor|shl|shr_[su]|rotl|rotr)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i(?:32|64))\\.trunc_sat_f(?:32|64)_[su]\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i(?:32|64))\\.trunc_sat_f(?:32|64)_[su]\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i16x8)(?:\\s+0x\\h{1,4}){8}\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i16x8)(?:\\p{space}+0x\\p{AHex}{1,4}){8}\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i16x8)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|load8x8_[su]|narrow_i32x4_[su]|widen_(low|high)_i8x16_[su])\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i16x8)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|load8x8_[su]|narrow_i32x4_[su]|widen_(low|high)_i8x16_[su])\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i31)\\.(?:new|get_s|get_u)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i31)\\.(?:new|get_s|get_u)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(?:load|load(?:8|16)(?:_[su])?|store(?:8|16)?)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32)\\.(?:load|load(?:8|16)(?:_[su])?|store(?:8|16)?)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(atomic)\\.(?:load(?:8_u|16_u)?|store(?:8|16)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32)\\.(atomic)\\.(?:load(?:8_u|16_u)?|store(?:8|16)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(wrap_i64|trunc_(f(?:32|64))_[su]|reinterpret_f32)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32)\\.(wrap_i64|trunc_(f(?:32|64))_[su]|reinterpret_f32)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.extend(?:8|16)_s\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32)\\.extend(?:8|16)_s\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32x4)(?:\\s+0x\\h{1,8}){4}\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32x4)(?:\\p{space}+0x\\p{AHex}{1,8}){4}\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane|load16x4_[su]|trunc_sat_f32x4_[su]|widen_(low|high)_i16x8_[su])\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane|load16x4_[su]|trunc_sat_f32x4_[su]|widen_(low|high)_i16x8_[su])\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32|i64|f32|f64|externref|funcref|nullref|exnref)\\.p(?:ush|op)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i32|i64|f32|f64|externref|funcref|nullref|exnref)\\.p(?:ush|op)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(?:load|load(?:8|16|32)(?:_[su])?|store(?:8|16|32)?)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64)\\.(?:load|load(?:8|16|32)(?:_[su])?|store(?:8|16|32)?)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(atomic)\\.(?:load(?:(?:8|16|32)_u)?|store(?:8|16|32)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16|32))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64)\\.(atomic)\\.(?:load(?:(?:8|16|32)_u)?|store(?:8|16|32)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16|32))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(extend_i32_[su]|trunc_f(32|64)_[su]|reinterpret_f64)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64)\\.(extend_i32_[su]|trunc_f(32|64)_[su]|reinterpret_f64)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.extend(?:8|16|32)_s\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64)\\.extend(?:8|16|32)_s\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64x2)(?:\\s+0x\\h{1,16}){2}\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64x2)(?:\\p{space}+0x\\p{AHex}{1,16}){2}\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|extract_lane|load32x2_[su])\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|extract_lane|load32x2_[su])\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i8x16)(?:\\s+0x\\h{1,2}){16}\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i8x16)(?:\\p{space}+0x\\p{AHex}{1,2}){16}\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i8x16)\\.(?:shuffle|swizzle|splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|narrow_i16x8_[su])\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(i8x16)\\.(?:shuffle|swizzle|splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|narrow_i16x8_[su])\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(local)\\.(?:get|set|tee)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(local)\\.(?:get|set|tee)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(memory)\\.(?:copy|fill|init|drop)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(memory)\\.(?:copy|fill|init|drop)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(memory)\\.(?:size|grow)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(memory)\\.(?:size|grow)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(offset|align)=\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(offset|align)=\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(ref)\\.(?:eq|test|cast)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(ref)\\.(?:eq|test|cast)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(ref)\\.(?:null|is_null|func|extern)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(ref)\\.(?:null|is_null|func|extern)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(struct)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(struct)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(table)\\.(?:get|size|grow|fill|init|copy)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(table)\\.(?:get|size|grow|fill|init|copy)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v128)\\.(?:const|and|or|xor|not|andnot|bitselect|load|store)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(v128)\\.(?:const|and|or|xor|not|andnot|bitselect|load|store)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v16x8)\\.load_splat\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(v16x8)\\.load_splat\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v32x4)\\.load_splat\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(v32x4)\\.load_splat\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v64x2)\\.load_splat\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(v64x2)\\.load_splat\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v8x16)\\.(?:load_splat|shuffle|swizzle)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\b(v8x16)\\.(?:load_splat|shuffle|swizzle)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bbr_on_(?:non_null|cast|cast_fail)\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bbr_on_(?:non_null|cast|cast_fail)\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bexnref\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bexnref\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\breturn_call(?:_indirect)?\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\breturn_call(?:_indirect)?\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bshared\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bshared\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bv128\\b(?!\\.)",
+      "success": true,
+      "recursion": {
+        "pattern": "\\bv128\\b(?!\\.)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    }
+  ]
+}

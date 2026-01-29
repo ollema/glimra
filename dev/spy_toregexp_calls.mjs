@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spy on toRegExp/parse/transform calls during highlighting
+// Spy on toRegExp/parse/transform/recursion calls during highlighting
 //
 // Usage: node dev/spy_toregexp_calls.mjs '<config-json>'
 
@@ -9,6 +9,13 @@ import sinon from 'sinon'
 import { createHighlighterCoreSync } from '@shikijs/core'
 import { JavaScriptScanner } from '@shikijs/engine-javascript'
 import { toRegExp } from 'oniguruma-to-es'
+import { recursion } from 'regex-recursion'
+
+// Import from oniguruma-parser and oniguruma-to-es source for manual pipeline
+import { parse } from 'oniguruma-parser/parser'
+import { transform } from '../js_reference/oniguruma-to-es/src/transform.js'
+import { generate } from '../js_reference/oniguruma-to-es/src/generate.js'
+import { JsUnicodePropertyMap } from '../js_reference/oniguruma-to-es/src/unicode.js'
 
 const PROJECT_ROOT = process.cwd()
 const PRIV_DIR = path.join(PROJECT_ROOT, 'priv')
@@ -18,6 +25,7 @@ const SNIPPETS_DIR = path.join(PROJECT_ROOT, 'test', 'snippets')
 
 const wrappers = {
   toRegExp: (pattern, options) => toRegExp(pattern, options),
+  recursion: (pattern, options) => recursion(pattern, options),
 }
 
 const SHIKI_DEFAULT_OPTIONS = {
@@ -78,6 +86,66 @@ function deriveGenerateOptions(opts) {
     rules: {
       recursionLimit: opts.rules?.recursionLimit ?? 20,
     },
+  }
+}
+
+/**
+ * Process a pattern through parse -> transform -> generate -> recursion
+ * and return recursion stats
+ */
+function analyzeRecursionForPattern(pattern) {
+  try {
+    const ast = parse(pattern, {
+      flags: '',
+      normalizeUnknownPropertyNames: true,
+      rules: {
+        captureGroup: true,
+        singleline: true,
+      },
+      skipBackrefValidation: true,
+      unicodePropertyMap: JsUnicodePropertyMap,
+    })
+
+    const regexPlusAst = transform(ast, {
+      accuracy: 'default',
+      asciiWordBoundaries: true,
+      avoidSubclass: false,
+      bestEffortTarget: 'ES2025',
+    })
+
+    const generated = generate(regexPlusAst, {
+      accuracy: 'default',
+      target: 'ES2025',
+      verbose: false,
+      rules: {
+        recursionLimit: 5,
+      },
+    })
+
+    // Track what recursion will receive
+    const recursionOptions = {
+      captureTransfers: generated._captureTransfers,
+      hiddenCaptures: generated._hiddenCaptures,
+      mode: 'external',
+    }
+
+    // Call recursion with the same parameters that oniguruma-to-es uses
+    const recursionResult = recursion(generated.pattern, recursionOptions)
+
+    return {
+      success: true,
+      mode: recursionOptions.mode,
+      captureTransfersSize: generated._captureTransfers.size,
+      hiddenCapturesLength: generated._hiddenCaptures.length,
+      inputPattern: generated.pattern,
+      outputPattern: recursionResult,
+    }
+  }
+  catch (err) {
+    return {
+      success: false,
+      error: err.message,
+    }
   }
 }
 
@@ -167,6 +235,68 @@ function main() {
   }
 
   const uniquePatterns = new Set(toRegExpSpy.getCalls().map(c => c.args[0]))
+
+  // Analyze recursion for all unique patterns
+  console.log('')
+  console.log('Analyzing recursion for unique patterns...')
+  const recursionStats = {
+    totalCalls: 0,
+    successful: 0,
+    failed: 0,
+    modeValues: {},
+    captureTransfersCounts: { empty: 0, nonEmpty: 0 },
+    hiddenCapturesCounts: { empty: 0, nonEmpty: 0 },
+    samplePatterns: [],
+    sampleErrors: [],
+  }
+
+  for (const pattern of uniquePatterns) {
+    const result = analyzeRecursionForPattern(pattern)
+    recursionStats.totalCalls++
+
+    if (result.success) {
+      recursionStats.successful++
+
+      // Track mode values
+      recursionStats.modeValues[result.mode] = (recursionStats.modeValues[result.mode] || 0) + 1
+
+      // Track captureTransfers counts
+      if (result.captureTransfersSize === 0) {
+        recursionStats.captureTransfersCounts.empty++
+      }
+      else {
+        recursionStats.captureTransfersCounts.nonEmpty++
+      }
+
+      // Track hiddenCaptures counts
+      if (result.hiddenCapturesLength === 0) {
+        recursionStats.hiddenCapturesCounts.empty++
+      }
+      else {
+        recursionStats.hiddenCapturesCounts.nonEmpty++
+      }
+
+      // Sample patterns (store first 5)
+      if (recursionStats.samplePatterns.length < 5) {
+        recursionStats.samplePatterns.push({
+          input: result.inputPattern,
+          output: result.outputPattern,
+          captureTransfersSize: result.captureTransfersSize,
+          hiddenCapturesLength: result.hiddenCapturesLength,
+        })
+      }
+    }
+    else {
+      recursionStats.failed++
+      if (recursionStats.sampleErrors.length < 5) {
+        recursionStats.sampleErrors.push({
+          pattern,
+          error: result.error,
+        })
+      }
+    }
+  }
+
   const analysis = {
     summary: {
       totalCalls: toRegExpSpy.callCount,
@@ -181,6 +311,7 @@ function main() {
       callCount: entry.count,
       samplePatterns: entry.samples,
     })),
+    recursion: recursionStats,
     errors,
   }
 
@@ -203,6 +334,14 @@ function main() {
       console.log(`    derived transform options: ${JSON.stringify(combo.derivedTransformOptions)}`)
     }
   }
+
+  console.log('')
+  console.log('=== Recursion Analysis ===')
+  console.log(`Total patterns analyzed: ${recursionStats.totalCalls}`)
+  console.log(`Successful: ${recursionStats.successful}, Failed: ${recursionStats.failed}`)
+  console.log(`Mode values: ${JSON.stringify(recursionStats.modeValues)}`)
+  console.log(`CaptureTransfers: empty=${recursionStats.captureTransfersCounts.empty}, nonEmpty=${recursionStats.captureTransfersCounts.nonEmpty}`)
+  console.log(`HiddenCaptures: empty=${recursionStats.hiddenCapturesCounts.empty}, nonEmpty=${recursionStats.hiddenCapturesCounts.nonEmpty}`)
 
   if (errors.length > 0) {
     console.log('')

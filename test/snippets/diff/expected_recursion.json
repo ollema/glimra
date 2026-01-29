@@ -1,0 +1,152 @@
+{
+  "language": "diff",
+  "total": 16,
+  "successful": 16,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "(^(\\+{3}) .+$\\n?| (-) .* (={4})$\\n?)",
+      "success": true,
+      "recursion": {
+        "pattern": "(^(\\+{3}) [^\\n]+(?=\\n?$)\\n?| (-) [^\\n]* (={4})(?=\\n?$)\\n?)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\n",
+      "success": true,
+      "recursion": {
+        "pattern": "\\n",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(!).*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^(!)[^\\n]*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(#)",
+      "success": true,
+      "recursion": {
+        "pattern": "^(#)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^((((-{3}) .+)|((\\*{3}) .+))$\\n?|(={4}) .+(?= - ))",
+      "success": true,
+      "recursion": {
+        "pattern": "^((((-{3}) [^\\n]+)|((\\*{3}) [^\\n]+))(?=\\n?$)\\n?|(={4}) [^\\n]+(?= - ))",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(((-{3}) .+ (-{4}))|((\\*{3}) .+ (\\*{4})))$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^(((-{3}) [^\\n]+ (-{4}))|((\\*{3}) [^\\n]+ (\\*{4})))(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(((<)( .*)?)|((-).*))$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^(((<)( [^\\n]*)?)|((-)[^\\n]*))(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(((>)( .*)?)|((\\+).*))$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^(((>)( [^\\n]*)?)|((\\+)[^\\n]*))(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^((\\*{15})|(={67})|(-{3}))$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^((\\*{15})|(={67})|(-{3}))(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(@@)\\s*(.+?)\\s*(@@)($\\n?)?",
+      "success": true,
+      "recursion": {
+        "pattern": "^(@@)\\p{space}*([^\\n]+?)\\p{space}*(@@)((?=\\n?$)\\n?)?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^Index(:) (.+)$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^Index(:) ([^\\n]+)(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^Only in .*: .*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^Only in [^\\n]*: [^\\n]*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\d+(,\\d+)*([acd])\\d+(,\\d+)*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^\\p{Nd}+(,\\p{Nd}+)*([acd])\\p{Nd}+(,\\p{Nd}+)*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^diff (-|\\S+\\s+\\S+).*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^diff (-|\\P{space}+\\p{space}+\\P{space}+)[^\\n]*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^diff --git a/.*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^diff --git a/[^\\n]*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^index [0-9a-f]{7,40}\\.\\.[0-9a-f]{7,40}.*$\\n?",
+      "success": true,
+      "recursion": {
+        "pattern": "^index [0-9a-f]{7,40}\\.\\.[0-9a-f]{7,40}[^\\n]*(?=\\n?$)\\n?",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    }
+  ]
+}

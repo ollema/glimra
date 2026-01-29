@@ -50,6 +50,11 @@ fn run_generate_expected_generated_ffi(
 @external(javascript, "./codegen_ffi.mjs", "run_spy_toregexp_calls")
 pub fn run_spy_toregexp_calls_ffi(config_json: String) -> Result(String, String)
 
+@external(javascript, "./codegen_ffi.mjs", "run_generate_expected_recursion")
+fn run_generate_expected_recursion_ffi(
+  config_json: String,
+) -> Result(String, String)
+
 pub fn main() {
   case argv.load().arguments {
     [source_path] -> run_all(source_path)
@@ -738,6 +743,30 @@ fn run_generate_expected_generated() {
 }
 
 // ============================================================================
+// Generate expected Recursion command (for recursion testing)
+// ============================================================================
+
+fn run_generate_expected_recursion() {
+  io.println("Generating expected recursion output for patterns...")
+  io.println("")
+
+  let config_json = build_config_json()
+
+  case run_generate_expected_recursion_ffi(config_json) {
+    Ok(output) -> {
+      io.println(output)
+    }
+    Error(error_msg) -> {
+      io.println("Error running generate_expected_recursion.mjs:")
+      io.println(error_msg)
+      io.println("")
+      io.println("Make sure the regex-recursion package is installed:")
+      io.println("  pnpm install")
+    }
+  }
+}
+
+// ============================================================================
 // All command
 // ============================================================================
 
@@ -777,6 +806,12 @@ fn run_all(source_path: String) {
   io.println("")
 
   run_generate_expected_generated()
+
+  io.println("")
+  io.println("========================================")
+  io.println("")
+
+  run_generate_expected_recursion()
 
   io.println("")
   io.println("========================================")

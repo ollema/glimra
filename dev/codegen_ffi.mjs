@@ -84,3 +84,17 @@ export function run_spy_toregexp_calls(configJson) {
     return new Error(message)
   }
 }
+
+export function run_generate_expected_recursion(configJson) {
+  try {
+    const output = execFileSync('node', ['dev/generate_expected_recursion.mjs', configJson], {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'inherit'],
+    })
+    return new Ok(output)
+  }
+  catch (error) {
+    const message = error.stdout || error.message
+    return new Error(message)
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "language": "docker",
+  "total": 7,
+  "successful": 7,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "recursion": {
+        "pattern": "\"",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "recursion": {
+        "pattern": "'",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\.",
+      "success": true,
+      "recursion": {
+        "pattern": "\\\\[^\\n]",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(\\s*)((#).*$\\n?)",
+      "success": true,
+      "recursion": {
+        "pattern": "^(\\p{space}*)((#)[^\\n]*(?=\\n?$)\\n?)",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\s",
+      "success": true,
+      "recursion": {
+        "pattern": "^\\p{space}*(?i:(ONBUILD)\\p{space}+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\p{space}",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(CMD|ENTRYPOINT))\\s",
+      "success": true,
+      "recursion": {
+        "pattern": "^\\p{space}*(?i:(ONBUILD)\\p{space}+)?(?i:(CMD|ENTRYPOINT))\\p{space}",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*\\b(?i:(FROM))\\b.*?\\b(?i:(AS))\\b",
+      "success": true,
+      "recursion": {
+        "pattern": "^\\p{space}*\\b(?i:(FROM))\\b[^\\n]*?\\b(?i:(AS))\\b",
+        "captureTransfers": [],
+        "hiddenCaptures": []
+      }
+    }
+  ]
+}

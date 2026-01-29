@@ -4,6 +4,7 @@
 		"@shikijs/engine-javascript": "^3.21.0",
 		"oniguruma-parser": "^0.12.1",
 		"oniguruma-to-es": "^4.3.4",
+		"regex-recursion": "^6.0.2",
 		"sinon": "^21.0.1"
 	}
 }
