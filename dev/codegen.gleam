@@ -42,6 +42,9 @@ fn run_generate_expected_regex_plus_ast_ffi(
   config_json: String,
 ) -> Result(String, String)
 
+@external(javascript, "./codegen_ffi.mjs", "run_spy_toregexp_calls")
+pub fn run_spy_toregexp_calls_ffi(config_json: String) -> Result(String, String)
+
 pub fn main() {
   case argv.load().arguments {
     [source_path] -> run_all(source_path)
@@ -108,7 +111,7 @@ fn run_vendor(source_path: String) {
 // Generate expected tokens command
 // ============================================================================
 
-fn build_config_json() -> String {
+pub fn build_config_json() -> String {
   let languages_json =
     languages.all_languages()
     |> list.map(fn(lang) {

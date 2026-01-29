@@ -10,7 +10,6 @@ export function run_generate_expected_tokens(configJson) {
     return new Ok(output)
   }
   catch (error) {
-    // If the command ran but failed, include stdout if available
     const message = error.stdout || error.message
     return new Error(message)
   }
@@ -47,6 +46,20 @@ export function run_generate_expected_ast(configJson) {
 export function run_generate_expected_regex_plus_ast(configJson) {
   try {
     const output = execFileSync('node', ['dev/generate_expected_regex_plus_ast.mjs', configJson], {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'inherit'],
+    })
+    return new Ok(output)
+  }
+  catch (error) {
+    const message = error.stdout || error.message
+    return new Error(message)
+  }
+}
+
+export function run_spy_toregexp_calls(configJson) {
+  try {
+    const output = execFileSync('node', ['dev/spy_toregexp_calls.mjs', configJson], {
       encoding: 'utf-8',
       stdio: ['pipe', 'pipe', 'inherit'],
     })

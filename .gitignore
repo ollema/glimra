@@ -4,3 +4,4 @@
 erl_crash.dump
 /node_modules
 /js_reference
+spy_results.json
