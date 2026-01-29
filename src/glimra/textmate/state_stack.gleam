@@ -42,16 +42,6 @@ fn scope_stack_depth_impl(stack: ScopeStack, acc: Int) -> Int {
   }
 }
 
-/// Check if two scope stacks are equal
-fn scope_stack_equals(a: ScopeStack, b: ScopeStack) -> Bool {
-  case a, b {
-    ScopeRoot(name_a), ScopeRoot(name_b) -> name_a == name_b
-    ScopeChild(parent_a, name_a), ScopeChild(parent_b, name_b) ->
-      name_a == name_b && scope_stack_equals(parent_a, parent_b)
-    _, _ -> False
-  }
-}
-
 /// Attributed scope stack - scope names with encoded token metadata.
 ///
 /// Each node in the linked list contains:
@@ -80,7 +70,7 @@ pub type AttributedScopeStack {
 }
 
 /// Create a root attributed scope stack
-pub fn attributed_root(
+fn attributed_root(
   scope_name: String,
   token_attributes: Int,
 ) -> AttributedScopeStack {
@@ -171,46 +161,6 @@ pub fn attributed_get_token_attributes(stack: AttributedScopeStack) -> Int {
   case stack {
     AttributedRoot(token_attributes: attrs, ..) -> attrs
     AttributedChild(token_attributes: attrs, ..) -> attrs
-  }
-}
-
-/// Check if two attributed scope stacks are equal
-fn attributed_equals(
-  a: Option(AttributedScopeStack),
-  b: Option(AttributedScopeStack),
-) -> Bool {
-  case a, b {
-    None, None -> True
-    Some(stack_a), Some(stack_b) -> attributed_equals_impl(stack_a, stack_b)
-    _, _ -> False
-  }
-}
-
-fn attributed_equals_impl(
-  a: AttributedScopeStack,
-  b: AttributedScopeStack,
-) -> Bool {
-  case a, b {
-    AttributedRoot(scope_path: path_a, token_attributes: attrs_a, ..),
-      AttributedRoot(scope_path: path_b, token_attributes: attrs_b, ..)
-    -> attrs_a == attrs_b && scope_stack_equals(path_a, path_b)
-    AttributedChild(
-      parent: parent_a,
-      scope_path: path_a,
-      token_attributes: attrs_a,
-      ..,
-    ),
-      AttributedChild(
-        parent: parent_b,
-        scope_path: path_b,
-        token_attributes: attrs_b,
-        ..,
-      )
-    ->
-      attrs_a == attrs_b
-      && scope_stack_equals(path_a, path_b)
-      && attributed_equals_impl(parent_a, parent_b)
-    _, _ -> False
   }
 }
 
@@ -408,41 +358,6 @@ pub fn get_content_name_scopes(
   case stack {
     StateStackNull -> None
     StateStackFrame(content_name_scopes: scopes, ..) -> scopes
-  }
-}
-
-/// Check if two state stacks are equal
-pub fn equals(a: StateStack, b: StateStack) -> Bool {
-  case a, b {
-    StateStackNull, StateStackNull -> True
-    StateStackFrame(
-      parent: parent_a,
-      rule_id: id_a,
-      enter_pos: _,
-      anchor_pos: _,
-      begin_rule_captured_eol: eol_a,
-      end_rule: end_a,
-      name_scopes: name_a,
-      content_name_scopes: content_a,
-    ),
-      StateStackFrame(
-        parent: parent_b,
-        rule_id: id_b,
-        enter_pos: _,
-        anchor_pos: _,
-        begin_rule_captured_eol: eol_b,
-        end_rule: end_b,
-        name_scopes: name_b,
-        content_name_scopes: content_b,
-      )
-    ->
-      id_a == id_b
-      && eol_a == eol_b
-      && end_a == end_b
-      && attributed_equals(name_a, name_b)
-      && attributed_equals(content_a, content_b)
-      && equals(parent_a, parent_b)
-    _, _ -> False
   }
 }
 

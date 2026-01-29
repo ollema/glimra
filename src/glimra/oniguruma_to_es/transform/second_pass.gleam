@@ -1,10 +1,11 @@
-/// Second pass transformations for Oniguruma to ES conversion.
-///
-/// Handles:
-/// - Subroutine expansion by cloning
-/// - Recursion detection
-/// - Backref multiplexing state tracking
-/// - Duplicate group name tracking
+//// Second pass transformations for Oniguruma to ES conversion.
+////
+//// Handles:
+//// - Subroutine expansion by cloning
+//// - Recursion detection
+//// - Backref multiplexing state tracking
+//// - Duplicate group name tracking
+
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/option.{type Option, None, Some}

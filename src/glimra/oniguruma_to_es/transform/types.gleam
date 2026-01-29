@@ -1,4 +1,5 @@
-/// Shared types for the transform module.
+//// Shared types for the transform module.
+
 import gleam/option.{type Option}
 import glimra/oniguruma_parser/parser/ast_types.{
   type CapturingGroupNode, type RegexNode,

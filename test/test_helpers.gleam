@@ -1,11 +1,12 @@
-/// Shared test utilities for all test files
-///
-/// This module provides common functionality used across tests:
-/// - Token formatting for snapshots
-/// - Token comparison for validation
-/// - File reading utilities
-/// - Expected token loading from JSON reference files
-/// - AST validation for parser testing
+//// Shared test utilities for all test files
+////
+//// This module provides common functionality used across tests:
+//// - Token formatting for snapshots
+//// - Token comparison for validation
+//// - File reading utilities
+//// - Expected token loading from JSON reference files
+//// - AST validation for parser testing
+
 import gleam/dict
 import gleam/dynamic/decode
 import gleam/int

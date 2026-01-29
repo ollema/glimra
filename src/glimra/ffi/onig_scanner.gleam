@@ -24,28 +24,6 @@ pub type MatchResult {
   )
 }
 
-/// Find options as a bitmask for controlling match behavior
-pub type FindOption {
-  /// No special options
-  None
-  /// Fail \A (start of string anchor)
-  NotBeginString
-  /// Fail \z, \Z (end of string anchor)
-  NotEndString
-  /// Fail \G (current position anchor)
-  NotBeginPosition
-}
-
-/// Convert FindOption to its integer bitmask value
-pub fn find_option_to_int(option: FindOption) -> Int {
-  case option {
-    None -> 0
-    NotBeginString -> 1
-    NotEndString -> 2
-    NotBeginPosition -> 4
-  }
-}
-
 /// Create a new OnigScanner from a list of regex patterns.
 /// Each pattern is compiled and can be matched against text.
 /// The index of the matching pattern is returned in MatchResult.

@@ -1,6 +1,7 @@
-/// Generated API tests for glimra public API functions
-/// Tests builder functions, query functions, and token options
-/// using JavaScript Shiki as the source of truth for token validation.
+//// Generated API tests for glimra public API functions
+//// Tests builder functions, query functions, and token options
+//// using JavaScript Shiki as the source of truth for token validation.
+
 import gleam/list
 import glimra
 import glimra/languages

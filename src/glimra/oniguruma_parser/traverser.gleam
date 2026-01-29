@@ -1,5 +1,6 @@
-/// AST traverser for Oniguruma regex patterns.
-/// Provides visitor-based traversal and modification of the AST.
+//// AST traverser for Oniguruma regex patterns.
+//// Provides visitor-based traversal and modification of the AST.
+
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import glimra/oniguruma_parser/parser/ast_types.{
@@ -86,34 +87,6 @@ pub type VisitResult(n) {
   Remove
   /// Replace this node with another
   Replace(n)
-}
-
-// ============================================================================
-// Default Visitor
-// ============================================================================
-
-/// Create an empty visitor
-pub fn empty_visitor() -> Visitor(state) {
-  Visitor(
-    on_absence_function: None,
-    on_alternative: None,
-    on_assertion: None,
-    on_backreference: None,
-    on_capturing_group: None,
-    on_character: None,
-    on_character_class: None,
-    on_character_class_range: None,
-    on_character_set: None,
-    on_directive: None,
-    on_flags: None,
-    on_group: None,
-    on_lookaround_assertion: None,
-    on_named_callout: None,
-    on_quantifier: None,
-    on_regex: None,
-    on_subroutine: None,
-    on_any: None,
-  )
 }
 
 // ============================================================================

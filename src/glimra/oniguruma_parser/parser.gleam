@@ -1,5 +1,6 @@
-/// Main parser module for Oniguruma regex patterns.
-/// Builds an AST from tokenized input.
+//// Main parser module for Oniguruma regex patterns.
+//// Builds an AST from tokenized input.
+
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
@@ -7,18 +8,12 @@ import gleam/option.{type Option, None, Some}
 import gleam/result
 import gleam/string
 import glimra/oniguruma_parser/parser/ast_types.{
-  type AbsenceFunctionNode, type AlternativeElement, type AlternativeNode,
-  type AssertionKind, type AssertionNode, type BackreferenceNode,
-  type BackreferenceRef, type CalloutArg, type CapturingGroupNode,
-  type CharacterClassElement, type CharacterClassKind, type CharacterClassNode,
-  type CharacterClassRangeNode, type CharacterNode, type CharacterSetNode,
-  type DirectiveNode, type FlagGroupModifiers, type FlagsNode, type GroupNode,
-  type LookaroundAssertionKind, type LookaroundAssertionNode,
-  type NamedCalloutKind, type NamedCalloutNode, type OnigurumaAst,
-  type QuantifiableNode, type QuantifierKind, type QuantifierNode,
-  type RegexNode, type SubroutineNode, type SubroutineRef, type TextSegmentMode,
-  AbsenceFunctionE, AbsenceFunctionNode, AlternativeNode, AssertionE,
-  AssertionNode, BackreferenceE, BackreferenceNode, CapturingGroupE,
+  type AlternativeElement, type AlternativeNode, type AssertionKind,
+  type CapturingGroupNode, type CharacterClassElement, type CharacterSetNode,
+  type FlagGroupModifiers, type FlagsNode, type OnigurumaAst,
+  type QuantifiableNode, type SubroutineNode, type SubroutineRef,
+  type TextSegmentMode, AbsenceFunctionE, AbsenceFunctionNode, AlternativeNode,
+  AssertionE, AssertionNode, BackreferenceE, BackreferenceNode, CapturingGroupE,
   CapturingGroupNode, CharacterCCE, CharacterClassCCE, CharacterClassE,
   CharacterClassNode, CharacterClassRangeCCE, CharacterClassRangeNode,
   CharacterE, CharacterNode, CharacterSetCCE, CharacterSetE, CharacterSetNode,
@@ -1182,178 +1177,6 @@ fn current_token(ctx: Context) -> Option(Token) {
 /// Advance to the next token
 fn advance(ctx: Context) -> Context {
   Context(..ctx, pos: ctx.pos + 1)
-}
-
-// ============================================================================
-// Node Creation Functions (exported for use by transformer)
-// ============================================================================
-
-/// Create an alternative node
-pub fn create_alternative(body: List(AlternativeElement)) -> AlternativeNode {
-  AlternativeNode(body: body)
-}
-
-/// Create an assertion node
-pub fn create_assertion(
-  kind: AssertionKind,
-  negate: Option(Bool),
-) -> AssertionNode {
-  AssertionNode(kind: kind, negate: negate)
-}
-
-/// Create a backreference node
-pub fn create_backreference(
-  ref: BackreferenceRef,
-  orphan: Option(Bool),
-) -> BackreferenceNode {
-  BackreferenceNode(ref: ref, orphan: orphan)
-}
-
-/// Create a capturing group node
-pub fn create_capturing_group(
-  number: Int,
-  name: Option(String),
-  body: List(AlternativeNode),
-) -> CapturingGroupNode {
-  CapturingGroupNode(
-    number: number,
-    name: name,
-    is_subroutined: None,
-    body: body,
-    transform_id: None,
-  )
-}
-
-/// Create a character node
-pub fn create_character(value: Int) -> CharacterNode {
-  CharacterNode(value: value)
-}
-
-/// Create a character class node
-pub fn create_character_class(
-  kind: CharacterClassKind,
-  negate: Bool,
-  body: List(CharacterClassElement),
-) -> CharacterClassNode {
-  CharacterClassNode(kind: kind, negate: negate, body: body)
-}
-
-/// Create a character class range node
-pub fn create_character_class_range(
-  min: CharacterNode,
-  max: CharacterNode,
-) -> Result(CharacterClassRangeNode, String) {
-  case max.value < min.value {
-    True -> Error("Character class range out of order")
-    False -> Ok(CharacterClassRangeNode(min: min, max: max))
-  }
-}
-
-/// Create a character set node
-pub fn create_character_set(
-  kind: ast_types.CharacterSetKind,
-  value: Option(String),
-  negate: Option(Bool),
-) -> CharacterSetNode {
-  let variable_length = case kind {
-    ast_types.TextSegment -> Some(True)
-    ast_types.Newline ->
-      case negate {
-        Some(True) -> None
-        _ -> Some(True)
-      }
-    _ -> None
-  }
-  CharacterSetNode(
-    kind: kind,
-    value: value,
-    negate: negate,
-    variable_length: variable_length,
-  )
-}
-
-/// Create a directive node
-pub fn create_directive(
-  kind: ast_types.DirectiveKind,
-  flags: Option(FlagGroupModifiers),
-) -> DirectiveNode {
-  DirectiveNode(kind: kind, flags: flags)
-}
-
-/// Create a flags node
-pub fn create_flags(
-  ignore_case: Bool,
-  dot_all: Bool,
-  extended: Bool,
-) -> FlagsNode {
-  FlagsNode(
-    ignore_case: ignore_case,
-    dot_all: dot_all,
-    extended: extended,
-    digit_is_ascii: False,
-    posix_is_ascii: False,
-    space_is_ascii: False,
-    word_is_ascii: False,
-    text_segment_mode: None,
-  )
-}
-
-/// Create a group node
-pub fn create_group(
-  atomic: Option(Bool),
-  flags: Option(FlagGroupModifiers),
-  body: List(AlternativeNode),
-) -> GroupNode {
-  GroupNode(atomic: atomic, flags: flags, body: body)
-}
-
-/// Create a lookaround assertion node
-pub fn create_lookaround_assertion(
-  kind: LookaroundAssertionKind,
-  negate: Bool,
-  body: List(AlternativeNode),
-) -> LookaroundAssertionNode {
-  LookaroundAssertionNode(kind: kind, negate: negate, body: body)
-}
-
-/// Create a named callout node
-pub fn create_named_callout(
-  kind: NamedCalloutKind,
-  tag: Option(String),
-  arguments: Option(List(CalloutArg)),
-) -> NamedCalloutNode {
-  NamedCalloutNode(kind: kind, tag: tag, arguments: arguments)
-}
-
-/// Create a quantifier node
-pub fn create_quantifier(
-  kind: QuantifierKind,
-  min: Int,
-  max: Int,
-  body: QuantifiableNode,
-) -> Result(QuantifierNode, String) {
-  case min > max {
-    True -> Error("Invalid reversed quantifier range")
-    False -> Ok(QuantifierNode(kind: kind, min: min, max: max, body: body))
-  }
-}
-
-/// Create a regex node
-pub fn create_regex(flags: FlagsNode, body: List(AlternativeNode)) -> RegexNode {
-  RegexNode(body: body, flags: flags)
-}
-
-/// Create a subroutine node
-pub fn create_subroutine(ref: SubroutineRef) -> SubroutineNode {
-  SubroutineNode(ref: ref, is_recursive: None)
-}
-
-/// Create an absence function node
-pub fn create_absence_function(
-  kind: ast_types.AbsenceFunctionKind,
-  body: List(AlternativeNode),
-) -> AbsenceFunctionNode {
-  AbsenceFunctionNode(kind: kind, body: body)
 }
 
 // ============================================================================

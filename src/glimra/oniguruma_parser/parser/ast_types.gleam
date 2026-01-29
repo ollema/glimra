@@ -1,5 +1,6 @@
-/// AST node types for the Oniguruma regex parser.
-/// These types mirror the JS oniguruma-parser library's AST structure.
+//// AST node types for the Oniguruma regex parser.
+//// These types mirror the JS oniguruma-parser library's AST structure.
+
 import gleam/option.{type Option}
 
 // ============================================================================
@@ -300,24 +301,6 @@ pub type QuantifiableNode {
   SubroutineQ(SubroutineNode)
 }
 
-/// Nodes that can contain alternatives
-pub type AlternativeContainerNode {
-  AbsenceFunctionAC(AbsenceFunctionNode)
-  CapturingGroupAC(CapturingGroupNode)
-  GroupAC(GroupNode)
-  LookaroundAssertionAC(LookaroundAssertionNode)
-  RegexAC(RegexNode)
-}
-
-/// Parent node types (nodes with children)
-pub type ParentNode {
-  AlternativeContainerP(AlternativeContainerNode)
-  AlternativeP(AlternativeNode)
-  CharacterClassP(CharacterClassNode)
-  CharacterClassRangeP(CharacterClassRangeNode)
-  QuantifierP(QuantifierNode)
-}
-
 // ============================================================================
 // Flag Group Modifiers
 // ============================================================================
@@ -362,35 +345,5 @@ pub fn element_to_quantifiable(
     DirectiveE(_) -> Error(Nil)
     LookaroundAssertionE(_) -> Error(Nil)
     NamedCalloutE(_) -> Error(Nil)
-  }
-}
-
-/// Convert a QuantifiableNode to an AlternativeElement
-pub fn quantifiable_to_element(node: QuantifiableNode) -> AlternativeElement {
-  case node {
-    AbsenceFunctionQ(n) -> AbsenceFunctionE(n)
-    BackreferenceQ(n) -> BackreferenceE(n)
-    CapturingGroupQ(n) -> CapturingGroupE(n)
-    CharacterQ(n) -> CharacterE(n)
-    CharacterClassQ(n) -> CharacterClassE(n)
-    CharacterSetQ(n) -> CharacterSetE(n)
-    GroupQ(n) -> GroupE(n)
-    QuantifierQ(n) -> QuantifierE(n)
-    SubroutineQ(n) -> SubroutineE(n)
-  }
-}
-
-/// Convert a CharacterNode to a CharacterClassElement
-pub fn character_to_cc_element(node: CharacterNode) -> CharacterClassElement {
-  CharacterCCE(node)
-}
-
-/// Convert a CharacterClassElement to a Node
-pub fn cc_element_to_node(element: CharacterClassElement) -> Node {
-  case element {
-    CharacterCCE(n) -> CharacterN(n)
-    CharacterClassCCE(n) -> CharacterClassN(n)
-    CharacterClassRangeCCE(n) -> CharacterClassRangeN(n)
-    CharacterSetCCE(n) -> CharacterSetN(n)
   }
 }

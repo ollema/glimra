@@ -52,7 +52,7 @@ pub fn add_grammar_json(
 }
 
 /// Add a raw grammar directly
-pub fn add_raw_grammar(
+fn add_raw_grammar(
   registry: Registry,
   lang: String,
   raw: RawGrammar,
@@ -77,7 +77,7 @@ pub fn add_theme_json(
 }
 
 /// Add a theme directly
-pub fn add_theme(registry: Registry, name: String, theme: Theme) -> Registry {
+fn add_theme(registry: Registry, name: String, theme: Theme) -> Registry {
   Registry(..registry, themes: dict.insert(registry.themes, name, theme))
 }
 

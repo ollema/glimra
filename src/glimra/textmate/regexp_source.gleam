@@ -27,7 +27,7 @@ pub type AnchorFlags {
 }
 
 /// No anchors present
-pub const no_anchors = AnchorFlags(
+const no_anchors = AnchorFlags(
   has_anchor_a: False,
   has_anchor_g: False,
   has_anchor_z: False,
@@ -186,7 +186,7 @@ fn parse_back_ref_number_impl(remaining: String, acc: Int) -> #(Int, String) {
 
 /// Escape special regex characters in a string.
 /// This is used when substituting captured text into patterns.
-pub fn escape_regexp_characters(text: String) -> String {
+fn escape_regexp_characters(text: String) -> String {
   escape_regexp_impl(text, "")
 }
 

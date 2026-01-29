@@ -1,8 +1,9 @@
-/// Unit tests for pure Gleam TextMate implementation
-///
-/// These tests verify the grammar compilation and state management
-/// without requiring OnigScanner initialization. Full tokenization
-/// tests would require the OnigScanner to be set up.
+//// Unit tests for pure Gleam TextMate implementation
+////
+//// These tests verify the grammar compilation and state management
+//// without requiring OnigScanner initialization. Full tokenization
+//// tests would require the OnigScanner to be set up.
+
 import gleam/dict
 import gleam/option.{None, Some}
 import glimra/textmate/raw_grammar.{

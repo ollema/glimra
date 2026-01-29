@@ -1,10 +1,11 @@
-/// Third pass transformations for Oniguruma to ES conversion.
-///
-/// Handles:
-/// - CapturingGroup → renumber groups, remove duplicate names
-/// - Backreference → recalculate numbers, multiplex for duplicates
-/// - Subroutine → update recursion refs
-/// - Regex.exit → add dummy captures for orphan backrefs
+//// Third pass transformations for Oniguruma to ES conversion.
+////
+//// Handles:
+//// - CapturingGroup → renumber groups, remove duplicate names
+//// - Backreference → recalculate numbers, multiplex for duplicates
+//// - Subroutine → update recursion refs
+//// - Regex.exit → add dummy captures for orphan backrefs
+
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list

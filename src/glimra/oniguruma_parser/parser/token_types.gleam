@@ -1,5 +1,6 @@
-/// Token types for the Oniguruma regex tokenizer.
-/// These types mirror the JS oniguruma-parser library's tokenizer output.
+//// Token types for the Oniguruma regex tokenizer.
+//// These types mirror the JS oniguruma-parser library's tokenizer output.
+
 import gleam/option.{type Option}
 import glimra/oniguruma_parser/parser/ast_types.{
   type FlagGroupModifiers, type NamedCalloutKind,
@@ -188,16 +189,5 @@ pub fn token_cs_kind_to_ast(
     TokSpace -> ast_types.Space
     TokTextSegment -> ast_types.TextSegment
     TokWord -> ast_types.Word
-  }
-}
-
-/// Convert token quantifier kind to AST quantifier kind
-pub fn token_q_kind_to_ast(
-  kind: TokenQuantifierKind,
-) -> ast_types.QuantifierKind {
-  case kind {
-    TokGreedy -> ast_types.Greedy
-    TokLazy -> ast_types.Lazy
-    TokPossessive -> ast_types.Possessive
   }
 }

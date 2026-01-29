@@ -4,6 +4,8 @@ target = "javascript"
 internal_modules = [
   "glimra/ffi/*",
   "glimra/highlight/*",
+  "glimra/oniguruma_parser/*",
+  "glimra/oniguruma_to_es/*",
   "glimra/textmate/*",
   "glimra/utils/*"
 ]

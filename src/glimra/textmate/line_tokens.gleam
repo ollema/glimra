@@ -194,57 +194,12 @@ pub fn get_result(line_tokens: LineTokens, stack: StateStack) -> List(Token) {
   }
 }
 
-/// Get the final result as binary tokens (packed format)
-pub fn get_binary_result(
-  line_tokens: LineTokens,
-  stack: StateStack,
-) -> List(Int) {
-  // Ensure final token covers to end of line
-  let final_tokens = finalize_tokens(line_tokens, stack)
-
-  // Reverse to get tokens in order
-  let binary_tokens = list.reverse(final_tokens.binary_tokens)
-
-  // Handle empty line case
-  let binary_tokens = case binary_tokens {
-    [] -> {
-      let metadata = get_stack_metadata(stack)
-      [BinaryToken(start_index: 0, metadata: metadata)]
-    }
-    _ -> binary_tokens
-  }
-
-  // Convert to flat list [startIndex, metadata, startIndex, metadata, ...]
-  binary_tokens_to_list(binary_tokens, [])
-}
-
-/// Convert binary tokens to flat list
-fn binary_tokens_to_list(tokens: List(BinaryToken), acc: List(Int)) -> List(Int) {
-  case tokens {
-    [] -> list.reverse(acc)
-    [BinaryToken(start_index: start, metadata: meta), ..rest] ->
-      binary_tokens_to_list(rest, [meta, start, ..acc])
-  }
-}
-
 /// Finalize tokens by producing any remaining content
 fn finalize_tokens(line_tokens: LineTokens, stack: StateStack) -> LineTokens {
   // Produce token to end of line if needed
   case line_tokens.last_token_end_index < line_tokens.line_length {
     True -> produce(line_tokens, stack, line_tokens.line_length)
     False -> line_tokens
-  }
-}
-
-/// Get metadata from state stack
-fn get_stack_metadata(stack: StateStack) -> Int {
-  case stack {
-    StateStackNull -> 0
-    StateStackFrame(content_name_scopes: Some(scopes), ..) ->
-      attributed_get_token_attributes(scopes)
-    StateStackFrame(name_scopes: Some(scopes), ..) ->
-      attributed_get_token_attributes(scopes)
-    StateStackFrame(..) -> 0
   }
 }
 

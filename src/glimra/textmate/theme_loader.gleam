@@ -18,7 +18,7 @@ import glimra/textmate/theme.{
 import glimra/types/token.{type RawThemeSetting, RawThemeSetting}
 
 /// Raw theme structure from JSON parsing
-pub type RawTheme {
+type RawTheme {
   RawTheme(
     name: String,
     display_name: String,
@@ -29,19 +29,19 @@ pub type RawTheme {
 }
 
 /// Raw token color from JSON
-pub type RawTokenColor {
+type RawTokenColor {
   RawTokenColor(name: String, scope: TokenScope, settings: TokenSettings)
 }
 
 /// Scope can be a string or list of strings
-pub type TokenScope {
+type TokenScope {
   ScopeString(String)
   ScopeList(List(String))
   ScopeNone
 }
 
 /// Token settings
-pub type TokenSettings {
+type TokenSettings {
   TokenSettings(
     font_style: Option(String),
     foreground: String,

@@ -1,5 +1,6 @@
-/// Tokenizer for Oniguruma regex patterns.
-/// Converts a pattern string into a list of tokens.
+//// Tokenizer for Oniguruma regex patterns.
+//// Converts a pattern string into a list of tokens.
+
 import gleam/int
 import gleam/list
 import gleam/option.{type Option, None, Some}

@@ -1,4 +1,5 @@
-/// Utility functions for the transform module.
+//// Utility functions for the transform module.
+
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
@@ -474,19 +475,4 @@ fn clone_character_class_element_impl(
       state,
     )
   }
-}
-
-// ============================================================================
-// Participation Check
-// ============================================================================
-
-/// Check if a capture can participate with a node
-/// (i.e., the capture is in the same alternation path)
-pub fn can_participate_with_node(
-  capture: CapturingGroupNode,
-  node_number: Int,
-) -> Bool {
-  // Simplified check: capture number must be less than the referencing node's context
-  // A full implementation would walk the tree
-  capture.number < node_number || capture.number == node_number
 }

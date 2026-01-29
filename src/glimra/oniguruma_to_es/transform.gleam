@@ -1,13 +1,14 @@
-/// Transform module for converting Oniguruma AST to Regex+ AST.
-///
-/// Transforms an Oniguruma AST in-place to a Regex+ AST suitable for JavaScript
-/// regex generation. The transformation uses a 3-pass visitor system:
-///
-/// - First Pass: Syntactic transformations (assertions, character sets, POSIX
-///   classes, flag directives, \K, \G)
-/// - Second Pass: Subroutine expansion, recursion detection, backref multiplexing
-///   setup
-/// - Third Pass: Group renumbering, backref finalization, orphan backref handling
+//// Transform module for converting Oniguruma AST to Regex+ AST.
+////
+//// Transforms an Oniguruma AST in-place to a Regex+ AST suitable for JavaScript
+//// regex generation. The transformation uses a 3-pass visitor system:
+////
+//// - First Pass: Syntactic transformations (assertions, character sets, POSIX
+////   classes, flag directives, \K, \G)
+//// - Second Pass: Subroutine expansion, recursion detection, backref multiplexing
+////   setup
+//// - Third Pass: Group renumbering, backref finalization, orphan backref handling
+
 import gleam/dict
 import gleam/list
 import gleam/option.{None, Some}
@@ -25,34 +26,11 @@ import glimra/oniguruma_to_es/transform/first_pass
 import glimra/oniguruma_to_es/transform/second_pass
 import glimra/oniguruma_to_es/transform/third_pass
 import glimra/oniguruma_to_es/transform/types.{
-  type Accuracy, type RegexPlusAst, type RegexPlusFlags, type Strategy,
-  type Target, type TransformConfig, type TransformOptions, DefaultAccuracy,
+  type RegexPlusAst, type Target, type TransformConfig, DefaultAccuracy,
   DisableOptions, ES2024, ES2025, ForceOptions, RegexPlusAst, RegexPlusFlags,
   TransformConfig, TransformOptions,
 }
 import glimra/oniguruma_to_es/transform/utils.{new_clone_state_from}
-
-// Re-export types for external use
-pub type RegexPlusAstExport =
-  RegexPlusAst
-
-pub type RegexPlusFlagsExport =
-  RegexPlusFlags
-
-pub type TransformOptionsExport =
-  TransformOptions
-
-pub type StrategyExport =
-  Strategy
-
-pub type TransformConfigExport =
-  TransformConfig
-
-pub type AccuracyExport =
-  Accuracy
-
-pub type TargetExport =
-  Target
 
 // ============================================================================
 // Default Configuration

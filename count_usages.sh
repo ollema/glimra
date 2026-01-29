@@ -65,7 +65,20 @@ while IFS= read -r line; do
     # Determine comment
     if [[ "$src_count" -eq 0 && "$dev_count" -eq 0 && "$test_count" -eq 0 ]]; then
         if [[ "$internal_count" -gt 0 ]]; then
-            comment="internal_only"
+            # Check if this type appears in a pub fn/type signature
+            if [[ "$kind" == "type" ]]; then
+                # Check pub fn signatures (parameters/return types)
+                pub_fn_usage=$(grep -E "^pub fn " "$file_path" 2>/dev/null | grep -cw "$name" || echo 0)
+                # Check pub type definitions (used in other public types)
+                pub_type_usage=$(grep -E "^pub type " "$file_path" 2>/dev/null | grep -v "^pub type $name" | grep -cw "$name" || echo 0)
+                if [[ "$pub_fn_usage" -gt 0 || "$pub_type_usage" -gt 0 ]]; then
+                    comment="pub_signature"
+                else
+                    comment="internal_only"
+                fi
+            else
+                comment="internal_only"
+            fi
         else
             comment="unused"
         fi

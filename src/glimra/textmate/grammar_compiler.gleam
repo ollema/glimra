@@ -28,7 +28,7 @@ import glimra/textmate/rule.{
 import glimra/textmate/scope_selector
 
 /// Compilation state tracking IDs and rules
-pub type CompilerState {
+type CompilerState {
   CompilerState(
     /// Next rule ID to assign
     next_id: Int,
@@ -48,7 +48,7 @@ pub type CompilerState {
 }
 
 /// Create a new compiler state
-pub fn new_compiler_state() -> CompilerState {
+fn new_compiler_state() -> CompilerState {
   CompilerState(
     next_id: rule_id_first,
     rules: dict.new(),
@@ -157,7 +157,7 @@ fn compile_patterns_rule(
 }
 
 /// Compile a raw rule into a Rule, returning its ID
-pub fn compile_rule(
+fn compile_rule(
   state: CompilerState,
   raw: RawRule,
   repository: Dict(String, RawRule),

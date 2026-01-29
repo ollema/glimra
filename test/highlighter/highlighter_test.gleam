@@ -1,11 +1,12 @@
-/// Highlighter feature tests
-///
-/// These tests validate specific features of the highlighter:
-/// - Color replacement
-/// - Explanation output
-/// - Language alias resolution
-/// - Plain text handling
-/// - Max line length limiting
+//// Highlighter feature tests
+////
+//// These tests validate specific features of the highlighter:
+//// - Color replacement
+//// - Explanation output
+//// - Language alias resolution
+//// - Plain text handling
+//// - Max line length limiting
+
 import gleam/dict
 import gleam/list
 import glimra/ffi/onig_scanner

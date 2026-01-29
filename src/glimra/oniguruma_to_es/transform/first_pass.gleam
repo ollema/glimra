@@ -1,15 +1,16 @@
-/// First pass transformations for Oniguruma to ES conversion.
-///
-/// Handles syntactic transformations:
-/// - AbsenceFunction → lookaround pattern
-/// - Alternative → flag directive processing
-/// - Assertion → line boundaries, \G, word boundaries
-/// - Backreference → JS name validation
-/// - CapturingGroup → name validation, subroutine map building
-/// - CharacterSet → Unicode properties, POSIX classes, \d, \w, \s, \X
-/// - Directive → flag modifiers, \K (keep)
-/// - Flags → remove Onig-specific, set up options
-/// - Quantifier → nested quantifier wrapping
+//// First pass transformations for Oniguruma to ES conversion.
+////
+//// Handles syntactic transformations:
+//// - AbsenceFunction → lookaround pattern
+//// - Alternative → flag directive processing
+//// - Assertion → line boundaries, \G, word boundaries
+//// - Backreference → JS name validation
+//// - CapturingGroup → name validation, subroutine map building
+//// - CharacterSet → Unicode properties, POSIX classes, \d, \w, \s, \X
+//// - Directive → flag modifiers, \K (keep)
+//// - Flags → remove Onig-specific, set up options
+//// - Quantifier → nested quantifier wrapping
+
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/option.{type Option, None, Some}
