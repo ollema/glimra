@@ -1,0 +1,141 @@
+{
+  "language": "docker",
+  "total": 7,
+  "successful": 7,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "generated": {
+        "pattern": "\"",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "'",
+      "success": true,
+      "generated": {
+        "pattern": "'",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\.",
+      "success": true,
+      "generated": {
+        "pattern": "\\\\[^\\n]",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(\\s*)((#).*$\\n?)",
+      "success": true,
+      "generated": {
+        "pattern": "^(\\p{space}*)((#)[^\\n]*(?=\\n?$)\\n?)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\s",
+      "success": true,
+      "generated": {
+        "pattern": "^\\p{space}*(?i:(ONBUILD)\\p{space}+)?(?i:(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR))\\p{space}",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*(?i:(ONBUILD)\\s+)?(?i:(CMD|ENTRYPOINT))\\s",
+      "success": true,
+      "generated": {
+        "pattern": "^\\p{space}*(?i:(ONBUILD)\\p{space}+)?(?i:(CMD|ENTRYPOINT))\\p{space}",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^\\s*\\b(?i:(FROM))\\b.*?\\b(?i:(AS))\\b",
+      "success": true,
+      "generated": {
+        "pattern": "^\\p{space}*\\b(?i:(FROM))\\b[^\\n]*?\\b(?i:(AS))\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    }
+  ]
+}

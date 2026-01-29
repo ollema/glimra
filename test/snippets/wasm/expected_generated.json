@@ -1,0 +1,1490 @@
+{
+  "language": "wasm",
+  "total": 78,
+  "successful": 78,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "\"",
+      "success": true,
+      "generated": {
+        "pattern": "\"",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(;;).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(;;)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()(?:module|import|export|memory|data|table|elem|start|func|type|param|result|global|local)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\()(?:module|import|export|memory|data|table|elem|start|func|type|param|result|global|local)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()\\s*(mut)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\()\\p{space}*(mut)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\()event\\b",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\()event\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(data)\\s+(passive)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\(data)\\p{space}+(passive)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(func|\\(start|call|return_call|ref\\.func)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\(func|\\(start|call|return_call|ref\\.func)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\(type)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\(type)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=\\s)\\$[!#-'*+\\--:<-Z\\\\^-z|~]*",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\p{space})\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ";\\)",
+      "success": true,
+      "generated": {
+        "pattern": ";\\)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b(?:0x\\h\\h*|\\d\\d*)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "[\\-\\+]?\\b(?:0x\\p{AHex}\\p{AHex}*|\\p{Nd}\\p{Nd}*)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b0x(\\h*\\.\\h+|\\h+\\.?)[Pp][-+]?[0-9]+\\b",
+      "success": true,
+      "generated": {
+        "pattern": "[\\-\\+]?\\b0x(\\p{AHex}*\\.\\p{AHex}+|\\p{AHex}+\\.?)[Pp][\\-\\+]?[0-9]+\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\b[0-9][0-9]*(?:\\.[0-9][0-9]*)?(?:[Ee][-+]?[0-9]+)?\\b",
+      "success": true,
+      "generated": {
+        "pattern": "[\\-\\+]?\\b[0-9][0-9]*(?:\\.[0-9][0-9]*)?(?:[Ee][\\-\\+]?[0-9]+)?\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\binf\\b",
+      "success": true,
+      "generated": {
+        "pattern": "[\\-\\+]?\\binf\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[-+]?\\bnan:0x\\h\\h*\\b",
+      "success": true,
+      "generated": {
+        "pattern": "[\\-\\+]?\\bnan:0x\\p{AHex}\\p{AHex}*\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[^()\\s]+",
+      "success": true,
+      "generated": {
+        "pattern": "[^\\(\\)\\p{space}]+",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\$[!#-'*+\\--:<-Z\\\\^-z|~]*\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\(;",
+      "success": true,
+      "generated": {
+        "pattern": "\\(;",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)",
+      "success": true,
+      "generated": {
+        "pattern": "\\)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)\\s+(\\$[!#-'*+\\--:<-Z\\\\^-z|~]*)",
+      "success": true,
+      "generated": {
+        "pattern": "\\)\\p{space}+(\\$[\\!\\#-'\\*\\+\\--\\:\\<-Z\\\\\\^-z\\|\\~]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\\\([\"'\\\\nt]|\\h{2})",
+      "success": true,
+      "generated": {
+        "pattern": "\\\\([\"'\\\\nt]|\\p{AHex}{2})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:drop|select)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:drop|select)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:extern|func|null)ref\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:extern|func|null)ref\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:extern|func|null)ref\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:extern|func|null)ref\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:i32|i64|f32|f64)\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:i32|i64|f32|f64)\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:i8|i16|ref|funcref|externref|anyref|eqref|i31ref|nullfuncref|nullexternref|structref|arrayref|nullref)\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:i8|i16|ref|funcref|externref|anyref|eqref|i31ref|nullfuncref|nullexternref|structref|arrayref|nullref)\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:struct|array|sub|final|rec|field|mut)\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:struct|array|sub|final|rec|field|mut)\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:try|catch|throw|rethrow|br_on_exn)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:try|catch|throw|rethrow|br_on_exn)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:type|func|extern|any|eq|nofunc|noextern|struct|array|none)\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:type|func|extern|any|eq|nofunc|noextern|struct|array|none)\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(?:unreachable|nop|block|loop|if|then|else|end|br|br_if|br_table|return|call|call_indirect)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(?:unreachable|nop|block|loop|if|then|else|end|br|br_if|br_table|return|call|call_indirect)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(array)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set|len|new_canon_fixed|new_canon_data|new_canon_elem)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(array)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set|len|new_canon_fixed|new_canon_data|new_canon_elem)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(atomic)\\.(?:notify|fence)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(atomic)\\.(?:notify|fence)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(extern)\\.(?:in|ex)ternalize\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(extern)\\.(?:in|ex)ternalize\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f(?:32|64))\\.(?:load|store)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f(?:32|64))\\.(?:load|store)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f(?:32|64))\\.(const|eq|ne|lt|gt|le|ge|abs|neg|ceil|floor|trunc|nearest|sqrt|add|sub|mul|div|min|max|copysign)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f(?:32|64))\\.(const|eq|ne|lt|gt|le|ge|abs|neg|ceil|floor|trunc|nearest|sqrt|add|sub|mul|div|min|max|copysign)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f32)\\.(convert_i(32|64)_[su]|demote_f64|reinterpret_i32)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f32)\\.(convert_i(32|64)_[su]|demote_f64|reinterpret_i32)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt|convert_i32x4_[su])\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt|convert_i32x4_[su])\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f64)\\.(convert_i(32|64)_[su]|promote_f32|reinterpret_i64)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f64)\\.(convert_i(32|64)_[su]|promote_f32|reinterpret_i64)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(f64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(f64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|extract_lane|eq|ne|lt|le|gt|ge|abs|min|max|div|sqrt)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(global)\\.[gs]et\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(global)\\.[gs]et\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i(?:32|64))\\.(const|eqz?|ne|lt_[su]|gt_[su]|le_[su]|ge_[su]|clz|ctz|popcnt|add|sub|mul|div_[su]|rem_[su]|and|or|xor|shl|shr_[su]|rotl|rotr)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i(?:32|64))\\.(const|eqz?|ne|lt_[su]|gt_[su]|le_[su]|ge_[su]|clz|ctz|popcnt|add|sub|mul|div_[su]|rem_[su]|and|or|xor|shl|shr_[su]|rotl|rotr)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i(?:32|64))\\.trunc_sat_f(?:32|64)_[su]\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i(?:32|64))\\.trunc_sat_f(?:32|64)_[su]\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i16x8)(?:\\s+0x\\h{1,4}){8}\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i16x8)(?:\\p{space}+0x\\p{AHex}{1,4}){8}\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i16x8)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|load8x8_[su]|narrow_i32x4_[su]|widen_(low|high)_i8x16_[su])\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i16x8)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|load8x8_[su]|narrow_i32x4_[su]|widen_(low|high)_i8x16_[su])\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i31)\\.(?:new|get_s|get_u)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i31)\\.(?:new|get_s|get_u)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(?:load|load(?:8|16)(?:_[su])?|store(?:8|16)?)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32)\\.(?:load|load(?:8|16)(?:_[su])?|store(?:8|16)?)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(atomic)\\.(?:load(?:8_u|16_u)?|store(?:8|16)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32)\\.(atomic)\\.(?:load(?:8_u|16_u)?|store(?:8|16)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.(wrap_i64|trunc_(f(?:32|64))_[su]|reinterpret_f32)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32)\\.(wrap_i64|trunc_(f(?:32|64))_[su]|reinterpret_f32)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32)\\.extend(?:8|16)_s\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32)\\.extend(?:8|16)_s\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32x4)(?:\\s+0x\\h{1,8}){4}\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32x4)(?:\\p{space}+0x\\p{AHex}{1,8}){4}\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane|load16x4_[su]|trunc_sat_f32x4_[su]|widen_(low|high)_i16x8_[su])\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32x4)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane|load16x4_[su]|trunc_sat_f32x4_[su]|widen_(low|high)_i16x8_[su])\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i32|i64|f32|f64|externref|funcref|nullref|exnref)\\.p(?:ush|op)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i32|i64|f32|f64|externref|funcref|nullref|exnref)\\.p(?:ush|op)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(?:load|load(?:8|16|32)(?:_[su])?|store(?:8|16|32)?)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64)\\.(?:load|load(?:8|16|32)(?:_[su])?|store(?:8|16|32)?)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(atomic)\\.(?:load(?:(?:8|16|32)_u)?|store(?:8|16|32)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16|32))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64)\\.(atomic)\\.(?:load(?:(?:8|16|32)_u)?|store(?:8|16|32)?|wait|(rmw)\\.(?:add|sub|and|or|xor|xchg|cmpxchg)|(rmw(?:8|16|32))\\.(?:add|sub|and|or|xor|xchg|cmpxchg)_u)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.(extend_i32_[su]|trunc_f(32|64)_[su]|reinterpret_f64)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64)\\.(extend_i32_[su]|trunc_f(32|64)_[su]|reinterpret_f64)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64)\\.extend(?:8|16|32)_s\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64)\\.extend(?:8|16|32)_s\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64x2)(?:\\s+0x\\h{1,16}){2}\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64x2)(?:\\p{space}+0x\\p{AHex}{1,16}){2}\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|extract_lane|load32x2_[su])\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i64x2)\\.(?:splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|extract_lane|load32x2_[su])\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i8x16)(?:\\s+0x\\h{1,2}){16}\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i8x16)(?:\\p{space}+0x\\p{AHex}{1,2}){16}\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(i8x16)\\.(?:shuffle|swizzle|splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|narrow_i16x8_[su])\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(i8x16)\\.(?:shuffle|swizzle|splat|replace_lane|add|sub|mul|neg|shl|shr_[su]|eq|ne|lt_[su]|le_[su]|gt_[su]|ge_[su]|min_[su]|max_[su]|any_true|all_true|extract_lane_[su]|add_saturate_[su]|sub_saturate_[su]|avgr_u|narrow_i16x8_[su])\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(local)\\.(?:get|set|tee)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(local)\\.(?:get|set|tee)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(memory)\\.(?:copy|fill|init|drop)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(memory)\\.(?:copy|fill|init|drop)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(memory)\\.(?:size|grow)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(memory)\\.(?:size|grow)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(offset|align)=\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(offset|align)=\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(ref)\\.(?:eq|test|cast)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(ref)\\.(?:eq|test|cast)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(ref)\\.(?:null|is_null|func|extern)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(ref)\\.(?:null|is_null|func|extern)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(struct)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(struct)\\.(?:new_canon|new_canon_default|get|get_s|get_u|set)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(table)\\.(?:get|size|grow|fill|init|copy)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(table)\\.(?:get|size|grow|fill|init|copy)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v128)\\.(?:const|and|or|xor|not|andnot|bitselect|load|store)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(v128)\\.(?:const|and|or|xor|not|andnot|bitselect|load|store)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v16x8)\\.load_splat\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(v16x8)\\.load_splat\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v32x4)\\.load_splat\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(v32x4)\\.load_splat\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v64x2)\\.load_splat\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(v64x2)\\.load_splat\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\b(v8x16)\\.(?:load_splat|shuffle|swizzle)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\b(v8x16)\\.(?:load_splat|shuffle|swizzle)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bbr_on_(?:non_null|cast|cast_fail)\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\bbr_on_(?:non_null|cast|cast_fail)\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bexnref\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\bexnref\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\breturn_call(?:_indirect)?\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\breturn_call(?:_indirect)?\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bshared\\b",
+      "success": true,
+      "generated": {
+        "pattern": "\\bshared\\b",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\bv128\\b(?!\\.)",
+      "success": true,
+      "generated": {
+        "pattern": "\\bv128\\b(?!\\.)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    }
+  ]
+}

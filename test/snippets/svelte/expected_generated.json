@@ -1,0 +1,2136 @@
+{
+  "language": "svelte",
+  "total": 112,
+  "successful": 112,
+  "failed": 0,
+  "patterns": [
+    {
+      "pattern": "((?:--)?[$_[:alpha:]][-$_[:alnum:]]*)",
+      "success": true,
+      "generated": {
+        "pattern": "((?:--)?[\\$_\\p{Alpha}][\\-\\$_\\p{Alpha}\\p{Nd}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(/?>)",
+      "success": true,
+      "generated": {
+        "pattern": "(/?>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(<)([^/>\\s]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(<)([^\\/\\>\\p{space}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(<)(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(?=\\s|/?>)",
+      "success": true,
+      "generated": {
+        "pattern": "(<)(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(?=\\p{space}|/?>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(</)(.*?)\\s*(>)|(/>)",
+      "success": true,
+      "generated": {
+        "pattern": "(</)([^\\n]*?)\\p{space}*(>)|(/>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(</)([^/>\\s]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(</)([^\\/\\>\\p{space}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(=)(?!>)",
+      "success": true,
+      "generated": {
+        "pattern": "(=)(?!>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(>)",
+      "success": true,
+      "generated": {
+        "pattern": "(>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<!<)(on|use|bind|transition|in|out|animate|let|class|style)(:)(?:((?:--)?[$_[:alpha:]][-$_[:alnum:]]*(?=\\s*=))|((?:--)?[$_[:alpha:]][-$_[:alnum:]]*))((\\|\\w+)*)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<!<)(on|use|bind|transition|in|out|animate|let|class|style)(:)(?:((?:--)?[\\$_\\p{Alpha}][\\-\\$_\\p{Alpha}\\p{Nd}]*(?=\\p{space}*=))|((?:--)?[\\$_\\p{Alpha}][\\-\\$_\\p{Alpha}\\p{Nd}]*))((\\|[\\p{L}\\p{M}\\p{N}\\p{Pc}]+)*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![\"$'./_[:alnum:]])(\\$\\$)(?=props|restProps|slots)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<![\"\\$'\\.\\/_\\p{Alpha}\\p{Nd}])(\\$\\$)(?=props|restProps|slots)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![\"$'./_[:alnum:]])\\$(?=[_[:alpha:]][$_[:alnum:]]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<![\"\\$'\\.\\/_\\p{Alpha}\\p{Nd}])\\$(?=[_\\p{Alpha}][\\$_\\p{Alpha}\\p{Nd}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![$_[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(extends|in|out|const)(?![$_[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))",
+      "success": true,
+      "generated": {
+        "pattern": "(?<![\\$_\\p{Alpha}\\p{Nd}])(?:(?<=\\.\\.\\.)|(?<!\\.))(extends|in|out|const)(?![\\$_\\p{Alpha}\\p{Nd}])(?:(?=\\.\\.\\.)|(?!\\.))",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![:=])\\s*(\\{)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<![\\:\\=])\\p{space}*(\\{)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<![:=])\\s*(\\{@attach\\s)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<![\\:\\=])\\p{space}*(\\{@attach\\p{space})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(bind):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(bind):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(bind):)this$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(bind):)this(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(class):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(class):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(if|key|then|catch|html|render).*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(if|key|then|catch|html|render)[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(let|class|style):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(let|class|style):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(on):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(on):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(style):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(style):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=(use|transition|in|out|animate):).*$",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=(use|transition|in|out|animate):)[^\\n]*(?=\\n?$)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=<)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=<)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=>)(?!</)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=>)(?!</)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=>)(?=[^\\n]+</(s(?:cript|tyle))[>\\s])",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=>)(?=[^\\n]+</(s(?:cript|tyle))[\\>\\p{space}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=>)\\s",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=>)\\p{space}",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=>\\s*\\()",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=>\\p{space}*\\()",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=[>}])",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=[\\>\\}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=[^=\\s])(?!\\s*=)|(?=/?>)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=[^\\=\\p{space}])(?!\\p{space}*=)|(?=/?>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=])",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=await.*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=await[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=const.*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=const[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=debug.*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=debug[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=each.*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=each[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=snippet.*?)\\G",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=snippet[^\\n]*?)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=then\\b)",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=then\\b)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?<=})",
+      "success": true,
+      "generated": {
+        "pattern": "(?<=\\})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=(?:^\\s*|\\s+)(as)|\\s*([,}]))",
+      "success": true,
+      "generated": {
+        "pattern": "(?=(?:^\\p{space}*|\\p{space}+)(as)|\\p{space}*([\\,\\}]))",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=-->)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=-->)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=/>)|>",
+      "success": true,
+      "generated": {
+        "pattern": "(?=/>)|>",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=/?>)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=/?>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=:)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=:)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=</(s(?:cript|tyle))[>\\s])",
+      "success": true,
+      "generated": {
+        "pattern": "(?=</(s(?:cript|tyle))[\\>\\p{space}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=</)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=</)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=</template)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=</template)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=</|/>)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=</|/>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?==)",
+      "success": true,
+      "generated": {
+        "pattern": "(?==)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=>)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=[:=])",
+      "success": true,
+      "generated": {
+        "pattern": "(?=[\\:\\=])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=[<{])",
+      "success": true,
+      "generated": {
+        "pattern": "(?=[\\<\\{])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\[)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=\\[)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\s*+[^=\\s])",
+      "success": true,
+      "generated": {
+        "pattern": "(?=\\p{space}*+[^\\=\\p{space}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=\\{)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=\\{)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(?=})",
+      "success": true,
+      "generated": {
+        "pattern": "(?=\\})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(@)(component)",
+      "success": true,
+      "generated": {
+        "pattern": "(@)(component)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([\"'])",
+      "success": true,
+      "generated": {
+        "pattern": "([\"'])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([\"'])([.0-9_]+[%\\w]{0,4})(\\1)|([.0-9_]+[%\\w]{0,4})(?=\\s|/?>)",
+      "success": true,
+      "generated": {
+        "pattern": "([\"'])([\\.0-9_]+[\\%\\p{L}\\p{M}\\p{N}\\p{Pc}]{0,4})(\\1)|([\\.0-9_]+[\\%\\p{L}\\p{M}\\p{N}\\p{Pc}]{0,4})(?=\\p{space}|/?>)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([#/:@])(else\\s+if|[a-z]*)",
+      "success": true,
+      "generated": {
+        "pattern": "([\\#\\/\\:\\@])(else\\p{space}+if|[a-z]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "([^\"'/<=>`\\s]|/(?!>))+",
+      "success": true,
+      "generated": {
+        "pattern": "([^\"'\\/\\<\\=\\>\\`\\p{space}]|/(?!>))+",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\3)",
+      "success": true,
+      "generated": {
+        "pattern": "(\\3)()()",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\s*([$_[:alpha:]][$_[:alnum:]]*)\\s*)",
+      "success": true,
+      "generated": {
+        "pattern": "(\\p{space}*([\\$_\\p{Alpha}][\\$_\\p{Alpha}\\p{Nd}]*)\\p{space}*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\w+(?:\\.\\w+)+)|([A-Z]\\w*)",
+      "success": true,
+      "generated": {
+        "pattern": "([\\p{L}\\p{M}\\p{N}\\p{Pc}]+(?:\\.[\\p{L}\\p{M}\\p{N}\\p{Pc}]+)+)|([A-Z][\\p{L}\\p{M}\\p{N}\\p{Pc}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\{)\\s*(#([a-z]*))",
+      "success": true,
+      "generated": {
+        "pattern": "(\\{)\\p{space}*(#([a-z]*))",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\{)\\s*(/([a-z]*))",
+      "success": true,
+      "generated": {
+        "pattern": "(\\{)\\p{space}*(/([a-z]*))",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(\\{)\\s*([:@](else\\s+if|[a-z]*))",
+      "success": true,
+      "generated": {
+        "pattern": "(\\{)\\p{space}*([\\:\\@](else\\p{space}+if|[a-z]*))",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(as)|(?=[,}])",
+      "success": true,
+      "generated": {
+        "pattern": "(as)|(?=[\\,\\}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(generics)(=)([\"'])",
+      "success": true,
+      "generated": {
+        "pattern": "(generics)(=)([\"'])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(svelte)(:)([a-z][-:\\w]*)",
+      "success": true,
+      "generated": {
+        "pattern": "(svelte)(:)([a-z][\\-\\:\\p{L}\\p{M}\\p{N}\\p{Pc}]*)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "(})",
+      "success": true,
+      "generated": {
+        "pattern": "(\\})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ",",
+      "success": true,
+      "generated": {
+        "pattern": ",",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "--.*",
+      "success": true,
+      "generated": {
+        "pattern": "--[^\\n]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "-->",
+      "success": true,
+      "generated": {
+        "pattern": "-->",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ".*",
+      "success": true,
+      "generated": {
+        "pattern": "[^\\n]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": ".*?(?=-->)",
+      "success": true,
+      "generated": {
+        "pattern": "[^\\n]*?(?=-->)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "/?>",
+      "success": true,
+      "generated": {
+        "pattern": "/?>",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "<!--",
+      "success": true,
+      "generated": {
+        "pattern": "<!--",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "<(script|style|template)",
+      "success": true,
+      "generated": {
+        "pattern": "<(script|style|template)",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "</\\1\\s*>|/>",
+      "success": true,
+      "generated": {
+        "pattern": "</\\1\\p{space}*>|/>()",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "=",
+      "success": true,
+      "generated": {
+        "pattern": "=",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[$_[:alpha:]][$_[:alnum:]]*",
+      "success": true,
+      "generated": {
+        "pattern": "[\\$_\\p{Alpha}][\\$_\\p{Alpha}\\p{Nd}]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[a-z][-0-:\\w]*",
+      "success": true,
+      "generated": {
+        "pattern": "[a-z][\\-0-\\:\\p{L}\\p{M}\\p{N}\\p{Pc}]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "[a-z][0-:\\w]*-[-0-:\\w]*",
+      "success": true,
+      "generated": {
+        "pattern": "[a-z][0-\\:\\p{L}\\p{M}\\p{N}\\p{Pc}]*-[\\-0-\\:\\p{L}\\p{M}\\p{N}\\p{Pc}]*",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\(",
+      "success": true,
+      "generated": {
+        "pattern": "\\(",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\)|(?=})",
+      "success": true,
+      "generated": {
+        "pattern": "\\)|(?=\\})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\.",
+      "success": true,
+      "generated": {
+        "pattern": "\\.",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\1",
+      "success": true,
+      "generated": {
+        "pattern": "\\1()",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G",
+      "success": true,
+      "generated": {
+        "pattern": "",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G(?=\\s*[^>]*?(type|lang)\\s*=\\s*([\"']?)(?:text/)?(\\w+)\\2)",
+      "success": true,
+      "generated": {
+        "pattern": "(?=\\p{space}*[^\\>]*?(type|lang)\\p{space}*=\\p{space}*([\"']?)(?:text/)?([\\p{L}\\p{M}\\p{N}\\p{Pc}]+)\\2)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G-?>|<!--(?!>)|<!-(?=-->)|--!>",
+      "success": true,
+      "generated": {
+        "pattern": "^-?>|<!--(?!>)|<!-(?=-->)|--!>",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G\\s*(?=\\{)",
+      "success": true,
+      "generated": {
+        "pattern": "\\p{space}*(?=\\{)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G\\s*([$_[:alpha:]][$_[:alnum:]]*)\\s*(?=<)",
+      "success": true,
+      "generated": {
+        "pattern": "\\p{space}*([\\$_\\p{Alpha}][\\$_\\p{Alpha}\\p{Nd}]*)\\p{space}*(?=<)",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G\\s*([$_[:alpha:]][$_[:alnum:]]+)\\s*",
+      "success": true,
+      "generated": {
+        "pattern": "\\p{space}*([\\$_\\p{Alpha}][\\$_\\p{Alpha}\\p{Nd}]+)\\p{space}*",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\G\\s*?(?=\\S)",
+      "success": true,
+      "generated": {
+        "pattern": "\\p{space}*?(?=\\P{space})",
+        "flags": "y",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\s+(then)|(?=})",
+      "success": true,
+      "generated": {
+        "pattern": "\\p{space}+(then)|(?=\\})",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\w+",
+      "success": true,
+      "generated": {
+        "pattern": "[\\p{L}\\p{M}\\p{N}\\p{Pc}]+",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\{",
+      "success": true,
+      "generated": {
+        "pattern": "\\{",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "\\|",
+      "success": true,
+      "generated": {
+        "pattern": "\\|",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "^(?!\\s*</(s(?:cript|tyle))[>\\s])",
+      "success": true,
+      "generated": {
+        "pattern": "^(?!\\p{space}*</(s(?:cript|tyle))[\\>\\p{space}])",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "await|then|catch",
+      "success": true,
+      "generated": {
+        "pattern": "await|then|catch",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "class|style",
+      "success": true,
+      "generated": {
+        "pattern": "class|style",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "const",
+      "success": true,
+      "generated": {
+        "pattern": "const",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "debug",
+      "success": true,
+      "generated": {
+        "pattern": "debug",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "each|key",
+      "success": true,
+      "generated": {
+        "pattern": "each|key",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "html",
+      "success": true,
+      "generated": {
+        "pattern": "html",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "if|else\\s+if|else",
+      "success": true,
+      "generated": {
+        "pattern": "if|else\\p{space}+if|else",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "let",
+      "success": true,
+      "generated": {
+        "pattern": "let",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "on|use|bind",
+      "success": true,
+      "generated": {
+        "pattern": "on|use|bind",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "render",
+      "success": true,
+      "generated": {
+        "pattern": "render",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "slot",
+      "success": true,
+      "generated": {
+        "pattern": "slot",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "snippet",
+      "success": true,
+      "generated": {
+        "pattern": "snippet",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "transition|in|out|animate",
+      "success": true,
+      "generated": {
+        "pattern": "transition|in|out|animate",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    },
+    {
+      "pattern": "}",
+      "success": true,
+      "generated": {
+        "pattern": "\\}",
+        "flags": "",
+        "options": {
+          "disable": {
+            "x": true,
+            "n": true
+          },
+          "force": {
+            "v": true
+          }
+        },
+        "_captureTransfers": [],
+        "_hiddenCaptures": []
+      }
+    }
+  ]
+}

@@ -57,6 +57,20 @@ export function run_generate_expected_regex_plus_ast(configJson) {
   }
 }
 
+export function run_generate_expected_generated(configJson) {
+  try {
+    const output = execFileSync('node', ['dev/generate_expected_generated.mjs', configJson], {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'inherit'],
+    })
+    return new Ok(output)
+  }
+  catch (error) {
+    const message = error.stdout || error.message
+    return new Error(message)
+  }
+}
+
 export function run_spy_toregexp_calls(configJson) {
   try {
     const output = execFileSync('node', ['dev/spy_toregexp_calls.mjs', configJson], {

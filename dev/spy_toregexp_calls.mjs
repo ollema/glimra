@@ -70,6 +70,17 @@ function deriveParseAndTransformOptions(opts) {
   }
 }
 
+function deriveGenerateOptions(opts) {
+  return {
+    accuracy: opts.accuracy || 'default',
+    target: opts.target,
+    verbose: opts.verbose ?? false,
+    rules: {
+      recursionLimit: opts.rules?.recursionLimit ?? 20,
+    },
+  }
+}
+
 function loadGrammar(langConfig) {
   const filepath = path.join(GRAMMARS_DIR, langConfig.file)
   if (!fs.existsSync(filepath))
@@ -166,6 +177,7 @@ function main() {
       toRegExpOptions: entry.options,
       derivedParseOptions: entry.derived.parseOpts,
       derivedTransformOptions: entry.derived.transformOpts,
+      derivedGenerateOptions: deriveGenerateOptions(entry.options),
       callCount: entry.count,
       samplePatterns: entry.samples,
     })),
