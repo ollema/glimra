@@ -14,6 +14,7 @@ import gleam/dict.{type Dict}
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/result
+import gleam/set.{type Set}
 import glimra/oniguruma_parser/parser/ast_types.{
   type AbsenceFunctionNode, type AlternativeElement, type AlternativeNode,
   type AssertionNode, type BackreferenceNode, type CapturingGroupNode,
@@ -60,9 +61,13 @@ pub type FirstPassState {
     word_is_ascii: Bool,
     flag_directives_by_alt: Dict(Int, List(DirectiveNode)),
     js_group_name_map: Dict(String, String),
+    /// Counter for assigning transform_ids to CapturingGroups
+    next_transform_id: Int,
     passed_lookbehind: Bool,
     strategy: Option(Strategy),
     subroutine_ref_map: Dict(SubroutineRefKey, types.SubroutineRefEntry),
+    /// Set of group numbers that are actually targeted by subroutines
+    subroutine_target_numbers: Set(Int),
     supported_g_nodes: List(AssertionNode),
   )
 }
@@ -802,41 +807,62 @@ fn transform_capturing_group(
   node: CapturingGroupNode,
   state: FirstPassState,
 ) -> #(List(AlternativeElement), FirstPassState) {
-  // Register in subroutine ref map with current flag context
-  let entry = types.SubroutineRefEntry(group: node, flags: state.current_flags)
-  let new_map =
-    dict.insert(state.subroutine_ref_map, NumberedKey(node.number), entry)
-  let new_map2 = case node.name {
-    Some(name) -> dict.insert(new_map, NamedKey(name), entry)
-    None -> new_map
+  // Assign transform_id if not present
+  let #(node_with_id, state_with_id) = case node.transform_id {
+    Some(_) -> #(node, state)
+    None -> {
+      let new_id = state.next_transform_id
+      #(
+        CapturingGroupNode(..node, transform_id: Some(new_id)),
+        FirstPassState(..state, next_transform_id: state.next_transform_id + 1),
+      )
+    }
   }
 
   // Transform name if needed
   let #(new_name, new_js_map) = case node.name {
     Some(name) ->
       case is_valid_js_group_name(name) {
-        True -> #(Some(name), state.js_group_name_map)
+        True -> #(Some(name), state_with_id.js_group_name_map)
         False -> {
           let #(js_name, updated_map) =
-            get_or_insert_group_name(name, state.js_group_name_map)
+            get_or_insert_group_name(name, state_with_id.js_group_name_map)
           #(Some(js_name), updated_map)
         }
       }
-    None -> #(None, state.js_group_name_map)
+    None -> #(None, state_with_id.js_group_name_map)
   }
 
-  let state2 =
-    FirstPassState(
-      ..state,
-      subroutine_ref_map: new_map2,
-      js_group_name_map: new_js_map,
+  let state2 = FirstPassState(..state_with_id, js_group_name_map: new_js_map)
+
+  // Transform body FIRST (so nested groups get their transform_ids)
+  let #(new_body, state_after_body) =
+    transform_alternatives(node_with_id.body, state2, 0, False)
+
+  // Create the fully transformed node
+  let new_node =
+    CapturingGroupNode(..node_with_id, name: new_name, body: new_body)
+
+  // Register in subroutine ref map AFTER transforming body
+  // This ensures the entry has the fully transformed node with all nested IDs
+  let entry =
+    types.SubroutineRefEntry(
+      group: new_node,
+      flags: state_with_id.current_flags,
     )
+  let new_map =
+    dict.insert(
+      state_after_body.subroutine_ref_map,
+      NumberedKey(node.number),
+      entry,
+    )
+  let new_map2 = case node.name {
+    Some(name) -> dict.insert(new_map, NamedKey(name), entry)
+    None -> new_map
+  }
 
-  // Transform body
-  let #(new_body, final_state) =
-    transform_alternatives(node.body, state2, 0, False)
-
-  let new_node = CapturingGroupNode(..node, name: new_name, body: new_body)
+  let final_state =
+    FirstPassState(..state_after_body, subroutine_ref_map: new_map2)
 
   #([CapturingGroupE(new_node)], final_state)
 }
@@ -1489,11 +1515,25 @@ fn transform_subroutine(
 ) -> #(List(AlternativeElement), FirstPassState) {
   case node.ref {
     NamedSubroutineRef(name) -> {
+      // Look up the referenced group to get its number
+      let state_with_target = case
+        dict.get(state.subroutine_ref_map, NamedKey(name))
+      {
+        Ok(entry) ->
+          FirstPassState(
+            ..state,
+            subroutine_target_numbers: set.insert(
+              state.subroutine_target_numbers,
+              entry.group.number,
+            ),
+          )
+        Error(_) -> state
+      }
       case is_valid_js_group_name(name) {
-        True -> #([SubroutineE(node)], state)
+        True -> #([SubroutineE(node)], state_with_target)
         False -> {
           let #(js_name, new_map) =
-            get_or_insert_group_name(name, state.js_group_name_map)
+            get_or_insert_group_name(name, state_with_target.js_group_name_map)
           let new_node =
             SubroutineNode(
               ref: NamedSubroutineRef(js_name),
@@ -1501,12 +1541,19 @@ fn transform_subroutine(
             )
           #(
             [SubroutineE(new_node)],
-            FirstPassState(..state, js_group_name_map: new_map),
+            FirstPassState(..state_with_target, js_group_name_map: new_map),
           )
         }
       }
     }
-    NumberedSubroutineRef(_) -> #([SubroutineE(node)], state)
+    NumberedSubroutineRef(n) -> {
+      // Track this group number as a subroutine target
+      let new_targets = set.insert(state.subroutine_target_numbers, n)
+      #(
+        [SubroutineE(node)],
+        FirstPassState(..state, subroutine_target_numbers: new_targets),
+      )
+    }
   }
 }
 

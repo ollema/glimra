@@ -85,6 +85,61 @@ export function compare_json(a, b) {
 }
 
 /**
+ * Find first difference between two JSON strings (for debugging)
+ * @param {string} a - First JSON string
+ * @param {string} b - Second JSON string
+ * @returns {string} - Description of first difference
+ */
+export function json_diff(a, b) {
+  try {
+    const objA = JSON.parse(a);
+    const objB = JSON.parse(b);
+    return findDiff(objA, objB, '');
+  } catch (e) {
+    return 'Parse error: ' + e.message;
+  }
+}
+
+function findDiff(a, b, path) {
+  if (a === b) return '';
+  if (typeof a !== typeof b) {
+    return path + ': type mismatch (' + typeof a + ' vs ' + typeof b + ')';
+  }
+  if (a === null || b === null) {
+    return path + ': null mismatch';
+  }
+  if (Array.isArray(a) !== Array.isArray(b)) {
+    return path + ': array/object mismatch';
+  }
+  if (Array.isArray(a)) {
+    if (a.length !== b.length) {
+      return path + ': array length mismatch (' + a.length + ' vs ' + b.length + ')';
+    }
+    for (let i = 0; i < a.length; i++) {
+      const diff = findDiff(a[i], b[i], path + '[' + i + ']');
+      if (diff) return diff;
+    }
+    return '';
+  }
+  if (typeof a === 'object') {
+    const keysA = Object.keys(a).sort();
+    const keysB = Object.keys(b).sort();
+    if (keysA.join(',') !== keysB.join(',')) {
+      const missingInB = keysA.filter(k => !keysB.includes(k));
+      const missingInA = keysB.filter(k => !keysA.includes(k));
+      return path + ': key mismatch (missing in A: [' + missingInA + '], missing in B: [' + missingInB + '])';
+    }
+    for (const key of keysA) {
+      const diff = findDiff(a[key], b[key], path + '.' + key);
+      if (diff) return diff;
+    }
+    return '';
+  }
+  // Primitive mismatch
+  return path + ': value mismatch (' + JSON.stringify(a) + ' vs ' + JSON.stringify(b) + ')';
+}
+
+/**
  * Convert a JavaScript value to a JSON string
  * Used to convert decoded dynamic values back to JSON
  * @param {any} value - JavaScript value (from Gleam dynamic)

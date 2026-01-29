@@ -116,6 +116,8 @@ pub type CapturingGroupNode {
     name: Option(String),
     is_subroutined: Option(Bool),
     body: List(AlternativeNode),
+    /// Optional unique ID for tracking through transforms (set during transform, not parsing)
+    transform_id: Option(Int),
   )
 }
 

@@ -8,6 +8,7 @@
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/option.{type Option, None, Some}
+import gleam/set.{type Set}
 import glimra/oniguruma_parser/parser/ast_types.{
   type AlternativeElement, type AlternativeNode, type BackreferenceNode,
   type BackreferenceRef, type CapturingGroupNode, type CharacterClassElement,
@@ -25,7 +26,7 @@ import glimra/oniguruma_to_es/transform/types.{
   GroupNameInfo, NamedKey, NumberedKey,
 }
 import glimra/oniguruma_to_es/transform/utils.{
-  type CurrentFlags, are_flags_equal, clone_capturing_group,
+  type CloneState, type CurrentFlags, are_flags_equal, clone_capturing_group,
   get_flag_mods_from_flags, get_new_current_flags,
 }
 
@@ -39,12 +40,15 @@ pub type SecondPassState {
     current_flags: CurrentFlags,
     prev_flags: Option(CurrentFlags),
     global_flags: CurrentFlags,
-    group_origin_by_copy: Dict(CapturingGroupNode, CapturingGroupNode),
+    /// Clone state tracking (replaces group_origin_by_copy)
+    clone_state: CloneState,
     groups_by_name: Dict(String, Dict(CapturingGroupNode, GroupNameInfo)),
     multiplex_captures_to_left_by_ref: Dict(MultiplexKey, List(MultiplexEntry)),
     open_refs: Dict(Int, CapturingGroupNode),
     reffed_nodes_by_referencer: Dict(Int, List(CapturingGroupNode)),
     subroutine_ref_map: Dict(SubroutineRefKey, SubroutineRefEntry),
+    /// Set of group numbers that are actually targeted by subroutines
+    subroutine_target_numbers: Set(Int),
   )
 }
 
@@ -230,36 +234,38 @@ fn transform_capturing_group(
   node: CapturingGroupNode,
   state: SecondPassState,
 ) -> #(List(AlternativeElement), SecondPassState) {
-  // Check if we're in a recursive context
-  let origin = dict.get(state.group_origin_by_copy, node)
+  // Check if this node is a clone (has a transform_id that's a key in id_relationships)
+  let is_clone = case node.transform_id {
+    Some(id) -> dict.has_key(state.clone_state.id_relationships, id)
+    None -> False
+  }
 
-  case origin {
-    Ok(_orig) -> {
-      // Handle recursion - check if we're within the same group
-      case dict.get(state.open_refs, node.number) {
-        Ok(open_node) -> {
-          // This is a recursive reference - create a recursion marker
-          let recursion_node =
-            SubroutineNode(
-              ref: NumberedSubroutineRef(node.number),
-              is_recursive: Some(True),
-            )
-          // Track the referenced node for later renumbering in third pass
-          // Use a unique key based on the recursion node's identity
-          let recursion_key =
-            node.number * 1000 + dict.size(state.reffed_nodes_by_referencer)
-          let new_reffed =
-            dict.insert(state.reffed_nodes_by_referencer, recursion_key, [
-              open_node,
-            ])
-          let new_state =
-            SecondPassState(..state, reffed_nodes_by_referencer: new_reffed)
-          #([SubroutineE(recursion_node)], new_state)
-        }
-        Error(_) -> transform_capturing_group_normal(node, state)
+  // Handle recursion: if this is a clone AND its number is in openRefs,
+  // it's a recursive reference - replace with recursion marker
+  case is_clone && dict.has_key(state.open_refs, node.number) {
+    True -> {
+      // Get the open node for tracking
+      let open_node = case dict.get(state.open_refs, node.number) {
+        Ok(n) -> n
+        Error(_) -> node
+        // Shouldn't happen
       }
+      // Create recursion marker
+      let recursion_node =
+        SubroutineNode(
+          ref: NumberedSubroutineRef(node.number),
+          is_recursive: Some(True),
+        )
+      // Track the referenced node for third pass
+      let recursion_key =
+        node.number * 1000 + dict.size(state.reffed_nodes_by_referencer)
+      let new_reffed =
+        dict.insert(state.reffed_nodes_by_referencer, recursion_key, [open_node])
+      let new_state =
+        SecondPassState(..state, reffed_nodes_by_referencer: new_reffed)
+      #([SubroutineE(recursion_node)], new_state)
     }
-    Error(_) -> transform_capturing_group_normal(node, state)
+    False -> transform_capturing_group_normal(node, state)
   }
 }
 
@@ -267,32 +273,57 @@ fn transform_capturing_group_normal(
   node: CapturingGroupNode,
   state: SecondPassState,
 ) -> #(List(AlternativeElement), SecondPassState) {
+  // Check if this group is referenced by a subroutine (should be marked is_subroutined)
+  let is_reffed_by_subroutine =
+    is_subroutine_target(node, state.subroutine_target_numbers)
+  let node_with_subroutined = case is_reffed_by_subroutine {
+    True -> CapturingGroupNode(..node, is_subroutined: Some(True))
+    False -> node
+  }
+
   // Mark this group as open for recursion detection
   let state_with_open =
     SecondPassState(
       ..state,
-      open_refs: dict.insert(state.open_refs, node.number, node),
+      open_refs: dict.insert(
+        state.open_refs,
+        node_with_subroutined.number,
+        node_with_subroutined,
+      ),
     )
 
   // Track multiplex data
-  let state_with_multiplex = track_multiplex_data(node, state_with_open)
+  let state_with_multiplex =
+    track_multiplex_data(node_with_subroutined, state_with_open)
 
   // Track duplicate names
-  let state_with_names = track_duplicate_names(node, state_with_multiplex)
+  let state_with_names =
+    track_duplicate_names(node_with_subroutined, state_with_multiplex)
 
   // Transform body
   let #(new_body, state_after_body) =
-    transform_alternatives(node.body, state_with_names)
+    transform_alternatives(node_with_subroutined.body, state_with_names)
 
   // Remove from open refs
   let final_state =
     SecondPassState(
       ..state_after_body,
-      open_refs: dict.delete(state_after_body.open_refs, node.number),
+      open_refs: dict.delete(
+        state_after_body.open_refs,
+        node_with_subroutined.number,
+      ),
     )
 
-  let new_node = CapturingGroupNode(..node, body: new_body)
+  let new_node = CapturingGroupNode(..node_with_subroutined, body: new_body)
   #([CapturingGroupE(new_node)], final_state)
+}
+
+/// Check if a capturing group is referenced by a subroutine
+fn is_subroutine_target(
+  node: CapturingGroupNode,
+  subroutine_target_numbers: Set(Int),
+) -> Bool {
+  set.contains(subroutine_target_numbers, node.number)
 }
 
 /// Track multiplex data for backref multiplexing
@@ -300,9 +331,15 @@ fn track_multiplex_data(
   node: CapturingGroupNode,
   state: SecondPassState,
 ) -> SecondPassState {
-  let origin = case dict.get(state.group_origin_by_copy, node) {
-    Ok(orig) -> Some(orig)
-    Error(_) -> None
+  // Check if this node is a clone by looking up its transform_id
+  let origin = case node.transform_id {
+    Some(id) ->
+      case dict.get(state.clone_state.id_relationships, id) {
+        Ok(_origin_id) -> Some(node)
+        // Just mark as having an origin
+        Error(_) -> None
+      }
+    None -> None
   }
 
   let entry = MultiplexEntry(node: node, origin: origin)
@@ -362,17 +399,21 @@ fn track_duplicate_names(
   case node.name {
     None -> state
     Some(name) -> {
-      let origin = dict.get(state.group_origin_by_copy, node)
+      // Check if this node is a clone
+      let is_clone = case node.transform_id {
+        Some(id) -> dict.has_key(state.clone_state.id_relationships, id)
+        None -> False
+      }
       let existing = case dict.get(state.groups_by_name, name) {
         Ok(groups) -> groups
         Error(_) -> dict.new()
       }
 
       // Check if we need to mark this as duplicate
-      let has_duplicate = case origin {
-        Ok(_) -> True
+      let has_duplicate = case is_clone {
+        True -> True
         // From subroutine expansion
-        Error(_) -> dict.size(existing) > 0
+        False -> dict.size(existing) > 0
       }
 
       let info =
@@ -559,32 +600,33 @@ fn transform_subroutine(
   case dict.get(state.subroutine_ref_map, key) {
     Error(_) -> #([SubroutineE(node)], state)
     Ok(reffed_entry) -> {
-      // Check for global recursion
+      // Check for global recursion (ref 0) - only case we don't clone
       case node.ref {
         NumberedSubroutineRef(0) -> {
           // Global recursion - mark as recursive
-          #([SubroutineE(node)], state)
+          #(
+            [SubroutineE(SubroutineNode(..node, is_recursive: Some(True)))],
+            state,
+          )
         }
         _ -> {
-          // Clone the referenced group
-          let #(cloned, new_origin_map) =
-            clone_capturing_group(
-              reffed_entry.group,
-              state.group_origin_by_copy,
-            )
+          // Clone the referenced group and traverse it
+          // Recursion is handled in transform_capturing_group when the clone
+          // is detected AND its number is already open
+          let #(cloned, new_clone_state) =
+            clone_capturing_group(reffed_entry.group, state.clone_state)
 
-          let state_with_origin =
-            SecondPassState(..state, group_origin_by_copy: new_origin_map)
+          let state_with_clone =
+            SecondPassState(..state, clone_state: new_clone_state)
 
           // Check if flags need to be wrapped
-          // Use the flags stored with the referenced group
           let reffed_flags = reffed_entry.flags
 
           case are_flags_equal(reffed_flags, state.current_flags) {
             True -> {
               // Transform the cloned group
               let #(elems, final_state) =
-                transform_capturing_group(cloned, state_with_origin)
+                transform_capturing_group(cloned, state_with_clone)
               #(elems, final_state)
             }
             False -> {
@@ -595,7 +637,7 @@ fn transform_subroutine(
                   AlternativeNode(body: [CapturingGroupE(cloned)]),
                 ])
               let #(elems, final_state) =
-                transform_group(wrapper, state_with_origin)
+                transform_group(wrapper, state_with_clone)
               #(elems, final_state)
             }
           }

@@ -1,5 +1,4 @@
 /// Shared types for the transform module.
-import gleam/dict.{type Dict}
 import gleam/option.{type Option}
 import glimra/oniguruma_parser/parser/ast_types.{
   type CapturingGroupNode, type RegexNode,
@@ -10,12 +9,14 @@ import glimra/oniguruma_parser/parser/ast_types.{
 // ============================================================================
 
 /// The transformed AST with additional metadata
+/// Note: origin_map stores pairs of (copy, origin) CapturingGroupNodes
+/// to match the JS _originMap: Map<CapturingGroup, CapturingGroup>
 pub type RegexPlusAst {
   RegexPlusAst(
     ast: RegexNode,
     flags: RegexPlusFlags,
     options: TransformOptions,
-    origin_map: Dict(Int, Int),
+    origin_map: List(#(CapturingGroupNode, CapturingGroupNode)),
     strategy: Option(Strategy),
   )
 }

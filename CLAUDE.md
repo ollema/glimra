@@ -1,8 +1,10 @@
 # glimra Development Guide
 
-Always format, check and test changes.
+Always `gleam format`, `gleam check` and `gleam test` changes.
 
 When debugging, use filters to limit the scope of tests run.
+
+Use `////` for module docs and `///` for function docs.
 
 ## Commands
 
@@ -22,11 +24,11 @@ gleam test -- snippets/javascript
 # Run tests matching a name pattern, for example a theme name like "nord"
 gleam test -- --test-name-filter="nord"
 
-# Combine file and name filters
-gleam test -- snippets/javascript --test-name-filter="nord"
+# Run tests matching a name pattern, for example the AST tests
+gleam test -- --test-name-filter="ast"
 
 # Run all codegen tasks (vendor + generate-references + generate-tests)
-gleam run -m codegen /path/to/textmate-grammars-themes
+gleam run -m codegen ../textmate-grammars-themes
 ```
 
 # JavaScript reference:

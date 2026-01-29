@@ -913,6 +913,7 @@ fn parse_group(
           name: name,
           is_subroutined: None,
           body: [],
+          transform_id: None,
         )
       let new_ctx =
         Context(
@@ -960,6 +961,7 @@ fn parse_group(
           name: name,
           is_subroutined: None,
           body: body,
+          transform_id: None,
         )
       Ok(#(CapturingGroupE(node), ctx4))
     }
@@ -1218,6 +1220,7 @@ pub fn create_capturing_group(
     name: name,
     is_subroutined: None,
     body: body,
+    transform_id: None,
   )
 }
 

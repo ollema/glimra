@@ -20,10 +20,12 @@ import glimra/oniguruma_parser/parser/ast_types.{
   CapturingGroupNode, CharacterCCE, CharacterClassCCE, CharacterClassE,
   CharacterClassNode, CharacterClassRangeCCE, CharacterE, CharacterSetCCE,
   CharacterSetE, DirectiveE, GroupE, GroupNode, Lookahead, LookaroundAssertionE,
-  LookaroundAssertionNode, NamedCalloutE, NamedRef, NumberedRef, QuantifierE,
-  QuantifierNode, RegexNode, SubroutineE,
+  LookaroundAssertionNode, NamedCalloutE, NamedRef, NamedSubroutineRef,
+  NumberedRef, NumberedSubroutineRef, QuantifierE, QuantifierNode, RegexNode,
+  SubroutineE, SubroutineNode,
 }
 import glimra/oniguruma_to_es/transform/types.{type GroupNameInfo}
+import glimra/oniguruma_to_es/transform/utils.{type CloneState}
 
 // ============================================================================
 // State Types
@@ -35,11 +37,17 @@ pub type ThirdPassState {
     /// Names we've already emitted (used to remove duplicates)
     emitted_names: Set(String),
     groups_by_name: Dict(String, Dict(CapturingGroupNode, GroupNameInfo)),
+    /// Clone state from second pass (contains id_relationships for origin tracking)
+    clone_state: CloneState,
     highest_orphan_backref: Int,
     num_captures_to_left: Int,
     /// Track currently open groups (groups we're inside)
-    open_groups: List(Int),
+    /// Each entry is #(original_number, new_number)
+    open_groups: List(#(Int, Int)),
     reffed_nodes_by_referencer: Dict(Int, List(CapturingGroupNode)),
+    /// Captures that can participate with backreferences in the current alternation path
+    /// This tracks captures that are "to the left" in the same path, excluding sibling alternatives
+    captures_in_path: List(CapturingGroupNode),
   )
 }
 
@@ -91,6 +99,7 @@ fn add_dummy_captures(
                 name: None,
                 is_subroutined: None,
                 body: [AlternativeNode(body: [])],
+                transform_id: None,
               ))
             })
 
@@ -117,21 +126,67 @@ fn transform_alternatives(
   alts: List(AlternativeNode),
   state: ThirdPassState,
 ) -> #(List(AlternativeNode), ThirdPassState) {
-  transform_alternatives_loop(alts, [], state)
+  // Save captures_in_path before processing alternatives
+  // Sibling alternatives don't share their in-progress captures with each other
+  let saved_captures = state.captures_in_path
+  transform_alternatives_loop(alts, [], state, saved_captures, [])
 }
 
 fn transform_alternatives_loop(
   remaining: List(AlternativeNode),
   acc: List(AlternativeNode),
   state: ThirdPassState,
+  saved_captures: List(CapturingGroupNode),
+  accumulated_captures: List(CapturingGroupNode),
 ) -> #(List(AlternativeNode), ThirdPassState) {
   case remaining {
-    [] -> #(list.reverse(acc), state)
+    [] -> {
+      // After processing all alternatives, KEEP the accumulated captures
+      // Captures from inside nested groups should be visible to backreferences
+      // that come after the group containing these alternatives
+      // Merge: saved_captures + all new captures found in any alternative
+      let merged_captures = merge_captures(saved_captures, accumulated_captures)
+      let final_state =
+        ThirdPassState(..state, captures_in_path: merged_captures)
+      #(list.reverse(acc), final_state)
+    }
     [alt, ..rest] -> {
-      let #(new_alt, new_state) = transform_alternative(alt, state)
-      transform_alternatives_loop(rest, [new_alt, ..acc], new_state)
+      // Reset captures_in_path before each alternative (siblings don't share)
+      let state_for_alt =
+        ThirdPassState(..state, captures_in_path: saved_captures)
+      let #(new_alt, new_state) = transform_alternative(alt, state_for_alt)
+      // Collect new captures found in this alternative
+      let new_captures =
+        list.filter(new_state.captures_in_path, fn(cap) {
+          !list.any(saved_captures, fn(saved) {
+            saved.transform_id == cap.transform_id
+          })
+        })
+      let updated_accumulated = list.append(accumulated_captures, new_captures)
+      transform_alternatives_loop(
+        rest,
+        [new_alt, ..acc],
+        new_state,
+        saved_captures,
+        updated_accumulated,
+      )
     }
   }
+}
+
+/// Merge two lists of captures, avoiding duplicates by transform_id
+fn merge_captures(
+  base: List(CapturingGroupNode),
+  additions: List(CapturingGroupNode),
+) -> List(CapturingGroupNode) {
+  list.fold(additions, base, fn(acc, cap) {
+    case
+      list.any(acc, fn(existing) { existing.transform_id == cap.transform_id })
+    {
+      True -> acc
+      False -> [cap, ..acc]
+    }
+  })
 }
 
 fn transform_alternative(
@@ -240,14 +295,12 @@ fn transform_backreference(
         Error(_) -> []
       }
 
-      // Filter to participating captures
+      // Filter to participating captures - must be in the current alternation path
+      // This handles the case where captures in sibling alternatives can't participate
       let participants =
         list.filter(reffed_nodes, fn(reffed) {
-          can_participate_with_node(
-            reffed,
-            state.num_captures_to_left,
-            state.open_groups,
-          )
+          is_capture_in_path(reffed, state.captures_in_path)
+          && !is_in_open_groups(reffed.number, state.open_groups)
         })
 
       case participants {
@@ -301,17 +354,42 @@ fn string_hash(s: String) -> Int {
   |> list.fold(0, fn(acc, cp) { acc * 31 + string.utf_codepoint_to_int(cp) })
 }
 
-/// Check if a capture can participate with a node
-/// A capture can participate if:
-/// 1. Its number is <= current position (it's been defined)
-/// 2. It's not currently "open" (we're not inside it)
-fn can_participate_with_node(
-  capture: CapturingGroupNode,
-  current_num: Int,
-  open_groups: List(Int),
+/// Check if an original group number is currently open
+fn is_in_open_groups(
+  original_number: Int,
+  open_groups: List(#(Int, Int)),
 ) -> Bool {
-  // Capture must be defined and not currently open (we're inside it)
-  capture.number <= current_num && !list.contains(open_groups, capture.number)
+  list.any(open_groups, fn(entry) { entry.0 == original_number })
+}
+
+/// Find the new number for an original group number in open_groups
+fn find_new_number_for_original(
+  original_number: Int,
+  open_groups: List(#(Int, Int)),
+) -> option.Option(Int) {
+  list.find_map(open_groups, fn(entry) {
+    case entry.0 == original_number {
+      True -> Ok(entry.1)
+      False -> Error(Nil)
+    }
+  })
+  |> option.from_result
+}
+
+/// Check if a capture is in the current alternation path
+/// Compares by transform_id for identity matching between the second pass
+/// reffed_nodes and the third pass renumbered captures
+fn is_capture_in_path(
+  capture: CapturingGroupNode,
+  path: List(CapturingGroupNode),
+) -> Bool {
+  list.any(path, fn(path_capture) {
+    // Compare by transform_id for identity matching
+    case capture.transform_id, path_capture.transform_id {
+      Some(cap_id), Some(path_id) -> cap_id == path_id
+      _, _ -> False
+    }
+  })
 }
 
 // ============================================================================
@@ -324,11 +402,13 @@ fn transform_capturing_group(
 ) -> #(List(AlternativeElement), ThirdPassState) {
   // Increment capture count and renumber
   let new_num = state.num_captures_to_left + 1
+  let original_num = node.number
 
   // Add to open groups (we're inside this group now)
+  // Track both original and new numbers for proper backref/subroutine handling
   let state_with_open =
     ThirdPassState(..state, num_captures_to_left: new_num, open_groups: [
-      new_num,
+      #(original_num, new_num),
       ..state.open_groups
     ])
 
@@ -359,17 +439,22 @@ fn transform_capturing_group(
   let #(new_body, state_after_body) =
     transform_alternatives(node.body, state_with_emitted)
 
+  let new_node =
+    CapturingGroupNode(..node, number: new_num, name: new_name, body: new_body)
+
   // Remove from open groups (we've exited this group)
+  // Add to captures_in_path (so backreferences after this group can see it)
+  // Note: origin_map is built from transform_ids after all transforms are done
   let final_state =
     ThirdPassState(
       ..state_after_body,
-      open_groups: list.filter(state_after_body.open_groups, fn(n) {
-        n != new_num
+      open_groups: list.filter(state_after_body.open_groups, fn(entry) {
+        entry.1 != new_num
       }),
+      // Add this capture to the path so subsequent backreferences can reference it
+      captures_in_path: [new_node, ..state_after_body.captures_in_path],
     )
 
-  let new_node =
-    CapturingGroupNode(..node, number: new_num, name: new_name, body: new_body)
   #([CapturingGroupE(new_node)], final_state)
 }
 
@@ -503,6 +588,32 @@ fn transform_subroutine(
   state: ThirdPassState,
 ) -> #(List(AlternativeElement), ThirdPassState) {
   // For recursive subroutines, update the ref to use the new number
-  // This is simplified - a full implementation would track the referenced group
-  #([SubroutineE(node)], state)
+  // The recursion appears within the group it references, so that group is in open_groups
+  case node.is_recursive {
+    Some(True) -> {
+      // Get the original ref number
+      let original_ref = case node.ref {
+        NumberedSubroutineRef(n) -> n
+        NamedSubroutineRef(_) -> 0
+        // Named refs don't need updating
+      }
+      // Look up the new number from open_groups
+      case find_new_number_for_original(original_ref, state.open_groups) {
+        Some(new_num) -> {
+          // Update ref to use the new number
+          let new_node =
+            SubroutineNode(..node, ref: NumberedSubroutineRef(new_num))
+          #([SubroutineE(new_node)], state)
+        }
+        None -> {
+          // Couldn't find the group - shouldn't happen for valid recursive refs
+          #([SubroutineE(node)], state)
+        }
+      }
+    }
+    _ -> {
+      // Non-recursive subroutines - no change needed
+      #([SubroutineE(node)], state)
+    }
+  }
 }
