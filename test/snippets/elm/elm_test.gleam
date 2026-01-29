@@ -73,3 +73,11 @@ pub fn elm_generated_tests() {
     }),
   ])
 }
+
+pub fn elm_recursion_tests() {
+  describe("elm expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Elm)
+    }),
+  ])
+}

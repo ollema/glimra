@@ -238,6 +238,14 @@ pub fn " <> lang_id <> "_generated_tests() {
     }),
   ])
 }
+
+pub fn " <> lang_id <> "_recursion_tests() {
+  describe(\"" <> lang_id <> " expected recursion validation\", [
+    it(\"processes all patterns correctly\", fn() {
+      test_helpers.validate_expected_recursion(languages." <> lang_ctor <> ")
+    }),
+  ])
+}
 "
 }
 

@@ -85,3 +85,11 @@ pub fn ruby_generated_tests() {
     }),
   ])
 }
+
+pub fn ruby_recursion_tests() {
+  describe("ruby expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Ruby)
+    }),
+  ])
+}

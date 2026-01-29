@@ -85,3 +85,11 @@ pub fn wgsl_generated_tests() {
     }),
   ])
 }
+
+pub fn wgsl_recursion_tests() {
+  describe("wgsl expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Wgsl)
+    }),
+  ])
+}

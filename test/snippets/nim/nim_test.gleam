@@ -73,3 +73,11 @@ pub fn nim_generated_tests() {
     }),
   ])
 }
+
+pub fn nim_recursion_tests() {
+  describe("nim expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Nim)
+    }),
+  ])
+}

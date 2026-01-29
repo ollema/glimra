@@ -85,3 +85,11 @@ pub fn rust_generated_tests() {
     }),
   ])
 }
+
+pub fn rust_recursion_tests() {
+  describe("rust expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Rust)
+    }),
+  ])
+}

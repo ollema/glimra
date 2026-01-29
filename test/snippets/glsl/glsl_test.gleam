@@ -85,3 +85,11 @@ pub fn glsl_generated_tests() {
     }),
   ])
 }
+
+pub fn glsl_recursion_tests() {
+  describe("glsl expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Glsl)
+    }),
+  ])
+}

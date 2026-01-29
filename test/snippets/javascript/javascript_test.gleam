@@ -101,3 +101,11 @@ pub fn javascript_generated_tests() {
     }),
   ])
 }
+
+pub fn javascript_recursion_tests() {
+  describe("javascript expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Javascript)
+    }),
+  ])
+}

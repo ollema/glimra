@@ -85,3 +85,11 @@ pub fn scala_generated_tests() {
     }),
   ])
 }
+
+pub fn scala_recursion_tests() {
+  describe("scala expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Scala)
+    }),
+  ])
+}

@@ -85,3 +85,11 @@ pub fn json_generated_tests() {
     }),
   ])
 }
+
+pub fn json_recursion_tests() {
+  describe("json expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Json)
+    }),
+  ])
+}

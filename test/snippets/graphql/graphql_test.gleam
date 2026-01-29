@@ -97,3 +97,11 @@ pub fn graphql_generated_tests() {
     }),
   ])
 }
+
+pub fn graphql_recursion_tests() {
+  describe("graphql expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Graphql)
+    }),
+  ])
+}

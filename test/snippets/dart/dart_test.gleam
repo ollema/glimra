@@ -85,3 +85,11 @@ pub fn dart_generated_tests() {
     }),
   ])
 }
+
+pub fn dart_recursion_tests() {
+  describe("dart expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Dart)
+    }),
+  ])
+}

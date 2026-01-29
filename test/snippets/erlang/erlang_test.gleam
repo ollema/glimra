@@ -89,3 +89,11 @@ pub fn erlang_generated_tests() {
     }),
   ])
 }
+
+pub fn erlang_recursion_tests() {
+  describe("erlang expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Erlang)
+    }),
+  ])
+}

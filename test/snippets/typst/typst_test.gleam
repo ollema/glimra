@@ -85,3 +85,11 @@ pub fn typst_generated_tests() {
     }),
   ])
 }
+
+pub fn typst_recursion_tests() {
+  describe("typst expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Typst)
+    }),
+  ])
+}

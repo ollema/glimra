@@ -73,3 +73,11 @@ pub fn css_generated_tests() {
     }),
   ])
 }
+
+pub fn css_recursion_tests() {
+  describe("css expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Css)
+    }),
+  ])
+}

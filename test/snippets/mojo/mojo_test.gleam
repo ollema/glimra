@@ -85,3 +85,11 @@ pub fn mojo_generated_tests() {
     }),
   ])
 }
+
+pub fn mojo_recursion_tests() {
+  describe("mojo expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Mojo)
+    }),
+  ])
+}

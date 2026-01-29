@@ -101,3 +101,11 @@ pub fn typescript_generated_tests() {
     }),
   ])
 }
+
+pub fn typescript_recursion_tests() {
+  describe("typescript expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Typescript)
+    }),
+  ])
+}

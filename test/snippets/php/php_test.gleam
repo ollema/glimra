@@ -73,3 +73,11 @@ pub fn php_generated_tests() {
     }),
   ])
 }
+
+pub fn php_recursion_tests() {
+  describe("php expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Php)
+    }),
+  ])
+}

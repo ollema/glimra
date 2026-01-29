@@ -73,3 +73,11 @@ pub fn vue_generated_tests() {
     }),
   ])
 }
+
+pub fn vue_recursion_tests() {
+  describe("vue expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Vue)
+    }),
+  ])
+}

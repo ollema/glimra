@@ -73,3 +73,11 @@ pub fn nix_generated_tests() {
     }),
   ])
 }
+
+pub fn nix_recursion_tests() {
+  describe("nix expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Nix)
+    }),
+  ])
+}

@@ -73,3 +73,11 @@ pub fn ini_generated_tests() {
     }),
   ])
 }
+
+pub fn ini_recursion_tests() {
+  describe("ini expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Ini)
+    }),
+  ])
+}

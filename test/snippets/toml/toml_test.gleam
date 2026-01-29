@@ -85,3 +85,11 @@ pub fn toml_generated_tests() {
     }),
   ])
 }
+
+pub fn toml_recursion_tests() {
+  describe("toml expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Toml)
+    }),
+  ])
+}

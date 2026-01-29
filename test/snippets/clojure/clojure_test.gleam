@@ -97,3 +97,11 @@ pub fn clojure_generated_tests() {
     }),
   ])
 }
+
+pub fn clojure_recursion_tests() {
+  describe("clojure expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Clojure)
+    }),
+  ])
+}

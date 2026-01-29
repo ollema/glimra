@@ -97,3 +97,11 @@ pub fn markdown_generated_tests() {
     }),
   ])
 }
+
+pub fn markdown_recursion_tests() {
+  describe("markdown expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Markdown)
+    }),
+  ])
+}

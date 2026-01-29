@@ -89,3 +89,11 @@ pub fn kotlin_generated_tests() {
     }),
   ])
 }
+
+pub fn kotlin_recursion_tests() {
+  describe("kotlin expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Kotlin)
+    }),
+  ])
+}

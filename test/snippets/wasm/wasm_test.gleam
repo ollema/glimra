@@ -85,3 +85,11 @@ pub fn wasm_generated_tests() {
     }),
   ])
 }
+
+pub fn wasm_recursion_tests() {
+  describe("wasm expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Wasm)
+    }),
+  ])
+}

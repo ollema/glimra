@@ -97,3 +97,11 @@ pub fn crystal_generated_tests() {
     }),
   ])
 }
+
+pub fn crystal_recursion_tests() {
+  describe("crystal expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Crystal)
+    }),
+  ])
+}

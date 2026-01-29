@@ -85,3 +85,11 @@ pub fn diff_generated_tests() {
     }),
   ])
 }
+
+pub fn diff_recursion_tests() {
+  describe("diff expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Diff)
+    }),
+  ])
+}

@@ -69,3 +69,11 @@ pub fn go_generated_tests() {
     }),
   ])
 }
+
+pub fn go_recursion_tests() {
+  describe("go expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Go)
+    }),
+  ])
+}

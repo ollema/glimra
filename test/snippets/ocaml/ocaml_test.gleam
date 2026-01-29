@@ -85,3 +85,11 @@ pub fn ocaml_generated_tests() {
     }),
   ])
 }
+
+pub fn ocaml_recursion_tests() {
+  describe("ocaml expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Ocaml)
+    }),
+  ])
+}

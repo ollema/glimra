@@ -85,3 +85,11 @@ pub fn astro_generated_tests() {
     }),
   ])
 }
+
+pub fn astro_recursion_tests() {
+  describe("astro expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Astro)
+    }),
+  ])
+}

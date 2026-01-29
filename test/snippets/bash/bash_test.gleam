@@ -85,3 +85,11 @@ pub fn bash_generated_tests() {
     }),
   ])
 }
+
+pub fn bash_recursion_tests() {
+  describe("bash expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Bash)
+    }),
+  ])
+}

@@ -89,3 +89,11 @@ pub fn svelte_generated_tests() {
     }),
   ])
 }
+
+pub fn svelte_recursion_tests() {
+  describe("svelte expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Svelte)
+    }),
+  ])
+}

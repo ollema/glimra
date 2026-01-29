@@ -89,3 +89,11 @@ pub fn scheme_generated_tests() {
     }),
   ])
 }
+
+pub fn scheme_recursion_tests() {
+  describe("scheme expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Scheme)
+    }),
+  ])
+}

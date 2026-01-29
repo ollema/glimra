@@ -73,3 +73,11 @@ pub fn zig_generated_tests() {
     }),
   ])
 }
+
+pub fn zig_recursion_tests() {
+  describe("zig expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Zig)
+    }),
+  ])
+}

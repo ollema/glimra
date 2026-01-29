@@ -97,3 +97,11 @@ pub fn haskell_generated_tests() {
     }),
   ])
 }
+
+pub fn haskell_recursion_tests() {
+  describe("haskell expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Haskell)
+    }),
+  ])
+}

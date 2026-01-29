@@ -73,3 +73,11 @@ pub fn cpp_generated_tests() {
     }),
   ])
 }
+
+pub fn cpp_recursion_tests() {
+  describe("cpp expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Cpp)
+    }),
+  ])
+}

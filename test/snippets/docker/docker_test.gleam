@@ -89,3 +89,11 @@ pub fn docker_generated_tests() {
     }),
   ])
 }
+
+pub fn docker_recursion_tests() {
+  describe("docker expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Docker)
+    }),
+  ])
+}

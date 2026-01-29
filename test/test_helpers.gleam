@@ -44,6 +44,7 @@ import glimra/oniguruma_parser/parser/ast_types.{
 import glimra/oniguruma_parser/unicode
 import glimra/oniguruma_to_es/generate
 import glimra/oniguruma_to_es/generate/types as generate_types
+import glimra/oniguruma_to_es/regex_recursion
 import glimra/oniguruma_to_es/transform
 import glimra/oniguruma_to_es/transform/types.{
   type RegexPlusAst, type RegexPlusFlags, type Strategy, type TransformOptions,
@@ -1607,4 +1608,269 @@ fn generated_options_to_json(
     option.None -> base
   }
   json.object(with_plugin)
+}
+
+// ============================================
+// Recursion Validation (for recursion testing)
+// ============================================
+
+/// Type for expected Recursion pattern entry
+pub type ExpectedRecursionPattern {
+  ExpectedRecursionPattern(
+    pattern: String,
+    success: Bool,
+    recursion_json: String,
+  )
+}
+
+/// Type for expected Recursion file
+pub type ExpectedRecursionFile {
+  ExpectedRecursionFile(
+    language: String,
+    total: Int,
+    successful: Int,
+    failed: Int,
+    patterns: List(ExpectedRecursionPattern),
+  )
+}
+
+/// Read expected Recursion from JSON file
+pub fn read_expected_recursion(
+  lang: Language,
+) -> Result(ExpectedRecursionFile, String) {
+  let lang_id = language_id(lang)
+  let path = "test/snippets/" <> lang_id <> "/expected_recursion.json"
+
+  case simplifile.read(path) {
+    Error(_) -> Error("Failed to read expected Recursion file: " <> path)
+    Ok(content) -> decode_expected_recursion(content)
+  }
+}
+
+fn decode_expected_recursion(
+  content: String,
+) -> Result(ExpectedRecursionFile, String) {
+  // Decode just the metadata
+  let metadata_decoder =
+    decode.field("language", decode.string, fn(language) {
+      decode.field("total", decode.int, fn(total) {
+        decode.field("successful", decode.int, fn(successful) {
+          decode.field("failed", decode.int, fn(failed) {
+            decode.success(#(language, total, successful, failed))
+          })
+        })
+      })
+    })
+
+  // First decode metadata
+  case json.parse(content, metadata_decoder) {
+    Error(_) -> Error("Failed to decode expected Recursion JSON metadata")
+    Ok(#(language, total, successful, failed)) -> {
+      // Now extract patterns
+      let patterns_decoder =
+        decode.field("patterns", decode.list(decode.dynamic), fn(patterns_dyn) {
+          decode.success(patterns_dyn)
+        })
+
+      case json.parse(content, patterns_decoder) {
+        Error(_) -> Error("Failed to decode patterns array")
+        Ok(patterns_dyn) -> {
+          let patterns =
+            patterns_dyn
+            |> list.filter_map(fn(p) { decode_recursion_pattern_entry(p) })
+          Ok(ExpectedRecursionFile(
+            language: language,
+            total: total,
+            successful: successful,
+            failed: failed,
+            patterns: patterns,
+          ))
+        }
+      }
+    }
+  }
+}
+
+fn decode_recursion_pattern_entry(
+  dyn: decode.Dynamic,
+) -> Result(ExpectedRecursionPattern, Nil) {
+  let pattern_decoder =
+    decode.field("pattern", decode.string, fn(pattern) {
+      decode.field("success", decode.bool, fn(success) {
+        decode.success(#(pattern, success))
+      })
+    })
+
+  case decode.run(dyn, pattern_decoder) {
+    Error(_) -> Error(Nil)
+    Ok(#(pattern, success)) -> {
+      // Now get the recursion field as raw JSON
+      let rec_decoder =
+        decode.field("recursion", decode.dynamic, fn(rec_dyn) {
+          decode.success(rec_dyn)
+        })
+
+      let recursion_json = case decode.run(dyn, rec_decoder) {
+        Ok(rec_dyn) -> stringify_dynamic(rec_dyn)
+        Error(_) -> ""
+      }
+
+      Ok(ExpectedRecursionPattern(
+        pattern: pattern,
+        success: success,
+        recursion_json: recursion_json,
+      ))
+    }
+  }
+}
+
+/// Validate expected Recursion for a language by running the full pipeline and comparing
+pub fn validate_expected_recursion(lang: Language) -> Nil {
+  let expected =
+    read_expected_recursion(lang)
+    |> expect.to_be_ok()
+
+  let errors =
+    expected.patterns
+    |> list.filter_map(fn(entry) {
+      case entry.success {
+        False ->
+          // Skip patterns that failed in JS
+          Error(Nil)
+        True -> {
+          // Parse with Gleam parser using same options as JS generator
+          let parse_opts =
+            parser.ParseOptions(
+              ..parser.default_options(),
+              singleline: True,
+              capture_group: True,
+              skip_backref_validation: True,
+              normalize_unknown_property_names: True,
+              unicode_property_map: option.Some(
+                unicode.js_unicode_property_map(),
+              ),
+            )
+          case parser.parse(entry.pattern, parse_opts) {
+            Error(err) ->
+              Ok("Pattern \"" <> entry.pattern <> "\" failed to parse: " <> err)
+            Ok(ast) -> {
+              // Transform the AST
+              let config =
+                TransformConfig(
+                  ..transform.default_config(),
+                  ascii_word_boundaries: True,
+                )
+              case transform.transform(ast, config) {
+                Error(err) ->
+                  Ok(
+                    "Pattern \""
+                    <> entry.pattern
+                    <> "\" failed to transform: "
+                    <> err,
+                  )
+                Ok(regex_plus_ast) -> {
+                  // Generate the pattern
+                  case
+                    generate.generate(regex_plus_ast, generate.default_config())
+                  {
+                    Error(err) ->
+                      Ok(
+                        "Pattern \""
+                        <> entry.pattern
+                        <> "\" failed to generate: "
+                        <> err,
+                      )
+                    Ok(generated) -> {
+                      // Apply recursion transformation
+                      let recursion_config =
+                        regex_recursion.RecursionConfig(
+                          capture_transfers: generated.capture_transfers,
+                          hidden_captures: generated.hidden_captures,
+                        )
+                      case
+                        regex_recursion.recursion(
+                          generated.pattern,
+                          recursion_config,
+                        )
+                      {
+                        Error(err) ->
+                          Ok(
+                            "Pattern \""
+                            <> entry.pattern
+                            <> "\" failed recursion: "
+                            <> err,
+                          )
+                        Ok(recursion_result) -> {
+                          // Convert to JSON and compare semantically
+                          let gleam_json =
+                            recursion_result_to_string(recursion_result)
+                          case
+                            compare_json_strings(
+                              gleam_json,
+                              entry.recursion_json,
+                            )
+                          {
+                            True -> Error(Nil)
+                            False -> {
+                              let diff =
+                                json_diff(entry.recursion_json, gleam_json)
+                              Ok(
+                                "Pattern \""
+                                <> string.slice(entry.pattern, 0, 80)
+                                <> "...\" mismatch:\nDiff: "
+                                <> diff,
+                              )
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+  case errors {
+    [] -> Nil
+    first_errors -> {
+      // Show first few errors
+      let error_msg =
+        first_errors
+        |> list.take(5)
+        |> string.join("\n\n")
+      error_msg |> expect.to_equal("")
+    }
+  }
+}
+
+/// Serialize a RecursionResult to a JSON string
+pub fn recursion_result_to_string(
+  result: regex_recursion.RecursionResult,
+) -> String {
+  recursion_result_to_json(result)
+  |> json.to_string
+}
+
+fn recursion_result_to_json(
+  result: regex_recursion.RecursionResult,
+) -> json.Json {
+  // Build captureTransfers as an array of [key, values] pairs, sorted by key
+  let capture_transfers =
+    result.capture_transfers
+    |> dict.to_list
+    |> list.sort(fn(a, b) { int.compare(a.0, b.0) })
+    |> list.map(fn(entry) {
+      let #(key, values) = entry
+      json.array([json.int(key), json.array(values, json.int)], fn(x) { x })
+    })
+
+  json.object([
+    #("pattern", json.string(result.pattern)),
+    #("captureTransfers", json.preprocessed_array(capture_transfers)),
+    #("hiddenCaptures", json.array(result.hidden_captures, json.int)),
+  ])
 }

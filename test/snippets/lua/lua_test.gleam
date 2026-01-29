@@ -73,3 +73,11 @@ pub fn lua_generated_tests() {
     }),
   ])
 }
+
+pub fn lua_recursion_tests() {
+  describe("lua expected recursion validation", [
+    it("processes all patterns correctly", fn() {
+      test_helpers.validate_expected_recursion(languages.Lua)
+    }),
+  ])
+}
